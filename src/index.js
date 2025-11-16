@@ -1,0 +1,41 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import common_hi from "./translations/hi/common.json";
+import common_gu from "./translations/gu/common.json";
+import common_en from "./translations/en/common.json";
+import i18next from "i18next";
+import { I18nextProvider } from "react-i18next";
+
+const lan = localStorage.getItem("language") || "en";
+i18next.init({
+  fallbackLng: "en",
+  interpolation: { escapeValue: false }, // React already does escaping
+  lng: lan,
+  resources: {
+    en: {
+      common: common_en, // 'common' is our custom namespace
+    },
+    hi: {
+      common: common_hi,
+    },
+    gu: {
+      common: common_gu,
+    },
+  },
+});
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <I18nextProvider i18n={i18next}>
+    <BrowserRouter basename={process.env.REACT_APP_HOME_PAGE}>
+      <App />
+    </BrowserRouter>
+  </I18nextProvider>
+);
+
+reportWebVitals();
