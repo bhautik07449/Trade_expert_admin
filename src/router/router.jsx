@@ -3,6 +3,8 @@ import { Navigate, useRoutes } from "react-router";
 import AdminPanelLayout from "../components/admin-panel/admin-panel-layout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Login/Login";
+import AdminsManagement from "../pages/UserManagement/AdminsManagement/AdminsManagement";
+import SuppliersManagement from "../pages/UserManagement/SuppliersManagement/SuppliersManagement";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("admin_store");
@@ -26,6 +28,16 @@ const routes = () => [
       {
         element: <Dashboard />,
         path: "/",
+        index: true,
+      },
+      {
+        element: <AdminsManagement />,
+        path: "/user-management/admins-management",
+        index: true,
+      },
+      {
+        element: <SuppliersManagement />,
+        path: "/user-management/suppliers-management",
         index: true,
       },
     ],

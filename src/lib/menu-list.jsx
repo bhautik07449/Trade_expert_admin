@@ -16,19 +16,19 @@ export function getMenuList(pathname) {
         {
           href: "",
           label: "User Management",
-          active: pathname.includes("/master"),
+          active: pathname.includes("/user-management"),
           icon: Box,
           submenus: [
             {
-              href: "/master/user",
+              href: "/user-management/admins-management",
               label: "Admins Management",
-              active: pathname === "/master/user",
+              active: pathname === "/user-management/admins-management",
               icon: User,
             },
             {
-              href: "/master/party",
+              href: "/user-management/suppliers-management",
               label: "Suppliers Management",
-              active: pathname === "/master/party",
+              active: pathname === "/user-management/suppliers-management",
               icon: Handshake,
             }
           ],
