@@ -33,7 +33,32 @@ export function getMenuList(pathname) {
             }
           ],
         },
-
+        {
+          href: "",
+          label: "Stock Management",
+          active: pathname.includes("/stock-management"),
+          icon: Box,
+          submenus: [
+            {
+              href: "/stock-management/product_management",
+              label: "Product Management",
+              active: pathname === "/stock-management/product_management",
+              icon: User,
+            },
+            {
+              href: "/stock-management/category-management",
+              label: "Category Management",
+              active: pathname === "/stock-management/category-management",
+              icon: Handshake,
+            },
+            {
+              href: "/stock-management/dmr-management",
+              label: "DMR Management",
+              active: pathname === "/stock-management/dmr-management",
+              icon: Handshake,
+            }
+          ],
+        },
       ],
     },
   ];
