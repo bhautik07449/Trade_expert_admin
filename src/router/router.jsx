@@ -5,6 +5,9 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Login/Login";
 import AdminsManagement from "../pages/UserManagement/AdminsManagement/AdminsManagement";
 import SuppliersManagement from "../pages/UserManagement/SuppliersManagement/SuppliersManagement";
+import ProductManagement from "../pages/StockManagement/ProductManagement/ProductManagement";
+import CategoryManagement from "../pages/StockManagement/CategoryManagement/CategoryManagement";
+import DMRManagement from "../pages/StockManagement/DMRManagement/DMRManagement";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("admin_store");
@@ -38,6 +41,21 @@ const routes = () => [
       {
         element: <SuppliersManagement />,
         path: "/user-management/suppliers-management",
+        index: true,
+      },
+      {
+        element: <ProductManagement />,
+        path: "/stock-management/product_management",
+        index: true,
+      },
+      {
+        element: <CategoryManagement />,
+        path: "/stock-management/category-management",
+        index: true,
+      },
+      {
+        element: <DMRManagement />,
+        path: "/stock-management/dmr-management",
         index: true,
       },
     ],
