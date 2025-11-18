@@ -1,25 +1,18 @@
 import React from 'react'
 import { Input } from '../ui/input'
 import { Label } from "../../components/ui/label";
-import AuthService from '../../service/auth.service';
-import config from '../../config';
 import { ImageUp } from 'lucide-react';
 
 const CommonImgupload = ({ value, onChange, className }) => {
 
-    const IMG_URL = config.baseImage;
-
     const handleImageUpload = async (e) => {
         const file = e.target.files[0];
         if (file) {
-            const formData = new FormData()
-            formData.append("images", file)
-            const response = await AuthService.imageUpload(formData)
-            if (response.data.success) {
-                onChange(IMG_URL + response.data.data[0])
-            }
+            const formData = new FormData();
+            console.log("image", formData);
         }
     };
+
     return (
         <div className="">
             <Label

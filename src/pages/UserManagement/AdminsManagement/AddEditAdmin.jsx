@@ -3,6 +3,7 @@ import { Input } from "../../../components/ui/input"
 import { Label } from "../../../components/ui/label"
 import React from "react"
 import CommonButton from "../../../components/widgets/common_button"
+import CommonImgupload from "../../../components/widgets/common_imgupload"
 
 const AddEditAdmin = ({ isOpen, setIsOpen }) => {
     return (
@@ -10,7 +11,7 @@ const AddEditAdmin = ({ isOpen, setIsOpen }) => {
             isOpen={isOpen}
             onClose={() => setIsOpen("")}
             size="xl"
-            title="Create Admin"
+            title="Add Admin"
             footer={
                 <div className="flex gap-2">
                     <CommonButton variant="outline" onClick={() => setIsOpen("")}>
@@ -50,6 +51,7 @@ const AddEditAdmin = ({ isOpen, setIsOpen }) => {
                         </div>
                         <div>
                             <Label>Image</Label>
+                            <CommonImgupload  />
                         </div>
                     </div>
                 </form>

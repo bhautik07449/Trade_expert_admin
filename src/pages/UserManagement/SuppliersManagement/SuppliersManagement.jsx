@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { CircleFadingPlus, Trash2 } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "../../../components/ui/table";
+import AddEditSuppliers from "./AddEditSuppliers";
 
 const categoryList = [
     { SrNo: "1", name: "Admin 1", email: "example@gmail.com", PhoneNo: "1234567889", Status: "Active", Created: "14/11/2023" },
@@ -13,6 +14,7 @@ const categoryList = [
 ]
 const SuppliersManagement = () => {
     const [search, setSearch] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -27,12 +29,12 @@ const SuppliersManagement = () => {
                         <CommonTextField
                             type="text"
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Admins"
+                            placeholder="Search Suppliers"
                             className="w-full"
                         />
                     </div>
                     <div>
-                        <Button className="flex items-center gap-2">
+                        <Button className="flex items-center gap-2" onClick={() => setIsOpen(true)}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>
@@ -108,6 +110,12 @@ const SuppliersManagement = () => {
                     </TableFooter>
                 </Table>
             </Card>
+
+            <AddEditSuppliers
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+            />
+
         </div>
     );
 }
