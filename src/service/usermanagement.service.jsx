@@ -8,8 +8,18 @@ const getUser = async () => {
         throw error
     }
 }
+
+const addAdmin = async (adminData) => {
+    try {
+        const response = await serverCall.post('/users', adminData);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const Userservice = {
-    getUser
+    getUser, addAdmin
 };
 
 export default Userservice;

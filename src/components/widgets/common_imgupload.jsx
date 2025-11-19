@@ -3,40 +3,43 @@ import { Input } from '../ui/input'
 import { Label } from "../../components/ui/label";
 import { ImageUp } from 'lucide-react';
 
-const CommonImgupload = ({ value, onChange, className }) => {
+const CommonImgupload = ({ value, onChange, onBlur, className }) => {
 
-    const handleImageUpload = async (e) => {
+    const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const formData = new FormData();
-            console.log("image", formData);
+            onChange(file);
         }
     };
 
+    const previewUrl = value instanceof File ? URL.createObjectURL(value) : value;
+
     return (
-        <div className="">
+        <div>
             <Label
                 htmlFor="profiles"
                 className={className ?? "h-16 w-16 lg:h-20 lg:w-20 xxl:h-24 xxl:w-24 overflow-hidden border border-border rounded-md cursor-pointer flex items-center justify-center"}
             >
-                {value ?
+                {previewUrl ? (
                     <img
-                        src={value}
-                        // alt="Profile"
+                        src={previewUrl}
                         className="w-full h-full object-cover bg-center"
                     />
-                    :
-                    <ImageUp className="md:size-[36px] opacity-50" />}
+                ) : (
+                    <ImageUp className="md:size-[36px] opacity-50" />
+                )}
             </Label>
+
             <Input
                 type="file"
                 id="profiles"
                 accept="image/*"
                 className="hidden"
                 onChange={handleImageUpload}
+                onBlur={onBlur}
             />
         </div>
-    )
-}
+    );
+};
 
-export default CommonImgupload
+export default CommonImgupload;

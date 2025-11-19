@@ -1,21 +1,33 @@
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CircleFadingPlus, Trash2 } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "../../../components/ui/table";
 import AddEditAdmin from "./AddEditAdmin";
-
-const categoryList = [
-    { SrNo: "1", name: "Admin 1", email: "example@gmail.com", PhoneNo: "1234567889", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "2", name: "Admin 2", email: "example@gmail.com", PhoneNo: "1234567889", Status: "Deactive", Created: "14/11/2023" },
-    { SrNo: "3", name: "Admin 3", email: "example@gmail.com", PhoneNo: "1234567889", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "4", name: "Admin 4", email: "example@gmail.com", PhoneNo: "1234567889", Status: "Deactive", Created: "14/11/2023" },
-]
+import Userservice from "../../../service/usermanagement.service";
+import dateformate from "../../../components/widgets/dateformate";
 
 const AdminsManagement = () => {
     const [search, setSearch] = useState("");
     const [isOpen, setIsOpen] = useState(false);
+    const [user, setUserList] = useState([]);
+
+    const getUserData = async () => {
+        try {
+            const res = await Userservice.getUser();
+            if (res) {
+                setUserList(res?.data);
+            }
+
+        } catch (error) {
+            console.log(error, "error");
+        }
+    }
+
+    useEffect(() => {
+        getUserData()
+    }, [isOpen])
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -59,26 +71,26 @@ const AdminsManagement = () => {
                     </TableHeader>
 
                     <TableBody>
-                        {categoryList.length > 0 ? (
-                            categoryList.map((item, idx) => (
-                                <TableRow key={item.SrNo ?? idx}>
-                                    <TableCell>{item.SrNo}</TableCell>
-                                    <TableCell className="font-medium">{item.name}</TableCell>
-                                    <TableCell>{item.email}</TableCell>
-                                    <TableCell>{item.PhoneNo}</TableCell>
+                        {user.length > 0 ? (
+                            user.map((item, idx) => (
+                                <TableRow key={idx}>
+                                    <TableCell>{idx + 1}</TableCell>
+                                    <TableCell>{item?.firstName + " " + item?.lastName}</TableCell>
+                                    <TableCell>{item?.email}</TableCell>
+                                    <TableCell>{item?.phone}</TableCell>
                                     <TableCell>
                                         <span
                                             className={
                                                 "inline-block px-2 py-0.5 rounded-full text-xs font-medium " +
-                                                (item.Status === "Active"
+                                                (item?.status === "active"
                                                     ? "bg-green-100 text-green-800"
                                                     : "bg-yellow-100 text-yellow-800")
                                             }
                                         >
-                                            {item.Status}
+                                            <span className="capitalize">{item?.status}</span>
                                         </span>
                                     </TableCell>
-                                    <TableCell>{item.Created}</TableCell>
+                                    <TableCell>{dateformate(item?.createdAt)}</TableCell>
                                     <TableCell className="text-right">
                                         <button
                                             className="inline-flex items-center gap-2 p-2 rounded hover:bg-red-50"
@@ -103,7 +115,7 @@ const AdminsManagement = () => {
                             <TableCell colSpan={7}>
                                 <div className="flex items-center justify-between py-2">
                                     <div className="text-sm text-muted-foreground">
-                                        Showing {categoryList.length} of {categoryList.length}
+                                        Showing {user.length} of {user.length}
                                     </div>
                                     <div className="text-sm text-muted-foreground">Page 1</div>
                                 </div>
