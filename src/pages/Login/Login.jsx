@@ -5,17 +5,24 @@ import { useTranslation } from "react-i18next";
 import { CommonTextField } from "../../components/widgets/common_textField";
 import CommonButton from "../../components/widgets/common_button";
 import { AppImages } from "../../common/ImagePath";
+import { login, setLoggedIn } from "../../store/slice/auth";
+import { toastSuccess } from "../../common/toastNotification";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { Toaster } from "../../components/ui/toaster";
 
 const Login = () => {
     const { t } = useTranslation("common");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const initialValues = {
-        mobile: "",
+        email: "",
         password: "",
     };
 
     const validationSchema = Yup.object({
-        mobile: Yup.string().required(t("messages.emailRequired")),
+        email: Yup.string().required(t("messages.emailRequired")),
         password: Yup.string()
             .min(8, t("messages.password"))
             .matches(/[A-Z]/, t("messages.passwordUppercase"))
@@ -26,7 +33,24 @@ const Login = () => {
     });
 
     const handleSubmit = async (values, { setSubmitting }) => {
-        console.log("login api", values);
+        setSubmitting(true);
+        try {
+            const response = await dispatch(login(values)).unwrap();
+            if (response) {
+                localStorage.setItem("isLoggedIn", "true");
+                dispatch(setLoggedIn(true));
+                toastSuccess(t("messages.loginSuccess"));
+                navigate("/");
+            }
+        } catch (error) {
+            Toaster(
+                "error",
+                error?.response?.error?.error_message ||
+                t("messages.somethingWentWrong")
+            );
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     const formik = useFormik({
@@ -64,13 +88,13 @@ const Login = () => {
                             <div className="grid gap-1.5">
                                 <CommonTextField
                                     label={t("email")}
-                                    type="number"
-                                    name="mobile"
+                                    type="text"
+                                    name="email"
                                     placeholder={t("emailPlaceholder")}
-                                    value={formik.values.mobile}
+                                    value={formik.values.email}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
-                                    error={formik.touched.mobile && formik.errors.mobile}
+                                    error={formik.touched.email && formik.errors.email}
                                 />
                             </div>
 

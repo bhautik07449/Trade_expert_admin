@@ -8,7 +8,7 @@ const customAxios = axios.create({
 });
 
 const requestHandler = (request) => {
-  const user = localStorage.getItem("admin_store");
+  const user = localStorage.getItem("token");
 
   if (user) {
     const token = user;

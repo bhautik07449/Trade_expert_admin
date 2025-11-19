@@ -10,23 +10,23 @@ import CategoryManagement from "../pages/StockManagement/CategoryManagement/Cate
 import DMRManagement from "../pages/StockManagement/DMRManagement/DMRManagement";
 
 export const PrivateRoute = ({ children }) => {
-  const user = localStorage.getItem("admin_store");
+  const user = localStorage.getItem("token");
   return user ? children : <Navigate to="/login" />;
 };
 
 export const PublicRoute = ({ children }) => {
-  const user = localStorage.getItem("admin_store");
+  const user = localStorage.getItem("token");
   return user ? <Navigate to="/" /> : children;
 };
 
-const routes = () => [
+const routes = (isLoggedIn) => [
   {
     path: "/login",
-    element: <Login />,
+    element: isLoggedIn ? <AdminPanelLayout /> : <Login />,
   },
   {
     path: "/",
-    element: <AdminPanelLayout />,
+    element: isLoggedIn ? <AdminPanelLayout /> : <Login />,
     children: [
       {
         element: <Dashboard />,
@@ -63,7 +63,6 @@ const routes = () => [
 ];
 
 export default function Routes(props) {
-  // const { isLoggedIn } = props;
-  // return useRoutes(routes(isLoggedIn));
-  return useRoutes(routes());
+  const { isLoggedIn } = props;
+  return useRoutes(routes(isLoggedIn));
 }

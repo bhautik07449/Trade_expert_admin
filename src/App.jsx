@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import "./App.css";
 import Router from "./router/router";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function App() {
 
@@ -24,9 +25,11 @@ function App() {
     }
   }, []);
 
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   return (
     <>
-      <Router />
+      <Router isLoggedIn={isLoggedIn} />
     </>
   );
 }
