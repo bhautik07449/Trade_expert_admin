@@ -1,19 +1,31 @@
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CircleFadingPlus, Trash2 } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "../../../components/ui/table";
-
-const productList = [
-    { SrNo: "1", name: "Admin 1", Description: "Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem", Category: "Agri & Foods", Tariff: "10203", price: "12023", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "2", name: "Admin 2", Description: "Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem", Category: "Agri & Foods", Tariff: "10203", price: "12023", Status: "Deactive", Created: "14/11/2023" },
-    { SrNo: "3", name: "Admin 3", Description: "Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem", Category: "Agri & Foods", Tariff: "10203", price: "12023", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "4", name: "Admin 4", Description: "Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem Lorem", Category: "Agri & Foods", Tariff: "10203", price: "12023", Status: "Deactive", Created: "14/11/2023" },
-]
+import Productservice from "../../../service/product.service";
 
 const ProductManagement = () => {
     const [search, setSearch] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
+    const [list, setList] = useState([]);
+
+    const getList = async () => {
+        try {
+            const res = await Productservice.getProductList();
+            if (res) {
+                setList(res?.data);
+            }
+
+        } catch (error) {
+            console.log(error, "error");
+        }
+    }
+
+    useEffect(() => {
+        getList()
+    }, [isOpen])
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -57,8 +69,8 @@ const ProductManagement = () => {
                     </TableHeader>
 
                     <TableBody>
-                        {productList.length > 0 ? (
-                            productList.map((item, idx) => (
+                        {list?.length > 0 ? (
+                            list?.map((item, idx) => (
                                 <TableRow key={item.SrNo ?? idx}>
                                     <TableCell>{item.SrNo}</TableCell>
                                     <TableCell className="font-medium">{item.name}</TableCell>
@@ -103,7 +115,7 @@ const ProductManagement = () => {
                             <TableCell colSpan={7}>
                                 <div className="flex items-center justify-between py-2">
                                     <div className="text-sm text-muted-foreground">
-                                        Showing {productList.length} of {productList.length}
+                                        Showing {list?.length} of {list?.length}
                                     </div>
                                     <div className="text-sm text-muted-foreground">Page 1</div>
                                 </div>
