@@ -59,6 +59,40 @@ export function getMenuList(pathname) {
             }
           ],
         },
+        {
+          href: "/",
+          label: "Website Management",
+          active: pathname === "/website-management",
+          icon: MdOutlineSpaceDashboard,
+          submenus: [
+            {
+              href: "/",
+              label: "Content CMS",
+              active: pathname === "/content",
+              icon: User,
+            },
+            {
+              href: "/",
+              label: "Settings",
+              active: pathname === "/settings",
+              icon: Handshake,
+            }
+          ],
+        },
+        {
+          href: "/",
+          label: "Buyer Interaction",
+          active: pathname === "/Bbuyer-interaction",
+          icon: MdOutlineSpaceDashboard,
+          submenus: [],
+        },
+        {
+          href: "/",
+          label: "Documents",
+          active: pathname === "/documents",
+          icon: MdOutlineSpaceDashboard,
+          submenus: [],
+        },
       ],
     },
   ];
