@@ -60,68 +60,60 @@ const Login = () => {
     });
 
     return (
-        <div className="flex items-center justify-center h-screen w-full">
-            <div className="max-w-3xl w-full px-5">
-                <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 w-full border-input border h-fit rounded-md shadow-lg">
-                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                        <a href="/" className="flex items-center gap-2 justify-center">
-                            <div className="w-20 lg:w-48">
-                                <img
-                                    src={AppImages.logoIconDark}
-                                    alt="logo"
-                                    className="block dark:hidden w-full"
-                                />
-                                <img
-                                    src={AppImages.logoIcon}
-                                    alt="logoDark"
-                                    className="hidden dark:block w-full"
-                                />
-                            </div>
-                        </a>
-                        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight dark:text-white text-gray-900">
-                            {t("auth.signIn")}
-                        </h2>
+        <div className="min-h-screen w-full flex items-center justify-center bg-linear-to-br from-gray-100 via-gray-200 to-gray-300 dark:from-[#0f0f0f] dark:via-[#1a1a1a] dark:to-[#0f0f0f] p-4">
+
+            <div className="w-full max-w-md bg-white dark:bg-[#141414] rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 p-8 animate-fadeIn">
+
+                <div className="flex flex-col items-center">
+                    <div className="w-24 mb-6">
+                        <img src={AppImages.logoIconDark} alt="logo" className="block dark:hidden w-full" />
+                        <img src={AppImages.logoIcon} alt="logoDark" className="hidden dark:block w-full" />
                     </div>
 
-                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                        <form className="mt-10 space-y-6" onSubmit={formik.handleSubmit}>
-                            <div className="grid gap-1.5">
-                                <CommonTextField
-                                    label={t("email")}
-                                    type="text"
-                                    name="email"
-                                    placeholder={t("emailPlaceholder")}
-                                    value={formik.values.email}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    error={formik.touched.email && formik.errors.email}
-                                />
-                            </div>
-
-                            <div className="grid gap-1.5">
-                                <CommonTextField
-                                    label={t("password")}
-                                    type="password"
-                                    name="password"
-                                    value={formik.values.password}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    placeholder={t("passwordPlaceholder")}
-                                    isPassword
-                                    error={formik.touched.password && formik.errors.password}
-                                />
-                            </div>
-
-                            <CommonButton
-                                type="submit"
-                                className="w-full"
-                                isLoading={formik.isSubmitting}
-                            >
-                                {t("auth.signIn")}
-                            </CommonButton>
-                        </form>
-                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
+                        Welcome Back
+                    </h2>
+                    <p className="mt-2 text-gray-500 dark:text-gray-400 text-sm">
+                        Sign in to continue to your dashboard
+                    </p>
                 </div>
+
+                <form className="mt-10 space-y-6" onSubmit={formik.handleSubmit}>
+                    <CommonTextField
+                        label={t("email")}
+                        type="text"
+                        name="email"
+                        placeholder={t("emailPlaceholder")}
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.email && formik.errors.email}
+                    />
+
+                    <CommonTextField
+                        label="Password"
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        isPassword
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched.password && formik.errors.password}
+                    />
+
+                    <CommonButton
+                        type="submit"
+                        className="w-full py-3 text-lg rounded-xl"
+                        isLoading={formik.isSubmitting}
+                    >
+                        Sign In
+                    </CommonButton>
+                </form>
+
+                <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
+                    © {new Date().getFullYear()} Your Company. All rights reserved.
+                </p>
             </div>
         </div>
     );
