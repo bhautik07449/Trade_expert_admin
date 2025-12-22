@@ -3,6 +3,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Eye, EyeOff, Search, Filter } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { Textarea } from "../ui/textarea";
 
 const CommonTextField = ({
   label,
@@ -16,6 +17,7 @@ const CommonTextField = ({
   onChange,
   value,
   error,
+  rows,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -52,24 +54,46 @@ const CommonTextField = ({
           {prefixIcon}
         </div>
       )}
-      <Input
-        type={isPassword ? (showPassword ? "text" : "password") : type}
-        placeholder={placeholder}
-        disabled={disabled}
-        onChange={onChange}
-        value={value}
-        error={error}
-        autoComplete="new-password"
-        autoCorrect="off"
-        autoCapitalize="off"
-        spellCheck="false"
-        className={cn(
-          inputClasses,
-          prefixIcon && "pl-10",
-          (renderIcon() || suffixIcon) && "pr-10"
-        )}
-        {...props}
-      />
+      {type === "textarea" ? (
+        <Textarea
+          type={isPassword ? (showPassword ? "text" : "password") : type}
+          placeholder={placeholder}
+          disabled={disabled}
+          onChange={onChange}
+          value={value}
+          error={error}
+          autoComplete="new-password"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
+          rows={rows || 4}
+          className={cn(
+            inputClasses,
+            prefixIcon && "pl-10",
+            (renderIcon() || suffixIcon) && "pr-10"
+          )}
+          {...props}
+        />
+      ) : (
+        <Input
+          type={isPassword ? (showPassword ? "text" : "password") : type}
+          placeholder={placeholder}
+          disabled={disabled}
+          onChange={onChange}
+          value={value}
+          error={error}
+          autoComplete="new-password"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
+          className={cn(
+            inputClasses,
+            prefixIcon && "pl-10",
+            (renderIcon() || suffixIcon) && "pr-10"
+          )}
+          {...props}
+        />
+      )}
       {(renderIcon() || suffixIcon) && (
         <div className="absolute right-3 top-1/2 -translate-y-1/2">
           {renderIcon() || suffixIcon}
