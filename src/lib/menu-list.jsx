@@ -22,13 +22,13 @@ export function getMenuList(pathname) {
             {
               href: "/user-management/admins-management",
               label: "Admins Management",
-              active: pathname === "/user-management/admins-management",
+              active: pathname.includes("/user-management/admins-management"),
               icon: User,
             },
             {
               href: "/user-management/suppliers-management",
               label: "Suppliers Management",
-              active: pathname === "/user-management/suppliers-management",
+              active: pathname.includes("/user-management/suppliers-management"),
               icon: Handshake,
             }
           ],

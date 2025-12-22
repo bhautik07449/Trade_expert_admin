@@ -9,6 +9,7 @@ import ProductManagement from "../pages/StockManagement/ProductManagement/Produc
 import CategoryManagement from "../pages/StockManagement/CategoryManagement/CategoryManagement";
 import DMRManagement from "../pages/StockManagement/DMRManagement/DMRManagement";
 import AddEditAdmin from "../pages/UserManagement/AdminsManagement/AddEditAdmin";
+import AddEditSuppliers from "../pages/UserManagement/SuppliersManagement/AddEditSuppliers";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -47,6 +48,11 @@ const routes = (isLoggedIn) => [
       {
         element: <SuppliersManagement />,
         path: "/user-management/suppliers-management",
+        index: true,
+      },
+      {
+        element: <AddEditSuppliers />,
+        path: "/user-management/suppliers-management/:type",
         index: true,
       },
       {

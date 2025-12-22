@@ -5,6 +5,7 @@ import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import AddEditSuppliers from "./AddEditSuppliers";
 import CommonTable from "../../../components/widgets/common_table";
+import { useNavigate } from "react-router";
 
 const categoryList = [
     { SrNo: "1", name: "Admin 1", email: "example@gmail.com", PhoneNo: "1234567889", Status: "Active", Created: "14/11/2023" },
@@ -24,7 +25,7 @@ const columns = [
 const SuppliersManagement = () => {
     
     const [search, setSearch] = useState("");
-    const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -44,7 +45,7 @@ const SuppliersManagement = () => {
                         />
                     </div>
                     <div>
-                        <Button className="flex items-center gap-2" onClick={() => setIsOpen(true)}>
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/user-management/suppliers-management/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>
@@ -61,12 +62,6 @@ const SuppliersManagement = () => {
                     onDelete={() => { }}
                 />
             </Card>
-
-            <AddEditSuppliers
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-            />
-
         </div>
     );
 }

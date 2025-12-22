@@ -1,102 +1,112 @@
-import CommonDialog from "../../../components/widgets/common_dialog"
-import { Input } from "../../../components/ui/input"
-import { Label } from "../../../components/ui/label"
-import React from "react"
-import CommonButton from "../../../components/widgets/common_button"
-import CommonDropdown from "../../../components/widgets/common_dropdown"
-import { Textarea } from "../../../components/ui/textarea"
+import React, { useState } from "react";
+import CommonButton from "../../../components/widgets/common_button";
+import { CommonTextField } from "../../../components/widgets/common_textField";
+import BackPath from "../../../components/common/BackPath";
+import { Card } from "../../../components/ui/card";
+import CommonBox from "../../../components/common/common_box";
 
-const AddEditSuppliers = ({ isOpen, setIsOpen }) => {
+const AddEditSuppliers = () => {
     const roles = [
-        { label: 'Indenting', value: 'Indenting' },
-        { label: 'On-behalf', value: 'On-behalf' },
-    ]
+        { label: "Indenting", value: "Indenting" },
+        { label: "On-behalf", value: "On-behalf" },
+    ];
+
+    const [productStatus, setProductStatus] = useState("");
+    const [supplierType, setSupplierType] = useState("");
 
     return (
-        <CommonDialog
-            isOpen={isOpen}
-            onClose={() => setIsOpen("")}
-            size="xl"
-            title="Add Supplier"
-            footer={
-                <div className="flex gap-2">
-                    <CommonButton variant="outline" onClick={() => setIsOpen("")}>
-                        cancel
-                    </CommonButton>
-                    <CommonButton>
-                        ADD
-                    </CommonButton>
-                </div>
-            }
-        >
+        <div className="grid gap-6">
             <div className="grid gap-4">
+                <BackPath />
+                <h3 className="h5-bold">Add Supplier</h3>
+            </div>
 
-                <form className="grid grid-cols-12 gap-4">
-                    <div className="col-span-12 md:col-span-6 grid gap-4">
-                        <div>
-                            <Label>First Name</Label>
-                            <Input type="text" placeholder="Enter First Name" />
-                        </div>
-                        <div>
-                            <Label>Last Name</Label>
-                            <Input type="text" placeholder="Enter Last Name" />
-                        </div>
-                        <div>
-                            <Label>Firm Name</Label>
-                            <Input type="text" placeholder="Enter Firm Name" />
-                        </div>
-                        <div>
-                            <Label>Email</Label>
-                            <Input type="text" placeholder="Enter Email" />
-                        </div>
-                        <div>
-                            <Label>Website</Label>
-                            <Input type="text" placeholder="Enter Website" />
-                        </div>
-                        <div>
-                            <Label>Address</Label>
-                            <Textarea type="text" placeholder="Enter Address" />
-                        </div>
-                        <div className="">
-                            <Label>Product Status</Label>
-                            <CommonDropdown placeholder="Select Product Status" options={roles} />
+            <Card className="p-6">
+                <form className="grid gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <CommonTextField
+                            label="First Name"
+                            placeholder="Enter First Name"
+                        />
+                        <CommonTextField
+                            label="Last Name"
+                            placeholder="Enter Last Name"
+                        />
+
+                        <CommonTextField
+                            label="Firm Name"
+                            placeholder="Enter Firm Name"
+                        />
+
+                        <CommonTextField
+                            label="Email"
+                            placeholder="Enter Email"
+                        />
+
+                        <CommonTextField
+                            label="Website"
+                            placeholder="Enter Website"
+                        />
+
+                        <CommonTextField
+                            label="Phone No"
+                            placeholder="Enter Phone No"
+                        />
+
+                        <CommonTextField
+                            label="City"
+                            placeholder="Enter City"
+                        />
+
+                        <CommonTextField
+                            label="State"
+                            placeholder="Enter State"
+                        />
+
+                        <div className="md:col-span-2">
+                            <CommonTextField label="Address" placeholder="Enter Address" />
                         </div>
 
+                        <CommonBox
+                            label="Product Status"
+                            placeholders="Select Product Status"
+                            options={roles}
+                            value={productStatus}
+                            onChange={setProductStatus}
+                        />
+
+                        <CommonBox
+                            label="Supplier Type"
+                            placeholders="Select Supplier Type"
+                            options={roles}
+                            value={supplierType}
+                            onChange={setSupplierType}
+                        />
+
+                        <CommonTextField
+                            label="Product Category"
+                            placeholder="Enter Product Category"
+                        />
+
+                        <CommonTextField
+                            label="Products"
+                            placeholder="Enter Products"
+                        />
                     </div>
-                    <div className="col-span-12 md:col-span-6 grid gap-4">
-                        <div>
-                            <Label>City</Label>
-                            <Input type="text" placeholder="Enter City" />
-                        </div>
-                        <div>
-                            <Label>State</Label>
-                            <Input type="text" placeholder="Enter State" />
-                        </div>
-                        <div>
-                            <Label>Phone No</Label>
-                            <Input type="text" placeholder="Enter Phone No" />
-                        </div>
-                        <div>
-                            <Label>Designation</Label>
-                            <Input type="text" placeholder="Enter Designation" />
-                        </div>
-                        <div className="">
-                            <Label>Supplier Type</Label>
-                            <CommonDropdown placeholder="Select Supplier Type" options={roles} />
-                        </div>
-                        <div>
-                            <Label>Product Category</Label>
-                            <Input type="text" placeholder="Enter Product Category" />
-                        </div>
-                        <div>
-                            <Label>Products</Label>
-                            <Textarea type="text" placeholder="Enter Products" />
-                        </div>
+
+                    <div className="flex justify-end gap-3 pt-5 border-t">
+                        <CommonButton type="button" variant="outline">
+                            Cancel
+                        </CommonButton>
+
+                        <CommonButton type="submit">
+                            Add Supplier
+                        </CommonButton>
                     </div>
                 </form>
-            </div>
-        </CommonDialog>
-    )
-}
+            </Card>
+        </div>
+    );
+};
 
-export default AddEditSuppliers
+export default AddEditSuppliers;
