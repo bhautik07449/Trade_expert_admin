@@ -8,6 +8,7 @@ import Userservice from "../../../service/usermanagement.service";
 import CommonTable from "../../../components/widgets/common_table";
 import { formatDate } from "../../../common/constants";
 import { useNavigate } from "react-router";
+import CustomLoader from "../../../components/widgets/custom_loader";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -20,11 +21,13 @@ const columns = [
 
 const AdminsManagement = () => {
     const [search, setSearch] = useState("");
-    const [isOpen, setIsOpen] = useState(false);
     const [user, setUserList] = useState([]);
+    const [loder, setLoder] = useState(false);
+
     const navigate = useNavigate();
 
     const getUserData = async () => {
+        setLoder(true);
         try {
             const res = await Userservice.getUser();
             if (res) {
@@ -34,16 +37,19 @@ const AdminsManagement = () => {
                     createdAt: formatDate(item.createdAt),
                 }))
                 setUserList(formattedData);
+                setLoder(false);
             }
 
         } catch (error) {
             console.log(error, "error");
+        } finally {
+            setLoder(false);
         }
     }
 
     useEffect(() => {
         getUserData()
-    }, [isOpen])
+    }, [])
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -71,15 +77,20 @@ const AdminsManagement = () => {
                         </Button>
                     </div>
                 </div>
-
-                <CommonTable
-                    columns={columns}
-                    rows={user || []}
-                    showEdit={true}
-                    showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
-                />
+                {loder ? (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <CustomLoader size={20} color="currentColor" />
+                    </div>
+                ) :
+                    <CommonTable
+                        columns={columns}
+                        rows={user || []}
+                        showEdit={true}
+                        showDelete={true}
+                        onEdit={() => { }}
+                        onDelete={() => { }}
+                    />
+                }
             </Card>
         </div>
     );
