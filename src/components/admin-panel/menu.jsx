@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Ellipsis, LogOut } from "lucide-react";
 
 import { cn } from "../../lib/utils";
@@ -19,7 +19,7 @@ import CommonText from "../widgets/common_text";
 export function Menu({ isOpen }) {
   const pathname = window.location.pathname;
   const menuList = getMenuList(pathname);
-console.log("menuList",menuList);
+  const [openMenu, setOpenMenu] = useState(null);
 
   const handleLogout = async () => {
     console.log("Logout working");
@@ -99,6 +99,9 @@ console.log("menuList",menuList);
                         active={active}
                         submenus={submenus}
                         isOpen={isOpen}
+                        menuKey={`${groupLabel}-${label}`}
+                        openMenu={openMenu}
+                        setOpenMenu={setOpenMenu}
                       />
                     </div>
                   )

@@ -32,14 +32,20 @@ export function CollapseMenuButton({
   active,
   submenus,
   isOpen,
+  menuKey,
+  openMenu,
+  setOpenMenu,
 }) {
-  const isSubmenuActive = submenus.some((submenu) => submenu.active);
-  const [isCollapsed, setIsCollapsed] = useState(isSubmenuActive);
+  const isCollapsed = openMenu === menuKey;
+
+  const handleToggle = () => {
+    setOpenMenu(isCollapsed ? null : menuKey);
+  };
 
   return isOpen ? (
     <Collapsible
       open={isCollapsed}
-      onOpenChange={setIsCollapsed}
+      onOpenChange={handleToggle}
       className="w-full"
     >
       <CollapsibleTrigger
