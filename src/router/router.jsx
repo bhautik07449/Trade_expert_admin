@@ -11,6 +11,7 @@ import DMRManagement from "../pages/StockManagement/DMRManagement/DMRManagement"
 import AddEditAdmin from "../pages/UserManagement/AdminsManagement/AddEditAdmin";
 import AddEditSuppliers from "../pages/UserManagement/SuppliersManagement/AddEditSuppliers";
 import AddProduct from "../pages/StockManagement/ProductManagement/addProduct";
+import AddDMR from "../pages/StockManagement/DMRManagement/AddDMR";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -74,6 +75,11 @@ const routes = (isLoggedIn) => [
       {
         element: <DMRManagement />,
         path: "/stock-management/dmr-management",
+        index: true,
+      },
+      {
+        element: <AddDMR />,
+        path: "/stock-management/dmr-management/:type",
         index: true,
       },
     ],

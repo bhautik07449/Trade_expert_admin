@@ -64,7 +64,11 @@ const AddEditSuppliers = () => {
                         />
 
                         <div className="md:col-span-2">
-                            <CommonTextField label="Address" placeholder="Enter Address" />
+                            <CommonTextField
+                                type="textarea"
+                                label="Address"
+                                placeholder="Enter Address"
+                            />
                         </div>
 
                         <CommonBox

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import CommonTable from "../../../components/widgets/common_table";
+import { useNavigate } from "react-router";
 
 const DmrList = [
     { SrNo: "1", name: "Admin 1", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
@@ -23,7 +24,8 @@ const columns = [
 
 const DMRManagement = () => {
     const [search, setSearch] = useState("");
-console.log("search", search);
+    console.log("search", search);
+    const navigate = useNavigate();
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -42,7 +44,7 @@ console.log("search", search);
                             className="w-full"
                         />
                     </div>
-                    <div>
+                    <div onClick={() => navigate("/stock-management/dmr-management/add")}>
                         <Button className="flex items-center gap-2">
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
