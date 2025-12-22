@@ -1,5 +1,5 @@
 import React from "react";
-import { MenuIcon, PanelsTopLeft } from "lucide-react";
+import { MenuIcon } from "lucide-react";
 
 import { Button } from "../ui/button";
 

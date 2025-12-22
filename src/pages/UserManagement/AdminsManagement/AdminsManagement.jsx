@@ -1,9 +1,8 @@
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
 import React, { useEffect, useState } from "react";
-import { CircleFadingPlus, Trash2 } from "lucide-react";
+import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
-import AddEditAdmin from "./AddEditAdmin";
 import Userservice from "../../../service/usermanagement.service";
 import CommonTable from "../../../components/widgets/common_table";
 import { formatDate } from "../../../common/constants";
@@ -23,6 +22,7 @@ const AdminsManagement = () => {
     const [search, setSearch] = useState("");
     const [user, setUserList] = useState([]);
     const [loder, setLoder] = useState(false);
+    console.log("search", search);
 
     const navigate = useNavigate();
 

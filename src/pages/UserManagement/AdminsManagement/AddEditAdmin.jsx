@@ -1,9 +1,5 @@
-import CommonDialog from "../../../components/widgets/common_dialog"
-import { Input } from "../../../components/ui/input"
-import { Label } from "../../../components/ui/label"
 import React from "react"
 import CommonButton from "../../../components/widgets/common_button"
-import CommonImgupload from "../../../components/widgets/common_imgupload"
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Userservice from "../../../service/usermanagement.service"

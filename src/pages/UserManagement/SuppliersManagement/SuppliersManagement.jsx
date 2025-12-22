@@ -3,7 +3,6 @@ import { Card } from "../../../components/ui/card";
 import React, { useState } from "react";
 import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
-import AddEditSuppliers from "./AddEditSuppliers";
 import CommonTable from "../../../components/widgets/common_table";
 import { useNavigate } from "react-router";
 
@@ -26,6 +25,7 @@ const SuppliersManagement = () => {
     
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
+console.log("search", search);
 
     return (
         <div className="grid gap-4 lg:gap-6">

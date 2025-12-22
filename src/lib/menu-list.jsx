@@ -1,4 +1,4 @@
-import { Box, Handshake, LayoutList, User } from "lucide-react";
+import { Box, Handshake,User } from "lucide-react";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 export function getMenuList(pathname) {

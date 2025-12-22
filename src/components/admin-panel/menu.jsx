@@ -13,7 +13,6 @@ import { CollapseMenuButton } from "./collapse-menu-button";
 import { getMenuList } from "../../lib/menu-list";
 import { ScrollArea } from "../ui/scroll-area";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import CommonButton from "../widgets/common_button";
 import CommonText from "../widgets/common_text";
 

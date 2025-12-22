@@ -20,6 +20,7 @@ const ProductManagement = () => {
     const [search, setSearch] = useState("");
     const [list, setList] = useState([]);
     const navigate = useNavigate();
+console.log("search", search);
 
     const getList = async () => {
         try {

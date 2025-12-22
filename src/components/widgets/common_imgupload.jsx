@@ -23,6 +23,7 @@ const CommonImgupload = ({ value, onChange, onBlur, className }) => {
                 {previewUrl ? (
                     <img
                         src={previewUrl}
+                        alt='Profile'
                         className="w-full h-full object-cover bg-center"
                     />
                 ) : (

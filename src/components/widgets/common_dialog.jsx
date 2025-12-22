@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../../components/ui/dialog";
-import { Button } from "../ui/button";
 
 const CommonDialog = ({
   isOpen,

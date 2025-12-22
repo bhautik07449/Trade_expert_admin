@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, Dot, LucideIcon } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
@@ -8,7 +8,6 @@ import { DropdownMenuArrow } from "@radix-ui/react-dropdown-menu";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -26,7 +25,6 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 export function CollapseMenuButton({
   icon: Icon,

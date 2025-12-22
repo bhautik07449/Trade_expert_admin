@@ -1,10 +1,8 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { Card } from "../../components/ui/card";
 import { ArrowUp, Users, ShoppingCart } from "lucide-react";
 
 const Dashboard = () => {
-    const { t } = useTranslation("common");
 
     const stats = [
         {

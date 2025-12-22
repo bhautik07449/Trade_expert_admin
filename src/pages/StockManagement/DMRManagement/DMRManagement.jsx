@@ -23,6 +23,7 @@ const columns = [
 
 const DMRManagement = () => {
     const [search, setSearch] = useState("");
+console.log("search", search);
 
     return (
         <div className="grid gap-4 lg:gap-6">

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 function App() {
 
-  const { t, i18n } = useTranslation("common");
+  const { i18n } = useTranslation("common");
 
   useEffect(() => {
     if (!localStorage.getItem("language")) {
