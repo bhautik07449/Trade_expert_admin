@@ -58,6 +58,7 @@ const CommonTextField = ({
         disabled={disabled}
         onChange={onChange}
         value={value}
+        error={error}
         autoComplete="new-password"
         autoCorrect="off"
         autoCapitalize="off"
@@ -79,10 +80,14 @@ const CommonTextField = ({
 
   if (label) {
     return (
-      <div className="space-y-2">
-        <Label className="text-sm font-medium text-primary">{label}</Label>
-        {input}
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+      <div className="grid gap-1.5">
+        <Label className="text-sm font-medium text-primary capitalize">
+          {label}
+        </Label>
+        <div className="grid gap-0.5 relative">
+          {input}
+          {error && <p className="text-destructive text-xs absolute -bottom-4">{error}</p>}
+        </div>
       </div>
     );
   }

@@ -11,6 +11,7 @@ import common_en from "./translations/en/common.json";
 import i18next from "i18next";
 import { I18nextProvider } from "react-i18next";
 import store from "./store";
+import './index.css';
 
 const lan = localStorage.getItem("language") || "en";
 i18next.init({

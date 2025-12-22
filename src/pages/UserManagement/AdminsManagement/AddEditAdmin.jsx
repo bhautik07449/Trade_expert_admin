@@ -7,8 +7,11 @@ import CommonImgupload from "../../../components/widgets/common_imgupload"
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Userservice from "../../../service/usermanagement.service"
+import { CommonTextField } from "../../../components/widgets/common_textField"
+import BackPath from "../../../components/common/BackPath"
+import { Card } from "../../../components/ui/card"
 
-const AddEditAdmin = ({ isOpen, setIsOpen }) => {
+const AddEditAdmin = () => {
 
     const initialValues = {
         firstName: "",
@@ -42,7 +45,6 @@ const AddEditAdmin = ({ isOpen, setIsOpen }) => {
             setSubmitting(true);
             try {
                 await Userservice.addAdmin(values);
-                setIsOpen(false);
                 resetForm()
             } catch (error) {
                 console.log("error", error);
@@ -53,117 +55,100 @@ const AddEditAdmin = ({ isOpen, setIsOpen }) => {
     });
 
     return (
-        <CommonDialog
-            isOpen={isOpen}
-            onClose={() => setIsOpen("")}
-            size="xl"
-            title="Add Admin"
-            footer={
-                <div className="flex gap-2">
-                    <CommonButton variant="outline" onClick={() => setIsOpen("")}>
-                        cancel
-                    </CommonButton>
-                    <CommonButton
-                        onClick={formik.handleSubmit}
-                        disabled={formik.isSubmitting}
-                    >
-                        ADD
-                    </CommonButton>
-                </div>
-            }
-        >
+        <div className="grid gap-6">
             <div className="grid gap-4">
+                <BackPath />
+                <h3 className="h5-bold">Add Admin</h3>
+            </div>
+            <Card className="p-6">
 
-                <form onSubmit={formik.handleSubmit} className="grid grid-cols-12 gap-4">
-                    <div className="col-span-12 md:col-span-6 grid gap-4">
-                        <div>
-                            <Label>First Name</Label>
-                            <Input
-                                type="text"
-                                placeholder="Enter First Name"
-                                name="firstName"
-                                value={formik.values.firstName}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                            />
-                            {formik.touched.firstName && formik.errors.firstName && (
-                                <p className="text-red-500 text-sm">{formik.errors.firstName}</p>
-                            )}
-                        </div>
-                        <div>
-                            <Label>Last Name</Label>
-                            <Input
-                                type="text"
-                                placeholder="Enter Last Name"
-                                name="lastName"
-                                value={formik.values.lastName}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                            />
-                            {formik.touched.lastName && formik.errors.lastName && (
-                                <p className="text-red-500 text-sm">{formik.errors.lastName}</p>
-                            )}
-                        </div>
-                        <div>
-                            <Label>Email</Label>
-                            <Input
-                                type="text"
-                                placeholder="Enter Email"
-                                name="email"
-                                value={formik.values.email}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                            />
-                            {formik.touched.email && formik.errors.email && (
-                                <p className="text-red-500 text-sm">{formik.errors.email}</p>
-                            )}
-                        </div>
+                <form
+                    onSubmit={formik.handleSubmit}
+                    className="grid gap-6"
+                >
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <CommonTextField
+                            label="First Name"
+                            placeholder="Enter First Name"
+                            name="firstName"
+                            value={formik.values.firstName}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.firstName && formik.errors.firstName}
+                        />
+
+                        <CommonTextField
+                            label="Last Name"
+                            placeholder="Enter Last Name"
+                            name="lastName"
+                            value={formik.values.lastName}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.lastName && formik.errors.lastName}
+                        />
+
+                        <CommonTextField
+                            label="Email"
+                            placeholder="Enter Email"
+                            name="email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.email && formik.errors.email}
+                        />
+
+                        <CommonTextField
+                            label="Phone No"
+                            placeholder="Enter Phone No"
+                            name="phone"
+                            value={formik.values.phone}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.phone && formik.errors.phone}
+                        />
+
+                        <CommonTextField
+                            label="Password"
+                            type="password"
+                            placeholder="Enter Password"
+                            name="password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.password && formik.errors.password}
+                        />
+
+                        <CommonTextField
+                            label="Image URL"
+                            placeholder="Paste Image URL"
+                            name="photo"
+                            value={formik.values.photo}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.photo && formik.errors.photo}
+                        />
                     </div>
-                    <div className="col-span-12 md:col-span-6 grid gap-4">
-                        <div>
-                            <Label>Phone No</Label>
-                            <Input
-                                type="text"
-                                placeholder="Enter Phone No"
-                                name="phone"
-                                value={formik.values.phone}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                            />
-                            {formik.touched.phone && formik.errors.phone && (
-                                <p className="text-red-500 text-sm">{formik.errors.phone}</p>
-                            )}
-                        </div>
-                        <div>
-                            <Label>Password</Label>
-                            <Input
-                                type="text"
-                                placeholder="Enter Password"
-                                name="password"
-                                value={formik.values.password}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                            />
-                            {formik.touched.password && formik.errors.password && (
-                                <p className="text-red-500 text-sm">{formik.errors.password}</p>
-                            )}
-                        </div>
-                        <div>
-                            <Label>Image</Label>
-                            <CommonImgupload
-                                value={formik.values.photo}
-                                onChange={(file) => formik.setFieldValue("photo", file)}
-                                onBlur={() => formik.setFieldTouched("photo", true)}
-                            />
-                            {formik.touched.photo && formik.errors.photo && (
-                                <p className="text-red-500 text-sm">{formik.errors.photo}</p>
-                            )}
-                        </div>
+
+                    <div className="flex justify-end gap-3 pt-5 border-t">
+                        <CommonButton
+                            type="button"
+                            variant="outline"
+                            onClick={() => formik.resetForm()}
+                        >
+                            Cancel
+                        </CommonButton>
+
+                        <CommonButton
+                            type="submit"
+                            disabled={formik.isSubmitting || !formik.isValid}
+                        >
+                            {formik.isSubmitting ? "Saving..." : "Add Admin"}
+                        </CommonButton>
                     </div>
                 </form>
-            </div>
-        </CommonDialog>
-    )
+            </Card>
+        </div>
+    );
 }
 
 export default AddEditAdmin

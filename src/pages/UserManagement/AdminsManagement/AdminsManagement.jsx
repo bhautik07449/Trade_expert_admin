@@ -7,6 +7,7 @@ import AddEditAdmin from "./AddEditAdmin";
 import Userservice from "../../../service/usermanagement.service";
 import CommonTable from "../../../components/widgets/common_table";
 import { formatDate } from "../../../common/constants";
+import { useNavigate } from "react-router";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -21,6 +22,7 @@ const AdminsManagement = () => {
     const [search, setSearch] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [user, setUserList] = useState([]);
+    const navigate = useNavigate();
 
     const getUserData = async () => {
         try {
@@ -62,7 +64,7 @@ const AdminsManagement = () => {
                     </div>
                     <div>
                         <Button className="flex items-center gap-2"
-                            onClick={() => setIsOpen(true)}
+                            onClick={() => navigate('/user-management/admins-management/add')}
                         >
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
@@ -79,12 +81,6 @@ const AdminsManagement = () => {
                     onDelete={() => { }}
                 />
             </Card>
-
-            <AddEditAdmin
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-            />
-
         </div>
     );
 }
