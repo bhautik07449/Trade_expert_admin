@@ -67,3 +67,38 @@ input:-webkit-autofill:active {
     width: 16px;
   }
 }
+
+.ag-theme-quartz .ag-cell {
+  display: flex;
+  align-items: center;
+  padding-left: 14px;
+}
+
+.ag-header-cell-label {
+  justify-content: start;
+  font-weight: 600;
+}
+
+.custom-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.custom-actions button {
+  border-radius: 6px !important;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ag-header-cell-sorted-asc .ag-icon,
+.ag-header-cell-sorted-desc .ag-icon {
+  color: #333 !important;
+}
+
+.ag-row-hover {
+  background-color: #f7f7f7 !important;
+}
