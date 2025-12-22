@@ -12,6 +12,12 @@ import AddEditAdmin from "../pages/UserManagement/AdminsManagement/AddEditAdmin"
 import AddEditSuppliers from "../pages/UserManagement/SuppliersManagement/AddEditSuppliers";
 import AddProduct from "../pages/StockManagement/ProductManagement/addProduct";
 import AddDMR from "../pages/StockManagement/DMRManagement/AddDMR";
+import BuyerManagement from "../pages/BuyerInteraction/BuyerManagement/BuyerManagement";
+import QuotationManagement from "../pages/BuyerInteraction/QuotationManagement/QuotationManagement";
+import RequestSamplesManagement from "../pages/BuyerInteraction/RequestSamplesManagement/RequestSamplesManagement";
+import InquiryManagement from "../pages/BuyerInteraction/InquiryManagement/InquiryManagement";
+import ContactManagement from "../pages/BuyerInteraction/ContactManagement/ContactManagement";
+import CreditAccountManagement from "../pages/BuyerInteraction/CreditAccountManagement/CreditAccountManagement";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -80,6 +86,31 @@ const routes = (isLoggedIn) => [
       {
         element: <AddDMR />,
         path: "/stock-management/dmr-management/:type",
+        index: true,
+      },
+      {
+        element: <BuyerManagement />,
+        path: "/buyer-interaction/buyer-management",
+        index: true,
+      },{
+        element: <QuotationManagement />,
+        path: "/buyer-interaction/quotation-management",
+        index: true,
+      },{
+        element: <RequestSamplesManagement />,
+        path: "/buyer-interaction/request-samples-management",
+        index: true,
+      },{
+        element: <InquiryManagement />,
+        path: "/buyer-interaction/inquiry-management",
+        index: true,
+      },{
+        element: <ContactManagement />,
+        path: "/buyer-interaction/contact-management",
+        index: true,
+      },{
+        element: <CreditAccountManagement />,
+        path: "/buyer-interaction/credit-account-management",
         index: true,
       },
     ],

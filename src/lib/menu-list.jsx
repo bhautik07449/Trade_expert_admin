@@ -1,4 +1,4 @@
-import { Box, Handshake,User } from "lucide-react";
+import { Box, Handshake, User } from "lucide-react";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 
 export function getMenuList(pathname) {
@@ -82,9 +82,46 @@ export function getMenuList(pathname) {
         {
           href: "/",
           label: "Buyer Interaction",
-          active: pathname === "/Bbuyer-interaction",
+          active: pathname.includes("/buyer-interaction"),
           icon: MdOutlineSpaceDashboard,
-          submenus: [],
+          submenus: [
+            {
+              href: "/buyer-interaction/buyer-management",
+              label: "Buyer Management",
+              active: pathname.includes("/buyer-interaction/buyer-management"),
+              icon: User,
+            },
+            {
+              href: "/buyer-interaction/quotation-management",
+              label: "Quotation Management",
+              active: pathname.includes("/buyer-interaction/quotation-management"),
+              icon: User,
+            },
+            {
+              href: "/buyer-interaction/request-samples-management",
+              label: "Request Samples Management",
+              active: pathname.includes("/buyer-interaction/request-samples-management"),
+              icon: User,
+            },
+            {
+              href: "/buyer-interaction/inquiry-management",
+              label: "Inquiry Management",
+              active: pathname.includes("/buyer-interaction/inquiry-management"),
+              icon: User,
+            },
+            {
+              href: "/buyer-interaction/contact-management",
+              label: "Contact Management",
+              active: pathname.includes("/buyer-interaction/contact-management"),
+              icon: User,
+            },
+            {
+              href: "/buyer-interaction/credit-account-management",
+              label: "Credit Account Management",
+              active: pathname.includes("/buyer-interaction/credit-account-management"),
+              icon: User,
+            },
+          ],
         },
         {
           href: "/",
