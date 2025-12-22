@@ -1,15 +1,24 @@
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
 import React, { useState } from "react";
-import { CircleFadingPlus, Trash2 } from "lucide-react";
+import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "../../../components/ui/table";
+import CommonTable from "../../../components/widgets/common_table";
 
 const DmrList = [
     { SrNo: "1", name: "Admin 1", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
     { SrNo: "2", name: "Admin 2", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Deactive", Created: "14/11/2023" },
     { SrNo: "3", name: "Admin 3", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
     { SrNo: "4", name: "Admin 4", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Deactive", Created: "14/11/2023" },
+]
+
+const columns = [
+    { field: "SrNo", headerName: "SrNo", flex: 1 },
+    { field: "name", headerName: "name", flex: 1 },
+    { field: "category", headerName: "category", flex: 1 },
+    { field: "sub_category", headerName: "sub_category", flex: 1 },
+    { field: "Status", headerName: "Status", flex: 1 },
+    { field: "Created", headerName: "Created", flex: 1 },
 ]
 
 const DMRManagement = () => {
@@ -41,72 +50,14 @@ const DMRManagement = () => {
                 </div>
 
 
-                <Table className="rounded-md">
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Sr No</TableHead>
-                            <TableHead>Name</TableHead>
-                            <TableHead>Category</TableHead>
-                            <TableHead>Sub Category</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Created</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-
-                    <TableBody>
-                        {DmrList.length > 0 ? (
-                            DmrList.map((item, idx) => (
-                                <TableRow key={item.SrNo ?? idx}>
-                                    <TableCell>{item.SrNo}</TableCell>
-                                    <TableCell className="font-medium">{item.name}</TableCell>
-                                    <TableCell>{item.category}</TableCell>
-                                    <TableCell>{item.sub_category}</TableCell>
-                                    <TableCell>
-                                        <span
-                                            className={
-                                                "inline-block px-2 py-0.5 rounded-full text-xs font-medium " +
-                                                (item.Status === "Active"
-                                                    ? "bg-green-100 text-green-800"
-                                                    : "bg-yellow-100 text-yellow-800")
-                                            }
-                                        >
-                                            {item.Status}
-                                        </span>
-                                    </TableCell>
-                                    <TableCell>{item.Created}</TableCell>
-                                    <TableCell className="text-right">
-                                        <button
-                                            className="inline-flex items-center gap-2 p-2 rounded hover:bg-red-50"
-                                            aria-label={`Delete ${item.name}`}
-                                        >
-                                            <Trash2 className="size-4" />
-                                        </button>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={7} className="text-center py-6">
-                                    <p className="text-black/50 font-medium text-base">No data found</p>
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-
-                    <TableFooter>
-                        <TableRow>
-                            <TableCell colSpan={7}>
-                                <div className="flex items-center justify-between py-2">
-                                    <div className="text-sm text-muted-foreground">
-                                        Showing {DmrList.length} of {DmrList.length}
-                                    </div>
-                                    <div className="text-sm text-muted-foreground">Page 1</div>
-                                </div>
-                            </TableCell>
-                        </TableRow>
-                    </TableFooter>
-                </Table>
+                <CommonTable
+                    columns={columns}
+                    rows={DmrList || []}
+                    showEdit={true}
+                    showDelete={true}
+                    onEdit={() => { }}
+                    onDelete={() => { }}
+                />
             </Card>
         </div>
     );
