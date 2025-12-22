@@ -5,6 +5,7 @@ import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import Productservice from "../../../service/product.service";
 import CommonTable from "../../../components/widgets/common_table";
+import { useNavigate } from "react-router";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -18,6 +19,7 @@ const columns = [
 const ProductManagement = () => {
     const [search, setSearch] = useState("");
     const [list, setList] = useState([]);
+    const navigate = useNavigate();
 
     const getList = async () => {
         try {
@@ -52,7 +54,7 @@ const ProductManagement = () => {
                             className="w-full"
                         />
                     </div>
-                    <div>
+                    <div onClick={() => navigate("/stock-management/product_management/add")}>
                         <Button className="flex items-center gap-2">
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
