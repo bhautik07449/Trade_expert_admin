@@ -18,6 +18,8 @@ import RequestSamplesManagement from "../pages/BuyerInteraction/RequestSamplesMa
 import InquiryManagement from "../pages/BuyerInteraction/InquiryManagement/InquiryManagement";
 import ContactManagement from "../pages/BuyerInteraction/ContactManagement/ContactManagement";
 import CreditAccountManagement from "../pages/BuyerInteraction/CreditAccountManagement/CreditAccountManagement";
+import GeneralSetting from "../pages/WebsiteManagement/Settings/GeneralSetting/GeneralSetting";
+import SocialSetting from "../pages/WebsiteManagement/Settings/SocialSetting/SocialSetting";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -92,25 +94,40 @@ const routes = (isLoggedIn) => [
         element: <BuyerManagement />,
         path: "/buyer-interaction/buyer-management",
         index: true,
-      },{
+      },
+      {
         element: <QuotationManagement />,
         path: "/buyer-interaction/quotation-management",
         index: true,
-      },{
+      },
+      {
         element: <RequestSamplesManagement />,
         path: "/buyer-interaction/request-samples-management",
         index: true,
-      },{
+      },
+      {
         element: <InquiryManagement />,
         path: "/buyer-interaction/inquiry-management",
         index: true,
-      },{
+      },
+      {
         element: <ContactManagement />,
         path: "/buyer-interaction/contact-management",
         index: true,
-      },{
+      },
+      {
         element: <CreditAccountManagement />,
         path: "/buyer-interaction/credit-account-management",
+        index: true,
+      },
+      {
+        element: <GeneralSetting />,
+        path: "/website-management/settings/general-settings",
+        index: true,
+      },
+      {
+        element: <SocialSetting />,
+        path: "/website-management/settings/social-settings",
         index: true,
       },
     ],
