@@ -58,7 +58,7 @@ export function CollapseMenuButton({
         <Button
           variant={active ? "secondary" : "ghost"}
           className="w-full justify-start h-10"
-          style={{ paddingLeft: `${16 + level * 16}px` }}
+          style={{ paddingLeft: `${16 + level * 8}px` }}
         >
           <div className="w-full items-center flex justify-between">
             <div className="flex items-center">
