@@ -6,10 +6,9 @@ import { CommonTextField } from "../../components/widgets/common_textField";
 import CommonButton from "../../components/widgets/common_button";
 import { AppImages } from "../../common/ImagePath";
 import { login, setLoggedIn } from "../../store/slice/auth";
-import { toastSuccess } from "../../common/toastNotification";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { Toaster } from "../../components/ui/toaster";
+import { toast } from "../../components/ui/use-toast";
 
 const Login = () => {
     const { t } = useTranslation("common");
@@ -39,15 +38,19 @@ const Login = () => {
             if (response) {
                 localStorage.setItem("isLoggedIn", "true");
                 dispatch(setLoggedIn(true));
-                toastSuccess(t("messages.loginSuccess"));
+                toast({
+                    variant: "success",
+                    title: "Login Successful",
+                    description: "You have successfully logged in.",
+                });
                 navigate("/");
             }
         } catch (error) {
-            Toaster(
-                "error",
-                error?.response?.error?.error_message ||
-                t("messages.somethingWentWrong")
-            );
+            toast({
+                variant: "error",
+                title: "Login Failed",
+                description: error.message || "An error occurred during login.",
+            });
         } finally {
             setSubmitting(false);
         }

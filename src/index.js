@@ -12,6 +12,7 @@ import i18next from "i18next";
 import { I18nextProvider } from "react-i18next";
 import store from "./store";
 import './index.css';
+import { Toaster } from "./components/ui/toaster";
 
 const lan = localStorage.getItem("language") || "en";
 i18next.init({
@@ -35,6 +36,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <I18nextProvider i18n={i18next}>
     <Provider store={store}>
+      <Toaster />
       <BrowserRouter basename={process.env.REACT_APP_HOME_PAGE}>
         <App />
       </BrowserRouter>
