@@ -44,14 +44,7 @@ export default function BuyerManagement() {
                             className="w-full"
                         />
                     </div>
-                    <div onClick={() => navigate("/stock-management/dmr-management/add")}>
-                        <Button className="flex items-center gap-2">
-                            <CircleFadingPlus className="size-5" />
-                            <span className="max-lg:hidden uppercase"> Add</span>
-                        </Button>
-                    </div>
                 </div>
-
 
                 <CommonTable
                     columns={columns}

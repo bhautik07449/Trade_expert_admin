@@ -1,5 +1,4 @@
-import { Box, Handshake, User } from "lucide-react";
-import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { Boxes, CreditCard, FileEdit, FileSpreadsheet, FileText, Folder, Globe, Handshake, HelpCircle, LayoutDashboard, MessageSquare, Package, PackageSearch, Phone, Settings, ShieldCheck, Tags, Truck, User, Users } from "lucide-react";
 
 export function getMenuList(pathname) {
   return [
@@ -10,26 +9,26 @@ export function getMenuList(pathname) {
           href: "/",
           label: "Dashboard",
           active: pathname === "/",
-          icon: MdOutlineSpaceDashboard,
+          icon: LayoutDashboard,
           submenus: [],
         },
         {
           href: "",
           label: "User Management",
           active: pathname.includes("/user-management"),
-          icon: Box,
+          icon: Users,
           submenus: [
             {
               href: "/user-management/admins-management",
               label: "Admins Management",
               active: pathname.includes("/user-management/admins-management"),
-              icon: User,
+              icon: ShieldCheck,
             },
             {
               href: "/user-management/suppliers-management",
               label: "Suppliers Management",
               active: pathname.includes("/user-management/suppliers-management"),
-              icon: Handshake,
+              icon: Truck,
             }
           ],
         },
@@ -37,25 +36,25 @@ export function getMenuList(pathname) {
           href: "",
           label: "Stock Management",
           active: pathname.includes("/stock-management"),
-          icon: Box,
+          icon: Boxes,
           submenus: [
             {
               href: "/stock-management/product_management",
               label: "Product Management",
               active: pathname.includes("/stock-management/product_management"),
-              icon: User,
+              icon: Package,
             },
             {
               href: "/stock-management/category-management",
               label: "Category Management",
               active: pathname.includes("/stock-management/category-management"),
-              icon: Handshake,
+              icon: Tags,
             },
             {
               href: "/stock-management/dmr-management",
               label: "DMR Management",
               active: pathname.includes("/stock-management/dmr-management"),
-              icon: Handshake,
+              icon: FileText,
             }
           ],
         },
@@ -63,19 +62,19 @@ export function getMenuList(pathname) {
           href: "/",
           label: "Website Management",
           active: pathname === "/website-management",
-          icon: MdOutlineSpaceDashboard,
+          icon: Globe,
           submenus: [
             {
               href: "/",
               label: "Content CMS",
               active: pathname === "/website-management/content",
-              icon: User,
+              icon: FileEdit,
             },
             {
               href: "/",
               label: "Settings",
               active: pathname === "/website-management/settings",
-              icon: Handshake,
+              icon: Settings,
               submenus: [
                 {
                   href: "/",
@@ -97,7 +96,7 @@ export function getMenuList(pathname) {
           href: "/",
           label: "Buyer Interaction",
           active: pathname.includes("/buyer-interaction"),
-          icon: MdOutlineSpaceDashboard,
+          icon: MessageSquare,
           submenus: [
             {
               href: "/buyer-interaction/buyer-management",
@@ -109,31 +108,31 @@ export function getMenuList(pathname) {
               href: "/buyer-interaction/quotation-management",
               label: "Quotation Management",
               active: pathname.includes("/buyer-interaction/quotation-management"),
-              icon: User,
+              icon: FileSpreadsheet,
             },
             {
               href: "/buyer-interaction/request-samples-management",
               label: "Request Samples Management",
               active: pathname.includes("/buyer-interaction/request-samples-management"),
-              icon: User,
+              icon: PackageSearch,
             },
             {
               href: "/buyer-interaction/inquiry-management",
               label: "Inquiry Management",
               active: pathname.includes("/buyer-interaction/inquiry-management"),
-              icon: User,
+              icon: HelpCircle,
             },
             {
               href: "/buyer-interaction/contact-management",
               label: "Contact Management",
               active: pathname.includes("/buyer-interaction/contact-management"),
-              icon: User,
+              icon: Phone,
             },
             {
               href: "/buyer-interaction/credit-account-management",
               label: "Credit Account Management",
               active: pathname.includes("/buyer-interaction/credit-account-management"),
-              icon: User,
+              icon: CreditCard,
             },
           ],
         },
@@ -141,7 +140,7 @@ export function getMenuList(pathname) {
           href: "/",
           label: "Documents",
           active: pathname === "/documents",
-          icon: MdOutlineSpaceDashboard,
+          icon: Folder,
           submenus: [],
         },
       ],
