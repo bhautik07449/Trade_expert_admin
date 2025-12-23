@@ -59,33 +59,33 @@ export function getMenuList(pathname) {
           ],
         },
         {
-          href: "/",
+          href: "/website-management",
           label: "Website Management",
-          active: pathname === "/website-management",
+          active: pathname.includes("/website-management"),
           icon: Globe,
           submenus: [
             {
-              href: "/",
+              href: "/website-management/content",
               label: "Content CMS",
-              active: pathname === "/website-management/content",
+              active: pathname.includes("/website-management/content"),
               icon: FileEdit,
             },
             {
-              href: "/",
+              href: "/website-management/settings",
               label: "Settings",
-              active: pathname === "/website-management/settings",
+              active: pathname.includes("/website-management/settings"),
               icon: Settings,
               submenus: [
                 {
-                  href: "/",
+                  href: "/website-management/settings/general-settings",
                   label: "General Settings",
-                  active: pathname === "/website-management/settings/general-settings",
+                  active: pathname.includes("/website-management/settings/general-settings"),
                   icon: User,
                 },
                 {
-                  href: "/",
+                  href: "/website-management/settings/social-settings",
                   label: "Social Settings",
-                  active: pathname === "/website-management/settings/social-settings",
+                  active: pathname.includes("/website-management/settings/social-settings"),
                   icon: Handshake,
                 }
               ]
