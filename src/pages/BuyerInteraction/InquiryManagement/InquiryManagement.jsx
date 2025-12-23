@@ -1,10 +1,9 @@
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
 import React, { useState } from "react";
-import { CircleFadingPlus } from "lucide-react";
-import { Button } from "../../../components/ui/button";
 import CommonTable from "../../../components/widgets/common_table";
-import { useNavigate } from "react-router";
+import ExportData from "../../../components/widgets/export_data";
+import CommonFiltter from "../../../components/widgets/common_filter";
 
 const DmrList = [
     { SrNo: "1", name: "Admin 1", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
@@ -25,7 +24,20 @@ const columns = [
 export default function InquiryManagement() {
     const [search, setSearch] = useState("");
     console.log("search", search);
-    const navigate = useNavigate();
+
+    const filterData = [
+        { type: "text", placeholder: "Buyer Name", label: "Buyer Name" },
+        { type: "text", placeholder: "Category", label: "Category" },
+        { type: "text", placeholder: "Status", label: "Status" },
+    ]
+
+    const handleApplyFilters = (filters) => {
+        console.log("Applied Filters:", filters);
+    }
+
+    const handleClearFilters = () => {
+        console.log("Filters Cleared");
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -42,6 +54,17 @@ export default function InquiryManagement() {
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Search Inquiries"
                             className="w-full"
+                        />
+                    </div>
+                    <div className="flex gap-4">
+                        <ExportData
+                            data={DmrList}
+                            fileName="inquiry_data.xlsx"
+                        />
+                        <CommonFiltter
+                            filterData={filterData}
+                            onApplyFilters={handleApplyFilters}
+                            onClearFilters={handleClearFilters}
                         />
                     </div>
                 </div>
