@@ -3,8 +3,7 @@ import { Card } from "../../../components/ui/card";
 import React, { useState } from "react";
 import CommonTable from "../../../components/widgets/common_table";
 import CommonFiltter from "../../../components/widgets/common_filter";
-import { FaFileExport } from "react-icons/fa6";
-import CommonButton from "../../../components/widgets/common_button";
+import ExportData from "../../../components/widgets/export_data";
 
 const DmrList = [
     { SrNo: "1", name: "Admin 1", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
@@ -58,16 +57,10 @@ export default function BuyerManagement() {
                         />
                     </div>
                     <div className="flex gap-4">
-                        <CommonButton
-                            variant="outline"
-                            size="sm"
-                            aria-label="Open Filters"
-                        >
-                            <div className="flex items-center gap-2">
-                                <FaFileExport className="text-sm" />
-                                <span className="hidden md:inline">Export data</span>
-                            </div>
-                        </CommonButton>
+                        <ExportData
+                            data={DmrList}
+                            fileName="buyer_data.xlsx"
+                        />
                         <CommonFiltter
                             filterData={filterData}
                             onApplyFilters={handleApplyFilters}
