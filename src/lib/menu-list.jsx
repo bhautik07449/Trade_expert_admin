@@ -68,14 +68,28 @@ export function getMenuList(pathname) {
             {
               href: "/",
               label: "Content CMS",
-              active: pathname === "/content",
+              active: pathname === "/website-management/content",
               icon: User,
             },
             {
               href: "/",
               label: "Settings",
-              active: pathname === "/settings",
+              active: pathname === "/website-management/settings",
               icon: Handshake,
+              submenus: [
+                {
+                  href: "/",
+                  label: "General Settings",
+                  active: pathname === "/website-management/settings/general-settings",
+                  icon: User,
+                },
+                {
+                  href: "/",
+                  label: "Social Settings",
+                  active: pathname === "/website-management/settings/social-settings",
+                  icon: Handshake,
+                }
+              ]
             }
           ],
         },
