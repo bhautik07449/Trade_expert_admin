@@ -19,7 +19,7 @@ import CommonText from "../widgets/common_text";
 export function Menu({ isOpen }) {
   const pathname = window.location.pathname;
   const menuList = getMenuList(pathname);
-  const [openMenu, setOpenMenu] = useState(null);
+  const [openMenu, setOpenMenu] = useState({});
 
   const handleLogout = async () => {
     console.log("Logout working");

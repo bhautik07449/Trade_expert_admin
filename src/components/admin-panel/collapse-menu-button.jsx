@@ -29,16 +29,20 @@ export function CollapseMenuButton({
   icon: Icon,
   label,
   active,
-  submenus,
+  submenus = [],
   isOpen,
   menuKey,
   openMenu,
   setOpenMenu,
+  level = 0,
 }) {
-  const isCollapsed = openMenu === menuKey;
+  const isCollapsed = openMenu[menuKey] === true;
 
-  const handleToggle = () => {
-    setOpenMenu(isCollapsed ? null : menuKey);
+  const handleToggle = (open) => {
+    setOpenMenu((prev) => ({
+      ...prev,
+      [menuKey]: open,
+    }));
   };
 
   return isOpen ? (
@@ -54,6 +58,7 @@ export function CollapseMenuButton({
         <Button
           variant={active ? "secondary" : "ghost"}
           className="w-full justify-start h-10"
+          style={{ paddingLeft: `${16 + level * 16}px` }}
         >
           <div className="w-full items-center flex justify-between">
             <div className="flex items-center">
@@ -88,32 +93,47 @@ export function CollapseMenuButton({
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-        {submenus.map(({ href, label, active, icon: Icon }, index) => (
-          <Button
-            key={index}
-            variant={active ? "secondary" : "ghost"}
-            className="w-full justify-start h-10 mb-1"
-            asChild
-          >
-            <Link to={href}>
-              <span className="mr-4 ml-2">
-                <Icon size={18} />
-              </span>
-              <p
-                className={cn(
-                  "max-w-[170px] truncate",
-                  isOpen
-                    ? "translate-x-0 opacity-100"
-                    : "-translate-x-96 opacity-0"
-                )}
-              >
-                {label}
-              </p>
-            </Link>
-          </Button>
-        ))}
-      </CollapsibleContent>
-    </Collapsible>
+        {submenus.map((submenus, index) =>
+          submenus?.submenus && submenus?.submenus.length > 0 ? (
+            <CollapseMenuButton
+              key={index}
+              icon={submenus?.icon}
+              label={submenus?.label}
+              active={submenus?.active}
+              submenus={submenus?.submenus}
+              isOpen={isOpen}
+              menuKey={`${menuKey}-${submenus?.label}`}
+              openMenu={openMenu}
+              setOpenMenu={setOpenMenu}
+              level={level + 1}
+            />
+          ) : (
+            <Button
+              key={index}
+              variant={submenus?.active ? "secondary" : "ghost"}
+              className="w-full justify-start h-10 mb-1"
+              asChild
+            >
+              <Link to={submenus?.href}>
+                <span className="mr-4 ml-2">
+                  {submenus.icon && <submenus.icon size={18} />}
+                </span>
+                <p
+                  className={cn(
+                    "max-w-[170px] truncate",
+                    isOpen
+                      ? "translate-x-0 opacity-100"
+                      : "-translate-x-96 opacity-0"
+                  )}
+                >
+                  {submenus.label}
+                </p>
+              </Link>
+            </Button>
+          )
+        )}
+      </CollapsibleContent >
+    </Collapsible >
   ) : (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>
