@@ -1,10 +1,10 @@
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
 import React, { useState } from "react";
-import { CircleFadingPlus } from "lucide-react";
-import { Button } from "../../../components/ui/button";
 import CommonTable from "../../../components/widgets/common_table";
-import { useNavigate } from "react-router";
+import CommonFiltter from "../../../components/widgets/common_filter";
+import { FaFileExport } from "react-icons/fa6";
+import CommonButton from "../../../components/widgets/common_button";
 
 const DmrList = [
     { SrNo: "1", name: "Admin 1", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
@@ -22,10 +22,23 @@ const columns = [
     { field: "Created", headerName: "Created", flex: 1 },
 ]
 
+const filterData = [
+    { type: "text", placeholder: "Buyer Name", label: "Buyer Name" },
+    { type: "text", placeholder: "Category", label: "Category" },
+    { type: "text", placeholder: "Status", label: "Status" },
+]
+
+const handleApplyFilters = (filters) => {
+    console.log("Applied Filters:", filters);
+}
+
+const handleClearFilters = () => {
+    console.log("Filters Cleared");
+}
+
 export default function BuyerManagement() {
     const [search, setSearch] = useState("");
     console.log("search", search);
-    const navigate = useNavigate();
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -42,6 +55,23 @@ export default function BuyerManagement() {
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Search buyers"
                             className="w-full"
+                        />
+                    </div>
+                    <div className="flex gap-4">
+                        <CommonButton
+                            variant="outline"
+                            size="sm"
+                            aria-label="Open Filters"
+                        >
+                            <div className="flex items-center gap-2">
+                                <FaFileExport className="text-sm" />
+                                <span className="hidden md:inline">Export data</span>
+                            </div>
+                        </CommonButton>
+                        <CommonFiltter
+                            filterData={filterData}
+                            onApplyFilters={handleApplyFilters}
+                            onClearFilters={handleClearFilters}
                         />
                     </div>
                 </div>
