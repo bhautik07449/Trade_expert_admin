@@ -20,6 +20,25 @@ import ContactManagement from "../pages/BuyerInteraction/ContactManagement/Conta
 import CreditAccountManagement from "../pages/BuyerInteraction/CreditAccountManagement/CreditAccountManagement";
 import GeneralSetting from "../pages/WebsiteManagement/Settings/GeneralSetting/GeneralSetting";
 import SocialSetting from "../pages/WebsiteManagement/Settings/SocialSetting/SocialSetting";
+import CurrencyManagement from "../pages/WebsiteManagement/ContentCMS/CurrencyManagement/CurrencyManagement";
+import MeasurementManagement from "../pages/WebsiteManagement/ContentCMS/MeasurementManagement/MeasurementManagement";
+import PageManagement from "../pages/WebsiteManagement/ContentCMS/PageManagement/PageManagement";
+import NewsletterManagement from "../pages/WebsiteManagement/ContentCMS/NewsletterManagement/NewsletterManagement";
+import BrandManagement from "../pages/WebsiteManagement/ContentCMS/BrandManagement/BrandManagement";
+import BlogsManagement from "../pages/WebsiteManagement/ContentCMS/BlogsManagement/BlogsManagement";
+import BlogCategories from "../pages/WebsiteManagement/ContentCMS/BlogCategories/BlogCategories";
+import TeamManagement from "../pages/WebsiteManagement/ContentCMS/TeamManagement/TeamManagement";
+import EmailTemplate from "../pages/WebsiteManagement/ContentCMS/EmailTemplate/EmailTemplate";
+import ClientManagement from "../pages/WebsiteManagement/ContentCMS/ClientManagement/ClientManagement";
+import TestimonialManagement from "../pages/WebsiteManagement/ContentCMS/TestimonialManagement/TestimonialManagement";
+import OfferType from "../pages/WebsiteManagement/ContentCMS/OfferType/OfferType";
+import TradeOffer from "../pages/WebsiteManagement/ContentCMS/TradeOffer/TradeOffer";
+import OfferRequest from "../pages/WebsiteManagement/ContentCMS/OfferRequest/OfferRequest";
+import HomeBanner from "../pages/WebsiteManagement/ContentCMS/HomeBanner/HomeBanner";
+import CertificationSliderManagement from "../pages/WebsiteManagement/ContentCMS/CertificationSliderManagement/CertificationSliderManagement";
+import Gallery from "../pages/WebsiteManagement/ContentCMS/Gallery/Gallery";
+import FAQ from "../pages/WebsiteManagement/ContentCMS/FAQ/FAQ";
+import QualityPolicies from "../pages/WebsiteManagement/ContentCMS/QualityPolicies/QualityPolicies";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -130,6 +149,101 @@ const routes = (isLoggedIn) => [
         path: "/website-management/settings/social-settings",
         index: true,
       },
+      {
+        element: <CurrencyManagement />,
+        path: "/website-management/content/currency",
+        index: true,
+      },
+      {
+        element: <MeasurementManagement />,
+        path: "/website-management/content/measurement",
+        index: true,
+      },
+      {
+        element: <PageManagement />,
+        path: "/website-management/content/Pages",
+        index: true,
+      },
+      {
+        element: <QualityPolicies />,
+        path: "/website-management/content/quality-policies",
+        index: true,
+      },
+      {
+        element: <EmailTemplate />,
+        path: "/website-management/content/email-template",
+        index: true,
+      },
+      {
+        element: <BrandManagement />,
+        path: "/website-management/content/brands",
+        index: true,
+      },
+      {
+        element: <BlogsManagement />,
+        path: "/website-management/content/blogs",
+        index: true,
+      },
+      {
+        element: <BlogCategories />,
+        path: "/website-management/content/blog-categories",
+        index: true,
+      },
+      {
+        element: <TeamManagement />,
+        path: "/website-management/content/team",
+        index: true,
+      },
+      {
+        element: <NewsletterManagement />,
+        path: "/website-management/content/newsletters",
+        index: true,
+      },
+      {
+        element: <ClientManagement />,
+        path: "/website-management/content/client",
+        index: true,
+      },
+      {
+        element: <TestimonialManagement />,
+        path: "/website-management/content/testinomial",
+        index: true,
+      },
+      {
+        element: <OfferType />,
+        path: "/website-management/content/offer-type",
+        index: true,
+      },
+      {
+        element: <TradeOffer />,
+        path: "/website-management/content/trade-offer",
+        index: true,
+      },
+      {
+        element: <OfferRequest />,
+        path: "/website-management/content/offer_req",
+        index: true,
+      },
+      {
+        element: <HomeBanner />,
+        path: "/website-management/content/home-banner",
+        index: true,
+      },
+      {
+        element: <CertificationSliderManagement />,
+        path: "/website-management/content/certification-slider",
+        index: true,
+      },
+      {
+        element: <Gallery />,
+        path: "/website-management/content/gallery",
+        index: true,
+      },
+      {
+        element: <FAQ />,
+        path: "/website-management/content/faq",
+        index: true,
+      }
     ],
   },
 ];
