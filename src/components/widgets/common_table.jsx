@@ -24,6 +24,7 @@ const CommonTable = ({
   showDelete = false,
   onEdit = () => { },
   onDelete = () => { },
+  rowHeight = 50
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -90,6 +91,7 @@ const CommonTable = ({
         <AgGridReact
           rowData={rows}
           columnDefs={agColumns}
+          rowHeight={rowHeight}
           pagination={true}
           paginationPageSize={10}
           paginationPageSizeSelector={[10, 20, 50, 100]}
