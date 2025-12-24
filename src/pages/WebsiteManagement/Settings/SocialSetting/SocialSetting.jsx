@@ -7,24 +7,24 @@ import { Switch } from "../../../../components/ui/switch";
 import { Label } from "../../../../components/ui/label";
 
 const SOCIALS = [
-  { key: "Facebook", label: "Facebook", placeholder: "https://facebook.com/username" },
+  { key: "facebook", label: "Facebook", placeholder: "https://facebook.com/username" },
   { key: "twitter", label: "Twitter", placeholder: "https://twitter.com/username" },
   { key: "instagram", label: "Instagram", placeholder: "https://instagram.com/username" },
   { key: "google", label: "Google+", placeholder: "https://linkedin.com/in/username" },
   { key: "linkedin", label: "LinkedIn", placeholder: "https://linkedin.com/in/username" },
-  { key: "YouTube", label: "YouTube", placeholder: "https://twitter.com/username" },
-  { key: "Pinterest", label: "Pinterest", placeholder: "https://instagram.com/username" },
+  { key: "youTube", label: "YouTube", placeholder: "https://twitter.com/username" },
+  { key: "pinterest", label: "Pinterest", placeholder: "https://instagram.com/username" },
 ];
 
 export default function SocialSetting() {
   const [socials, setSocials] = useState({
-    facebook: { enabled: false, link: "http://www.facebook.com/sourceseas" },
-    twitter: { enabled: false, link: "" },
-    instagram: { enabled: false, link: "" },
-    google: { enabled: false, link: "" },
-    linkedin: { enabled: false, link: "" },
-    YouTube: { enabled: false, link: "" },
-    Pinterest: { enabled: false, link: "" },
+    facebook: { enabled: true, link: "http://www.facebook.com/sourceseas" },
+    twitter: { enabled: true, link: "http://www.twitter.com/sourceseas" },
+    instagram: { enabled: true, link: "http://www.instagram.com/sourceseas" },
+    google: { enabled: true, link: "http://www.google.com/sourceseas" },
+    linkedin: { enabled: true, link: "http://www.inkedin.com/sourceseas" },
+    youTube: { enabled: true, link: "http://www.youtube.com/sourceseas" },
+    pinterest: { enabled: true, link: "http://www.pinterest.com/sourceseas" },
   });
 
   const toggleSocial = (key, value) => {
