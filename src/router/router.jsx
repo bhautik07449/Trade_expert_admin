@@ -39,6 +39,8 @@ import CertificationSliderManagement from "../pages/WebsiteManagement/ContentCMS
 import Gallery from "../pages/WebsiteManagement/ContentCMS/Gallery/Gallery";
 import FAQ from "../pages/WebsiteManagement/ContentCMS/FAQ/FAQ";
 import QualityPolicies from "../pages/WebsiteManagement/ContentCMS/QualityPolicies/QualityPolicies";
+import AddCurrency from "../pages/WebsiteManagement/ContentCMS/CurrencyManagement/AddCurrency";
+import AddMeasurement from "../pages/WebsiteManagement/ContentCMS/MeasurementManagement/AddMeasurement";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -155,8 +157,18 @@ const routes = (isLoggedIn) => [
         index: true,
       },
       {
+        element: <AddCurrency />,
+        path: "/website-management/content/currency/:type",
+        index: true,
+      },
+      {
         element: <MeasurementManagement />,
         path: "/website-management/content/measurement",
+        index: true,
+      },
+      {
+        element: <AddMeasurement />,
+        path: "/website-management/content/measurement/:type",
         index: true,
       },
       {
