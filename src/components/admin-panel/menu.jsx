@@ -29,7 +29,7 @@ export function Menu({ isOpen }) {
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
       <nav className="mt-8 h-full w-full">
-        <ul className="flex flex-col min-h-[calc(100vh-250px)] lg:min-h-[calc(100vh-170px)] items-start space-y-1 ">
+        <ul className="flex flex-col min-h-[calc(100vh-250px)] lg:min-h-[calc(100vh-170px)] items-start space-y-1 mb-12">
           {menuList.map(({ groupLabel, menus }, index) => (
             <li className={cn("w-full", groupLabel ? "pt-5" : "")} key={index}>
               {(isOpen && groupLabel) || isOpen === undefined ? (
@@ -111,7 +111,7 @@ export function Menu({ isOpen }) {
         </ul>
 
         {/* Logout */}
-        <div className="w-full grow flex items-end px-4">
+        <div className="w-full grow flex items-end px-4 absolute bottom-2">
           <CommonButton
             onClick={() => handleLogout()}
             variant="outline"
