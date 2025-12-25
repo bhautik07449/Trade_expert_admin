@@ -41,6 +41,23 @@ import FAQ from "../pages/WebsiteManagement/ContentCMS/FAQ/FAQ";
 import QualityPolicies from "../pages/WebsiteManagement/ContentCMS/QualityPolicies/QualityPolicies";
 import AddCurrency from "../pages/WebsiteManagement/ContentCMS/CurrencyManagement/AddCurrency";
 import AddMeasurement from "../pages/WebsiteManagement/ContentCMS/MeasurementManagement/AddMeasurement";
+import AddPageManagement from "@/pages/WebsiteManagement/ContentCMS/PageManagement/AddPageManagement";
+import AddQualityPolicies from "@/pages/WebsiteManagement/ContentCMS/QualityPolicies/AddQualityPolicies";
+import AddEmailTemplate from "@/pages/WebsiteManagement/ContentCMS/EmailTemplate/AddEmailTemplate";
+import AddBrandManagement from "@/pages/WebsiteManagement/ContentCMS/BrandManagement/AddBrandManagement";
+import AddBlogsManagement from "@/pages/WebsiteManagement/ContentCMS/BlogsManagement/AddBlogsManagement";
+import AddBlogCategories from "@/pages/WebsiteManagement/ContentCMS/BlogCategories/AddBlogCategories";
+import AddTeamManagement from "@/pages/WebsiteManagement/ContentCMS/TeamManagement/AddTeamManagement";
+import AddNewsletterManagement from "@/pages/WebsiteManagement/ContentCMS/NewsletterManagement/AddNewsletterManagement";
+import AddClientManagement from "@/pages/WebsiteManagement/ContentCMS/ClientManagement/AddClientManagement";
+import AddTestimonialManagement from "@/pages/WebsiteManagement/ContentCMS/TestimonialManagement/AddTestimonialManagement";
+import AddOfferType from "@/pages/WebsiteManagement/ContentCMS/OfferType/AddOfferType";
+import AddTradeOffer from "@/pages/WebsiteManagement/ContentCMS/TradeOffer/AddTradeOffer";
+import AddOfferRequest from "@/pages/WebsiteManagement/ContentCMS/OfferRequest/AddOfferRequest";
+import AddHomeBanner from "@/pages/WebsiteManagement/ContentCMS/HomeBanner/AddHomeBanner";
+import AddCertificationSliderManagement from "@/pages/WebsiteManagement/ContentCMS/CertificationSliderManagement/AddCertificationSliderManagement";
+import AddGallery from "@/pages/WebsiteManagement/ContentCMS/Gallery/AddGallery";
+import AddFAQ from "@/pages/WebsiteManagement/ContentCMS/FAQ/AddFAQ";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -177,8 +194,18 @@ const routes = (isLoggedIn) => [
         index: true,
       },
       {
+        element: <AddPageManagement />,
+        path: "/website-management/content/pages/:type",
+        index: true,
+      },
+      {
         element: <QualityPolicies />,
         path: "/website-management/content/quality-policies",
+        index: true,
+      },
+      {
+        element: <AddQualityPolicies />,
+        path: "/website-management/content/quality-policies/:type",
         index: true,
       },
       {
@@ -187,8 +214,18 @@ const routes = (isLoggedIn) => [
         index: true,
       },
       {
+        element: <AddEmailTemplate />,
+        path: "/website-management/content/email-template/:type",
+        index: true,
+      },
+      {
         element: <BrandManagement />,
         path: "/website-management/content/brands",
+        index: true,
+      },
+      {
+        element: <AddBrandManagement />,
+        path: "/website-management/content/brands/:type",
         index: true,
       },
       {
@@ -197,8 +234,18 @@ const routes = (isLoggedIn) => [
         index: true,
       },
       {
+        element: <AddBlogsManagement />,
+        path: "/website-management/content/blogs/:type",
+        index: true,
+      },
+      {
         element: <BlogCategories />,
         path: "/website-management/content/blog-categories",
+        index: true,
+      },
+      {
+        element: <AddBlogCategories />,
+        path: "/website-management/content/blog-categories/:type",
         index: true,
       },
       {
@@ -207,8 +254,18 @@ const routes = (isLoggedIn) => [
         index: true,
       },
       {
+        element: <AddTeamManagement />,
+        path: "/website-management/content/team/:type",
+        index: true,
+      },
+      {
         element: <NewsletterManagement />,
         path: "/website-management/content/newsletters",
+        index: true,
+      },
+      {
+        element: <AddNewsletterManagement />,
+        path: "/website-management/content/newsletters/:type",
         index: true,
       },
       {
@@ -217,8 +274,18 @@ const routes = (isLoggedIn) => [
         index: true,
       },
       {
+        element: <AddClientManagement />,
+        path: "/website-management/content/client/:type",
+        index: true,
+      },
+      {
         element: <TestimonialManagement />,
         path: "/website-management/content/testinomial",
+        index: true,
+      },
+      {
+        element: <AddTestimonialManagement />,
+        path: "/website-management/content/testinomial/:type",
         index: true,
       },
       {
@@ -227,8 +294,18 @@ const routes = (isLoggedIn) => [
         index: true,
       },
       {
+        element: <AddOfferType />,
+        path: "/website-management/content/offer-type/:type",
+        index: true,
+      },
+      {
         element: <TradeOffer />,
         path: "/website-management/content/trade-offer",
+        index: true,
+      },
+      {
+        element: <AddTradeOffer />,
+        path: "/website-management/content/trade-offer/:type",
         index: true,
       },
       {
@@ -237,8 +314,18 @@ const routes = (isLoggedIn) => [
         index: true,
       },
       {
+        element: <AddOfferRequest />,
+        path: "/website-management/content/offer_req/:type",
+        index: true,
+      },
+      {
         element: <HomeBanner />,
         path: "/website-management/content/home-banner",
+        index: true,
+      },
+      {
+        element: <AddHomeBanner />,
+        path: "/website-management/content/home-banner/:type",
         index: true,
       },
       {
@@ -247,13 +334,28 @@ const routes = (isLoggedIn) => [
         index: true,
       },
       {
+        element: <AddCertificationSliderManagement />,
+        path: "/website-management/content/certification-slider/:type",
+        index: true,
+      },
+      {
         element: <Gallery />,
         path: "/website-management/content/gallery",
         index: true,
       },
       {
+        element: <AddGallery />,
+        path: "/website-management/content/gallery/:type",
+        index: true,
+      },
+      {
         element: <FAQ />,
         path: "/website-management/content/faq",
+        index: true,
+      },
+      {
+        element: <AddFAQ />,
+        path: "/website-management/content/faq/:type",
         index: true,
       }
     ],
