@@ -24,7 +24,8 @@ const CommonTable = ({
   showDelete = false,
   onEdit = () => { },
   onDelete = () => { },
-  rowHeight = 50
+  rowHeight = 50,
+  tableHeight = "400px"
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -86,7 +87,7 @@ const CommonTable = ({
     <>
       <div className="ag-theme-quartz w-full"
         style={{
-          height: "400px",
+          height: tableHeight,
         }}>
         <AgGridReact
           rowData={rows}
