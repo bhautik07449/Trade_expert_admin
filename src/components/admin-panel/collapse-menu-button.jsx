@@ -52,7 +52,7 @@ export function CollapseMenuButton({
       className="w-full"
     >
       <CollapsibleTrigger
-        className="[&[data-state=open]>div>div>svg]:rotate-180 mb-0.5"
+        className="[&[data-state=open]_svg.chevron-icon]:rotate-180 mb-0.5"
         asChild
       >
         <Button
@@ -72,7 +72,7 @@ export function CollapseMenuButton({
             </div>
             <ChevronDown
               size={18}
-              className="transition-transform duration-300 ease-in-out"
+              className="chevron-icon transition-transform duration-300 ease-in-out"
             />
           </div>
         </Button>
