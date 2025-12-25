@@ -83,9 +83,9 @@ export function getMenuList(pathname) {
                   icon: Ruler,
                 },
                 {
-                  href: "/website-management/content/Pages",
+                  href: "/website-management/content/pages",
                   label: "Pages Management",
-                  active: pathname.includes("/website-management/content/Pages"),
+                  active: pathname.includes("/website-management/content/pages"),
                   icon: FileEdit,
                 },
                 {

@@ -173,7 +173,7 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <PageManagement />,
-        path: "/website-management/content/Pages",
+        path: "/website-management/content/pages",
         index: true,
       },
       {
