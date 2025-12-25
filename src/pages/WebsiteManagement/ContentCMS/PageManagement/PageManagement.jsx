@@ -60,7 +60,7 @@ export default function PageManagement() {
                         />
                     </div>
                     <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/currency/add')}>
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/pages/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>
