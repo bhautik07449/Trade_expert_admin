@@ -1,9 +1,7 @@
 import { ChevronDown } from "lucide-react";
-
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/button";
 import { DropdownMenuArrow } from "@radix-ui/react-dropdown-menu";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,17 +30,19 @@ export function CollapseMenuButton({
   submenus = [],
   isOpen,
   menuKey,
-  openMenu,
-  setOpenMenu,
+  parentKey = null,
+  openMenus,
+  onToggle,
   level = 0,
 }) {
-  const isCollapsed = openMenu[menuKey] === true;
+  const isCollapsed = openMenus[menuKey] === true;
 
   const handleToggle = (open) => {
-    setOpenMenu((prev) => ({
-      ...prev,
-      [menuKey]: open,
-    }));
+    if (open) {
+      onToggle(menuKey, parentKey);
+    } else {
+      onToggle(menuKey, parentKey);
+    }
   };
 
   return isOpen ? (
@@ -52,88 +52,73 @@ export function CollapseMenuButton({
       className="w-full"
     >
       <CollapsibleTrigger
-        className="[&[data-state=open]>div>div>svg]:rotate-180 mb-1"
+        className="[&[data-state=open]>div>div>svg]:rotate-180 mb-0.5"
         asChild
       >
         <Button
           variant={active ? "secondary" : "ghost"}
-          className="w-full justify-start h-10"
-          style={{ paddingLeft: `${16 + level * 8}px` }}
+          className={cn(
+            "w-full justify-start h-11 transition-all duration-200",
+            active && "bg-primary/10 text-primary font-medium shadow-sm"
+          )}
+          style={{ paddingLeft: `${12 + level * 12}px` }}
         >
           <div className="w-full items-center flex justify-between">
-            <div className="flex items-center">
-              <span className="mr-4">
-                <Icon size={18} />
-              </span>
-              <p
-                className={cn(
-                  "max-w-[150px] truncate",
-                  isOpen
-                    ? "translate-x-0 opacity-100"
-                    : "-translate-x-96 opacity-0"
-                )}
-              >
+            <div className="flex items-center gap-3">
+              <Icon size={19} />
+              <p className={cn("max-w-[150px] truncate font-medium")}>
                 {label}
               </p>
             </div>
-            <div
-              className={cn(
-                "whitespace-nowrap",
-                isOpen
-                  ? "translate-x-0 opacity-100"
-                  : "-translate-x-96 opacity-0"
-              )}
-            >
-              <ChevronDown
-                size={18}
-                className="transition-transform duration-200"
-              />
-            </div>
+            <ChevronDown
+              size={18}
+              className="transition-transform duration-300 ease-in-out"
+            />
           </div>
         </Button>
       </CollapsibleTrigger>
+
       <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-        {submenus.map((submenus, index) =>
-          submenus?.submenus && submenus?.submenus.length > 0 ? (
-            <CollapseMenuButton
-              key={index}
-              icon={submenus?.icon}
-              label={submenus?.label}
-              active={submenus?.active}
-              submenus={submenus?.submenus}
-              isOpen={isOpen}
-              menuKey={`${menuKey}-${submenus?.label}`}
-              openMenu={openMenu}
-              setOpenMenu={setOpenMenu}
-              level={level + 1}
-            />
-          ) : (
-            <Button
-              key={index}
-              variant={submenus?.active ? "secondary" : "ghost"}
-              className="w-full justify-start h-10 mb-1"
-              asChild
-            >
-              <Link to={submenus?.href}>
-                <span className="mr-4 ml-2">
-                  {submenus.icon && <submenus.icon size={18} />}
-                </span>
-                <p
-                  className={cn(
-                    "max-w-[170px] truncate",
-                    isOpen
-                      ? "translate-x-0 opacity-100"
-                      : "-translate-x-96 opacity-0"
-                  )}
-                >
-                  {submenus.label}
-                </p>
-              </Link>
-            </Button>
-          )
-        )}
-      </CollapsibleContent >
-    </Collapsible >
+        <div className="pl-2 border-l-2 border-border/50 ml-6 mt-1 space-y-0.5">
+          {submenus.map((submenu, index) =>
+            submenu?.submenus && submenu?.submenus.length > 0 ? (
+              <CollapseMenuButton
+                key={index}
+                icon={submenu.icon}
+                label={submenu.label}
+                active={submenu.active}
+                submenus={submenu.submenus}
+                isOpen={isOpen}
+                menuKey={`${menuKey}-${submenu.label}`}
+                parentKey={menuKey}
+                openMenus={openMenus}
+                onToggle={onToggle}
+                level={level + 1}
+              />
+            ) : (
+              <Button
+                key={index}
+                variant={submenu.active ? "secondary" : "ghost"}
+                className={cn(
+                  "w-full justify-start h-10 mb-0.5 transition-all duration-200",
+                  submenu.active && "bg-primary/10 text-primary font-medium shadow-sm"
+                )}
+                asChild
+              >
+                <Link to={submenu.href}>
+                  <span className="mr-3">
+                    {submenu.icon && <submenu.icon size={17} />}
+                  </span>
+                  <p className="max-w-[170px] truncate text-sm">
+                    {submenu.label}
+                  </p>
+                </Link>
+              </Button>
+            )
+          )}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
   ) : (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>
@@ -142,45 +127,68 @@ export function CollapseMenuButton({
             <DropdownMenuTrigger asChild>
               <Button
                 variant={active ? "secondary" : "ghost"}
-                className="w-full justify-start h-10 mb-1"
+                className={cn(
+                  "w-full justify-start h-11 mb-0.5 transition-all duration-200",
+                  active && "bg-primary/10 text-primary font-medium"
+                )}
               >
                 <div className="w-full items-center flex justify-between">
                   <div className="flex items-center">
-                    <span className={cn(isOpen === false ? "" : "mr-4")}>
-                      <Icon size={18} />
-                    </span>
-                    <p
-                      className={cn(
-                        "max-w-[200px] truncate",
-                        isOpen === false ? "opacity-0" : "opacity-100"
-                      )}
-                    >
-                      {label}
-                    </p>
+                    <Icon size={19} />
                   </div>
                 </div>
               </Button>
             </DropdownMenuTrigger>
           </TooltipTrigger>
-          <TooltipContent side="right" align="start" alignOffset={2}>
+          <TooltipContent side="right" align="start" alignOffset={2} className="font-medium">
             {label}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <DropdownMenuContent side="right" sideOffset={25} align="start">
-        <DropdownMenuLabel className="max-w-[190px] truncate">
+
+      <DropdownMenuContent
+        side="right"
+        sideOffset={25}
+        align="start"
+        className="w-64 max-h-[500px] overflow-y-auto"
+      >
+        <DropdownMenuLabel className="max-w-[190px] truncate font-semibold text-base">
           {label}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {submenus.map(({ href, label }, index) => (
-          <DropdownMenuItem key={index} asChild>
-            <a className="cursor-pointer" href={href}>
-              <p className="max-w-[180px] truncate">{label}</p>
-            </a>
-          </DropdownMenuItem>
-        ))}
+
+        {submenus.map((submenu, index) =>
+          submenu?.submenus && submenu?.submenus.length > 0 ? (
+            <div key={index} className="py-1">
+              <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-2">
+                {submenu.label}
+              </DropdownMenuLabel>
+              {submenu.submenus.map((nestedSubmenu, nestedIndex) => (
+                <DropdownMenuItem key={nestedIndex} asChild>
+                  <Link
+                    className="cursor-pointer flex items-center gap-2 py-2"
+                    to={nestedSubmenu.href}
+                  >
+                    {nestedSubmenu.icon && <nestedSubmenu.icon size={16} />}
+                    <p className="max-w-[180px] truncate text-sm">{nestedSubmenu.label}</p>
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+              {index < submenus.length - 1 && <DropdownMenuSeparator />}
+            </div>
+          ) : (
+            <DropdownMenuItem key={index} asChild>
+              <Link
+                className="cursor-pointer flex items-center gap-2 py-2"
+                to={submenu.href}
+              >
+                {submenu.icon && <submenu.icon size={16} />}
+                <p className="max-w-[180px] truncate text-sm">{submenu.label}</p>
+              </Link>
+            </DropdownMenuItem>
+          )
+        )}
         <DropdownMenuArrow className="fill-border" />
-        {/* <FaChevronRight className="fill-border" /> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );
