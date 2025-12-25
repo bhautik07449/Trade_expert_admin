@@ -25,7 +25,7 @@ const columns = [
             <img
                 src={row?.image}
                 alt={row?.name}
-                className="h-10 w-10 object-cover rounded p-0.5"
+                className="h-16 w-16 object-cover rounded p-0.5"
             />
         )
     },
@@ -51,7 +51,6 @@ export default function BlogsManagement() {
     const handleClearFilters = () => {
         console.log("Filters Cleared");
     }
-
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -91,6 +90,7 @@ export default function BlogsManagement() {
                     showDelete={true}
                     onEdit={() => { }}
                     onDelete={() => { }}
+                    rowHeight={80}
                 />
             </Card>
         </div>
