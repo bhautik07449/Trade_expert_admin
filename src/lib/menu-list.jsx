@@ -257,7 +257,39 @@ export function getMenuList(pathname) {
           label: "Documents",
           active: pathname === "/documents",
           icon: Folder,
-          submenus: [],
+          submenus: [
+            {
+              href: "/",
+              label: "Domestic Invoice",
+              active: pathname === "/documents/domestic-invoice",
+              icon: Folder,
+              submenus: [
+                {
+                  href: "/",
+                  label: "Bill of Supply",
+                  active: pathname === "/documents/domestic-invoice",
+                  icon: Folder,
+                },
+                {
+                  href: "/",
+                  label: "GST Invoice",
+                  active: pathname === "/documents/domestic-invoice",
+                  icon: Folder,
+                }, {
+                  href: "/",
+                  label: "Non GST Invoice",
+                  active: pathname === "/documents/domestic-invoice",
+                  icon: Folder,
+                }
+              ]
+            },
+            {
+              href: "/",
+              label: "Export Invoice",
+              active: pathname === "/documents/export-invoice",
+              icon: Folder,
+            }
+          ],
         },
       ],
     },
