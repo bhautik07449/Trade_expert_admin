@@ -253,38 +253,38 @@ export function getMenuList(pathname) {
           ],
         },
         {
-          href: "/",
+          href: "",
           label: "Documents",
-          active: pathname === "/documents",
+          active: pathname.includes("/documents"),
           icon: Folder,
           submenus: [
             {
-              href: "/",
+              href: "/documents/bill-of-supply",
               label: "Domestic Invoice",
-              active: pathname === "/documents/domestic-invoice",
+              active: pathname.includes("/documents"),
               icon: Folder,
               submenus: [
                 {
-                  href: "/",
+                  href: "/documents/bill-of-supply",
                   label: "Bill of Supply",
-                  active: pathname === "/documents/domestic-invoice",
+                  active: pathname === "/documents/bill-of-supply",
                   icon: Folder,
                 },
                 {
-                  href: "/",
+                  href: "/documents/gst-invoice",
                   label: "GST Invoice",
-                  active: pathname === "/documents/domestic-invoice",
+                  active: pathname === "/documents/gst-invoice",
                   icon: Folder,
                 }, {
-                  href: "/",
+                  href: "/documents/non-gst-invoice",
                   label: "Non GST Invoice",
-                  active: pathname === "/documents/domestic-invoice",
+                  active: pathname === "/documents/non-gst-invoice",
                   icon: Folder,
                 }
               ]
             },
             {
-              href: "/",
+              href: "/documents/export-invoice",
               label: "Export Invoice",
               active: pathname === "/documents/export-invoice",
               icon: Folder,

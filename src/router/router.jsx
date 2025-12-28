@@ -58,6 +58,10 @@ import AddHomeBanner from "../pages/WebsiteManagement/ContentCMS/HomeBanner/AddH
 import AddCertificationSliderManagement from "../pages/WebsiteManagement/ContentCMS/CertificationSliderManagement/AddCertificationSliderManagement";
 import AddGallery from "../pages/WebsiteManagement/ContentCMS/Gallery/AddGallery";
 import AddFAQ from "../pages/WebsiteManagement/ContentCMS/FAQ/AddFAQ";
+import BillofSupply from "../pages/Document/DomesticInvoice/BillofSupply/BillofSupply";
+import GSTInvoice from "../pages/Document/DomesticInvoice/GSTInvoice/GSTInvoice";
+import NonGSTInvoice from "../pages/Document/DomesticInvoice/NonGSTInvoice/NonGSTInvoice";
+import ExportInvoice from "../pages/Document/ExportInvoice/ExportInvoice";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -356,6 +360,26 @@ const routes = (isLoggedIn) => [
       {
         element: <AddFAQ />,
         path: "/website-management/content/faq/:type",
+        index: true,
+      },
+      {
+        element: <BillofSupply />,
+        path: "/documents/bill-of-supply",
+        index: true,
+      },
+      {
+        element: <GSTInvoice />,
+        path: "/documents/gst-invoice",
+        index: true,
+      },
+      {
+        element: <NonGSTInvoice />,
+        path: "/documents/non-gst-invoice",
+        index: true,
+      },
+      {
+        element: <ExportInvoice />,
+        path: "/documents/export-invoice",
         index: true,
       }
     ],
