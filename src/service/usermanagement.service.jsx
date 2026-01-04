@@ -2,7 +2,7 @@ import serverCall from "../serverCall";
 
 const getUser = async () => {
     try {
-        const response = serverCall.get('/users/admins')
+        const response = serverCall.get('/admin')
         return response
     } catch (error) {
         throw error

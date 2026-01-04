@@ -364,17 +364,17 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <BillofSupply />,
-        path: "/documents/bill-of-supply",
+        path: "/documents/domestic-invoice/bill-of-supply",
         index: true,
       },
       {
         element: <GSTInvoice />,
-        path: "/documents/gst-invoice",
+        path: "/documents/domestic-invoice/gst-invoice",
         index: true,
       },
       {
         element: <NonGSTInvoice />,
-        path: "/documents/non-gst-invoice",
+        path: "/documents/domestic-invoice/non-gst-invoice",
         index: true,
       },
       {

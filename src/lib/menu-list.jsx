@@ -259,26 +259,26 @@ export function getMenuList(pathname) {
           icon: Folder,
           submenus: [
             {
-              href: "/documents/bill-of-supply",
+              href: "/documents/domestic-invoice",
               label: "Domestic Invoice",
-              active: pathname.includes("/documents"),
+              active: pathname.includes("/domestic-invoice"),
               icon: Folder,
               submenus: [
                 {
-                  href: "/documents/bill-of-supply",
+                  href: "/documents/domestic-invoice/bill-of-supply",
                   label: "Bill of Supply",
-                  active: pathname === "/documents/bill-of-supply",
+                  active: pathname === "/documents/domestic-invoice/bill-of-supply",
                   icon: Folder,
                 },
                 {
-                  href: "/documents/gst-invoice",
+                  href: "/documents/domestic-invoice/gst-invoice",
                   label: "GST Invoice",
-                  active: pathname === "/documents/gst-invoice",
+                  active: pathname === "/documents/domestic-invoice/gst-invoice",
                   icon: Folder,
                 }, {
-                  href: "/documents/non-gst-invoice",
+                  href: "/documents/domestic-invoice/non-gst-invoice",
                   label: "Non GST Invoice",
-                  active: pathname === "/documents/non-gst-invoice",
+                  active: pathname === "/documents/domestic-invoice/non-gst-invoice",
                   icon: Folder,
                 }
               ]

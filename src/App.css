@@ -102,3 +102,65 @@ input:-webkit-autofill:active {
 .ag-row-hover {
   background-color: #f7f7f7 !important;
 }
+/* A4 page setup */
+.a4-page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 10mm;
+  margin: auto;
+  background: white;
+  box-sizing: border-box;
+}
+
+/* Screen preview */
+.a4-wrapper {
+  background: #f0f0f0;
+  padding: 20px;
+}
+
+/* PRINT SETTINGS */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .a4-wrapper {
+    padding: 0;
+    background: white;
+  }
+
+  .a4-page {
+    margin: 0;
+    padding: 10mm;
+    box-shadow: none;
+    border: none;
+  }
+
+  input,
+  textarea {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+}

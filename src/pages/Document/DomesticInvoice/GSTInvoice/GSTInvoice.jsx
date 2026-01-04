@@ -1,5 +1,7 @@
+import InvoiceForm from "../InvoiceForm";
+
 export default function GSTInvoice() {
     return (
-        <div>GST Invoice</div>
+        <InvoiceForm title="GST INVOICE" />
     )
 }
