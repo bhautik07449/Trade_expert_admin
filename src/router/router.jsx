@@ -62,6 +62,7 @@ import BillofSupply from "../pages/Document/DomesticInvoice/BillofSupply/BillofS
 import GSTInvoice from "../pages/Document/DomesticInvoice/GSTInvoice/GSTInvoice";
 import NonGSTInvoice from "../pages/Document/DomesticInvoice/NonGSTInvoice/NonGSTInvoice";
 import ExportInvoice from "../pages/Document/ExportInvoice/ExportInvoice";
+import Quotation from "../pages/Document/ExportInvoice/Forms/quotation";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -380,6 +381,11 @@ const routes = (isLoggedIn) => [
       {
         element: <ExportInvoice />,
         path: "/documents/export-invoice",
+        index: true,
+      },
+      {
+        element: <Quotation />,
+        path: "/documents/export-invoice/quotation",
         index: true,
       }
     ],
