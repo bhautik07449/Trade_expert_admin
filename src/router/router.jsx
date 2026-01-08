@@ -96,7 +96,7 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddEditAdmin />,
-        path: "/user-management/admins-management/:type",
+        path: "/user-management/admins-management/:type/*",
         index: true,
       },
       {

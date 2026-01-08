@@ -3,11 +3,11 @@ import { Card } from "../../../components/ui/card";
 import React, { useEffect, useState } from "react";
 import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
-import Userservice from "../../../service/usermanagement.service";
 import CommonTable from "../../../components/widgets/common_table";
 import { formatDate } from "../../../common/constants";
 import { useNavigate } from "react-router";
 import CustomLoader from "../../../components/widgets/custom_loader";
+import Adminservice from "../../../service/admin.service";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -29,7 +29,7 @@ const AdminsManagement = () => {
     const getUserData = async () => {
         setLoder(true);
         try {
-            const res = await Userservice.getUser();
+            const res = await Adminservice.getAdmin();
             if (res) {
                 const formattedData = res?.data?.map((item, index) => ({
                     ...item,
@@ -50,6 +50,10 @@ const AdminsManagement = () => {
     useEffect(() => {
         getUserData()
     }, [])
+
+    const handleEdit = (row) => {
+        navigate(`/user-management/admins-management/edit/${row?.id}`)
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -87,7 +91,7 @@ const AdminsManagement = () => {
                         rows={user || []}
                         showEdit={true}
                         showDelete={true}
-                        onEdit={() => { }}
+                        onEdit={(row) => { handleEdit(row) }}
                         onDelete={() => { }}
                     />
                 }

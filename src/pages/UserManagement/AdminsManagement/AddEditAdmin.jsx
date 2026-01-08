@@ -1,22 +1,29 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import CommonButton from "../../../components/widgets/common_button"
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Userservice from "../../../service/usermanagement.service"
+import Adminservice from "../../../service/admin.service"
 import { CommonTextField } from "../../../components/widgets/common_textField"
 import BackPath from "../../../components/common/BackPath"
 import { Card } from "../../../components/ui/card"
+import { useNavigate, useParams } from "react-router";
 
 const AddEditAdmin = () => {
+    const params = useParams();
+    const id = params["*"]
+    const [list, setList] = useState()
+    const navigate = useNavigate()
+
+    const isEdit = Boolean(id)
 
     const initialValues = {
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
+        firstName: list ? list?.firstName : "",
+        lastName: list ? list?.lastName : "",
+        email: list ? list?.email : "",
+        phone: list ? list?.phone : "",
         password: "",
-        photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/250px-Image_created_with_a_mobile_phone.png",
-        status: "active"
+        photo: list ? list?.photo : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/250px-Image_created_with_a_mobile_phone.png",
+        status: list ? list?.status : "active"
     };
 
     const validationSchema = Yup.object().shape({
@@ -27,9 +34,11 @@ const AddEditAdmin = () => {
             .matches(/^[0-9]+$/, "Phone number must be digits")
             .min(10, "Phone number must be at least 10 digits")
             .required("Phone number is required"),
-        password: Yup.string()
-            .min(6, "Password must be at least 6 characters")
-            .required("Password is required"),
+        password: isEdit ?
+            Yup.string() :
+            Yup.string()
+                .min(6, "Password must be at least 6 characters")
+                .required("Password is required"),
         photo: Yup.mixed().required("Image is required")
     });
 
@@ -40,8 +49,13 @@ const AddEditAdmin = () => {
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             setSubmitting(true);
             try {
-                await Userservice.addAdmin(values);
+                if (isEdit) {
+                    await Adminservice.updateAdmin(id, values)
+                } else {
+                    await Adminservice.addAdmin(values);
+                }
                 resetForm()
+                navigate("/user-management/admins-management")
             } catch (error) {
                 console.log("error", error);
             } finally {
@@ -50,11 +64,34 @@ const AddEditAdmin = () => {
         }
     });
 
+    useEffect(() => {
+        const getAdmin = async (id) => {
+            // setLoder(true);
+            try {
+                const res = await Adminservice.getAdminByid(id);
+                if (res) {
+                    const data = res?.data
+                    setList(data);
+                    // setLoder(false);
+                }
+
+            } catch (error) {
+                console.log(error, "error");
+            } finally {
+                // setLoder(false);
+            }
+        }
+
+        if (isEdit) {
+            getAdmin(id)
+        }
+    }, [id])
+
     return (
         <div className="grid gap-6">
             <div className="grid gap-4">
                 <BackPath />
-                <h3 className="h5-bold">Add Admin</h3>
+                <h3 className="h5-bold">{isEdit ? "Edit" : "Add"} Admin</h3>
             </div>
             <Card className="p-6">
 
@@ -102,17 +139,18 @@ const AddEditAdmin = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.phone && formik.errors.phone}
                         />
-
-                        <CommonTextField
-                            label="Password"
-                            type="password"
-                            placeholder="Enter Password"
-                            name="password"
-                            value={formik.values.password}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.password && formik.errors.password}
-                        />
+                        {!isEdit && (
+                            <CommonTextField
+                                label="Password"
+                                type="password"
+                                placeholder="Enter Password"
+                                name="password"
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.password && formik.errors.password}
+                            />
+                        )}
 
                         <CommonTextField
                             label="Image URL"
@@ -138,7 +176,7 @@ const AddEditAdmin = () => {
                             type="submit"
                             disabled={formik.isSubmitting || !formik.isValid}
                         >
-                            {formik.isSubmitting ? "Saving..." : "Add Admin"}
+                            {formik.isSubmitting ? "Saving..." : isEdit ? "Add Admin" : "Update Admin"}
                         </CommonButton>
                     </div>
                 </form>
