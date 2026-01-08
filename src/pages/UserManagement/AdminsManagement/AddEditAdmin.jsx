@@ -176,7 +176,7 @@ const AddEditAdmin = () => {
                             type="submit"
                             disabled={formik.isSubmitting || !formik.isValid}
                         >
-                            {formik.isSubmitting ? "Saving..." : isEdit ? "Add Admin" : "Update Admin"}
+                            {formik.isSubmitting ? "Saving..." : isEdit ? "Update Admin" : "Add Admin"}
                         </CommonButton>
                     </div>
                 </form>
