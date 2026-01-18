@@ -80,7 +80,7 @@ export default function Quotation() {
                     </div>
                     <div className="mt-10 text-sm text-right">
                         <p>Thanks & Regards,</p>
-                        <p className="font-semibold mt-2">Dhruvin V. Pokal</p>
+                        <p className="font-semibold mt-2">Trade expert</p>
                         <p>Export Regional Manager</p>
                         <p>Sourcesos Overseas Pvt. Ltd.</p>
                     </div>

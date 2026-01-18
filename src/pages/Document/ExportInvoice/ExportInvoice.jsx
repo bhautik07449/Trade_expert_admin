@@ -53,7 +53,7 @@ export default function ExportInvoice() {
                                         <Button
                                             size="icon"
                                             variant="ghost"
-                                            onClick={() => navigate(item?.link)}
+                                            onClick={() => navigate(`/documents/export-invoice/${item?.slug}`)}
                                         >
                                             <Plus className="h-4 w-4" />
                                         </Button>

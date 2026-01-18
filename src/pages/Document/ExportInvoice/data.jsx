@@ -4,16 +4,16 @@ export function data() {
             title: "Pre Shipment Documents",
             items: [
                 {
-                    label: "Expression of Interest", link: "/documents/export-invoice/quotation",
+                    label: "Expression of Interest", slug: "quotation", form: "Quotation" ,
                 },
                 {
-                    label: "Sampling Sample Invoice", link: "/documents/export-invoice/sampling-sample-invoice",
+                    label: "Sampling Sample Invoice", slug: "sampling-sample-invoice", form: "SampleInvoice"
                 },
                 {
-                    label: "Sales Contract / Proforma Invoice", link: "/documents/export-invoice/sales-contracts",
+                    label: "Sales Contract / Proforma Invoice", slug: "sales-contracts", form: "SalesContract"
                 },
                 {
-                    label: "Letter of Credit Draft", link: "/documents/export-invoice/letter-credit-draft",
+                    label: "Letter of Credit Draft", slug: "letter-credit-draft", form: "LetterOfCreditDraft"
                 },
             ]
         },
@@ -21,19 +21,19 @@ export function data() {
             title: "Dispatch Documents",
             items: [
                 {
-                    label: "Preshipment Invoice", link: "/documents/export-invoice/preshipment-invoice",
+                    label: "Preshipment Invoice", slug: "preshipment-invoice", form: "PreshipmentInvoice"
                 },
                 {
-                    label: "Packing List", link: "/documents/export-invoice/packing",
+                    label: "Packing List", slug: "packing", form: "PackingList"
                 },
                 {
-                    label: "EVD", link: "/documents/export-invoice/evd",
+                    label: "EVD", slug: "evd", form: "EVD" 
                 },
                 {
-                    label: "Drawback Declaration Letter", link: "/documents/export-invoice/drawback-declaration-letter",
+                    label: "Drawback Declaration Letter", slug: "drawback-declaration-letter", form: "DrawbackDeclarationLetter"
                 },
                 {
-                    label: "E-Way Bill", link: "/documents/export-invoice/eway-bill"
+                    label: "E-Way Bill", slug: "eway-bill", form: "EWB"
                 }
             ]
         },
@@ -41,7 +41,7 @@ export function data() {
             title: "Shipping Activity & Documents",
             items: [
                 {
-                    label: "Bill of Lading Draft", link: "/documents/export-invoice/bill-lading-draft",
+                    label: "Bill of Lading Draft", slug: "bill-lading-draft", form: "BillOfLadingDraft"
                 }
             ]
         },
@@ -49,7 +49,7 @@ export function data() {
             title: "POST - SHIPMENT PROCEDURE & DOCUMENTS",
             items: [
                 {
-                    label: "Shipment Advice", link: "/documents/export-invoice/shipment-advice",
+                    label: "Shipment Advice", slug: "shipment-advice", form: "ShipmentAdvice"
                 }
             ]
         },
@@ -57,10 +57,10 @@ export function data() {
             title: "Documents Under Collection - Advance / CAD / DA / Open Account",
             items: [
                 {
-                    label: "Covering Letter For Post Shipment Under LC", link: "/documents/export-invoice/covering-letter-under-lc",
+                    label: "Covering Letter For Post Shipment Under LC", slug: "covering-letter-under-lc", form: "CoveringLetterUnderLC"
                 },
                 {
-                    label: "Covering Letter For Post Shipment Under Collection", link: "/documents/export-invoice/covering-letter-under-collection",
+                    label: "Covering Letter For Post Shipment Under Collection", slug: "covering-letter-under-collection", form: "CoveringLetterUnderCollection"
                 },
             ]
         },
@@ -68,19 +68,19 @@ export function data() {
             title: "New Bill of Exchange",
             items: [
                 {
-                    label: "Bill Of Exchange (Collection)", link: "/documents/export-invoice/bill-exchange-collection",
+                    label: "Bill Of Exchange (Collection)", slug: "bill-exchange-collection", form: "BillOfExchangeCollection"
                 },
                 {
-                    label: "Bill Of Exchange (LC)", link: "/documents/export-invoice/bill-exchange-lc",
+                    label: "Bill Of Exchange (LC)", slug: "bill-exchange-lc", form: "BillOfExchangeLC"
                 },
                 {
-                    label: "Comercial Invoice (LC)", link: "/documents/export-invoice/comercial-invoice-lc",
+                    label: "Comercial Invoice (LC)", slug: "comercial-invoice-lc", form: "ComercialInvoiceLC"
                 },
                 {
-                    label: "Comercial Invoice (Collection)", link: "/documents/export-invoice/comercial-invoice-collection",
+                    label: "Comercial Invoice (Collection)", slug: "comercial-invoice-collection", form: "ComercialInvoiceCollection"
                 },
                 {
-                    label: "Comercial Packing List", link: "/documents/export-invoice/comercial-packing-list"
+                    label: "Comercial Packing List", slug: "comercial-packing-list" , form: "ComercialPackingList"
                 }
             ]
         }
