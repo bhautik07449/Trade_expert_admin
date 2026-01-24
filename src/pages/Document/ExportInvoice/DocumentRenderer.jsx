@@ -5,6 +5,8 @@ import SalesContract from "./Forms/SalesContract";
 import PerformaInvoice from "./Forms/PerformaInvoice";
 import Packing from "./Forms/Packing";
 import Drawback from "./Forms/Drawback";
+import BillofLanding from "./Forms/BillofLanding";
+import ShipmentAdvice from "./Forms/ShipmentAdvice";
 
 const componentMap = {
     "quotation": Quotation,
@@ -16,6 +18,9 @@ const componentMap = {
     "evd": null,
     "drawback-declaration-letter": Drawback,
     "eway-bill": null,
+    "bill-lading-draft": BillofLanding,
+    "shipment-advice": ShipmentAdvice,
+    
 };
 
 export default function DocumentRenderer() {
