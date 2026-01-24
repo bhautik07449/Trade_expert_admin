@@ -1,38 +1,33 @@
 import { Card } from "../../../../components/ui/card";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
 
-export default function PerformaInvoice() {
+export default function SalesContract() {
     return (
         <Card>
             <div className="max-w-[800px] mx-auto p-4">
-                <h1 className="text-center text-lg font-bold mb-4">Proforma Invoice</h1>
+                <h1 className="text-center text-lg font-bold mb-4">Sales Contract / Proforma Invoice</h1>
                 <div className="grid grid-cols-2 gap-4">
-                    {/* Exporter Details */}
                     <div className="col-span-2">
                         <h2 className="font-semibold">Exporter</h2>
                         <TextArea label="Exporter Details" />
                     </div>
 
-                    {/* Invoice Details */}
                     <Field label="Invoice No." type="text" />
                     <Field label="Invoice Date" type="date" />
                     <Field label="Exporter’s Ref." type="text" />
                     <Field label="Buyer’s Order No. & Date" type="text" />
                     <Field label="Other Reference(s)" type="text" />
 
-                    {/* Consignee Details */}
                     <div className="col-span-2">
                         <h2 className="font-semibold">Consignee</h2>
                         <TextArea label="Consignee Details" />
                     </div>
 
-                    {/* Buyer Details */}
                     <div className="col-span-2">
                         <h2 className="font-semibold">Buyer (if other than Consignee)</h2>
                         <TextArea label="Buyer Details" />
                     </div>
 
-                    {/* Shipping Details */}
                     <Field label="Pre-carriage by Road" type="text" />
                     <Field label="Place of Receipt by pre-carrier" type="text" />
                     <Field label="Country of Origin of Goods" type="text" />
@@ -42,25 +37,21 @@ export default function PerformaInvoice() {
                     <Field label="Port of Discharge" type="text" />
                     <Field label="Final Destination" type="text" />
 
-                    {/* Goods Details */}
                     <div className="col-span-2">
                         <h2 className="font-semibold">Marks & Nos. / No. & Kind of Pkgs., Description of Goods</h2>
                         <TextArea label="Description of Goods" />
                     </div>
 
-                    {/* Quantity and Price Details */}
                     <Field label="Quantity (POLY BAG)" type="number" />
                     <Field label="Quantity (PCS)" type="number" />
                     <Field label="Rate (USD/PCS)" type="number" />
                     <Field label="Amount (USD)" type="number" />
 
-                    {/* Total Amount */}
                     <div className="col-span-2">
                         <h2 className="font-semibold">Amount Chargeable</h2>
                         <TextArea label="Amount in Words" />
                     </div>
 
-                    {/* Footer */}
                     <div className="col-span-2 text-right mt-4">
                         <button className="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
                     </div>
