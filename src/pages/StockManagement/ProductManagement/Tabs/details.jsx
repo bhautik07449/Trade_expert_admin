@@ -6,7 +6,7 @@ export default function Details() {
 
     return (
         <div>
-            <Editor editorData={editorData} setEditorData={setEditorData} />            
+            <Editor editorData={editorData} setEditorData={setEditorData} label="Description" />            
         </div>
     );
 }
