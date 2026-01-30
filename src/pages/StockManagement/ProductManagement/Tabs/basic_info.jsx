@@ -2,6 +2,8 @@ import { useState } from "react";
 import CommonBox from "../../../../components/common/common_box";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
 import CommonButton from "../../../../components/widgets/common_button";
+import { Checkbox } from "../../../../components/ui/checkbox";
+import { Label } from "../../../../components/ui/label";
 
 export default function BasicInfo() {
     const Measure = [
@@ -71,6 +73,21 @@ export default function BasicInfo() {
                     value={subCategory}
                     onChange={setSubCategory}
                 />
+
+                <div className="flex justify-between">
+                    <div className="flex items-center gap-2 mt-6">
+                        <Checkbox label="new-arrival-checkbox" />
+                        <Label htmlFor="new-arrival-checkbox">New Arrival</Label>
+                    </div>
+                    <div className="flex items-center gap-2 mt-6">
+                        <Checkbox label="trending-checkbox" />
+                        <Label htmlFor="trending-checkbox">Trending</Label>
+                    </div>
+                    <div className="flex items-center gap-2 mt-6">
+                        <Checkbox label="featured-checkbox" />
+                        <Label htmlFor="featured-checkbox">Featured</Label>
+                    </div>
+                </div>
             </div>
             <div className="flex justify-end gap-3 pt-5 border-t">
                 <CommonButton type="button" variant="outline">

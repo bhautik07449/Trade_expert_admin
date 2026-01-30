@@ -7,6 +7,7 @@ import { CommonTextField } from "../../../components/widgets/common_textField"
 import BackPath from "../../../components/common/BackPath"
 import { Card } from "../../../components/ui/card"
 import { useNavigate, useParams } from "react-router";
+import ImageUploadField from "../../../components/common/ImageUploadField";
 
 const AddEditAdmin = () => {
     const params = useParams();
@@ -152,15 +153,13 @@ const AddEditAdmin = () => {
                             />
                         )}
 
-                        <CommonTextField
-                            label="Image URL"
-                            placeholder="Paste Image URL"
-                            name="photo"
-                            value={formik.values.photo}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.photo && formik.errors.photo}
+                        <ImageUploadField
+                            label="Upload Profile Picture"
+                            onImageUpload={(file) => formik.setFieldValue("photo", file)}
                         />
+                        {formik.touched.photo && formik.errors.photo && (
+                            <div className="text-red-500 text-sm">{formik.errors.photo}</div>
+                        )}
                     </div>
 
                     <div className="flex justify-end gap-3 pt-5 border-t">

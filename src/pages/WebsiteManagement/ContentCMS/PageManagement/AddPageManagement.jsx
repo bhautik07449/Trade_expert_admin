@@ -4,6 +4,7 @@ import { CommonTextField } from "../../../../components/widgets/common_textField
 import CommonButton from "../../../../components/widgets/common_button";
 import CommonBox from "../../../../components/common/common_box";
 import { useState } from "react";
+import Editor from "../../../../common/Editor";
 
 export default function AddPageManagement() {
     const [status, setStatus] = useState()
@@ -45,7 +46,7 @@ export default function AddPageManagement() {
                             />
                         </div>
                         <div className="space-y-5">
-                            <div>Here add ckeditor</div>
+                            <Editor label="Content" />
                             <CommonBox
                                 placeholders="Select Status of Page"
                                 options={[

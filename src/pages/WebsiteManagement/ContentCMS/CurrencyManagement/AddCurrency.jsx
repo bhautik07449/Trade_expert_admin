@@ -2,6 +2,7 @@ import { Card } from "../../../../components/ui/card";
 import BackPath from "../../../../components/common/BackPath";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
 import CommonButton from "../../../../components/widgets/common_button";
+import ImageUploadField from "../../../../components/common/ImageUploadField";
 
 export default function AddCurrency() {
     return (
@@ -35,7 +36,7 @@ export default function AddCurrency() {
                                 type="textarea"
                                 rows={6}
                             />
-                            <div>Image</div>
+                            <ImageUploadField />
                         </div>
                     </div>
 
