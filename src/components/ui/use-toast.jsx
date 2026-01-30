@@ -87,6 +87,8 @@ export const reducer = (state, action) => {
         ...state,
         toasts: state.toasts.filter((t) => t.id !== action.toastId),
       };
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`);
   }
 }
 
