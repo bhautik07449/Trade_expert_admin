@@ -86,7 +86,7 @@ const AddEditAdmin = () => {
         if (isEdit) {
             getAdmin(id)
         }
-    }, [id])
+    }, [id, isEdit])
 
     return (
         <div className="grid gap-6">

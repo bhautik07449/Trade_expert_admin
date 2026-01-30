@@ -83,15 +83,3 @@ function Field({ label, type }) {
         </div>
     );
 }
-
-function TextArea({ label, value }) {
-    return (
-        <div className="grid grid-cols-[1fr_2fr] gap-2">
-            <span>{label}:</span>
-            <CommonTextField
-                type='textarea'
-                value={value}
-            />
-        </div>
-    );
-}
