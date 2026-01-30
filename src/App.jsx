@@ -1,4 +1,5 @@
 import "./App.css";
+import ScrollToTop from "./hooks/ScrollToTop";
 import Router from "./router/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <>
+      <ScrollToTop />
       {isLaptop ? <Router isLoggedIn={isLoggedIn} /> : <div className='flex justify-center items-center h-screen '>This website is accessible only on laptop and desktop devices.</div>}
     </>
   );
