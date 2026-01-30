@@ -5,7 +5,7 @@ export default function PerformaInvoice() {
     return (
         <Card>
             <div className="max-w-[800px] mx-auto p-4">
-                <h1 className="text-center text-lg font-bold mb-4">Proforma Invoice</h1>
+                <h1 className="text-center text-lg font-bold mb-4">Preshipment Invoice</h1>
                 <div className="grid grid-cols-2 gap-4">
                     {/* Exporter Details */}
                     <div className="col-span-2">
