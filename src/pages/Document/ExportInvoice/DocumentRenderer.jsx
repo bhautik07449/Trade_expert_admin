@@ -13,6 +13,7 @@ import BillOfExchangeLC from "./Forms/BillOfExchangeLC";
 import CommercialInvoice from "./Forms/CommercialInvoice";
 import CommercialInvoiceCollection from "./Forms/CommercialInvoiceCollection";
 import CommercialPacking from "./Forms/CommercialPacking";
+import CoverLetterUnderCollection from "./Forms/CoverLetterUnderCollection";
 
 const componentMap = {
     "quotation": Quotation,
@@ -26,10 +27,10 @@ const componentMap = {
     "eway-bill": null, //not exit
     "bill-lading-draft": BillofLanding,
     "shipment-advice": ShipmentAdvice,
-    "covering-letter-under-lc": CoverLetterLc, //Pending
-    "covering-letter-under-collection": null, //Pending
-    "bill-exchange-collection": BillOfExchange, //Pending
-    "bill-exchange-lc": BillOfExchangeLC, //Pending
+    "covering-letter-under-lc": CoverLetterLc,
+    "covering-letter-under-collection": CoverLetterUnderCollection,
+    "bill-exchange-collection": BillOfExchange, 
+    "bill-exchange-lc": BillOfExchangeLC,
     "comercial-invoice-lc": CommercialInvoice,
     "comercial-invoice-collection": CommercialInvoiceCollection,
     "comercial-packing-list": CommercialPacking,
