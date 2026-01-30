@@ -1,6 +1,5 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { useState } from 'react';
 
 export default function Editor({ editorData, setEditorData, label }) {
 
