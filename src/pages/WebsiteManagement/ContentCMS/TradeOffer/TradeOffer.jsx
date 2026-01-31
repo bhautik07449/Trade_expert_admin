@@ -1,7 +1,7 @@
 import { Button } from "../../../..//components/ui/button";
 import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
-import { CommonTextField } from "../../../..//components/widgets/common_textField";
+import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -60,7 +60,7 @@ export default function TradeOffer() {
                         />
                     </div>
                     <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/currency/add')}>
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/trade-offer/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>

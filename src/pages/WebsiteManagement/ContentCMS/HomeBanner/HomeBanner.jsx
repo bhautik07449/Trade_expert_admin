@@ -1,5 +1,8 @@
 import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
+import { CircleFadingPlus } from "lucide-react";
+import { useNavigate } from "react-router";
+import { Button } from "../../../..//components/ui/button";
 
 const banner = [
     { SrNo: 1, image: "https://sourceseas.itcoders.in/files/banners/721ee4ac936571761f89d287fd45dbbc.jpeg", status: "Active", Created: "14/11/2023" },
@@ -25,6 +28,7 @@ const columns = [
 ]
 
 export default function HomeBanner() {
+    const navigate = useNavigate();
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -34,6 +38,14 @@ export default function HomeBanner() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
+                <div className="flex items-center justify-end gap-4">
+                    <div className="flex gap-3 items-center">
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/home-banner/add')}>
+                            <CircleFadingPlus className="size-5" />
+                            <span className="max-lg:hidden uppercase"> Add</span>
+                        </Button>
+                    </div>
+                </div>
                 <CommonTable
                     columns={columns}
                     rows={banner || []}

@@ -2,7 +2,7 @@ import { Button } from "../../../..//components/ui/button";
 import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
-import { CircleFadingPlus } from "lucide-react";
+// import { CircleFadingPlus } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
@@ -24,7 +24,7 @@ const columns = [
 export default function NewsletterManagement() {
 
     const [search, setSearch] = useState("");
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     console.log("search", search);
 
     const filterData = [
@@ -58,10 +58,10 @@ export default function NewsletterManagement() {
                         />
                     </div>
                     <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/currency/add')}>
+                        {/* <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/currency/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
-                        </Button>
+                        </Button> */}
                         <CommonFiltter
                             filterData={filterData}
                             onApplyFilters={handleApplyFilters}
