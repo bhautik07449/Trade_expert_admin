@@ -57,7 +57,7 @@
     "react-router": "^6.26.1",
     "react-router-dom": "^6.26.1",
     "react-scripts": "5.0.1",
-    "recharts": "^2.12.7",
+    "recharts": "^2.15.4",
     "sweetalert2": "^11.19.1",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
