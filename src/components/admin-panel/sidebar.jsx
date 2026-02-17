@@ -33,10 +33,10 @@ export function Sidebar() {
           asChild
         >
           <a href="/" className="flex items-center gap-2">
-            <div className="w-48">
+            <div className="w-52">
               {/* Light Logo */}
               <img
-                src={AppImages.logoIconDark}
+                src={AppImages.logoIcon}
                 alt="logo"
                 className={cn(
                   sidebar?.isOpen === false
