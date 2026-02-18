@@ -2,7 +2,8 @@ import "./App.css";
 import ScrollToTop from "./hooks/ScrollToTop";
 import Router from "./router/router";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoggedIn } from "./store/slice/auth";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
   }, []);
 
   const [isLaptop, setIsLaptop] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,6 +33,9 @@ function App() {
   }, []);
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  localStorage.setItem("isLoggedIn", "true");
+  dispatch(setLoggedIn(true));
 
   return (
     <>
