@@ -6,6 +6,7 @@ import { CircleFadingPlus } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
+import { getStatusStyles } from "../../../../lib/funcation";
 
 const brands = [
     { SrNo: 1, Category: "Agri & Foods", name: "FLAVOURICA", image: "https://sourceseas.itcoders.in/img/no-image.png", status: "Active", Created: "14/11/2023" },
@@ -28,7 +29,13 @@ const columns = [
             />
         )
     },
-    { field: "status", headerName: "Status", flex: 2 },
+    {
+        field: "status", headerName: "Status", flex: 2, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+                {params.value}
+            </span>
+        )
+    },
     { field: "Created", headerName: "Created", flex: 2 },
 ]
 

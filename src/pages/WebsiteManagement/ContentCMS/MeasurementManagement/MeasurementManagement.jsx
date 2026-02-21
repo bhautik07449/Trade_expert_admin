@@ -6,6 +6,7 @@ import CommonTable from "../../../../components/widgets/common_table";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { getStatusStyles } from "../../../../lib/funcation";
 
 const Measurement = [
     { SrNo: 1, name: "JMD", description: "", status: "Active", Created: "14/11/2023" },
@@ -18,7 +19,13 @@ const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 1 },
     { field: "description", headerName: "Description", flex: 2 },
-    { field: "status", headerName: "Status", flex: 1 },
+    {
+        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+                {params.value}
+            </span>
+        )
+    },
     { field: "Created", headerName: "Created", flex: 1 }
 ]
 

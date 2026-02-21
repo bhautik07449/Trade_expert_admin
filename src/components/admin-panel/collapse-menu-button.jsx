@@ -59,7 +59,7 @@ export function CollapseMenuButton({
           variant={active ? "secondary" : "ghost"}
           className={cn(
             "w-full justify-start h-11 transition-all duration-200",
-            active && "bg-primary/10 text-primary font-medium shadow-sm"
+            active && "bg-white text-primary font-medium shadow-sm"
           )}
         >
           <div className="w-full items-center flex justify-between">
@@ -100,7 +100,7 @@ export function CollapseMenuButton({
                 variant={submenu.active ? "secondary" : "ghost"}
                 className={cn(
                   "w-full justify-start h-10 mb-0.5 transition-all duration-200",
-                  submenu.active && "bg-primary/10 text-primary font-medium shadow-sm"
+                  submenu.active && "bg-white text-primary font-medium shadow-sm"
                 )}
                 asChild
               >

@@ -3,6 +3,7 @@ import CommonTable from "../../../..//components/widgets/common_table";
 import { Button } from "../../../../components/ui/button";
 import { CircleFadingPlus } from "lucide-react";
 import { useNavigate } from "react-router";
+import { getStatusStyles } from "../../../../lib/funcation";
 
 const banner = [
     { SrNo: 1, image: "https://sourceseas.itcoders.in/files/banners/7960166ccd6317f26ed02394c926fd71.jpeg", status: "Active", Created: "14/11/2023" },
@@ -23,7 +24,13 @@ const columns = [
             />
         )
     },
-    { field: "status", headerName: "Status", flex: 1 },
+    {
+        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+                {params.value}
+            </span>
+        )
+    },
     { field: "Created", headerName: "Created", flex: 1 },
 ]
 

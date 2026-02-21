@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Editor from '../../../../common/Editor';
 import { CommonTextField } from '../../../../components/widgets/common_textField';
 
-export default function Details() {
+export default function Details({ formik }) {
     const [editorData, setEditorData] = useState('');
 
     return (
@@ -12,6 +12,9 @@ export default function Details() {
                 <CommonTextField
                     type="textarea"
                     label="Seasonal Chart"
+                    name="seasonalChart"
+                    value={formik.values.seasonalChart}
+                    onChange={formik.handleChange}
                 />
                 <Editor editorData={editorData} setEditorData={setEditorData} label="Product specific policy" />
             </div>

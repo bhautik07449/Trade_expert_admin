@@ -34,8 +34,7 @@ const Login = () => {
     const handleSubmit = async (values, { setSubmitting }) => {
         setSubmitting(true);
         try {
-            const response = true
-            // const response = await dispatch(login(values)).unwrap();
+            const response = await dispatch(login(values)).unwrap();
             if (response) {
                 localStorage.setItem("isLoggedIn", "true");
                 dispatch(setLoggedIn(true));
@@ -59,7 +58,7 @@ const Login = () => {
 
     const formik = useFormik({
         initialValues,
-        // validationSchema,
+        validationSchema,
         onSubmit: handleSubmit,
     });
 

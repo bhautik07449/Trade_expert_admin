@@ -28,7 +28,7 @@ const ImageUploadField = ({ onImageUpload, label = 'Upload Image', accept = 'ima
       />
       {preview && (
         <div className="image-preview">
-          <img src={preview} alt="Preview" className="preview-image" />
+          <img src={preview} alt="Preview" className="preview-image h-36 object-cover" />
         </div>
       )}
     </div>

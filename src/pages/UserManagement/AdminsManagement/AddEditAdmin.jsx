@@ -23,7 +23,7 @@ const AddEditAdmin = () => {
         email: list ? list?.email : "",
         phone: list ? list?.phone : "",
         password: "",
-        photo: list ? list?.photo : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/250px-Image_created_with_a_mobile_phone.png",
+        photo: list ? list?.photo : "",
         status: list ? list?.status : "active"
     };
 
@@ -50,10 +50,17 @@ const AddEditAdmin = () => {
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             setSubmitting(true);
             try {
+                const formData = new FormData();
+
+                Object.keys(values).forEach((key) => {
+                    if (values[key] !== null && values[key] !== undefined) {
+                        formData.append(key, values[key]);
+                    }
+                })
                 if (isEdit) {
-                    await Adminservice.updateAdmin(id, values)
+                    await Adminservice.updateAdmin(id, formData)
                 } else {
-                    await Adminservice.addAdmin(values);
+                    await Adminservice.addAdmin(formData);
                 }
                 resetForm()
                 navigate("/user-management/admins-management")
@@ -152,7 +159,8 @@ const AddEditAdmin = () => {
                                 error={formik.touched.password && formik.errors.password}
                             />
                         )}
-
+                    </div>
+                    <div>
                         <ImageUploadField
                             label="Upload Profile Picture"
                             onImageUpload={(file) => formik.setFieldValue("photo", file)}
@@ -161,7 +169,6 @@ const AddEditAdmin = () => {
                             <div className="text-red-500 text-sm">{formik.errors.photo}</div>
                         )}
                     </div>
-
                     <div className="flex justify-end gap-3 pt-5 border-t">
                         <CommonButton
                             type="button"

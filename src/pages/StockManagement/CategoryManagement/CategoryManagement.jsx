@@ -153,7 +153,7 @@ const CategoryManagement = () => {
             </div>
 
             <div className="mt-6">
-                <Button onClick={handleUpdate} className="bg-sky-600 hover:bg-sky-700">
+                <Button onClick={handleUpdate}>
                     Update
                 </Button>
             </div>

@@ -19,7 +19,6 @@ function App() {
   }, []);
 
   const [isLaptop, setIsLaptop] = useState(true);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleResize = () => {
@@ -33,9 +32,6 @@ function App() {
   }, []);
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
-  localStorage.setItem("isLoggedIn", "true");
-  dispatch(setLoggedIn(true));
 
   return (
     <>

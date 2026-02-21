@@ -5,6 +5,7 @@ import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import CommonTable from "../../../components/widgets/common_table";
 import { useNavigate } from "react-router";
+import { getStatusStyles } from "../../../lib/funcation";
 
 const DmrList = [
     { SrNo: "1", name: "Admin 1", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
@@ -18,7 +19,13 @@ const columns = [
     { field: "name", headerName: "name", flex: 1 },
     { field: "category", headerName: "category", flex: 1 },
     { field: "sub_category", headerName: "sub_category", flex: 1 },
-    { field: "Status", headerName: "Status", flex: 1 },
+    {
+        field: "Status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+                {params.value}
+            </span>
+        )
+    },
     { field: "Created", headerName: "Created", flex: 1 },
 ]
 

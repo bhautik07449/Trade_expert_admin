@@ -52,7 +52,7 @@ export default function ExportInvoice() {
                                     <TableCell className="text-center">
                                         <Button
                                             size="icon"
-                                            variant="ghost"
+                                            variant="action"
                                             onClick={() => navigate(`/documents/export-invoice/${item?.slug}`)}
                                         >
                                             <Plus className="h-4 w-4" />

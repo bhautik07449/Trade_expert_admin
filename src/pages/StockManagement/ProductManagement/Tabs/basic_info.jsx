@@ -5,7 +5,7 @@ import CommonButton from "../../../../components/widgets/common_button";
 import { Checkbox } from "../../../../components/ui/checkbox";
 import { Label } from "../../../../components/ui/label";
 
-export default function BasicInfo() {
+export default function BasicInfo({ formik }) {
     const Measure = [
         { label: "Kg", value: "Kg" },
         { label: "Gram", value: "Gram" },
@@ -26,9 +26,6 @@ export default function BasicInfo() {
         { label: "Fiction", value: "Fiction" },
         { label: "Non-Fiction", value: "Non-Fiction" },
     ]
-    const [category, setCategory] = useState("");
-    const [subCategory, setSubCategory] = useState("");
-    const [measure, setMeasure] = useState("");
 
     return (
         <form className="grid gap-6">
@@ -36,67 +33,73 @@ export default function BasicInfo() {
                 <CommonTextField
                     label="Name"
                     placeholder="Name"
+                    name="name"
+                    value={formik.values.name}
+                    onChange={formik.handleChange}
                 />
                 <div className="grid grid-cols-2 gap-4">
                     <CommonTextField
                         label="Price (in $ only)"
                         placeholder="Price"
+                        name="price"
+                        value={formik.values.price}
+                        onChange={formik.handleChange}
                     />
 
                     <CommonBox
                         label="Measure"
                         placeholders="Select Measure"
                         options={Measure}
-                        value={measure}
-                        onChange={setMeasure}
+                        name="measure"
+                        value={formik.values.measure}
+                        onChange={(value) => formik.setFieldValue("measure", value)}
                     />
                 </div>
                 <CommonTextField
                     label="Teriff"
                     placeholder="Teriff"
+                    name="teriff"
+                    value={formik.values.teriff}
+                    onChange={formik.handleChange}
                 />
                 <CommonTextField
                     label="Slug (URL ADDRESS)"
                     placeholder="Slug"
+                    name="slug"
+                    value={formik.values.slug}
+                    onChange={formik.handleChange}
                 />
                 <CommonBox
                     label="Category"
                     placeholders="Select Category"
                     options={Category}
-                    value={category}
-                    onChange={setCategory}
+                    name="category"
+                    value={formik.values.category}
+                    onChange={(value) => formik.setFieldValue("category", value)}
                 />
                 <CommonBox
                     label="Sub Category"
                     placeholders="Select Sub Category"
                     options={subCategories}
-                    value={subCategory}
-                    onChange={setSubCategory}
+                    name="subCategory"
+                    value={formik.values.subCategory}
+                    onChange={(value) => formik.setFieldValue("subCategory", value)}
                 />
 
                 <div className="flex justify-between">
                     <div className="flex items-center gap-2 mt-6">
-                        <Checkbox label="new-arrival-checkbox" />
+                        <Checkbox label="new-arrival-checkbox" checked={formik.values.newArrival} onChange={(e) => formik.setFieldValue("newArrival", e.target.checked)} />
                         <Label htmlFor="new-arrival-checkbox">New Arrival</Label>
                     </div>
                     <div className="flex items-center gap-2 mt-6">
-                        <Checkbox label="trending-checkbox" />
+                        <Checkbox label="trending-checkbox" checked={formik.values.trending} onChange={(e) => formik.setFieldValue("trending", e.target.checked)} />
                         <Label htmlFor="trending-checkbox">Trending</Label>
                     </div>
                     <div className="flex items-center gap-2 mt-6">
-                        <Checkbox label="featured-checkbox" />
+                        <Checkbox label="featured-checkbox" checked={formik.values.featured} onChange={(e) => formik.setFieldValue("featured", e.target.checked)} />
                         <Label htmlFor="featured-checkbox">Featured</Label>
                     </div>
                 </div>
-            </div>
-            <div className="flex justify-end gap-3 pt-5 border-t">
-                <CommonButton type="button" variant="outline">
-                    Cancel
-                </CommonButton>
-
-                <CommonButton type="submit">
-                    Save
-                </CommonButton>
             </div>
         </form>
     );

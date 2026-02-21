@@ -5,6 +5,7 @@ import { CommonTextField } from "../../../..//components/widgets/common_textFiel
 import { CircleFadingPlus } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { getStatusStyles } from "../../../../lib/funcation";
 
 const policy = [
     { SrNo: 1, name: "ISO 22000:2005", image: "https://sourceseas.itcoders.in/img/no-image.png", description: "we at sourceseas commited to deliver naturally", status: "Active", Created: "14/11/2023" },
@@ -25,7 +26,13 @@ const columns = [
         )
     },
     { field: "description", headerName: "Description", flex: 4 },
-    { field: "status", headerName: "Status", flex: 1 },
+    {
+        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+                {params.value}
+            </span>
+        )
+    },
     { field: "Created", headerName: "Created", flex: 1 },
 ]
 

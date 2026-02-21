@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import CommonButton from "../widgets/common_button";
 import CommonText from "../widgets/common_text";
 
-export function Menu({ isOpen }) {
+export function Menu({ isOpen, profile }) {
   const pathname = window.location.pathname;
   const menuList = getMenuList(pathname);
   const [openMenus, setOpenMenus] = useState({});
@@ -118,7 +118,7 @@ export function Menu({ isOpen }) {
                             variant={menu.active ? "secondary" : "ghost"}
                             className={cn(
                               "w-full justify-start h-11 mb-0.5 transition-all duration-200",
-                              menu.active && "bg-primary/10 text-primary font-medium shadow-sm"
+                              menu.active && "bg-white text-primary font-medium shadow-sm"
                             )}
                             asChild
                           >
@@ -166,7 +166,7 @@ export function Menu({ isOpen }) {
           ))}
         </ul>
 
-        <div className="w-full px-3 py-4 border-t fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+        <div className="w-full px-3 py-4 fixed bottom-0 left-0 right-0">
           <CommonButton
             onClick={handleLogout}
             variant="outline"

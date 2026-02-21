@@ -5,8 +5,61 @@ import BasicInfo from "./Tabs/basic_info";
 import SEO from "./Tabs/seo";
 import Image from "./Tabs/image";
 import Details from "./Tabs/details";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useNavigate } from "react-router";
+import CommonButton from "../../../components/widgets/common_button";
+import { useState } from "react";
 
 export default function AddProduct() {
+    const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState("basic_info");
+    console.log("activeTab", activeTab);
+
+    const initialValues = {
+        name: "",
+        price: "",
+        measure: "",
+        teriff: "",
+        slug: "",
+        category: "",
+        subCategory: "",
+        newArrival: false,
+        trending: false,
+        featured: false,
+        seasonalChart: "",
+        pageTitle: "",
+        metaKeywords: "",
+        metaDescription: "",
+    };
+
+    const formik = useFormik({
+        initialValues,
+        onSubmit: async (values, { setSubmitting, resetForm }) => {
+            setSubmitting(true);
+            try {
+                resetForm()
+                navigate("/stock-management/product_management")
+            } catch (error) {
+                console.log("error", error);
+            } finally {
+                setSubmitting(false);
+            }
+        }
+    });
+
+    const goNext = () => {
+        if (activeTab === "basic_info") setActiveTab("details");
+        else if (activeTab === "details") setActiveTab("image");
+        else if (activeTab === "image") setActiveTab("seo");
+    };
+
+    const goBack = () => {
+        if (activeTab === "seo") setActiveTab("image");
+        else if (activeTab === "image") setActiveTab("details");
+        else if (activeTab === "details") setActiveTab("basic_info");
+    };
+
     return (
         <div className="grid gap-6">
             <div className="flex justify-between items-center gap-4">
@@ -14,7 +67,7 @@ export default function AddProduct() {
                 <BackPath />
             </div>
             <Card className="p-6">
-                <Tabs defaultValue="basic_info">
+                <Tabs value={activeTab} onValueChange={(val) => setActiveTab(val)}>
                     <TabsList>
                         <TabsTrigger value="basic_info">Basic Info</TabsTrigger>
                         <TabsTrigger value="details">Details</TabsTrigger>
@@ -23,18 +76,36 @@ export default function AddProduct() {
                     </TabsList>
 
                     <TabsContent value="basic_info">
-                        <BasicInfo />
+                        <BasicInfo formik={formik} />
                     </TabsContent>
                     <TabsContent value="seo">
-                        <SEO />
+                        <SEO formik={formik} />
                     </TabsContent>
                     <TabsContent value="image">
-                        <Image />
+                        <Image formik={formik} />
                     </TabsContent>
                     <TabsContent value="details">
-                        <Details />
+                        <Details formik={formik} />
                     </TabsContent>
                 </Tabs>
+
+                <div className="flex justify-between mt-6">
+                    {activeTab !== "basic_info" && (
+                        <CommonButton type="button" onClick={goBack}>
+                            Back
+                        </CommonButton>
+                    )}
+
+                    {activeTab !== "seo" ? (
+                        <CommonButton type="button" onClick={goNext}>
+                            Next
+                        </CommonButton>
+                    ) : (
+                        <CommonButton type="submit" onClick={formik.handleSubmit}>
+                            Save Product
+                        </CommonButton>
+                    )}
+                </div>
             </Card>
         </div>
     );

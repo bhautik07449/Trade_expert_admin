@@ -5,6 +5,7 @@ import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import CommonTable from "../../../components/widgets/common_table";
 import { useNavigate } from "react-router";
+import { getStatusStyles } from "../../../lib/funcation";
 
 const categoryList = [
     { SrNo: "1", name: "Admin 1", email: "example@gmail.com", PhoneNo: "1234567889", Status: "Active", Created: "14/11/2023" },
@@ -18,14 +19,20 @@ const columns = [
     { field: "name", headerName: "name", flex: 1 },
     { field: "email", headerName: "email", flex: 1 },
     { field: "PhoneNo", headerName: "PhoneNo", flex: 1 },
-    { field: "Status", headerName: "Status", flex: 1 },
+    {
+        field: "Status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+                {params.value}
+            </span>
+        )
+    },
     { field: "Created", headerName: "Created", flex: 1 },
 ]
 const SuppliersManagement = () => {
-    
+
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
-console.log("search", search);
+    console.log("search", search);
 
     return (
         <div className="grid gap-4 lg:gap-6">

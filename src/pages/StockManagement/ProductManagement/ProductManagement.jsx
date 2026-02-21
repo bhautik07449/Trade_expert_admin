@@ -6,13 +6,20 @@ import { Button } from "../../../components/ui/button";
 import Productservice from "../../../service/product.service";
 import CommonTable from "../../../components/widgets/common_table";
 import { useNavigate } from "react-router";
+import { getStatusStyles } from "../../../lib/funcation";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "name", flex: 1 },
     { field: "email", headerName: "email", flex: 1 },
     { field: "PhoneNo", headerName: "PhoneNo", flex: 1 },
-    { field: "Status", headerName: "Status", flex: 1 },
+    {
+        field: "Status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+                {params.value}
+            </span>
+        )
+    },
     { field: "Created", headerName: "Created", flex: 1 },
 ]
 
@@ -20,7 +27,7 @@ const ProductManagement = () => {
     const [search, setSearch] = useState("");
     const [list, setList] = useState([]);
     const navigate = useNavigate();
-console.log("search", search);
+    console.log("search", search);
 
     const getList = async () => {
         try {

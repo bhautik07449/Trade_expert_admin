@@ -53,6 +53,13 @@ const Dashboard = () => {
     { name: "Mar", products: 8 },
     { name: "Apr", products: 20 },
     { name: "May", products: 18 },
+    { name: "Jun", products: 25 },
+    { name: "Jul", products: 22 },
+    { name: "Aug", products: 30 },
+    { name: "Sep", products: 28 },
+    { name: "Oct", products: 35 },
+    { name: "Nov", products: 32 },
+    { name: "Dec", products: 4 },
   ];
 
   const requestGrowth = [

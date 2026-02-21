@@ -22,8 +22,17 @@ const setDataToLocal = (data) => {
   localStorage.setItem("token", token);
 };
 
+const getProfile = async () => {
+  try {
+    const response = serverCall.get('/admin/profile')
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
 const AuthService = {
-  login
+  login, getProfile
 };
 
 export default AuthService;
