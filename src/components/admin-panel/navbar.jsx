@@ -5,20 +5,20 @@ import AuthService from "../../service/auth.service";
 // import { ModeToggle } from "../mode-toggle";
 
 export function Navbar({ title }) {
-  const [profile, setProfile] = useState({firstName: "Bhautik", lastName: "Pokal", email: "bhautik@example.com"})
+  const [profile, setProfile] = useState()
 
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     try {
-  //       const response = await AuthService.getProfile();
-  //       setProfile(response?.data);
-  //     } catch (error) {
-  //       console.error("Error fetching profile:", error);
-  //     }
-  //   }
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await AuthService.getProfile();
+        setProfile(response?.data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    }
 
-  //   fetchProfile();
-  // }, [])
+    fetchProfile();
+  }, [])
 
   return (
     <header className="sticky top-0 z-10 w-full bg-gradient-to-r from-blue-600 to-blue-500 shadow-md">
