@@ -21,7 +21,7 @@ export function Navbar({ title }) {
   }, [])
 
   return (
-    <header className="sticky top-0 z-10 w-full bg-[#2095fc]">
+    <header className="sticky top-0 z-10 w-full bg-gradient-to-r from-blue-600 to-blue-500 shadow-md">
       <div className="mx-4 sm:mx-8 flex h-14 items-center">
         <div className="flex items-center space-x-4 lg:space-x-0">
           <SheetMenu />

@@ -26,24 +26,28 @@ const Dashboard = () => {
       value: 54,
       icon: Tags,
       color: "bg-blue-100 text-blue-600",
+      border: "border-blue-500",
     },
     {
       title: "Total Products",
       value: 20,
       icon: Package,
       color: "bg-green-100 text-green-600",
+      border: "border-green-500",
     },
     {
       title: "Total Quotations",
       value: 1,
       icon: FileSpreadsheet,
       color: "bg-yellow-100 text-yellow-600",
+      border: "border-yellow-500",
     },
     {
       title: "Sample Requests",
       value: 191,
       icon: PackageSearch,
       color: "bg-purple-100 text-purple-600",
+      border: "border-purple-500",
     },
   ];
 
@@ -85,8 +89,7 @@ const Dashboard = () => {
           return (
             <Card
               key={index}
-              className="p-5 flex items-center justify-between rounded-2xl 
-                         shadow-sm hover:shadow-lg transition-all duration-300"
+              className={`p-5 flex items-center justify-between rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border-l-4 ${stat.border}`}
             >
               <div className="flex flex-col gap-1">
                 <span className="text-sm text-gray-500">

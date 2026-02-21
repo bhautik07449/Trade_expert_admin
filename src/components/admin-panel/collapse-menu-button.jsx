@@ -58,8 +58,8 @@ export function CollapseMenuButton({
         <Button
           variant={active ? "secondary" : "ghost"}
           className={cn(
-            "w-full justify-start h-11 transition-all duration-200",
-            active && "bg-white text-primary font-medium shadow-sm"
+            "w-full justify-start h-11 transition-all duration-200 hover:text-blue-400 hover:bg-slate-800",
+            active && "bg-slate-800 border-l-4 border-blue-500 text-slate-200 font-medium shadow-sm"
           )}
         >
           <div className="w-full items-center flex justify-between">
@@ -99,8 +99,8 @@ export function CollapseMenuButton({
                 key={index}
                 variant={submenu.active ? "secondary" : "ghost"}
                 className={cn(
-                  "w-full justify-start h-10 mb-0.5 transition-all duration-200",
-                  submenu.active && "bg-white text-primary font-medium shadow-sm"
+                  "w-full justify-start h-10 mb-0.5 transition-all duration-200 hover:text-blue-400 hover:bg-slate-800",
+                  submenu.active && "bg-slate-800 border-l-4 border-emerald-400 text-slate-200 font-medium shadow-sm"
                 )}
                 asChild
               >

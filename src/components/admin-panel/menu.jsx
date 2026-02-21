@@ -117,8 +117,8 @@ export function Menu({ isOpen, profile }) {
                           <Button
                             variant={menu.active ? "secondary" : "ghost"}
                             className={cn(
-                              "w-full justify-start h-11 mb-0.5 transition-all duration-200",
-                              menu.active && "bg-white text-primary font-medium shadow-sm"
+                              "w-full justify-start h-11 mb-0.5 transition-all duration-200 hover:text-blue-400 hover:bg-slate-800",
+                              menu.active && "bg-slate-800 border-l-4 border-blue-500 text-slate-200 font-medium shadow-sm"
                             )}
                             asChild
                           >
@@ -169,18 +169,17 @@ export function Menu({ isOpen, profile }) {
         <div className="w-full px-3 py-4 fixed bottom-0 left-0 right-0">
           <CommonButton
             onClick={handleLogout}
-            variant="outline"
             className={cn(
               "w-full h-11 transition-all duration-200 hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50",
               isOpen === false && "justify-center"
             )}
           >
-            <div className="w-full flex items-center justify-center gap-3">
+            <div className="w-full flex items-center justify-center gap-3 text-slate-300">
               <LogOut size={19} />
               <CommonText
                 text="Logout"
                 className={cn(
-                  "font-medium transition-all duration-300",
+                  "font-medium transition-all duration-300 text-slate-300",
                   isOpen === false ? "opacity-0 w-0 hidden" : "opacity-100"
                 )}
               />
