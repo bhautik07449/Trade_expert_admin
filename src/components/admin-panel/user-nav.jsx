@@ -2,11 +2,15 @@ import React from "react";
 import { useNavigate } from "react-router";
 import { LogOut } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { useDispatch } from "react-redux";
+import { setLoggedIn } from "../../store/slice/auth";
 
 export function UserNav({ profile }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
+    dispatch(setLoggedIn(false));
     localStorage.clear();
     navigate("/login");
   };
@@ -17,7 +21,7 @@ export function UserNav({ profile }) {
         <DropdownMenuTrigger asChild>
           <div className="flex items-center space-x-2 cursor-pointer">
             <img src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png" alt="" srcset="" className="w-8 h-8 rounded-full" />
-            <p className="capitalize font-sans">{profile?.firstName}{" "}{profile?.lastName}</p>
+            <p className="capitalize font-sans text-slate-200">{profile?.firstName}{" "}{profile?.lastName}</p>
           </div>
         </DropdownMenuTrigger>
 

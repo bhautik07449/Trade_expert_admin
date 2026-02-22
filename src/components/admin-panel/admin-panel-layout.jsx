@@ -7,9 +7,12 @@ import { useStore } from "zustand";
 import { cn } from "../../lib/utils";
 import { Outlet } from "react-router-dom";
 import { Navbar } from "./navbar";
+import { getMenuList } from "../../lib/menu-list";
 
 export default function AdminPanelLayout({ children }) {
+  const pathname = window.location.pathname;
   const sidebar = useStore(useSidebarToggle, (state) => state);
+  const list = getMenuList(pathname)
 
   if (!sidebar) return null;
 
@@ -22,7 +25,7 @@ export default function AdminPanelLayout({ children }) {
           sidebar?.isOpen === false ? "lg:ml-[90px]" : "lg:ml-72"
         )}
       >
-        <Navbar />
+        <Navbar title={list[0]?.groupLabel}/>
         <div className="p-4 lg:p-6">
           <Outlet />
         </div>

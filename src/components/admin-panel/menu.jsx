@@ -11,14 +11,18 @@ import {
 import { CollapseMenuButton } from "./collapse-menu-button";
 import { getMenuList } from "../../lib/menu-list";
 import { ScrollArea } from "../ui/scroll-area";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CommonButton from "../widgets/common_button";
 import CommonText from "../widgets/common_text";
+import { useDispatch } from "react-redux";
+import { setLoggedIn } from "../../store/slice/auth";
 
 export function Menu({ isOpen, profile }) {
   const pathname = window.location.pathname;
   const menuList = getMenuList(pathname);
   const [openMenus, setOpenMenus] = useState({});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const activeMenuKeys = {};
@@ -41,8 +45,10 @@ export function Menu({ isOpen, profile }) {
     setOpenMenus(activeMenuKeys);
   }, [pathname]);
 
-  const handleLogout = async () => {
-    console.log("Logout working");
+  const handleLogout = () => {
+    dispatch(setLoggedIn(false));
+    localStorage.clear();
+    navigate("/login");
   };
 
   const handleMenuToggle = (menuKey, parentKey = null) => {
