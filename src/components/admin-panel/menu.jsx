@@ -95,7 +95,7 @@ export function Menu({ isOpen, profile }) {
         <ul className="flex flex-col min-h-[calc(100vh-250px)] lg:min-h-[calc(100vh-170px)] items-start space-y-0.5 pb-32">
           {menuList.map(({ groupLabel, menus }, groupIndex) => (
             <li className={cn("w-full", groupLabel ? "pt-5" : "")} key={groupIndex}>
-              {(isOpen && groupLabel) || isOpen === undefined ? (
+              {/* {(isOpen && groupLabel) || isOpen === undefined ? (
                 <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-6 py-3 max-w-[248px] truncate">
                   {groupLabel}
                 </p>
@@ -112,7 +112,7 @@ export function Menu({ isOpen, profile }) {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-              ) : null}
+              ) : null} */}
 
               {menus.map((menu, menuIndex) =>
                 menu.submenus.length === 0 ? (
