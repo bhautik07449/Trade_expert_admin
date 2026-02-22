@@ -107,7 +107,7 @@ const CommonTable = ({
       <Delete
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        handleDelete={() => onDelete(selectedRow)}
+        handleDelete={() => onDelete(selectedRow?.id)}
       />
     </>
   );
