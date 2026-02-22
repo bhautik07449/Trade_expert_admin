@@ -23,9 +23,9 @@ export function SheetMenu() {
             asChild
           >
             <a href="/" className="flex items-center gap-2 mt-5">
-              <div className="w-40">
+              <div className="w-52">
                 <img
-                  src={AppImages.logoIconDark}
+                  src={AppImages.logoIcon}
                   alt="logo"
                   className="block dark:hidden"
                 />
