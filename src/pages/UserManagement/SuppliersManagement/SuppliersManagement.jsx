@@ -1,38 +1,73 @@
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import CommonTable from "../../../components/widgets/common_table";
 import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../lib/funcation";
-
-const categoryList = [
-    { SrNo: "1", name: "Admin 1", email: "example@gmail.com", PhoneNo: "1234567889", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "2", name: "Admin 2", email: "example@gmail.com", PhoneNo: "1234567889", Status: "Deactive", Created: "14/11/2023" },
-    { SrNo: "3", name: "Admin 3", email: "example@gmail.com", PhoneNo: "1234567889", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "4", name: "Admin 4", email: "example@gmail.com", PhoneNo: "1234567889", Status: "Deactive", Created: "14/11/2023" },
-]
+import Supplierservice from "../../../service/suppliers.service";
+import CustomLoader from "../../../components/widgets/custom_loader";
+import { formatDate } from "../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "name", flex: 1 },
     { field: "email", headerName: "email", flex: 1 },
-    { field: "PhoneNo", headerName: "PhoneNo", flex: 1 },
+    { field: "phone", headerName: "PhoneNo", flex: 1 },
     {
-        field: "Status", headerName: "Status", flex: 1, renderCell: (params) => (
+        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
             <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
                 {params.value}
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 const SuppliersManagement = () => {
 
     const [search, setSearch] = useState("");
+    const [list, setList] = useState([])
+    const [loder, setLoder] = useState(false);
     const navigate = useNavigate();
-    console.log("search", search);
+    console.log("search", list);
+
+    const getList = async () => {
+        setLoder(true);
+        try {
+            const res = await Supplierservice.getList();
+            if (res) {
+                const formattedData = res?.data?.map((item, index) => ({
+                    ...item,
+                    name: item?.firstName + " " + item?.lastName,
+                    SrNo: index + 1,
+                    createdAt: formatDate(item.createdAt),
+                }))
+                setList(formattedData);
+                setLoder(false);
+            }
+
+        } catch (error) {
+            console.log(error, "error");
+        } finally {
+            setLoder(false);
+        }
+    }
+
+    useEffect(() => {
+        getList()
+    }, [])
+
+    const handleDelete = async (id) => {
+        try {
+            const res = Supplierservice.deleteSupplier(id)
+            if (res) {
+                getList()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -58,16 +93,20 @@ const SuppliersManagement = () => {
                         </Button>
                     </div>
                 </div>
-
-
-                <CommonTable
-                    columns={columns}
-                    rows={categoryList || []}
-                    showEdit={true}
-                    showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
-                />
+                {loder ? (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <CustomLoader size={20} color="currentColor" />
+                    </div>
+                ) :
+                    <CommonTable
+                        columns={columns}
+                        rows={list || []}
+                        showEdit={true}
+                        showDelete={true}
+                        onEdit={() => { }}
+                        onDelete={handleDelete}
+                    />
+                }
             </Card>
         </div>
     );
