@@ -59,8 +59,15 @@ const CommonBox = ({
                       <CommandItem
                         key={option.value}
                         value={option.value}
-                        onSelect={(currentValue) => {
-                          onChange(currentValue === value ? "" : currentValue);
+                        onSelect={() => {
+                          const selectedOption = options.find(
+                            (option) => option.value === option.value
+                          );
+
+                          onChange(
+                            option.value === value ? "" : option.value
+                          );
+
                           setOpen(false);
                         }}
                       >

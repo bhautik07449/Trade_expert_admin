@@ -1,39 +1,9 @@
-import React, { useState, useCallback } from "react";
-import { Edit2, Trash2, ChevronDown, ChevronRight } from "lucide-react";
+import React, { useState, useCallback, useEffect } from "react";
+import { Edit2, Trash2, ChevronDown, ChevronRight, CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
-
-const initialCategories = [
-    {
-        id: "cat-1",
-        title: "Agri & Foods",
-        children: [
-            {
-                id: "sub-1",
-                title: "Fresh Produces",
-                children: [
-                    { id: "item-1", title: "Fresh Red Onion" },
-                    { id: "item-2", title: "Promogranate" },
-                    { id: "item-3", title: "Cavendish Banana" },
-                    { id: "item-4", title: "Fresh Tomato" },
-                ],
-            },
-            {
-                id: "sub-2",
-                title: "Grains & Pulses",
-                children: [{ id: "item-5", title: "1121-Basmati Rice" }, { id: "item-6", title: "Peanuts" }],
-            },
-            {
-                id: "sub-3",
-                title: "Dehydrated",
-                children: [
-                    { id: "item-7", title: "White Onion flakes" },
-                    { id: "item-8", title: "White Onion Powder" },
-                ],
-            },
-        ],
-    },
-    { id: "cat-2", title: "Electronics", children: [{ id: "sub-4", title: "Wired Electronics" }] },
-];
+import Categoriesservice from "../../../service/categories.service";
+import CustomLoader from "../../../components/widgets/custom_loader";
+import { useNavigate } from "react-router";
 
 const levelColors = {
     0: "bg-blue-50 border-blue-300",
@@ -54,13 +24,19 @@ const Row = ({ title, level, onEdit, onDelete, hasChildren, expanded, toggle }) 
                         className="flex items-center justify-center w-6 h-6 rounded focus:outline-none"
                         aria-label={expanded ? "Collapse" : "Expand"}
                     >
-                        {expanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                        {expanded ? (
+                            <ChevronDown className="w-4 h-4" />
+                        ) : (
+                            <ChevronRight className="w-4 h-4" />
+                        )}
                     </button>
                 ) : (
                     <div style={{ width: 24 }} />
                 )}
 
-                <span className="text-sm text-gray-800">{title}</span>
+                <span className="text-sm text-gray-800 font-medium">
+                    {title}
+                </span>
             </div>
 
             <div className="flex items-center gap-2">
@@ -68,7 +44,6 @@ const Row = ({ title, level, onEdit, onDelete, hasChildren, expanded, toggle }) 
                     onClick={onEdit}
                     className="p-1 hover:bg-gray-100 rounded-sm"
                     title="Edit"
-                    aria-label={`Edit ${title}`}
                 >
                     <Edit2 className="w-4 h-4 text-sky-600" />
                 </button>
@@ -77,7 +52,6 @@ const Row = ({ title, level, onEdit, onDelete, hasChildren, expanded, toggle }) 
                     onClick={onDelete}
                     className="p-1 hover:bg-gray-100 rounded-sm"
                     title="Delete"
-                    aria-label={`Delete ${title}`}
                 >
                     <Trash2 className="w-4 h-4 text-red-600" />
                 </button>
@@ -88,14 +62,18 @@ const Row = ({ title, level, onEdit, onDelete, hasChildren, expanded, toggle }) 
 
 const CategoryNode = ({ node, level = 0, onEdit, onDelete }) => {
     const [expanded, setExpanded] = useState(true);
-    const hasChildren = Array.isArray(node.children) && node.children.length > 0;
 
-    const toggle = useCallback(() => setExpanded((s) => !s), []);
+    const hasChildren =
+        Array.isArray(node.children) && node.children.length > 0;
+
+    const toggle = useCallback(() => {
+        setExpanded((prev) => !prev);
+    }, []);
 
     return (
         <div>
             <Row
-                title={node.title}
+                title={node.name}
                 level={level}
                 hasChildren={hasChildren}
                 expanded={expanded}
@@ -107,7 +85,13 @@ const CategoryNode = ({ node, level = 0, onEdit, onDelete }) => {
             {hasChildren && expanded && (
                 <div>
                     {node.children.map((child) => (
-                        <CategoryNode key={child.id} node={child} level={level + 1} onEdit={onEdit} onDelete={onDelete} />
+                        <CategoryNode
+                            key={child.id}
+                            node={child}
+                            level={level + 1}
+                            onEdit={onEdit}
+                            onDelete={onDelete}
+                        />
                     ))}
                 </div>
             )}
@@ -116,47 +100,79 @@ const CategoryNode = ({ node, level = 0, onEdit, onDelete }) => {
 };
 
 const CategoryManagement = () => {
-    const [categories, setCategories] = useState(initialCategories);
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const handleEdit = (node) => {
-        console.log("Edit", node);
+    const navigate = useNavigate();
+
+    const getList = async () => {
+        try {
+            setLoading(true);
+            const response = await Categoriesservice.getList();
+
+            setCategories(response?.data || []);
+        } catch (error) {
+            console.log("Error fetching categories:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleDelete = (nodeToDelete) => {
-        const deleteRec = (items) =>
-            items
-                .map((it) => {
-                    if (it.id === nodeToDelete.id) return null;
-                    if (it.children) {
-                        const newChildren = deleteRec(it.children).filter(Boolean);
-                        return { ...it, children: newChildren };
-                    }
-                    return it;
-                })
-                .filter(Boolean);
+    useEffect(() => {
+        getList();
+    }, []);
 
-        setCategories((prev) => deleteRec(prev));
+    const handleEdit = (node) => {
+        console.log("Edit:", node);
+    };
+
+    const handleDelete = async (nodeToDelete) => {
+        try {
+            const res = await Categoriesservice.deleteCat(nodeToDelete?.id)
+            if (res) {
+                getList()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
     };
 
     const handleUpdate = () => {
-        console.log("Update categories payload:", categories);
+        console.log("Updated Categories Payload:", categories);
     };
 
     return (
-        <div className="">
-            <h2 className="h4-bold">Category Management</h2>
-
-            <div className="space-y-2 p-4">
-                {categories.map((cat) => (
-                    <CategoryNode key={cat.id} node={cat} onEdit={handleEdit} onDelete={handleDelete} />
-                ))}
+        <div>
+            <div className="flex justify-between items-center">
+                <h2 className="h4-bold mb-4">Category Management</h2>
+                <div>
+                    <Button className="flex items-center gap-2" onClick={() => navigate('/stock-management/category-management/add')}>
+                        <CircleFadingPlus className="size-5" />
+                        <span className="max-lg:hidden uppercase"> Add</span>
+                    </Button>
+                </div>
             </div>
 
-            <div className="mt-6">
-                <Button onClick={handleUpdate}>
-                    Update
-                </Button>
-            </div>
+            {loading ? (
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <CustomLoader size={20} color="currentColor" />
+                </div>
+            ) : (
+                <div className="space-y-2 p-4">
+                    {categories.length > 0 ? (
+                        categories.map((cat) => (
+                            <CategoryNode
+                                key={cat.id}
+                                node={cat}
+                                onEdit={handleEdit}
+                                onDelete={handleDelete}
+                            />
+                        ))
+                    ) : (
+                        <p className="text-gray-400">No categories found</p>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

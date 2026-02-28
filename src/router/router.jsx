@@ -64,6 +64,7 @@ import NonGSTInvoice from "../pages/Document/DomesticInvoice/NonGSTInvoice/NonGS
 import ExportInvoice from "../pages/Document/ExportInvoice/ExportInvoice";
 import Inprogress from "../pages/Inprogress";
 import DocumentRenderer from "../pages/Document/ExportInvoice/DocumentRenderer";
+import AddCategory from "../pages/StockManagement/CategoryManagement/AddCategory";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -122,6 +123,11 @@ const routes = (isLoggedIn) => [
       {
         element: <CategoryManagement />,
         path: "/stock-management/category-management",
+        index: true,
+      },
+      {
+        element: <AddCategory />,
+        path: "/stock-management/category-management/:type",
         index: true,
       },
       {
