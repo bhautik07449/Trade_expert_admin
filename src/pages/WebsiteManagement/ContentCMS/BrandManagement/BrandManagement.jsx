@@ -3,21 +3,16 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
 import { getStatusStyles } from "../../../../lib/funcation";
-
-const brands = [
-    { SrNo: 1, Category: "Agri & Foods", name: "FLAVOURICA", image: "https://sourceseas.itcoders.in/img/no-image.png", status: "Active", Created: "14/11/2023" },
-    { SrNo: 2, Category: "Agri & Foods", name: "FLAVOURICA", image: "https://sourceseas.itcoders.in/img/no-image.png", status: "Deactive", Created: "14/11/2023" },
-    { SrNo: 3, Category: "Agri & Foods", name: "FLAVOURICA", image: "https://sourceseas.itcoders.in/img/no-image.png", status: "Active", Created: "14/11/2023" },
-    { SrNo: 4, Category: "Agri & Foods", name: "FLAVOURICA", image: "https://sourceseas.itcoders.in/img/no-image.png", status: "Deactive", Created: "14/11/2023" },
-]
+import Brandservice from "../../../../service/brands.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
-    { field: "Category", headerName: "Category", flex: 2 },
+    { field: "category", headerName: "Category", flex: 2 },
     { field: "name", headerName: "Name", flex: 2 },
     {
         field: "image", headerName: "Image", flex: 2,
@@ -36,13 +31,35 @@ const columns = [
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 2 },
+    { field: "createdAt", headerName: "Created", flex: 2 },
 ]
 
 export default function BrandManagement() {
     const [search, setSearch] = useState("");
+    const [list, setList] = useState([])
     const navigate = useNavigate();
     console.log("search", search);
+
+    const getList = async () => {
+        try {
+            const res = await Brandservice.getList()
+            if (res) {
+                const formattedData = res?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    category: item?.category?.name,
+                    createdAt: formatDate(item?.lastUpdatedAt),
+                }))
+                setList(formattedData)
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        getList()
+    }, [])
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
@@ -55,6 +72,17 @@ export default function BrandManagement() {
 
     const handleClearFilters = () => {
         console.log("Filters Cleared");
+    }
+
+    const handledelete = async (id) => {
+        try {
+            const res = await Brandservice.deleteBrand(id)
+            if (res) {
+                getList()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
     }
 
     return (
@@ -90,11 +118,11 @@ export default function BrandManagement() {
 
                 <CommonTable
                     columns={columns}
-                    rows={brands || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
                     onEdit={() => { }}
-                    onDelete={() => { }}
+                    onDelete={handledelete}
                     rowHeight={80}
                 />
             </Card>
