@@ -237,7 +237,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddBrandManagement />,
-        path: "/website-management/content/brands/:type",
+        path: "/website-management/content/brands/add",
+        index: true,
+      },
+      {
+        element: <AddBrandManagement />,
+        path: "/website-management/content/brands/:id",
         index: true,
       },
       {

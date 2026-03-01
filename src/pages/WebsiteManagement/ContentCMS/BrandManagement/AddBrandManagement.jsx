@@ -10,9 +10,12 @@ import { fetchFlatCategories } from "../../../../store/slice/categoriesSlice";
 import Brandservice from "../../../../service/brands.service";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 export default function AddBrandManagement() {
+    const [list, setList] = useState()
+    const {id} = useParams();
+
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
@@ -20,6 +23,22 @@ export default function AddBrandManagement() {
         dispatch(fetchFlatCategories());
     }, []);
 
+    const getList = async (id) => {
+        try {
+            const res = await Brandservice.getById(id)
+            if (res) {
+                setList(res?.data)
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        if (id) {
+            getList(id)
+        }
+    }, [])
 
     const { flatList, loading } = useSelector(
         (state) => state.categories
@@ -33,11 +52,11 @@ export default function AddBrandManagement() {
     }, [flatList]);
 
     const initialValues = {
-        name: "",
-        description: "",
-        logo: "",
-        category: "",
-        status: "active"
+        name: list?.name ? list?.name : "",
+        description: list?.description ? list?.description : "",
+        logo: list?.logo ? list?.logo : "",
+        category: list?.category ? list?.category?.id : "",
+        status: list?.status ? list?.status : "active"
     };
 
     const validationSchema = Yup.object().shape({
@@ -51,7 +70,7 @@ export default function AddBrandManagement() {
     const formik = useFormik({
         initialValues,
         enableReinitialize: true,
-        // validationSchema,
+        validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             console.log("values", values);
 
@@ -69,7 +88,13 @@ export default function AddBrandManagement() {
                     payload.category = { id: values.category };
                 }
 
-                const res = await Brandservice.create(payload)
+                let res
+                if (id) {
+                    await Brandservice.update(payload, id)
+                } else {
+                    await Brandservice.create(payload)
+                }
+
                 if (res) {
                     resetForm()
                     navigate("/website-management/content/brands")
@@ -78,6 +103,7 @@ export default function AddBrandManagement() {
                 console.log("error", error);
             } finally {
                 setSubmitting(false);
+                resetForm()
             }
         }
     });
@@ -86,7 +112,7 @@ export default function AddBrandManagement() {
         <div className="grid gap-6">
             <div className="grid gap-4">
                 <BackPath />
-                <h3 className="h5-bold">Add Brand</h3>
+                <h3 className="h5-bold">{id ? "Edit" : "Add"} Brand</h3>
             </div>
 
             <Card className="p-6">
@@ -147,7 +173,7 @@ export default function AddBrandManagement() {
                         </CommonButton>
 
                         <CommonButton type="submit" disabled={formik.isSubmitting}>
-                            {formik.isSubmitting ? "Adding..." : "Add"}
+                            {formik.isSubmitting ? "Adding..." : id ? "Edit" : "Add"}
                         </CommonButton>
                     </div>
                 </form>

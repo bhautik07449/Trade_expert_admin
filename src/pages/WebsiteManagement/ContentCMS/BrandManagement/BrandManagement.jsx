@@ -18,9 +18,9 @@ const columns = [
         field: "image", headerName: "Image", flex: 2,
         renderCell: ({ row }) => (
             <img
-                src={row?.image}
+                src={row?.logo}
                 alt={row?.name}
-                className="h-16 w-16 object-cover rounded p-0.5"
+                className="h-52 w-[300px] object-fill rounded p-0.5"
             />
         )
     },
@@ -38,7 +38,7 @@ export default function BrandManagement() {
     const [search, setSearch] = useState("");
     const [list, setList] = useState([])
     const navigate = useNavigate();
-    console.log("search", search);
+    console.log("search", list);
 
     const getList = async () => {
         try {
@@ -85,6 +85,10 @@ export default function BrandManagement() {
         }
     }
 
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/brands/${row.id}`)
+    }
+
     return (
         <div className="grid gap-4 lg:gap-6">
             <div className="flex items-center justify-between gap-2">
@@ -121,7 +125,7 @@ export default function BrandManagement() {
                     rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
+                    onEdit={handleEdit}
                     onDelete={handledelete}
                     rowHeight={80}
                 />
