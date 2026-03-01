@@ -14,7 +14,7 @@ import { useNavigate, useParams } from "react-router";
 
 export default function AddBrandManagement() {
     const [list, setList] = useState()
-    const {id} = useParams();
+    const { id } = useParams();
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -81,7 +81,7 @@ export default function AddBrandManagement() {
                     name: values?.name,
                     description: values?.description,
                     logo: values?.logo,
-                    status: "active"
+                    status: values?.status
                 };
 
                 if (values.category) {
@@ -90,9 +90,9 @@ export default function AddBrandManagement() {
 
                 let res
                 if (id) {
-                    await Brandservice.update(payload, id)
+                    res = await Brandservice.update(payload, id)
                 } else {
-                    await Brandservice.create(payload)
+                    res = await Brandservice.create(payload)
                 }
 
                 if (res) {
@@ -153,7 +153,7 @@ export default function AddBrandManagement() {
                                 name="status"
                                 options={[
                                     { label: "Active", value: "active" },
-                                    { label: "Blocked", value: "blocked" }
+                                    { label: "Inactive", value: "inactive" }
                                 ]}
                                 value={formik.values.status}
                                 onChange={(value) => formik.setFieldValue("status", value)}

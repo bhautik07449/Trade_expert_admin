@@ -29,7 +29,7 @@ const create = async (payload) => {
 
 const update = async (payload, id) => {
     try {
-        const response = serverCall.put(`/brands/${id}`, payload)
+        const response = serverCall.patch(`/brands/${id}`, payload)
         return response
     } catch (error) {
         throw error
