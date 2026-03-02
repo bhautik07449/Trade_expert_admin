@@ -1,19 +1,13 @@
-import { Button } from "../../../..//components/ui/button";
+import { Button } from "../../../../components/ui/button";
 import { Card } from "../../../../components/ui/card";
-import CommonTable from "../../../..//components/widgets/common_table";
-import { CommonTextField } from "../../../..//components/widgets/common_textField";
+import CommonTable from "../../../../components/widgets/common_table";
+import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
-import { getStatusStyles } from "../../../../lib/funcation";
-
-const Currency = [
-    { SrNo: 1, name: "JMD", image: "https://sourceseas.itcoders.in/img/no-image.png", sybmol: "$", rate: "1234567889", description: "", status: "Active", Created: "14/11/2023" },
-    { SrNo: 2, name: "INR", image: "https://sourceseas.itcoders.in/img/no-image.png", sybmol: "$", rate: "1234567889", description: "", status: "Deactive", Created: "14/11/2023" },
-    { SrNo: 3, name: "SGD", image: "https://sourceseas.itcoders.in/img/no-image.png", sybmol: "$", rate: "1234567889", description: "", status: "Active", Created: "14/11/2023" },
-    { SrNo: 4, name: "AED", image: "https://sourceseas.itcoders.in/img/no-image.png", sybmol: "$", rate: "1234567889", description: "", status: "Deactive", Created: "14/11/2023" },
-]
+import Cuurrencyservice from "../../../../service/currency.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -28,22 +22,16 @@ const columns = [
             />
         )
     },
-    { field: "sybmol", headerName: "Sybmol", flex: 1 },
+    { field: "symbol", headerName: "Sybmol", flex: 1 },
     { field: "rate", headerName: "Rate", flex: 1 },
     { field: "description", headerName: "Description", flex: 1 },
-    {
-        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
-                {params.value}
-            </span>
-        )
-    },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function CurrencyManagement() {
 
     const [search, setSearch] = useState("");
+    const [list, setList] = useState([])
     const navigate = useNavigate();
     console.log("search", search);
 
@@ -51,6 +39,26 @@ export default function CurrencyManagement() {
         { type: "text", placeholder: "Name", label: "Name" },
         { type: "text", placeholder: "Rate", label: "Rate" },
     ]
+
+    const getList = async () => {
+        try {
+            const res = await Cuurrencyservice.getList()
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    createdAt: formatDate(item?.createdAt),
+                }))
+                setList(formattedData);
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        getList()
+    }, [])
 
     const handleApplyFilters = (filters) => {
         console.log("Applied Filters:", filters);
@@ -60,6 +68,21 @@ export default function CurrencyManagement() {
         console.log("Filters Cleared");
     }
 
+    const handleDelete = async (id) => {
+        try {
+            const res = await Cuurrencyservice.deleteCurrency(id)
+            if (res) {
+                navigate('/website-management/content/currency')
+                getList()
+            }
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/currency/${row.id}`)
+    }
     return (
         <div className="grid gap-4 lg:gap-6">
             <div className="flex items-center justify-between gap-2">
@@ -93,11 +116,11 @@ export default function CurrencyManagement() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Currency || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
                     rowHeight={80}
                 />
             </Card>

@@ -187,7 +187,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddCurrency />,
-        path: "/website-management/content/currency/:type",
+        path: "/website-management/content/currency/add",
+        index: true,
+      },
+      {
+        element: <AddCurrency />,
+        path: "/website-management/content/currency/:id",
         index: true,
       },
       {
