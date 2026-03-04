@@ -232,7 +232,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddQualityPolicies />,
-        path: "/website-management/content/quality-policies/:type",
+        path: "/website-management/content/quality-policies/add",
+        index: true,
+      },
+      {
+        element: <AddQualityPolicies />,
+        path: "/website-management/content/quality-policies/:id",
         index: true,
       },
       {
@@ -277,7 +282,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddBlogCategories />,
-        path: "/website-management/content/blog-categories/:type",
+        path: "/website-management/content/blog-categories/add",
+        index: true,
+      },
+      {
+        element: <AddBlogCategories />,
+        path: "/website-management/content/blog-categories/:id",
         index: true,
       },
       {
@@ -287,7 +297,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddTeamManagement />,
-        path: "/website-management/content/team/:type",
+        path: "/website-management/content/team/add",
+        index: true,
+      },
+      {
+        element: <AddTeamManagement />,
+        path: "/website-management/content/team/:id",
         index: true,
       },
       {
@@ -307,7 +322,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddClientManagement />,
-        path: "/website-management/content/client/:type",
+        path: "/website-management/content/client/add",
+        index: true,
+      },
+      {
+        element: <AddClientManagement />,
+        path: "/website-management/content/client/:id",
         index: true,
       },
       {

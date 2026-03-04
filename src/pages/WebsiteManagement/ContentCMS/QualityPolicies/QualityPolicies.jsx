@@ -3,23 +3,20 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../../lib/funcation";
-
-const policy = [
-    { SrNo: 1, name: "ISO 22000:2005", image: "https://sourceseas.itcoders.in/img/no-image.png", description: "we at sourceseas commited to deliver naturally", status: "Active", Created: "14/11/2023" },
-    { SrNo: 2, name: "FSSAI", image: "https://sourceseas.itcoders.in/img/no-image.png", description: "	we at sourceseas commited to deliver naturally", status: "Deactive", Created: "14/11/2023" },
-]
+import QualityPolicyservice from "../../../../service/qualityPolicy.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 2 },
     {
-        field: "image", headerName: "Image", flex: 2,
+        field: "logo", headerName: "Image", flex: 2,
         renderCell: ({ row }) => (
             <img
-                src={row?.image}
+                src={row?.logo}
                 alt={row?.name}
                 className="h-16 w-16 object-cover rounded p-0.5"
             />
@@ -33,13 +30,53 @@ const columns = [
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function QualityPolicies() {
     const [search, setSearch] = useState("");
+    const [list, setList] = useState([])
+
     const navigate = useNavigate();
     console.log("search", search);
+
+    const getData = async () => {
+        try {
+            const res = await QualityPolicyservice.getList();
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    createdAt: formatDate(item.createdAt),
+                }))
+                setList(formattedData);
+            }
+
+        } catch (error) {
+            console.log(error, "error");
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await QualityPolicyservice.deleteQualityPolicy(id)
+
+            if (res) {
+                getData()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/quality-policies/${row.id}`)
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -68,11 +105,11 @@ export default function QualityPolicies() {
 
                 <CommonTable
                     columns={columns}
-                    rows={policy || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
                     rowHeight={80}
                 />
             </Card>

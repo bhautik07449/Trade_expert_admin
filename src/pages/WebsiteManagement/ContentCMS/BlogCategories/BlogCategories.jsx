@@ -3,17 +3,12 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
 import { getStatusStyles } from "../../../../lib/funcation";
-
-const Currency = [
-    { SrNo: 1, name: "KYC - Know Your Commodity", status: "Active", Created: "14/11/2023" },
-    { SrNo: 2, name: "Trade Advisory", status: "Deactive", Created: "14/11/2023" },
-    { SrNo: 3, name: "Useful Resources", status: "Active", Created: "14/11/2023" },
-    { SrNo: 4, name: "Know-How of EXIM", status: "Deactive", Created: "14/11/2023" },
-]
+import Blogservice from "../../../../service/blogs.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -25,13 +20,53 @@ const columns = [
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function BlogCategories() {
+    const [list, setList] = useState([])
+
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
     console.log("search", search);
+
+    const getData = async () => {
+        try {
+            const res = await Blogservice.getBlogList();
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    createdAt: formatDate(item?.createdAt),
+                }))
+                setList(formattedData);
+            }
+
+        } catch (error) {
+            console.log(error, "error");
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await Blogservice.deleteBlog(id)
+
+            if (res) {
+                getData()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/blog-categories/${row.id}`)
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -61,11 +96,11 @@ export default function BlogCategories() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Currency || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
                 />
             </Card>
         </div>

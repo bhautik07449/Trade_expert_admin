@@ -1,33 +1,63 @@
 import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
-import { useState } from "react";
-
-const Currency = [
-    { SrNo: 1, name: "activation_mail", Subject: "Please verify your email address on {SITE_NAME}", Created: "14/11/2023" },
-    { SrNo: 2, name: "contact_us", Subject: "Contact us mail from {NAME}", Created: "14/11/2023" },
-    { SrNo: 3, name: "activation_mail", Subject: "Please verify your email address on {SITE_NAME}", Created: "14/11/2023" },
-    { SrNo: 4, name: "contact_us", Subject: "Contact us mail from {NAME}", Created: "14/11/2023" },
-    { SrNo: 5, name: "activation_mail", Subject: "Please verify your email address on {SITE_NAME}", Created: "14/11/2023" },
-    { SrNo: 6, name: "contact_us", Subject: "Contact us mail from {NAME}", Created: "14/11/2023" },
-    { SrNo: 7, name: "activation_mail", Subject: "Please verify your email address on {SITE_NAME}", Created: "14/11/2023" },
-    { SrNo: 8, name: "contact_us", Subject: "Contact us mail from {NAME}", Created: "14/11/2023" },
-    { SrNo: 9, name: "activation_mail", Subject: "Please verify your email address on {SITE_NAME}", Created: "14/11/2023" },
-    { SrNo: 10, name: "contact_us", Subject: "Contact us mail from {NAME}", Created: "14/11/2023" },
-    { SrNo: 11, name: "activation_mail", Subject: "Please verify your email address on {SITE_NAME}", Created: "14/11/2023" },
-    { SrNo: 12, name: "contact_us", Subject: "Contact us mail from {NAME}", Created: "14/11/2023" },
-]
+import { useEffect, useState } from "react";
+import Emailtemplateservice from "../../../../service/emailtemplate.service";
+import { formatDate } from "../../../../common/constants";
+import { getStatusStyles } from "../../../../lib/funcation";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
-    { field: "name", headerName: "Name", flex: 3 },
-    { field: "Subject", headerName: "Subject", flex: 5 },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "name", headerName: "Name", flex: 2 },
+    { field: "subject", headerName: "Subject", flex: 6 },
+    {
+        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+                {params.value}
+            </span>
+        )
+    },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function EmailTemplate() {
+    const [list, setList] = useState([])
     const [search, setSearch] = useState("");
     console.log("search", search);
+
+    const getData = async () => {
+        try {
+            const res = await Emailtemplateservice.getList();
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    createdAt: formatDate(item?.createdAt),
+                }))
+                setList(formattedData);
+            }
+
+        } catch (error) {
+            console.log(error, "error");
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await Emailtemplateservice.deleteEmailtemplate(id)
+
+            if (res) {
+                getData()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -51,11 +81,11 @@ export default function EmailTemplate() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Currency || []}
-                    showEdit={true}
+                    rows={list || []}
+                    showEdit={false}
                     showDelete={true}
                     onEdit={() => { }}
-                    onDelete={() => { }}
+                    onDelete={handleDelete}
                 />
             </Card>
         </div>
