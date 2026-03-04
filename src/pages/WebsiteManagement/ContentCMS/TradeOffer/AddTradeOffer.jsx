@@ -13,7 +13,6 @@ import Tradeofferservice from "../../../../service/tradeoffer.service";
 
 export default function AddTradeOffer() {
     const { id } = useParams()
-    const [type, setType] = useState("");
     const [data, setData] = useState()
 
     const dispatch = useDispatch();

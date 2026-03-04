@@ -3,32 +3,48 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
-
-const Currency = [
-    { SrNo: 1, Trade_Offer: "Affiliate (Commition) Agent Proposal", name: "direct submit", email: "dev@gmail.com", Phone: "1234567889", Message: "become exclisive message", Created: "14/11/2023" },
-    { SrNo: 2, Trade_Offer: "Affiliate (Commition) Agent Proposal", name: "direct submit", email: "dev@gmail.com", Phone: "1234567889", Message: "become exclisive message", Created: "14/11/2023" },
-    { SrNo: 3, Trade_Offer: "Affiliate (Commition) Agent Proposal", name: "direct submit", email: "dev@gmail.com", Phone: "1234567889", Message: "become exclisive message", Created: "14/11/2023" },
-    { SrNo: 4, Trade_Offer: "Affiliate (Commition) Agent Proposal", name: "direct submit", email: "dev@gmail.com", Phone: "1234567889", Message: "become exclisive message", Created: "14/11/2023" },
-]
+import Traderequestservice from "../../../../service/traderequest.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
-    { field: "Trade_Offer", headerName: "Trade Offer", flex: 3 },
+    { field: "trade_offer", headerName: "Trade Offer", flex: 3 },
     { field: "name", headerName: "Name", flex: 2 },
     { field: "email", headerName: "Email", flex: 2 },
-    { field: "Phone", headerName: "Phone", flex: 2 },
-    { field: "Message", headerName: "Message", flex: 3 },
-    { field: "Created", headerName: "Created", flex: 2 },
+    { field: "phone", headerName: "Phone", flex: 2 },
+    { field: "message", headerName: "Message", flex: 3 },
+    { field: "createdAt", headerName: "Created", flex: 2 },
 ]
 
 export default function OfferRequest() {
-
+    const [list, setList] = useState([])
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
     console.log("search", search);
+
+    const getList = async () => {
+        try {
+            const res = await Traderequestservice.getList()
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    trade_offer: item?.trade_offer?.name,
+                    createdAt: formatDate(item?.createdAt),
+                }))
+                setList(formattedData)
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        getList()
+    }, [])
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
@@ -41,6 +57,21 @@ export default function OfferRequest() {
 
     const handleClearFilters = () => {
         console.log("Filters Cleared");
+    }
+
+    const handledelete = async (id) => {
+        try {
+            const res = await Traderequestservice.deleteTraderequest(id)
+            if (res) {
+                getList()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/offer_req/${row.id}`)
     }
 
     return (
@@ -76,11 +107,11 @@ export default function OfferRequest() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Currency || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handledelete}
                 />
             </Card>
         </div>

@@ -382,7 +382,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddOfferRequest />,
-        path: "/website-management/content/offer_req/:type",
+        path: "/website-management/content/offer_req/add",
+        index: true,
+      },
+      {
+        element: <AddOfferRequest />,
+        path: "/website-management/content/offer_req/:id",
         index: true,
       },
       {
