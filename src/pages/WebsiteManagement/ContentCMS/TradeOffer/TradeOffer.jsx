@@ -3,38 +3,54 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
 import { getStatusStyles } from "../../../../lib/funcation";
-
-const Offer_Type = [
-    { SrNo: 1, Trade_Type: "Whooping Trade Deals on Stock-lots", name: "Whooping Trade Deals on Stock-lots", Description: "This is for testing. ", Status: "active", Created: "14/11/2023" },
-    { SrNo: 2, Trade_Type: "Whooping Trade Deals on Stock-lots", name: "Whooping Trade Deals on Stock-lots", Description: "This is for testing. ", Status: "active", Created: "14/11/2023" },
-    { SrNo: 3, Trade_Type: "Whooping Trade Deals on Stock-lots", name: "Whooping Trade Deals on Stock-lots", Description: "This is for testing. ", Status: "active", Created: "14/11/2023" },
-    { SrNo: 4, Trade_Type: "Whooping Trade Deals on Stock-lots", name: "Whooping Trade Deals on Stock-lots", Description: "This is for testing. ", Status: "active", Created: "14/11/2023" },
-]
+import Tradeofferservice from "../../../../service/tradeoffer.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
-    { field: "Trade_Type", headerName: "Trade Type", flex: 3 },
+    { field: "trade_type", headerName: "Trade Type", flex: 3 },
     { field: "name", headerName: "Name", flex: 2 },
-    { field: "Description", headerName: "Description", flex: 3 },
+    { field: "description", headerName: "Description", flex: 3 },
     {
-        field: "Status", headerName: "Status", flex: 1, renderCell: (params) => (
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
                 {params.value}
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function TradeOffer() {
-
+    const [list, setList] = useState([])
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
     console.log("search", search);
+
+    const getList = async () => {
+        try {
+            const res = await Tradeofferservice.getList()
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    trade_type: item?.trade_type?.name,
+                    createdAt: formatDate(item?.createdAt),
+                }))
+                setList(formattedData)
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        getList()
+    }, [])
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
@@ -47,6 +63,21 @@ export default function TradeOffer() {
 
     const handleClearFilters = () => {
         console.log("Filters Cleared");
+    }
+
+    const handledelete = async (id) => {
+        try {
+            const res = await Tradeofferservice.deleteTradeoffer(id)
+            if (res) {
+                getList()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/trade-offer/${row.id}`)
     }
 
     return (
@@ -82,11 +113,11 @@ export default function TradeOffer() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Offer_Type || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handledelete}
                 />
             </Card>
         </div>

@@ -93,7 +93,6 @@ export default function TestimonialManagement() {
         navigate(`/website-management/content/testinomial/${row.id}`)
     }
 
-
     return (
         <div className="grid gap-4 lg:gap-6">
             <div className="flex items-center justify-between gap-2">

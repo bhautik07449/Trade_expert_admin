@@ -3,28 +3,62 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-
-const Offer_Type = [
-    { SrNo: 1, name: "Whooping Trade Deals on Stock-lots", Created: "14/11/2023", Updated: "14/11/2023" },
-    { SrNo: 2, name: "Whooping Trade Deals on Stock-lots", Created: "14/11/2023", Updated: "14/11/2023" },
-    { SrNo: 3, name: "Whooping Trade Deals on Stock-lots", Created: "14/11/2023", Updated: "14/11/2023" },
-    { SrNo: 4, name: "Whooping Trade Deals on Stock-lots", Created: "14/11/2023", Updated: "14/11/2023" },
-]
+import Tradetypeservice from "../../../../service/tradetype.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 4 },
-    { field: "Created", headerName: "Created", flex: 1 },
-    { field: "Updated", headerName: "Updated", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
+    { field: "lastUpdatedAt", headerName: "Updated", flex: 1 },
 ]
 
 export default function OfferType() {
-
+    const [list, setList] = useState([])
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
     console.log("search", search);
+
+    const getData = async () => {
+        try {
+            const res = await Tradetypeservice.getList();
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    lastUpdatedAt: formatDate(item?.lastUpdatedAt),
+                    createdAt: formatDate(item?.createdAt),
+                }))
+                setList(formattedData);
+            }
+
+        } catch (error) {
+            console.log(error, "error");
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await Tradetypeservice.deleteTradetype(id)
+
+            if (res) {
+                getData()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/offer-type/${row.id}`)
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -54,11 +88,11 @@ export default function OfferType() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Offer_Type || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
                 />
             </Card>
         </div>

@@ -352,7 +352,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddOfferType />,
-        path: "/website-management/content/offer-type/:type",
+        path: "/website-management/content/offer-type/add",
+        index: true,
+      },
+      {
+        element: <AddOfferType />,
+        path: "/website-management/content/offer-type/:id",
         index: true,
       },
       {
@@ -362,7 +367,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddTradeOffer />,
-        path: "/website-management/content/trade-offer/:type",
+        path: "/website-management/content/trade-offer/add",
+        index: true,
+      },
+      {
+        element: <AddTradeOffer />,
+        path: "/website-management/content/trade-offer/:id",
         index: true,
       },
       {
