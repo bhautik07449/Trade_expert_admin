@@ -4,9 +4,11 @@ import { Card } from "../../../../components/ui/card";
 import CommonFiltter from "../../../../components/widgets/common_filter";
 import CommonTable from "../../../../components/widgets/common_table";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../../lib/funcation";
+import Measurementsservice from "../../../../service/measurements.service";
+import { formatDate } from "../../../../common/constants";
 
 const Measurement = [
     { SrNo: 1, name: "JMD", description: "", status: "Active", Created: "14/11/2023" },
@@ -26,11 +28,13 @@ const columns = [
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 1 }
+    { field: "createdAt", headerName: "Created", flex: 1 }
 ]
 
 export default function MeasurementManagement() {
     const [search, setSearch] = useState("");
+    const [list, setList] = useState([])
+
     const navigate = useNavigate();
     console.log("search", search);
 
@@ -39,12 +43,51 @@ export default function MeasurementManagement() {
         { type: "text", placeholder: "Rate", label: "Rate" },
     ]
 
+    const getData = async () => {
+        try {
+            const res = await Measurementsservice.getList();
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    createdAt: formatDate(item.createdAt),
+                }))
+                setList(formattedData);
+            }
+
+        } catch (error) {
+            console.log(error, "error");
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+
     const handleApplyFilters = (filters) => {
         console.log("Applied Filters:", filters);
     }
 
     const handleClearFilters = () => {
         console.log("Filters Cleared");
+    }
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await Measurementsservice.deleteMeasurements(id)
+
+            if (res) {
+                getData()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/measurement/${row.id}`)
     }
 
     return (
@@ -80,11 +123,11 @@ export default function MeasurementManagement() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Measurement || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
                 />
             </Card>
         </div>

@@ -202,7 +202,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddMeasurement />,
-        path: "/website-management/content/measurement/:type",
+        path: "/website-management/content/measurement/add",
+        index: true,
+      },
+      {
+        element: <AddMeasurement />,
+        path: "/website-management/content/measurement/:id",
         index: true,
       },
       {
@@ -212,7 +217,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddPageManagement />,
-        path: "/website-management/content/pages/:type",
+        path: "/website-management/content/pages/add",
+        index: true,
+      },
+      {
+        element: <AddPageManagement />,
+        path: "/website-management/content/pages/:id",
         index: true,
       },
       {
