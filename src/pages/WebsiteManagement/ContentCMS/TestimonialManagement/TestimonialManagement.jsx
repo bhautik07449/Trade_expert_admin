@@ -3,17 +3,12 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
 import { getStatusStyles } from "../../../../lib/funcation";
-
-const Currency = [
-    { SrNo: 1, name: "Joymagti bay", image: "https://sourceseas.itcoders.in/img/no-image.png", Email: "joymagtibay@alnaslllc.com", Review: "Amazing...", status: "Active", Created: "14/11/2023" },
-    { SrNo: 2, name: "Joymagti bay", image: "https://sourceseas.itcoders.in/img/no-image.png", Email: "joymagtibay@alnaslllc.com", Review: "Amazing...", status: "Deactive", Created: "14/11/2023" },
-    { SrNo: 3, name: "Joymagti bay", image: "https://sourceseas.itcoders.in/img/no-image.png", Email: "joymagtibay@alnaslllc.com", Review: "Amazing...", status: "Active", Created: "14/11/2023" },
-    { SrNo: 4, name: "Joymagti bay", image: "https://sourceseas.itcoders.in/img/no-image.png", Email: "joymagtibay@alnaslllc.com", Review: "Amazing...", status: "Deactive", Created: "14/11/2023" },
-]
+import Testimonialservice from "../../../../service/testimonial.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -28,8 +23,8 @@ const columns = [
         )
     },
     { field: "name", headerName: "Name", flex: 1 },
-    { field: "Email", headerName: "Email", flex: 2 },
-    { field: "Review", headerName: "Review", flex: 2 },
+    { field: "email", headerName: "Email", flex: 2 },
+    { field: "review", headerName: "Review", flex: 2 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
             <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
@@ -37,14 +32,38 @@ const columns = [
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function TestimonialManagement() {
-
+    const [list, setList] = useState([])
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
     console.log("search", search);
+
+    const getList = async () => {
+        try {
+            const res = await Testimonialservice.getList()
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    image: item?.client?.image,
+                    name: item?.client?.first_name + " " + item?.client?.last_name,
+                    email: item?.client?.email,
+                    category: item?.category?.name,
+                    createdAt: formatDate(item?.lastUpdatedAt),
+                }))
+                setList(formattedData)
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        getList()
+    }, [])
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
@@ -58,6 +77,22 @@ export default function TestimonialManagement() {
     const handleClearFilters = () => {
         console.log("Filters Cleared");
     }
+
+    const handledelete = async (id) => {
+        try {
+            const res = await Testimonialservice.deleteTestimonial(id)
+            if (res) {
+                getList()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/testinomial/${row.id}`)
+    }
+
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -92,11 +127,11 @@ export default function TestimonialManagement() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Currency || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handledelete}
                     rowHeight={80}
                 />
             </Card>

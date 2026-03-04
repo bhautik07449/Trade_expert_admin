@@ -337,7 +337,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddTestimonialManagement />,
-        path: "/website-management/content/testinomial/:type",
+        path: "/website-management/content/testinomial/add",
+        index: true,
+      },
+      {
+        element: <AddTestimonialManagement />,
+        path: "/website-management/content/testinomial/:id",
         index: true,
       },
       {
