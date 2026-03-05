@@ -3,17 +3,12 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
 import { getStatusStyles } from "../../../../lib/funcation";
-
-const Currency = [
-    { SrNo: 1, name: "JMD", image: "https://sourceseas.itcoders.in/img/no-image.png", description: "", status: "Active", Created: "14/11/2023" },
-    { SrNo: 2, name: "INR", image: "https://sourceseas.itcoders.in/img/no-image.png", description: "", status: "Deactive", Created: "14/11/2023" },
-    { SrNo: 3, name: "SGD", image: "https://sourceseas.itcoders.in/img/no-image.png", description: "", status: "Active", Created: "14/11/2023" },
-    { SrNo: 4, name: "AED", image: "https://sourceseas.itcoders.in/img/no-image.png", description: "", status: "Deactive", Created: "14/11/2023" },
-]
+import Galleryservice from "../../../../service/gallery.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -29,21 +24,57 @@ const columns = [
             />
         )
     },
+    { field: "sr_no", headerName: "Position", flex: 1 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
                 {params.value}
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function Gallery() {
-
+    const [list, setList] = useState([])
     const [search, setSearch] = useState("");
+
     const navigate = useNavigate();
-    console.log("search", search);
+
+    const getList = async () => {
+        try {
+            const res = await Galleryservice.getList()
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    createdAt: formatDate(item?.createdAt),
+                }))
+                setList(formattedData)
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        getList()
+    }, [])
+
+    const handledelete = async (id) => {
+        try {
+            const res = await Galleryservice.deleteGallery(id)
+            if (res) {
+                getList()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/gallery/${row.id}`)
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -72,11 +103,11 @@ export default function Gallery() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Currency || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handledelete}
                     rowHeight={80}
                 />
             </Card>

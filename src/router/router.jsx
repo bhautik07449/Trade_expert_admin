@@ -412,7 +412,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddCertificationSliderManagement />,
-        path: "/website-management/content/certification-slider/:type",
+        path: "/website-management/content/certification-slider/add",
+        index: true,
+      },
+      {
+        element: <AddCertificationSliderManagement />,
+        path: "/website-management/content/certification-slider/:id",
         index: true,
       },
       {
@@ -422,7 +427,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddGallery />,
-        path: "/website-management/content/gallery/:type",
+        path: "/website-management/content/gallery/add",
+        index: true,
+      },
+      {
+        element: <AddGallery />,
+        path: "/website-management/content/gallery/:id",
         index: true,
       },
       {
@@ -432,7 +442,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddFAQ />,
-        path: "/website-management/content/faq/:type",
+        path: "/website-management/content/faq/add",
+        index: true,
+      },
+      {
+        element: <AddFAQ />,
+        path: "/website-management/content/faq/:id",
         index: true,
       },
       {

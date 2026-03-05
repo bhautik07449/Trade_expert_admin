@@ -2,36 +2,70 @@ import { Button } from "../../../..//components/ui/button";
 import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../../lib/funcation";
-
-const Currency = [
-    { SrNo: 1, Title: "JMD", Answer: "sourceseas.itcoders.in", status: "Active", Created: "14/11/2023" },
-    { SrNo: 2, Title: "INR", Answer: "sourceseas.itcoders.in", status: "Deactive", Created: "14/11/2023" },
-    { SrNo: 3, Title: "SGD", Answer: "sourceseas.itcoders.in", status: "Active", Created: "14/11/2023" },
-    { SrNo: 4, Title: "AED", Answer: "sourceseas.itcoders.in", status: "Deactive", Created: "14/11/2023" },
-]
+import Faqservice from "../../../../service/faq.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
-    { field: "Title", headerName: "Title", flex: 3 },
-    { field: "Answer", headerName: "Answer", flex: 3 },
+    { field: "title", headerName: "Title", flex: 3 },
+    {
+        field: "answer", headerName: "Answer", flex: 3, renderCell: (params) => (
+            <div
+                dangerouslySetInnerHTML={{ __html: params.value }}
+            />
+        )
+    },
     {
         field: "status", headerName: "status", flex: 1, renderCell: (params) => (
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
                 {params.value}
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function FAQ() {
-
-    const [search, setSearch] = useState("");
+    const [list, setList] = useState([])
     const navigate = useNavigate();
-    console.log("search", search);
+
+    const getList = async () => {
+        try {
+            const res = await Faqservice.getList()
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    createdAt: formatDate(item?.createdAt),
+                }))
+                setList(formattedData)
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        getList()
+    }, [])
+
+    const handledelete = async (id) => {
+        try {
+            const res = await Faqservice.deleteFaq(id)
+            if (res) {
+                getList()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/faq/${row.id}`)
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -52,11 +86,11 @@ export default function FAQ() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Currency || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handledelete}
                 />
             </Card>
         </div>
