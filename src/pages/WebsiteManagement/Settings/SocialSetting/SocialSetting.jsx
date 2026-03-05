@@ -1,52 +1,86 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommonButton from "../../../../components/widgets/common_button";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { Card } from "../../../../components/ui/card";
 import BackPath from "../../../../components/common/BackPath";
 import { Switch } from "../../../../components/ui/switch";
 import { Label } from "../../../../components/ui/label";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import Settingservice from "../../../../service/setting.service";
 
 const SOCIALS = [
   { key: "facebook", label: "Facebook", placeholder: "https://facebook.com/username" },
   { key: "twitter", label: "Twitter", placeholder: "https://twitter.com/username" },
   { key: "instagram", label: "Instagram", placeholder: "https://instagram.com/username" },
-  { key: "google", label: "Google+", placeholder: "https://linkedin.com/in/username" },
-  { key: "linkedin", label: "LinkedIn", placeholder: "https://linkedin.com/in/username" },
-  { key: "youTube", label: "YouTube", placeholder: "https://twitter.com/username" },
-  { key: "pinterest", label: "Pinterest", placeholder: "https://instagram.com/username" },
+  { key: "google", label: "Google+", placeholder: "https://google.com" },
+  { key: "linkedIn", label: "LinkedIn", placeholder: "https://linkedin.com/in/username" },
+  { key: "youtube", label: "YouTube", placeholder: "https://youtube.com/channel" },
+  { key: "pinterest", label: "Pinterest", placeholder: "https://pinterest.com/username" },
 ];
 
 export default function SocialSetting() {
-  const [socials, setSocials] = useState({
-    facebook: { enabled: true, link: "http://www.facebook.com/sourceseas" },
-    twitter: { enabled: true, link: "http://www.twitter.com/sourceseas" },
-    instagram: { enabled: true, link: "http://www.instagram.com/sourceseas" },
-    google: { enabled: true, link: "http://www.google.com/sourceseas" },
-    linkedin: { enabled: true, link: "http://www.inkedin.com/sourceseas" },
-    youTube: { enabled: true, link: "http://www.youtube.com/sourceseas" },
-    pinterest: { enabled: true, link: "http://www.pinterest.com/sourceseas" },
+
+  const [data, setData] = useState({});
+
+  const initialValues = {
+    facebook: data?.facebook || "",
+    twitter: data?.twitter || "",
+    instagram: data?.instagram || "",
+    google: data?.google || "",
+    linkedIn: data?.linkedIn || "",
+    youtube: data?.youtube || "",
+    pinterest: data?.pinterest || ""
+  };
+
+  const validationSchema = Yup.object({
+    facebook: Yup.string().url("Enter valid URL"),
+    twitter: Yup.string().url("Enter valid URL"),
+    instagram: Yup.string().url("Enter valid URL"),
+    google: Yup.string().url("Enter valid URL"),
+    linkedIn: Yup.string().url("Enter valid URL"),
+    youTube: Yup.string().url("Enter valid URL"),
+    pinterest: Yup.string().url("Enter valid URL")
   });
 
-  const toggleSocial = (key, value) => {
-    setSocials(prev => ({
-      ...prev,
-      [key]: {
-        ...prev[key],
-        enabled: value,
-        link: value ? prev[key].link : "",
-      },
-    }));
+  const formik = useFormik({
+    initialValues,
+    enableReinitialize: true,
+    validationSchema,
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+
+        const res = await Settingservice.updateSocial(values);
+
+        if (res) {
+          getData();
+        }
+
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setSubmitting(false);
+      }
+    }
+  });
+
+  const getData = async () => {
+    try {
+
+      const res = await Settingservice.getSocial();
+
+      if (res) {
+        setData(res?.data);
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const updateLink = (key, value) => {
-    setSocials(prev => ({
-      ...prev,
-      [key]: {
-        ...prev[key],
-        link: value,
-      },
-    }));
-  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="grid gap-6">
@@ -56,32 +90,39 @@ export default function SocialSetting() {
       </div>
 
       <Card className="p-6">
-        <form className="grid gap-6">
+        <form className="grid gap-6" onSubmit={formik.handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {SOCIALS.map(({ key, label, placeholder }) => {
-              const isEnabled = socials[key].enabled;
+              const enabled = !!formik.values[key];
 
               return (
                 <div
                   key={key}
-                  className={`rounded-lg border p-4 transition ${isEnabled ? "bg-background" : "bg-muted/40"
-                    }`}
+                  className={`rounded-lg border p-4 ${enabled ? "bg-background" : "bg-muted/40"}`}
                 >
                   <div className="flex items-center justify-between">
-                    <Label className="font-medium">{label}</Label>
+                    <Label>{label}</Label>
+
                     <Switch
-                      checked={isEnabled}
-                      onCheckedChange={(val) => toggleSocial(key, val)}
+                      checked={enabled}
+                      onCheckedChange={(val) => {
+                        if (!val) {
+                          formik.setFieldValue(key, "");
+                        }
+                      }}
                     />
                   </div>
 
-                  {isEnabled && (
+                  {enabled && (
                     <div className="mt-4">
                       <CommonTextField
                         label={`${label} Link`}
                         placeholder={placeholder}
-                        value={socials[key].link}
-                        onChange={(e) => updateLink(key, e.target.value)}
+                        name={key}
+                        value={formik.values[key]}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={formik.touched[key] && formik.errors[key]}
                       />
                     </div>
                   )}
@@ -89,10 +130,12 @@ export default function SocialSetting() {
               );
             })}
           </div>
-
-          <div className="flex justify-end gap-3 pt-4 border-t">
-            <CommonButton type="submit">Save Changes</CommonButton>
+          <div className="flex justify-end pt-4 border-t">
+            <CommonButton type="submit" disabled={formik.isSubmitting}>
+              {formik.isSubmitting ? "Saving..." : "Save Changes"}
+            </CommonButton>
           </div>
+
         </form>
       </Card>
     </div>
