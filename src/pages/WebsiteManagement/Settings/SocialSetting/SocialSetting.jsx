@@ -20,7 +20,7 @@ const SOCIALS = [
 ];
 
 export default function SocialSetting() {
-
+  const [enabledSocials, setEnabledSocials] = useState({});
   const [data, setData] = useState({});
 
   const initialValues = {
@@ -39,7 +39,7 @@ export default function SocialSetting() {
     instagram: Yup.string().url("Enter valid URL"),
     google: Yup.string().url("Enter valid URL"),
     linkedIn: Yup.string().url("Enter valid URL"),
-    youTube: Yup.string().url("Enter valid URL"),
+    youtube: Yup.string().url("Enter valid URL"),
     pinterest: Yup.string().url("Enter valid URL")
   });
 
@@ -70,7 +70,16 @@ export default function SocialSetting() {
       const res = await Settingservice.getSocial();
 
       if (res) {
-        setData(res?.data);
+        const socialData = res?.data;
+
+        setData(socialData);
+
+        const enabled = {};
+        SOCIALS.forEach(({ key }) => {
+          enabled[key] = !!socialData?.[key];
+        });
+
+        setEnabledSocials(enabled);
       }
 
     } catch (error) {
@@ -81,6 +90,18 @@ export default function SocialSetting() {
   useEffect(() => {
     getData();
   }, []);
+
+  const handleSwitchChange = (key, checked) => {
+
+    setEnabledSocials((prev) => ({
+      ...prev,
+      [key]: checked
+    }));
+
+    if (!checked) {
+      formik.setFieldValue(key, "");
+    }
+  };
 
   return (
     <div className="grid gap-6">
@@ -93,7 +114,7 @@ export default function SocialSetting() {
         <form className="grid gap-6" onSubmit={formik.handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {SOCIALS.map(({ key, label, placeholder }) => {
-              const enabled = !!formik.values[key];
+              const enabled = enabledSocials[key] || false;
 
               return (
                 <div
@@ -105,11 +126,7 @@ export default function SocialSetting() {
 
                     <Switch
                       checked={enabled}
-                      onCheckedChange={(val) => {
-                        if (!val) {
-                          formik.setFieldValue(key, "");
-                        }
-                      }}
+                      onCheckedChange={(val) => handleSwitchChange(key, val)}
                     />
                   </div>
 
