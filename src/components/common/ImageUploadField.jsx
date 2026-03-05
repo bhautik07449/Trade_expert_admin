@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ImageUploadService from '../../service/imageupload.service';
 
-const ImageUploadField = ({ onImageUpload, label = 'Upload Image', accept = 'image/*'}) => {
+const ImageUploadField = ({
+  onImageUpload,
+  value,
+  label = 'Upload Image',
+  accept = 'image/*'
+}) => {
+
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (value) {
+      setPreview(value);
+    }
+  }, [value]);
 
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
@@ -16,14 +28,12 @@ const ImageUploadField = ({ onImageUpload, label = 'Upload Image', accept = 'ima
         formData.append('image', file);
 
         const response = await ImageUploadService.imageUpload(formData);
-
         const imageUrl = response?.data?.url;
 
         if (imageUrl) {
           setPreview(imageUrl);
 
           if (onImageUpload) {
-            
             onImageUpload(imageUrl);
           }
         }

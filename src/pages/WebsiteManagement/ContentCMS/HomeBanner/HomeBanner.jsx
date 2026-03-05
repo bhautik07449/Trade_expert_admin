@@ -4,13 +4,9 @@ import { CircleFadingPlus } from "lucide-react";
 import { useNavigate } from "react-router";
 import { Button } from "../../../..//components/ui/button";
 import { getStatusStyles } from "../../../../lib/funcation";
-
-const banner = [
-    { SrNo: 1, image: "https://sourceseas.itcoders.in/files/banners/721ee4ac936571761f89d287fd45dbbc.jpeg", status: "Active", Created: "14/11/2023" },
-    { SrNo: 2, image: "https://sourceseas.itcoders.in/files/banners/721ee4ac936571761f89d287fd45dbbc.jpeg", status: "Deactive", Created: "14/11/2023" },
-    { SrNo: 3, image: "https://sourceseas.itcoders.in/files/banners/721ee4ac936571761f89d287fd45dbbc.jpeg", status: "Active", Created: "14/11/2023" },
-    { SrNo: 4, image: "https://sourceseas.itcoders.in/files/banners/721ee4ac936571761f89d287fd45dbbc.jpeg", status: "Deactive", Created: "14/11/2023" },
-]
+import { useEffect, useState } from "react";
+import Homebannerservice from "../../../../service/homebanner.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -26,16 +22,52 @@ const columns = [
     },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
                 {params.value}
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function HomeBanner() {
     const navigate = useNavigate();
+    const [list, setList] = useState([])
+
+    const getList = async () => {
+        try {
+            const res = await Homebannerservice.getList()
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    createdAt: formatDate(item?.createdAt),
+                }))
+                setList(formattedData)
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        getList()
+    }, [])
+
+    const handledelete = async (id) => {
+        try {
+            const res = await Homebannerservice.deleteHomeBanner(id)
+            if (res) {
+                getList()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/home-banner/${row.id}`)
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -55,11 +87,11 @@ export default function HomeBanner() {
                 </div>
                 <CommonTable
                     columns={columns}
-                    rows={banner || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handledelete}
                     rowHeight={300}
                     tableHeight="600px"
                 />

@@ -138,9 +138,11 @@ export default function AddQualityPolicies() {
                                 error={formik.touched.name && formik.errors.name}
                             />
                             <div className="space-y-5">
-                                <ImageUploadField onImageUpload={(url) => {
-                                    formik.setFieldValue("logo", url);
-                                }} />
+                                <ImageUploadField
+                                    value={formik.values.logo}
+                                    onImageUpload={(url) => {
+                                        formik.setFieldValue("logo", url);
+                                    }} />
                             </div>
                             <CommonTextField
                                 label="Description"

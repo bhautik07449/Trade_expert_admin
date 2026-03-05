@@ -161,9 +161,11 @@ export default function AddBrandManagement() {
                             />
                         </div>
                         <div className="space-y-5">
-                            <ImageUploadField onImageUpload={(url) => {
-                                formik.setFieldValue("logo", url);
-                            }} />
+                            <ImageUploadField
+                                value={formik.values.logo}
+                                onImageUpload={(url) => {
+                                    formik.setFieldValue("logo", url);
+                                }} />
                         </div>
                     </div>
 

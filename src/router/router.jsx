@@ -397,7 +397,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddHomeBanner />,
-        path: "/website-management/content/home-banner/:type",
+        path: "/website-management/content/home-banner/add",
+        index: true,
+      },
+      {
+        element: <AddHomeBanner />,
+        path: "/website-management/content/home-banner/:id",
         index: true,
       },
       {

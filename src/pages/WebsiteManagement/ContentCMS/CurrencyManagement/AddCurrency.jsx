@@ -125,9 +125,11 @@ export default function AddCurrency() {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.description && formik.errors.description}
                             />
-                            <ImageUploadField onImageUpload={(url) => {
-                                formik.setFieldValue("image", url);
-                            }} />
+                            <ImageUploadField
+                                value={formik.values.image}
+                                onImageUpload={(url) => {
+                                    formik.setFieldValue("image", url);
+                                }} />
                         </div>
                     </div>
 

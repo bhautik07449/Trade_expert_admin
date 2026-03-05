@@ -126,9 +126,11 @@ export default function AddClientManagement() {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.phone && formik.errors.phone}
                             />
-                            <ImageUploadField onImageUpload={(url) => {
-                                formik.setFieldValue("image", url);
-                            }} />
+                            <ImageUploadField
+                                value={formik.values.image}
+                                onImageUpload={(url) => {
+                                    formik.setFieldValue("image", url);
+                                }} />
                         </div>
                     </div>
 
