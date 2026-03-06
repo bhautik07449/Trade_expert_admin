@@ -107,7 +107,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddEditSuppliers />,
-        path: "/user-management/suppliers-management/:type",
+        path: "/user-management/suppliers-management/add",
+        index: true,
+      },
+      {
+        element: <AddEditSuppliers />,
+        path: "/user-management/suppliers-management/:id",
         index: true,
       },
       {

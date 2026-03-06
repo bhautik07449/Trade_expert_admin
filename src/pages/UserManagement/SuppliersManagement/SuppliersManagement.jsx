@@ -60,13 +60,17 @@ const SuppliersManagement = () => {
 
     const handleDelete = async (id) => {
         try {
-            const res = Supplierservice.deleteSupplier(id)
+            const res = await Supplierservice.deleteSupplier(id)
             if (res) {
                 getList()
             }
         } catch (error) {
             console.log("error", error);
         }
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/user-management/suppliers-management/${row?.id}`)
     }
 
     return (
@@ -103,7 +107,7 @@ const SuppliersManagement = () => {
                         rows={list || []}
                         showEdit={true}
                         showDelete={true}
-                        onEdit={() => { }}
+                        onEdit={handleEdit}
                         onDelete={handleDelete}
                     />
                 }

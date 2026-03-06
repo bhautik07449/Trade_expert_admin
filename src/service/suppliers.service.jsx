@@ -29,7 +29,7 @@ const addSuppliers = async (body) => {
 
 const updateSuppliers = async (body, id) => {
     try {
-        const response = serverCall.post(`/suppliers/${id}`, body)
+        const response = serverCall.patch(`/suppliers/${id}`, body)
         return response
     } catch (error) {
         throw error

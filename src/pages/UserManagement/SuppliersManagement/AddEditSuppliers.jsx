@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CommonButton from "../../../components/widgets/common_button";
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import BackPath from "../../../components/common/BackPath";
@@ -6,32 +6,35 @@ import { Card } from "../../../components/ui/card";
 import CommonBox from "../../../components/common/common_box";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Supplierservice from "../../../service/suppliers.service";
 
 const AddEditSuppliers = () => {
+    const [data, setData] = useState([])
+
     const roles = [
         { label: "Manufacturer", value: "Manufacturer" },
         { label: "Trader", value: "Trader" },
         { label: "Agent", value: "Agent" },
     ];
 
+    const { id } = useParams()
     const navigate = useNavigate()
 
     const initialValues = {
-        firstName: "",
-        lastName: "",
-        firmName: "",
-        email: "",
-        website: "",
-        phone: "",
-        city: "",
-        state: "",
-        address: "",
-        supplierType: "",
-        productCategory: "",
-        products: "",
-        productStatus: "",
+        firstName: data ? data?.firstName : "",
+        lastName: data ? data?.lastName : "",
+        firmName: data ? data?.firmName : "",
+        email: data ? data?.email : "",
+        website: data ? data?.website : "",
+        phone: data ? data?.phone : "",
+        city: data ? data?.city : "",
+        state: data ? data?.state : "",
+        address: data ? data?.address : "",
+        supplierType: data ? data?.supplierType : "",
+        productCategory: data ? data?.productCategory : "",
+        products: data ? data?.products : "",
+        productStatus: data ? data?.productStatus : "",
     };
 
     const validationSchema = Yup.object().shape({
@@ -59,7 +62,14 @@ const AddEditSuppliers = () => {
 
             setSubmitting(true);
             try {
-                const response = await Supplierservice.addSuppliers(values)
+                let response
+
+                if (id) {
+                    response = await Supplierservice.updateSuppliers(values, id)
+                } else {
+                    response = await Supplierservice.addSuppliers(values)
+                }
+
                 if (response) {
                     navigate("/user-management/suppliers-management")
                 }
@@ -71,11 +81,31 @@ const AddEditSuppliers = () => {
         }
     });
 
+
+    useEffect(() => {
+        const getData = async (id) => {
+            try {
+                const res = await Supplierservice.getById(id);
+                if (res) {
+                    const data = res?.data
+                    setData(data)
+                }
+
+            } catch (error) {
+                console.log(error, "error");
+            }
+        }
+
+        if (id) {
+            getData(id)
+        }
+    }, [id])
+
     return (
         <div className="grid gap-6">
             <div className="grid gap-4">
                 <BackPath />
-                <h3 className="h5-bold">Add Supplier</h3>
+                <h3 className="h5-bold">{id ? "Edit" : "Add"} Supplier</h3>
             </div>
 
             <Card className="p-6">
