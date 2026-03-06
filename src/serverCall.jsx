@@ -18,10 +18,15 @@ const requestHandler = (request) => {
 };
 
 const responseHandler = (response) => {
-  if (response.status === 401 || response.status === 403) {
+  if (response.status === 401 || response.status === 403 || response.status === 400) {
     localStorage.clear();
     window.location.replace("/login");
   }
+
+  if (response.status === 500) {
+    alert("Server is down")
+  }
+
   return response;
 };
 
