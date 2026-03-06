@@ -36,8 +36,17 @@ const updateAdmin = async (id, adminData) => {
     }
 }
 
+const deleteAdmin = async (id) => {
+    try {
+        const response = serverCall.delete(`/admin/${id}`)
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
 const Adminservice = {
-    getAdmin, addAdmin, getAdminByid, updateAdmin
+    getAdmin, addAdmin, getAdminByid, updateAdmin, deleteAdmin
 };
 
 export default Adminservice;

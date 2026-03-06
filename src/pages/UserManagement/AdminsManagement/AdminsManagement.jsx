@@ -55,6 +55,19 @@ const AdminsManagement = () => {
         navigate(`/user-management/admins-management/edit/${row?.id}`)
     }
 
+    const handleDelete = async (id) => {
+        try {
+            const res = await Adminservice.deleteAdmin(id)
+
+            if (res) {
+                getUserData()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+
+    }
+
     return (
         <div className="grid gap-4 lg:gap-6">
             <div className="flex items-center justify-between gap-2">
@@ -92,7 +105,7 @@ const AdminsManagement = () => {
                         showEdit={true}
                         showDelete={true}
                         onEdit={(row) => { handleEdit(row) }}
-                        onDelete={() => { }}
+                        onDelete={handleDelete}
                     />
                 }
             </Card>

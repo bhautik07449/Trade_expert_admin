@@ -50,17 +50,11 @@ const AddEditAdmin = () => {
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             setSubmitting(true);
             try {
-                const formData = new FormData();
 
-                Object.keys(values).forEach((key) => {
-                    if (values[key] !== null && values[key] !== undefined) {
-                        formData.append(key, values[key]);
-                    }
-                })
                 if (isEdit) {
-                    await Adminservice.updateAdmin(id, formData)
+                    await Adminservice.updateAdmin(id, values)
                 } else {
-                    await Adminservice.addAdmin(formData);
+                    await Adminservice.addAdmin(values);
                 }
                 resetForm()
                 navigate("/user-management/admins-management")
@@ -162,9 +156,10 @@ const AddEditAdmin = () => {
                     </div>
                     <div>
                         <ImageUploadField
-                            label="Upload Profile Picture"
-                            onImageUpload={(file) => formik.setFieldValue("photo", file)}
-                        />
+                            value={formik.values.photo}
+                            onImageUpload={(url) => {
+                                formik.setFieldValue("photo", url);
+                            }} />
                         {formik.touched.photo && formik.errors.photo && (
                             <div className="text-red-500 text-sm">{formik.errors.photo}</div>
                         )}
