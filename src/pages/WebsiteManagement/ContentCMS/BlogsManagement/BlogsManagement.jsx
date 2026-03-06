@@ -3,28 +3,23 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
 import { getStatusStyles } from "../../../../lib/funcation";
-
-const Currency = [
-    { SrNo: 1, Post_Date: "14/11/2023", Blog_Category: "", name: "How to make shipment planning", image: "https://sourceseas.itcoders.in/img/no-image.png", Blog_Title: "How to create shipment Planning", status: "Active", Created: "14/11/2023" },
-    { SrNo: 2, Post_Date: "14/11/2023", Blog_Category: "", name: "How to make shipment planning", image: "https://sourceseas.itcoders.in/img/no-image.png", Blog_Title: "How to create shipment Planning", status: "Deactive", Created: "14/11/2023" },
-    { SrNo: 3, Post_Date: "14/11/2023", Blog_Category: "", name: "How to make shipment planning", image: "https://sourceseas.itcoders.in/img/no-image.png", Blog_Title: "How to create shipment Planning", status: "Active", Created: "14/11/2023" },
-    { SrNo: 4, Post_Date: "14/11/2023", Blog_Category: "", name: "How to make shipment planning", image: "https://sourceseas.itcoders.in/img/no-image.png", Blog_Title: "How to create shipment Planning", status: "Deactive", Created: "14/11/2023" },
-]
+import Blogservice from "../../../../service/blogs.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
-    { field: "Post_Date", headerName: "Post Date", flex: 1 },
-    { field: "Blog_Category", headerName: "Blog Category", flex: 1 },
+    { field: "postDate", headerName: "Post Date", flex: 1 },
+    { field: "blog_category", headerName: "Blog Category", flex: 1 },
     { field: "name", headerName: "Name", flex: 3 },
     {
-        field: "image", headerName: "Photo", flex: 1,
+        field: "slider", headerName: "Photo", flex: 1,
         renderCell: ({ row }) => (
             <img
-                src={row?.image}
+                src={row?.slider}
                 alt={row?.name}
                 className="h-16 w-16 object-cover rounded p-0.5"
             />
@@ -37,14 +32,56 @@ const columns = [
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function BlogsManagement() {
 
+    const [list, setList] = useState([])
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
     console.log("search", search);
+
+    const getData = async () => {
+        try {
+            const res = await Blogservice.getList();
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    postDate: formatDate(item?.postDate),
+                    blog_category: item?.blog_category?.name,
+                    lastUpdatedAt: formatDate(item?.lastUpdatedAt),
+                    createdAt: formatDate(item?.createdAt),
+                }))
+                setList(formattedData);
+            }
+
+        } catch (error) {
+            console.log(error, "error");
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await Blogservice.deleteblog(id)
+
+            if (res) {
+                getData()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/blogs/${row.id}`)
+    }
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
@@ -92,11 +129,11 @@ export default function BlogsManagement() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Currency || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
                     rowHeight={80}
                 />
             </Card>

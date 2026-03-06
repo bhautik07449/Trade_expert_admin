@@ -272,7 +272,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddBlogsManagement />,
-        path: "/website-management/content/blogs/:type",
+        path: "/website-management/content/blogs/add",
+        index: true,
+      },
+      {
+        element: <AddBlogsManagement />,
+        path: "/website-management/content/blogs/:id",
         index: true,
       },
       {

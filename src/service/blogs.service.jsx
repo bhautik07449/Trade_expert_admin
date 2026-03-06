@@ -45,8 +45,53 @@ const deleteBlog = async (id) => {
     }
 }
 
+const getList = async () => {
+    try {
+        const response = serverCall.get('/blogs')
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
+const getById = async (id) => {
+    try {
+        const response = serverCall.get(`/blogs/${id}`)
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
+const addblog = async (body) => {
+    try {
+        const response = await serverCall.post('/blogs', body);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const updateblog = async (id, body) => {
+    try {
+        const response = await serverCall.patch(`/blogs/${id}`, body);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const deleteblog = async (id) => {
+    try {
+        const response = await serverCall.delete(`/blogs/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const Blogservice = {
-    getBlogList, addBlog, getBlogByid, updateBlog, deleteBlog
+    getBlogList, addBlog, getBlogByid, updateBlog, deleteBlog, getList, addblog, getById, updateblog, deleteblog
 };
 
 export default Blogservice;
