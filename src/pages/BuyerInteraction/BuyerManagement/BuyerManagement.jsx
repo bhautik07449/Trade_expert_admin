@@ -104,7 +104,7 @@ export default function BuyerManagement() {
                 <CommonTable
                     columns={columns}
                     rows={list || []}
-                    showEdit={true}
+                    showEdit={false}
                     showDelete={true}
                     onEdit={() => { }}
                     onDelete={handleDelete}
