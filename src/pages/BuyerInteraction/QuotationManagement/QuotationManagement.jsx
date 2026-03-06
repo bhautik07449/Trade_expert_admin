@@ -1,16 +1,10 @@
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CommonTable from "../../../components/widgets/common_table";
 import ExportData from "../../../components/widgets/export_data";
 import CommonFiltter from "../../../components/widgets/common_filter";
-
-const DmrList = [
-    { SrNo: "1", name: "Admin 1", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "2", name: "Admin 2", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Deactive", Created: "14/11/2023" },
-    { SrNo: "3", name: "Admin 3", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "4", name: "Admin 4", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Deactive", Created: "14/11/2023" },
-]
+import Buyerinteractionservice from "../../../service/buyerinteraction.service";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -24,6 +18,27 @@ const columns = [
 export default function QuotationManagement() {
     const [search, setSearch] = useState("");
     console.log("search", search);
+
+    const [list, setList] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await Buyerinteractionservice.getQuotation();
+                if (response && response.data) {
+                    const formattedData = response?.data?.data?.map((item, index) => ({
+                        ...item,
+                        SrNo: index + 1,
+                        lastUpdatedAt: new Date(item.lastUpdatedAt).toLocaleDateString(),
+                    }));
+                    setList(formattedData);
+                }
+            } catch (error) {
+                console.error("Error fetching buyer list:", error);
+            }
+        }
+        fetchData();
+    }, [])
 
     const filterData = [
         { type: "text", placeholder: "Buyer Name", label: "Buyer Name" },
@@ -58,7 +73,7 @@ export default function QuotationManagement() {
                     </div>
                     <div className="flex gap-4">
                         <ExportData
-                            data={DmrList}
+                            data={list}
                             fileName="quotation_data.xlsx"
                         />
                         <CommonFiltter
@@ -71,7 +86,7 @@ export default function QuotationManagement() {
 
                 <CommonTable
                     columns={columns}
-                    rows={DmrList || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
                     onEdit={() => { }}

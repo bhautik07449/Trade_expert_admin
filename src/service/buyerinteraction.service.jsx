@@ -1,0 +1,43 @@
+import serverCall from "../serverCall";
+
+const getQuotation = async () => {
+    try {
+        const response = serverCall.get('/quotation')
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
+const getRequestsample = async () => {
+    try {
+        const response = serverCall.get('/requestsamples')
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
+const getInquiry = async () => {
+    try {
+        const response = serverCall.get('/inquiry')
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
+const getContact = async () => {
+    try {
+        const response = serverCall.get('/contact')
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
+const Buyerinteractionservice = {
+    getQuotation, getRequestsample, getInquiry, getContact
+};
+
+export default Buyerinteractionservice;
