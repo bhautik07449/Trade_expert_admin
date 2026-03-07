@@ -3,15 +3,18 @@ import BackPath from "../../../components/common/BackPath";
 import CommonBox from "../../../components/common/common_box";
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import CommonButton from "../../../components/widgets/common_button";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Categoriesservice from "../../../service/categories.service";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { fetchFlatCategories } from "../../../store/slice/categoriesSlice";
 
 export default function AddCategory() {
+    const { id } = useParams()
+    const [data, setData] = useState()
+
     const navigate = useNavigate()
 
     const dispatch = useDispatch();
@@ -21,13 +24,13 @@ export default function AddCategory() {
     }, []);
 
     const initialValues = {
-        name: "",
-        slug: "",
-        pageTitle: "",
-        metaKeyword: "",
-        metaDescription: "",
-        parent: "",
-        status: "active"
+        name: data ? data?.name : "",
+        slug: data ? data?.slug : "",
+        pageTitle: data ? data?.pageTitle : "",
+        metaKeyword: data ? data?.metaKeyword : "",
+        metaDescription: data ? data?.metaDescription : "",
+        parent: data ? data?.parent?.id : "",
+        status: data ? data?.status : "active"
     };
 
     const validationSchema = Yup.object().shape({
@@ -45,7 +48,7 @@ export default function AddCategory() {
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             console.log("values", values);
-            
+
             setSubmitting(true);
             try {
 
@@ -62,7 +65,14 @@ export default function AddCategory() {
                     payload.parent = { id: values.parent };
                 }
 
-                const res = await Categoriesservice.create(payload);
+                let res
+
+                if (id) {
+                    res = await Categoriesservice.update(payload, id)
+                } else {
+                    res = await Categoriesservice.create(payload);
+                }
+
                 if (res) {
                     resetForm()
                     navigate("/stock-management/category-management")
@@ -86,11 +96,29 @@ export default function AddCategory() {
         }));
     }, [flatList]);
 
+    const getData = async (id) => {
+        try {
+            const res = await Categoriesservice.getById(id)
+
+            if (res) {
+                setData(res?.data)
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        if (id) {
+            getData(id)
+        }
+    }, [id])
+
     return (
         <div className="grid gap-6">
             <div className="grid gap-4">
                 <BackPath />
-                <h3 className="h5-bold">Add Category</h3>
+                <h3 className="h5-bold">{id ? "Edit" : "Add"} Category</h3>
             </div>
 
             <Card className="p-6">

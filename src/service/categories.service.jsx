@@ -9,6 +9,15 @@ const getList = async () => {
     }
 }
 
+const getById = async (id) => {
+    try {
+        const response = serverCall.get(`/categories/${id}`)
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
 const getFlat = async () => {
     try {
         const response = serverCall.get('/categories/flat')
@@ -29,7 +38,7 @@ const create = async (payload) => {
 
 const update = async (payload, id) => {
     try {
-        const response = serverCall.put(`/categories/${id}`, payload)
+        const response = serverCall.patch(`/categories/${id}`, payload)
         return response
     } catch (error) {
         throw error
@@ -46,7 +55,7 @@ const deleteCat = async (id) => {
 }
 
 const Categoriesservice = {
-    getList, create, update, deleteCat, getFlat
+    getList, create, update, deleteCat, getFlat, getById
 };
 
 export default Categoriesservice;

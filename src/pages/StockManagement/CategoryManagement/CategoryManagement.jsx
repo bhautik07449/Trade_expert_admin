@@ -123,7 +123,7 @@ const CategoryManagement = () => {
     }, []);
 
     const handleEdit = (node) => {
-        console.log("Edit:", node);
+        navigate(`/stock-management/category-management/${node?.id}`)
     };
 
     const handleDelete = async (nodeToDelete) => {
@@ -135,10 +135,6 @@ const CategoryManagement = () => {
         } catch (error) {
             console.log("error", error);
         }
-    };
-
-    const handleUpdate = () => {
-        console.log("Updated Categories Payload:", categories);
     };
 
     return (

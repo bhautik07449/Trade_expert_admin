@@ -137,7 +137,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddCategory />,
-        path: "/stock-management/category-management/:type",
+        path: "/stock-management/category-management/add",
+        index: true,
+      },
+      {
+        element: <AddCategory />,
+        path: "/stock-management/category-management/:id",
         index: true,
       },
       {
