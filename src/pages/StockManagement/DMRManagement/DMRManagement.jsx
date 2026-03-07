@@ -1,18 +1,13 @@
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CircleFadingPlus } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import CommonTable from "../../../components/widgets/common_table";
 import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../lib/funcation";
-
-const DmrList = [
-    { SrNo: "1", name: "Admin 1", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "2", name: "Admin 2", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Deactive", Created: "14/11/2023" },
-    { SrNo: "3", name: "Admin 3", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "4", name: "Admin 4", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Deactive", Created: "14/11/2023" },
-]
+import DMRservice from "../../../service/dmr.service";
+import { formatDate } from "../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -20,19 +15,58 @@ const columns = [
     { field: "category", headerName: "category", flex: 1 },
     { field: "sub_category", headerName: "sub_category", flex: 1 },
     {
-        field: "Status", headerName: "Status", flex: 1, renderCell: (params) => (
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
                 {params.value}
             </span>
         )
     },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 const DMRManagement = () => {
     const [search, setSearch] = useState("");
+    const [list, setList] = useState([])
     console.log("search", search);
     const navigate = useNavigate();
+
+    const getData = async () => {
+        try {
+            const res = await DMRservice.getList()
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    category: item?.category?.name,
+                    sub_category: item?.subcategory?.name,
+                    createdAt: formatDate(item?.lastUpdatedAt),
+                }))
+                setList(formattedData);
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await DMRservice.deleteDMR(id)
+
+            if (res) {
+                getData()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/stock-management/dmr-management/${row?.id}`)
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -62,11 +96,11 @@ const DMRManagement = () => {
 
                 <CommonTable
                     columns={columns}
-                    rows={DmrList || []}
+                    rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
                 />
             </Card>
         </div>

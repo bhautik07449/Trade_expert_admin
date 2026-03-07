@@ -152,7 +152,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddDMR />,
-        path: "/stock-management/dmr-management/:type",
+        path: "/stock-management/dmr-management/add",
+        index: true,
+      },
+      {
+        element: <AddDMR />,
+        path: "/stock-management/dmr-management/:id",
         index: true,
       },
       {
