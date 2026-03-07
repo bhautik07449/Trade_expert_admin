@@ -13,10 +13,23 @@ export const fetchFlatCategories = createAsyncThunk(
     }
 );
 
+export const fetchCategories = createAsyncThunk(
+    "categories/fetchAll",
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await serverCall.get("/categories");
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || "Error");
+        }
+    }
+);
+
 const categoriesSlice = createSlice({
     name: "categories",
     initialState: {
         flatList: [],
+        categories: [],
         loading: false,
         error: null,
     },
@@ -32,6 +45,18 @@ const categoriesSlice = createSlice({
                 state.flatList = action.payload;
             })
             .addCase(fetchFlatCategories.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
+
+            .addCase(fetchCategories.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchCategories.fulfilled, (state, action) => {
+                state.loading = false;
+                state.categories = action.payload;
+            })
+            .addCase(fetchCategories.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });

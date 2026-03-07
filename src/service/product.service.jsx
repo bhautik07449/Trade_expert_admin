@@ -18,8 +18,35 @@ const addProduct = async (payload) => {
     }
 }
 
+const getById = async (id) => {
+    try {
+        const response = await serverCall.get(`/products/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const updateProduct = async (id, body) => {
+    try {
+        const response = await serverCall.patch(`/products/${id}`, body);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const deleteProduct = async (id) => {
+    try {
+        const response = await serverCall.delete(`/products/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const Productservice = {
-    getProductList, addProduct
+    getProductList, addProduct, getById, updateProduct, deleteProduct
 };
 
 export default Productservice;

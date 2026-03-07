@@ -122,7 +122,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddProduct />,
-        path: "/stock-management/product_management/:type",
+        path: "/stock-management/product_management/add",
+        index: true,
+      },
+      {
+        element: <AddProduct />,
+        path: "/stock-management/product_management/:id",
         index: true,
       },
       {

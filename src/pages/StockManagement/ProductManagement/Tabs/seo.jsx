@@ -10,6 +10,7 @@ export default function SEO({ formik }) {
                 name="pageTitle"
                 value={formik.values.pageTitle}
                 onChange={formik.handleChange}
+                error={formik.touched.pageTitle && formik.errors.pageTitle}
             />
 
             <CommonTextField
@@ -20,6 +21,7 @@ export default function SEO({ formik }) {
                 name="metaKeywords"
                 value={formik.values.metaKeywords}
                 onChange={formik.handleChange}
+                error={formik.touched.metaKeywords && formik.errors.metaKeywords}
             />
 
             <CommonTextField
@@ -29,6 +31,7 @@ export default function SEO({ formik }) {
                 name="metaDescription"
                 value={formik.values.metaDescription}
                 onChange={formik.handleChange}
+                error={formik.touched.metaDescription && formik.errors.metaDescription}
             />
         </div>
     );

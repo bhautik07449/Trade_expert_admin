@@ -1,34 +1,40 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import CommonBox from "../../../../components/common/common_box";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
-import CommonButton from "../../../../components/widgets/common_button";
 import { Checkbox } from "../../../../components/ui/checkbox";
 import { Label } from "../../../../components/ui/label";
 
-export default function BasicInfo({ formik }) {
-    const Measure = [
-        { label: "Kg", value: "Kg" },
-        { label: "Gram", value: "Gram" },
-        { label: "Litre", value: "Litre" },
-        { label: "Millilitre", value: "Millilitre" },
-    ]
+export default function BasicInfo({ formik, categories, flatList }) {
 
-    const Category = [
-        { label: "Electronics", value: "Electronics" },
-        { label: "Apparel", value: "Apparel" },
-        { label: "Home & Kitchen", value: "Home & Kitchen" },
-        { label: "Books", value: "Books" },
-    ]
+    const categoryOptions = useMemo(() => {
+        return categories?.map((cat) => ({
+            label: cat.name,
+            value: cat.id
+        }));
+    }, [categories]);
 
-    const subCategories = [
-        { label: "Mobile Phones", value: "Mobile Phones" },
-        { label: "Laptops", value: "Laptops" },
-        { label: "Fiction", value: "Fiction" },
-        { label: "Non-Fiction", value: "Non-Fiction" },
-    ]
+    const selectedCategory = categories?.find(
+        (cat) => cat.id === formik.values.category
+    );
+
+    const subCategoryOptions = useMemo(() => {
+        if (!selectedCategory) return [];
+
+        return selectedCategory.children?.map((sub) => ({
+            label: sub.name,
+            value: sub.id
+        })) || [];
+    }, [selectedCategory]);
+
+    const massureOptions = useMemo(() => {
+        return flatList?.map((cat) => ({
+            label: cat.name,
+            value: cat.id
+        }));
+    }, [flatList])
 
     return (
-        <form className="grid gap-6">
+        <div className="grid gap-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <CommonTextField
                     label="Name"
@@ -36,6 +42,7 @@ export default function BasicInfo({ formik }) {
                     name="name"
                     value={formik.values.name}
                     onChange={formik.handleChange}
+                    error={formik.touched.name && formik.errors.name}
                 />
                 <div className="grid grid-cols-2 gap-4">
                     <CommonTextField
@@ -44,15 +51,17 @@ export default function BasicInfo({ formik }) {
                         name="price"
                         value={formik.values.price}
                         onChange={formik.handleChange}
+                        error={formik.touched.price && formik.errors.price}
                     />
 
                     <CommonBox
                         label="Measure"
                         placeholders="Select Measure"
-                        options={Measure}
+                        options={massureOptions}
                         name="measure"
                         value={formik.values.measure}
                         onChange={(value) => formik.setFieldValue("measure", value)}
+                        error={formik.touched.measure && formik.errors.measure}
                     />
                 </div>
                 <CommonTextField
@@ -61,6 +70,7 @@ export default function BasicInfo({ formik }) {
                     name="teriff"
                     value={formik.values.teriff}
                     onChange={formik.handleChange}
+                    error={formik.touched.teriff && formik.errors.teriff}
                 />
                 <CommonTextField
                     label="Slug (URL ADDRESS)"
@@ -68,39 +78,57 @@ export default function BasicInfo({ formik }) {
                     name="slug"
                     value={formik.values.slug}
                     onChange={formik.handleChange}
+                    error={formik.touched.slug && formik.errors.slug}
                 />
                 <CommonBox
                     label="Category"
                     placeholders="Select Category"
-                    options={Category}
+                    options={categoryOptions}
                     name="category"
                     value={formik.values.category}
-                    onChange={(value) => formik.setFieldValue("category", value)}
+                    onChange={(value) => {
+                        formik.setFieldValue("category", value);
+                        formik.setFieldValue("subCategory", "");
+                    }}
+                    error={formik.touched.category && formik.errors.category}
                 />
                 <CommonBox
                     label="Sub Category"
                     placeholders="Select Sub Category"
-                    options={subCategories}
+                    options={subCategoryOptions}
                     name="subCategory"
                     value={formik.values.subCategory}
                     onChange={(value) => formik.setFieldValue("subCategory", value)}
+                    error={formik.touched.subCategory && formik.errors.subCategory}
                 />
 
                 <div className="flex justify-between">
                     <div className="flex items-center gap-2 mt-6">
-                        <Checkbox label="new-arrival-checkbox" checked={formik.values.newArrival} onChange={(e) => formik.setFieldValue("newArrival", e.target.checked)} />
+                        <Checkbox
+                            id="new-arrival-checkbox"
+                            checked={formik.values.newArrival}
+                            onCheckedChange={(value) => formik.setFieldValue("newArrival", value)}
+                        />
                         <Label htmlFor="new-arrival-checkbox">New Arrival</Label>
                     </div>
                     <div className="flex items-center gap-2 mt-6">
-                        <Checkbox label="trending-checkbox" checked={formik.values.trending} onChange={(e) => formik.setFieldValue("trending", e.target.checked)} />
+                        <Checkbox
+                            id="trending-checkbox"
+                            checked={formik.values.trending}
+                            onCheckedChange={(value) => formik.setFieldValue("trending", value)}
+                        />
                         <Label htmlFor="trending-checkbox">Trending</Label>
                     </div>
                     <div className="flex items-center gap-2 mt-6">
-                        <Checkbox label="featured-checkbox" checked={formik.values.featured} onChange={(e) => formik.setFieldValue("featured", e.target.checked)} />
+                        <Checkbox
+                            id="featured-checkbox"
+                            checked={formik.values.featured}
+                            onCheckedChange={(value) => formik.setFieldValue("featured", value)}
+                        />
                         <Label htmlFor="featured-checkbox">Featured</Label>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
     );
 }

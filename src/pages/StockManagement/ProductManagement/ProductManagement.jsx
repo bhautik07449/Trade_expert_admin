@@ -12,8 +12,14 @@ import { formatDate } from "../../../common/constants";
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "name", flex: 1 },
-    { field: "description", headerName: "Description", flex: 3 },
-    { field: "tariff", headerName: "Tariff", flex: 1 },
+    {
+        field: "description", headerName: "Description", flex: 3, renderCell: (params) => (
+            <div
+                dangerouslySetInnerHTML={{ __html: params.value }}
+            />
+        )
+    },
+    { field: "teriff", headerName: "Tariff", flex: 1 },
     { field: "price", headerName: "Price", flex: 1 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
@@ -35,7 +41,7 @@ const ProductManagement = () => {
         try {
             const res = await Productservice.getProductList();
             if (res) {
-                const formattedData = res?.data?.map((item, index) => ({
+                const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
                     createdAt: formatDate(item?.lastUpdatedAt),
@@ -51,6 +57,21 @@ const ProductManagement = () => {
     useEffect(() => {
         getList()
     }, [])
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await Productservice.deleteProduct(id)
+            if (res) {
+                getList()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    const handleEdit = (row) => {
+        navigate(`/stock-management/product_management/${row?.id}`)
+    }
 
     return (
         <div className="grid gap-4 lg:gap-6">
@@ -82,8 +103,8 @@ const ProductManagement = () => {
                     rows={list || []}
                     showEdit={true}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
                 />
             </Card>
         </div>
