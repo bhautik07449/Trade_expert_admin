@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router";
 import Supplierservice from "../../../service/suppliers.service";
+import { toast } from "../../../components/ui/use-toast";
 
 const AddEditSuppliers = () => {
     const [data, setData] = useState([])
@@ -72,6 +73,11 @@ const AddEditSuppliers = () => {
 
                 if (response) {
                     navigate("/user-management/suppliers-management")
+                    toast({
+                        variant: "success",
+                        title: "Suppliers",
+                        description: response?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);

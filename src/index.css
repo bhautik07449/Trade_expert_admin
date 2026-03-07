@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --mainBackground:#ECF0F3;
+    --mainBackground: #ECF0F3;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -33,7 +33,7 @@
   }
 
   .dark {
-    --mainBackground:#212428;
+    --mainBackground: #212428;
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
@@ -65,6 +65,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -85,18 +86,23 @@ input[type="number"] {
 .h1-bold {
   @apply text-56 font-semibold -tracking-[3%];
 }
+
 .h2-bold {
   @apply text-40 font-semibold;
 }
+
 .h3-bold {
   @apply text-20 tab:text-36 font-semibold;
 }
+
 .h4-bold {
   @apply text-base tab:text-24 font-semibold;
 }
+
 .h5-bold {
   @apply text-sm tab:text-20 font-semibold;
 }
+
 .h6-bold {
   @apply text-sm font-semibold;
 }
@@ -105,18 +111,23 @@ input[type="number"] {
 .h1-medium {
   @apply text-56 font-medium -tracking-[3%];
 }
+
 .h2-medium {
   @apply text-40 font-medium;
 }
+
 .h3-medium {
   @apply text-20 tab:text-36 font-medium;
 }
+
 .h4-medium {
   @apply text-20 tab:text-24 font-medium;
 }
+
 .h5-medium {
   @apply text-sm tab:text-20 font-medium;
 }
+
 .h6-medium {
   @apply text-base font-medium;
 }
@@ -125,18 +136,23 @@ input[type="number"] {
 .h1-regular {
   @apply text-56 font-normal -tracking-[3%];
 }
+
 .h2-regular {
   @apply text-40 font-normal;
 }
+
 .h3-regular {
   @apply text-20 tab:text-36 font-normal;
 }
+
 .h4-regular {
   @apply text-20 tab:text-24 font-normal;
 }
+
 .h5-regular {
   @apply text-sm tab:text-20 font-normal;
 }
+
 .h6-regular {
   @apply text-base font-normal;
 }
@@ -145,19 +161,24 @@ input[type="number"] {
 .p-bold {
   @apply text-sm font-semibold;
 }
+
 .p-medium {
   @apply text-sm font-medium;
 }
+
 .p-regular {
   @apply text-sm font-normal;
 }
+
 /* Span Tag */
 .span-bold {
   @apply text-xs font-semibold;
 }
+
 .span-medium {
   @apply text-xs font-medium;
 }
+
 .span-regular {
   @apply text-xs font-normal;
 }
@@ -177,4 +198,36 @@ input:-webkit-autofill:focus {
 .dark input:-webkit-autofill:focus {
   -webkit-text-fill-color: white !important;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+}
+
+.animate-toast-in {
+  animation: toast-in 0.35s ease;
+}
+
+.animate-toast-out {
+  animation: toast-out 0.25s ease forwards;
 }

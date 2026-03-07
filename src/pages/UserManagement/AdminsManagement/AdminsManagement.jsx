@@ -8,6 +8,7 @@ import { formatDate } from "../../../common/constants";
 import { useNavigate } from "react-router";
 import CustomLoader from "../../../components/widgets/custom_loader";
 import Adminservice from "../../../service/admin.service";
+import { toast } from "../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -61,6 +62,11 @@ const AdminsManagement = () => {
 
             if (res) {
                 getUserData()
+                toast({
+                    variant: "success",
+                    title: "Admin",
+                    description: res?.data?.message,
+                });
             }
         } catch (error) {
             console.log("error", error);

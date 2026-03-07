@@ -8,6 +8,7 @@ import BackPath from "../../../components/common/BackPath"
 import { Card } from "../../../components/ui/card"
 import { useNavigate, useParams } from "react-router";
 import ImageUploadField from "../../../components/common/ImageUploadField";
+import { toast } from "../../../components/ui/use-toast";
 
 const AddEditAdmin = () => {
     const params = useParams();
@@ -74,11 +75,21 @@ const AddEditAdmin = () => {
                 if (res) {
                     const data = res?.data
                     setList(data);
+                    toast({
+                        variant: "success",
+                        title: "Admin",
+                        description: res?.message,
+                    });
                     // setLoder(false);
                 }
 
             } catch (error) {
                 console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Error",
+                    description: error?.message,
+                });
             } finally {
                 // setLoder(false);
             }
