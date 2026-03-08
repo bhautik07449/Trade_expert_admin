@@ -1,29 +1,53 @@
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CommonTable from "../../../components/widgets/common_table";
 import CommonFiltter from "../../../components/widgets/common_filter";
 import ExportData from "../../../components/widgets/export_data";
-
-const DmrList = [
-    { SrNo: "1", name: "Admin 1", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "2", name: "Admin 2", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Deactive", Created: "14/11/2023" },
-    { SrNo: "3", name: "Admin 3", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "4", name: "Admin 4", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Deactive", Created: "14/11/2023" },
-]
+import Contactservice from "../../../service/contact.service";
+import { getStatusStyles } from "../../../lib/funcation";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "name", flex: 1 },
-    { field: "category", headerName: "category", flex: 1 },
-    { field: "sub_category", headerName: "sub_category", flex: 1 },
-    { field: "Status", headerName: "Status", flex: 1 },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "email", headerName: "Email", flex: 1 },
+    { field: "phone", headerName: "Phone", flex: 1 },
+    { field: "message", headerName: "Message", flex: 3 },
+    {
+        field: "status", headerName: "Status", flex: 2, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
+                {params.value}
+            </span>
+        )
+    },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function ContactManagement() {
+    const [list, setList] = useState([])
     const [search, setSearch] = useState("");
     console.log("search", search);
+
+    const getData = async () => {
+        try {
+            const res = await Contactservice.getList()
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    name: item.first_name + " " + item.last_name,
+                    SrNo: index + 1,
+                    createdAt: new Date(item?.createdAt).toLocaleDateString(),
+                }));
+                setList(formattedData);
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     const filterData = [
         { type: "text", placeholder: "Buyer Name", label: "Buyer Name" },
@@ -37,6 +61,17 @@ export default function ContactManagement() {
 
     const handleClearFilters = () => {
         console.log("Filters Cleared");
+    }
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await Contactservice.deleteContact(id)
+            if (res) {
+                getData()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
     }
 
     return (
@@ -58,7 +93,7 @@ export default function ContactManagement() {
                     </div>
                     <div className="flex gap-4">
                         <ExportData
-                            data={DmrList}
+                            data={list}
                             fileName="contact_data.xlsx"
                         />
                         <CommonFiltter
@@ -71,11 +106,9 @@ export default function ContactManagement() {
 
                 <CommonTable
                     columns={columns}
-                    rows={DmrList || []}
-                    showEdit={true}
+                    rows={list || []}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onDelete={handleDelete}
                 />
             </Card>
         </div>
