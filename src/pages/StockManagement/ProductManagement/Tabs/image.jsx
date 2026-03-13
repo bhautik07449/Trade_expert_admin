@@ -14,38 +14,49 @@ export default function Image({ formik }) {
 
     return (
         <div className="space-y-6">
-            <div className="flex items-end gap-4">
+            <div className="">
+                <div className="flex items-end gap-4">
+                    <ImageUploadField
+                        label="Images"
+                        onImageUpload={(url) => {
+                            setTempImage(url);
+                        }}
+                    />
+
+                    <button
+                        type="button"
+                        onClick={handleAddImage}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg"
+                    >
+                        Add
+                    </button>
+                </div>
+
+                <div className="flex flex-wrap gap-4">
+                    {formik.values.images?.map((img, index) => (
+                        <div
+                            key={index}
+                            className="w-24 h-24 border rounded-lg overflow-hidden"
+                        >
+                            <img
+                                src={img}
+                                alt="uploaded"
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div>
                 <ImageUploadField
-                    label="Images"
+                    label="Certification"
+                    value={formik.values.certification}
                     onImageUpload={(url) => {
-                        setTempImage(url);
+                        formik.setFieldValue("certification", url);
                     }}
                 />
-
-                <button
-                    type="button"
-                    onClick={handleAddImage}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg"
-                >
-                    Add
-                </button>
             </div>
-
-            <div className="flex flex-wrap gap-4">
-                {formik.values.images?.map((img, index) => (
-                    <div
-                        key={index}
-                        className="w-24 h-24 border rounded-lg overflow-hidden"
-                    >
-                        <img
-                            src={img}
-                            alt="uploaded"
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                ))}
-            </div>
-
         </div>
     );
 }

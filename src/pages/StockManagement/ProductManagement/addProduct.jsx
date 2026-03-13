@@ -70,9 +70,11 @@ export default function AddProduct() {
         pageTitle: data ? data?.pageTitle : "",
         metaKeywords: data ? data?.metaKeywords : "",
         metaDescription: data ? data?.metaDescription : "",
+        shipmentmanual: data ? data?.shipmentmanual : [],
         technicalSpecification: data ? data?.technicalSpecification : [],
         commercialAspect: data ? data?.commercialAspect : [],
-        images: data ? data?.images : []
+        images: data ? data?.images : [],
+        certification: data ? data?.certification : ''
     };
 
     const formik = useFormik({

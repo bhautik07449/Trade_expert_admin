@@ -11,6 +11,21 @@ export default function Details({ formik }) {
     const [comKey, setComKey] = useState("");
     const [comValue, setComValue] = useState("");
 
+    const [shipKey, setShipKey] = useState("");
+    const [shipValue, setShipValue] = useState("");
+
+    const addShipment = () => {
+        if (!shipKey || !shipValue) return;
+
+        formik.setFieldValue("shipmentmanual", [
+            ...formik.values.shipmentmanual,
+            { key: shipKey, value: shipValue }
+        ]);
+
+        setShipKey("");
+        setShipValue("");
+    };
+
     const addTechnical = () => {
         if (!techKey || !techValue) return;
 
@@ -33,6 +48,13 @@ export default function Details({ formik }) {
 
         setComKey("");
         setComValue("");
+    };
+
+    const removeShipment = (index) => {
+        const updated = [...formik.values.shipmentmanual];
+        updated.splice(index, 1);
+
+        formik.setFieldValue("shipmentmanual", updated);
     };
 
     const removeTechnical = (index) => {
@@ -77,6 +99,55 @@ export default function Details({ formik }) {
 
             <div className="space-y-6">
                 <div className="border p-4 space-y-4">
+
+                    <label className="text-sm font-bold">Shipment manual</label>
+
+                    <div className="grid grid-cols-3 gap-4 items-center">
+
+                        <CommonTextField
+                            placeholder="Key"
+                            value={shipKey}
+                            onChange={(e) => setShipKey(e.target.value)}
+                        />
+
+                        <CommonTextField
+                            placeholder="Value"
+                            value={shipValue}
+                            onChange={(e) => setShipValue(e.target.value)}
+                        />
+
+                        <button
+                            type="button"
+                            onClick={addShipment}
+                            className="bg-blue-500 text-white px-4 py-2"
+                        >
+                            Add
+                        </button>
+
+                    </div>
+
+                    {formik.values.shipmentmanual.map((item, index) => (
+                        <div
+                            key={index}
+                            className="flex justify-between border p-2 rounded"
+                        >
+                            <span>
+                                <b>{item.key}</b> : {item.value}
+                            </span>
+
+                            <button
+                                type="button"
+                                onClick={() => removeShipment(index)}
+                                className="text-red-500"
+                            >
+                                <Trash2 className="size-4" />
+                            </button>
+                        </div>
+                    ))}
+
+                </div>
+
+                <div className="border p-4 space-y-4">
                     <label className="text-sm font-bold">Technical Specification</label>
 
                     <div className="grid grid-cols-3 gap-4 items-center">
@@ -101,7 +172,7 @@ export default function Details({ formik }) {
                         </button>
                     </div>
 
-                    {formik.values.technicalSpecification.map((item, index) => (
+                    {formik.values.technicalSpecification?.map((item, index) => (
                         <div
                             key={index}
                             className="flex justify-between border p-2 rounded"
@@ -149,7 +220,7 @@ export default function Details({ formik }) {
 
                     </div>
 
-                    {formik.values.commercialAspect.map((item, index) => (
+                    {formik.values.commercialAspect?.map((item, index) => (
                         <div
                             key={index}
                             className="flex justify-between border p-2 rounded"
