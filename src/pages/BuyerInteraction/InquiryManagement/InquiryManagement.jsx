@@ -1,29 +1,55 @@
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CommonTable from "../../../components/widgets/common_table";
 import ExportData from "../../../components/widgets/export_data";
 import CommonFiltter from "../../../components/widgets/common_filter";
-
-const DmrList = [
-    { SrNo: "1", name: "Admin 1", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "2", name: "Admin 2", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Deactive", Created: "14/11/2023" },
-    { SrNo: "3", name: "Admin 3", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Active", Created: "14/11/2023" },
-    { SrNo: "4", name: "Admin 4", category: "Agri & Foods", sub_category: "Fresh Produces", Status: "Deactive", Created: "14/11/2023" },
-]
+import Inquiryservice from "../../../service/inquiry.service";
+import { formatDate } from "../../../common/constants";
+import { getStatusStyles } from "../../../lib/funcation";
+import { toast } from "../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
-    { field: "name", headerName: "name", flex: 1 },
-    { field: "category", headerName: "category", flex: 1 },
-    { field: "sub_category", headerName: "sub_category", flex: 1 },
-    { field: "Status", headerName: "Status", flex: 1 },
-    { field: "Created", headerName: "Created", flex: 1 },
+    { field: "subject", headerName: "Subject", flex: 1 },
+    { field: "message", headerName: "Message", flex: 1 },
+    { field: "quantity", headerName: "Quantity", flex: 1 },
+    { field: "price", headerName: "Price", flex: 1 },
+    {
+        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
+                {params.value}
+            </span>
+        )
+    },
+    { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 
 export default function InquiryManagement() {
+    const [list, setList] = useState([])
     const [search, setSearch] = useState("");
     console.log("search", search);
+
+    const getData = async () => {
+        try {
+            const res = await Inquiryservice.getList()
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    createdAt: formatDate(item?.createdAt),
+                }))
+
+                setList(formattedData)
+            }
+        } catch (error) {
+            toast.error("Inquiry not send")
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     const filterData = [
         { type: "text", placeholder: "Buyer Name", label: "Buyer Name" },
@@ -37,6 +63,28 @@ export default function InquiryManagement() {
 
     const handleClearFilters = () => {
         console.log("Filters Cleared");
+    }
+
+    const handleDelete = async (id) => {
+        try {
+
+            const res = await Inquiryservice.deleteInquiry(id)
+            if (res) {
+                toast({
+                    variant: "success",
+                    title: "Inquiry",
+                    description: res?.data?.message,
+                });
+                getData()
+            }
+
+        } catch (error) {
+            toast({
+                variant: "error",
+                title: "Inquiry",
+                description: error.message || "Inquiry not Deleted.",
+            });
+        }
     }
 
     return (
@@ -58,7 +106,7 @@ export default function InquiryManagement() {
                     </div>
                     <div className="flex gap-4">
                         <ExportData
-                            data={DmrList}
+                            data={list}
                             fileName="inquiry_data.xlsx"
                         />
                         <CommonFiltter
@@ -71,11 +119,9 @@ export default function InquiryManagement() {
 
                 <CommonTable
                     columns={columns}
-                    rows={DmrList || []}
-                    showEdit={true}
+                    rows={list || []}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onDelete={handleDelete}
                 />
             </Card>
         </div>

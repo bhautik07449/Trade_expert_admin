@@ -68,11 +68,6 @@ const Login = () => {
             <div className="w-full max-w-md bg-white dark:bg-[#141414] rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 p-8 animate-fadeIn">
 
                 <div className="flex flex-col items-center">
-                    <div className="w-24 mb-6">
-                        <img src={AppImages.logoIconDark} alt="logo" className="block dark:hidden w-full" />
-                        <img src={AppImages.logoIcon} alt="logoDark" className="hidden dark:block w-full" />
-                    </div>
-
                     <h2 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
                         Welcome Back
                     </h2>
@@ -115,7 +110,7 @@ const Login = () => {
                 </form>
 
                 <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-                    © {new Date().getFullYear()} Your Company. All rights reserved.
+                    © {new Date().getFullYear()} Sourceseas. All rights reserved.
                 </p>
             </div>
         </div>
