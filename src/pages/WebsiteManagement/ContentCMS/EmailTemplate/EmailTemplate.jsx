@@ -8,11 +8,11 @@ import { getStatusStyles } from "../../../../lib/funcation";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
-    { field: "name", headerName: "Name", flex: 2 },
-    { field: "subject", headerName: "Subject", flex: 6 },
+    { field: "email", headerName: "email", flex: 2 },
+    // { field: "subject", headerName: "Subject", flex: 6 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
                 {params.value}
             </span>
         )
@@ -82,9 +82,7 @@ export default function EmailTemplate() {
                 <CommonTable
                     columns={columns}
                     rows={list || []}
-                    showEdit={false}
                     showDelete={true}
-                    onEdit={() => { }}
                     onDelete={handleDelete}
                 />
             </Card>
