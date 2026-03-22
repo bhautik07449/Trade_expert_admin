@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../../components/ui/card";
 import {
   Tags,
@@ -18,61 +18,84 @@ import {
   Line,
   CartesianGrid,
 } from "recharts";
+import Adminservice from "../../service/admin.service";
 
 const Dashboard = () => {
-  const stats = [
-    {
-      title: "Total Categories",
-      value: 54,
-      icon: Tags,
-      color: "bg-blue-100 text-blue-600",
-      border: "border-blue-500",
-    },
-    {
-      title: "Total Products",
-      value: 20,
-      icon: Package,
-      color: "bg-green-100 text-green-600",
-      border: "border-green-500",
-    },
-    {
-      title: "Total Quotations",
-      value: 1,
-      icon: FileSpreadsheet,
-      color: "bg-yellow-100 text-yellow-600",
-      border: "border-yellow-500",
-    },
-    {
-      title: "Sample Requests",
-      value: 191,
-      icon: PackageSearch,
-      color: "bg-purple-100 text-purple-600",
-      border: "border-purple-500",
-    },
-  ];
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loder, setLoder] = useState(false)
 
-  const productData = [
-    { name: "Jan", products: 10 },
-    { name: "Feb", products: 15 },
-    { name: "Mar", products: 8 },
-    { name: "Apr", products: 20 },
-    { name: "May", products: 18 },
-    { name: "Jun", products: 25 },
-    { name: "Jul", products: 22 },
-    { name: "Aug", products: 30 },
-    { name: "Sep", products: 28 },
-    { name: "Oct", products: 35 },
-    { name: "Nov", products: 32 },
-    { name: "Dec", products: 4 },
-  ];
+  const getUserData = async () => {
+    setLoder(true);
+    try {
+      const res = await Adminservice.getDashboard();
+      if (res) {
+        setDashboardData(res?.data?.data);
+        setLoder(false);
+      }
 
-  const requestGrowth = [
-    { name: "Jan", requests: 20 },
-    { name: "Feb", requests: 35 },
-    { name: "Mar", requests: 25 },
-    { name: "Apr", requests: 45 },
-    { name: "May", requests: 60 },
-  ];
+    } catch (error) {
+      console.log(error, "error");
+    } finally {
+      setLoder(false);
+    }
+  }
+
+  useEffect(() => {
+    getUserData()
+  }, [])
+
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const stats = dashboardData
+    ? [
+      {
+        title: "Total Categories",
+        value: dashboardData.totalCategory,
+        icon: Tags,
+        color: "bg-blue-100 text-blue-600",
+        border: "border-blue-500",
+      },
+      {
+        title: "Total Products",
+        value: dashboardData.monthlyProducts.reduce((a, b) => a + b, 0),
+        icon: Package,
+        color: "bg-green-100 text-green-600",
+        border: "border-green-500",
+      },
+      {
+        title: "Total Quotations",
+        value: dashboardData.totalQuotation,
+        icon: FileSpreadsheet,
+        color: "bg-yellow-100 text-yellow-600",
+        border: "border-yellow-500",
+      },
+      {
+        title: "Sample Requests",
+        value: dashboardData.totalRequest,
+        icon: PackageSearch,
+        color: "bg-purple-100 text-purple-600",
+        border: "border-purple-500",
+      },
+    ]
+    : [];
+
+  const productData = dashboardData
+    ? dashboardData.monthlyProducts.map((val, i) => ({
+      name: months[i],
+      products: val,
+    }))
+    : [];
+
+  const requestGrowth = dashboardData
+    ? dashboardData.sampleRequestGrowth.map((val, i) => ({
+      name: months[i],
+      requests: val,
+    }))
+    : [];
+
+  if (loder || !dashboardData) {
+    return <div className="p-6">Loading dashboard...</div>;
+  }
 
   return (
     <div className="space-y-8">

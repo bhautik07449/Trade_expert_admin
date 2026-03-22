@@ -9,6 +9,15 @@ const getAdmin = async () => {
     }
 }
 
+const getDashboard = async () => {
+    try {
+        const response = serverCall.get('/dashboard')
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
 const getAdminByid = async (id) => {
     try {
         const response = serverCall.get(`/admin/${id}`)
@@ -46,7 +55,7 @@ const deleteAdmin = async (id) => {
 }
 
 const Adminservice = {
-    getAdmin, addAdmin, getAdminByid, updateAdmin, deleteAdmin
+    getAdmin, addAdmin, getAdminByid, updateAdmin, deleteAdmin, getDashboard
 };
 
 export default Adminservice;
