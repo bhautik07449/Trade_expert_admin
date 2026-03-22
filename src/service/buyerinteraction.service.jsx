@@ -36,8 +36,17 @@ const getContact = async () => {
     }
 }
 
+const deleteQuo = async (id) => {
+    try {
+        const response = serverCall.delete(`/quotation/${id}`)
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
 const Buyerinteractionservice = {
-    getQuotation, getRequestsample, getInquiry, getContact
+    getQuotation, getRequestsample, getInquiry, getContact, deleteQuo
 };
 
 export default Buyerinteractionservice;

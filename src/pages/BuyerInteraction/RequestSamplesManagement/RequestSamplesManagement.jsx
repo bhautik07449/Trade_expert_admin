@@ -61,11 +61,19 @@ export default function RequestSamplesManagement() {
         try {
             const res = await ResquestSampleservice.deleteResquestSample(id)
             if (res) {
-                toast.success(res?.data?.message)
+                toast({
+                    variant: "success",
+                    title: "Inquiry",
+                    description: res?.data?.message,
+                });
                 getData()
             }
         } catch (error) {
-            toast.error('Request Sample data not deleted')
+            toast({
+                variant: "error",
+                title: "Inquiry",
+                description: error.message || "Request Sample data not deleted.",
+            });
         }
     }
 
