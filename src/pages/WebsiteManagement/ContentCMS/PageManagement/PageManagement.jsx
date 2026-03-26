@@ -18,7 +18,7 @@ const columns = [
     { field: "meta_keyword", headerName: "Meta Keyword", flex: 1 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyles(params.value)}`}>
+            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
                 {params.value}
             </span>
         )

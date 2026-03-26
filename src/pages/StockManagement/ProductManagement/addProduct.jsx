@@ -74,7 +74,8 @@ export default function AddProduct() {
         technicalSpecification: data ? data?.technicalSpecification : [],
         commercialAspect: data ? data?.commercialAspect : [],
         images: data ? data?.images : [],
-        certification: data ? data?.certification : ''
+        certification: data ? data?.certification : '',
+        status: data ? data?.status : 'Indenting'
     };
 
     const formik = useFormik({

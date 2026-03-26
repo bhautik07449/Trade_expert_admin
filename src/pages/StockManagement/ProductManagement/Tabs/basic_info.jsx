@@ -128,6 +128,20 @@ export default function BasicInfo({ formik, categories, flatList }) {
                         <Label htmlFor="featured-checkbox">Featured</Label>
                     </div>
                 </div>
+
+                <CommonBox
+                    label="Status"
+                    placeholders="Status"
+                    options={[
+                        { label: "Indenting", value: "Indenting" },
+                        { label: "On-behalf", value: "On-behalf" },
+                        { label: "Market-Development", value: "Market-Development" }
+                    ]}
+                    name="status"
+                    value={formik.values.status}
+                    onChange={(value) => formik.setFieldValue("status", value)}
+                    error={formik.touched.status && formik.errors.status}
+                />
             </div>
         </div>
     );
