@@ -59,6 +59,11 @@ const AddEditAdmin = () => {
                 }
                 resetForm()
                 navigate("/user-management/admins-management")
+                toast({
+                    variant: "success",
+                    title: "Admin",
+                    description: "Admin",
+                });
             } catch (error) {
                 console.log("error", error);
             } finally {
