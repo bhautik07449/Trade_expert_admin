@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../../store/slice/categoriesSlice";
 import { fetchFlatMeasurement } from "../../../store/slice/measurementSlice";
 import Productservice from "../../../service/product.service";
+import { toast } from "../../../components/ui/use-toast";
 
 export default function AddProduct() {
     const { id } = useParams()
@@ -99,9 +100,19 @@ export default function AddProduct() {
                 if (res) {
                     resetForm()
                     navigate("/stock-management/product_management")
+                    toast({
+                        variant: "success",
+                        title: "Product",
+                        description: res?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Product Failed",
+                    description: "Product Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
             }

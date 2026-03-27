@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFlatCategories } from "../../../../store/slice/categoriesSlice";
 import QualityPolicyservice from "../../../../service/qualityPolicy.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddQualityPolicies() {
     const [list, setList] = useState()
@@ -98,9 +99,19 @@ export default function AddQualityPolicies() {
                 if (res) {
                     resetForm()
                     navigate("/website-management/content/quality-policies")
+                    toast({
+                        variant: "success",
+                        title: "Quality Policies",
+                        description: res?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Quality Policies Failed",
+                    description: "Quality Policies Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
                 resetForm()

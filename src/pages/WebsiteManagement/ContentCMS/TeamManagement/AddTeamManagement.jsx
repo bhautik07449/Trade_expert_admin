@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Teamservice from "../../../../service/teams.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 
 export default function AddTeamManagement() {
@@ -62,15 +63,26 @@ export default function AddTeamManagement() {
             setSubmitting(true);
             try {
 
+                let res
                 if (id) {
-                    await Teamservice.updateTeam(id, values)
+                    res = await Teamservice.updateTeam(id, values)
                 } else {
-                    await Teamservice.addTeam(values);
+                    res = await Teamservice.addTeam(values);
                 }
                 resetForm()
                 navigate("/website-management/content/team")
+                toast({
+                    variant: "success",
+                    title: "Team",
+                    description: res?.data?.message,
+                });
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Team Failed",
+                    description: "Team Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
             }

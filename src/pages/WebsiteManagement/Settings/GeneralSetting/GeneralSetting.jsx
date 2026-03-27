@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Settingservice from "../../../../service/setting.service";
 import { useEffect, useState } from "react";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function GeneralSetting() {
     const [data, setData] = useState()
@@ -74,10 +75,20 @@ export default function GeneralSetting() {
 
                 if (res) {
                     getData()
+                    toast({
+                        variant: "success",
+                        title: "Update General Setting",
+                        description: res?.data?.message,
+                    });
                 }
 
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "General Setting Failed",
+                    description: "General Setting Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
                 resetForm()

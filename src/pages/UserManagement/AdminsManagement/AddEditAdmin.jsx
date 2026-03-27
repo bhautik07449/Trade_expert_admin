@@ -66,6 +66,11 @@ const AddEditAdmin = () => {
                 });
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Admin Failed",
+                    description: "Admin Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
             }
@@ -80,11 +85,6 @@ const AddEditAdmin = () => {
                 if (res) {
                     const data = res?.data
                     setList(data);
-                    toast({
-                        variant: "success",
-                        title: "Admin",
-                        description: res?.message,
-                    });
                     // setLoder(false);
                 }
 

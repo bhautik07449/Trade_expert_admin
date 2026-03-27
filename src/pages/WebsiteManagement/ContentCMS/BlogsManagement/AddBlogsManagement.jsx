@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFlatBlogCategories } from "../../../../store/slice/blogcategorySlice";
 import Blogservice from "../../../../service/blogs.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddBlogsManagement() {
     const { id } = useParams()
@@ -85,9 +86,19 @@ export default function AddBlogsManagement() {
                 if (res) {
                     resetForm()
                     navigate("/website-management/content/blogs")
+                    toast({
+                        variant: "success",
+                        title: "Blogs",
+                        description: res?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Blogs Failed",
+                    description: "Blogs Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
                 resetForm()

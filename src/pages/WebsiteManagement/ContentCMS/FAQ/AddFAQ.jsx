@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Faqservice from "../../../../service/faq.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddFAQ() {
     const { id } = useParams()
@@ -46,9 +47,19 @@ export default function AddFAQ() {
                 if (res) {
                     resetForm()
                     navigate("/website-management/content/faq")
+                    toast({
+                        variant: "success",
+                        title: "FAQs",
+                        description: res?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "FAQs Failed",
+                    description: "FAQs Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
                 resetForm()

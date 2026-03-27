@@ -10,6 +10,7 @@ import { fetchTradeType } from "../../../../store/slice/tradetypeSlice";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Tradeofferservice from "../../../../service/tradeoffer.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddTradeOffer() {
     const { id } = useParams()
@@ -75,9 +76,19 @@ export default function AddTradeOffer() {
                 if (res) {
                     resetForm()
                     navigate("/website-management/content/trade-offer")
+                    toast({
+                        variant: "success",
+                        title: "Trade Offer",
+                        description: res?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Trade Offer Failed",
+                    description: "Trade Offer Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
                 resetForm()

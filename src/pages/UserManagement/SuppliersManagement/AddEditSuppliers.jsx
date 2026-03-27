@@ -81,6 +81,11 @@ const AddEditSuppliers = () => {
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Suppliers Failed",
+                    description: "Suppliers Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
             }

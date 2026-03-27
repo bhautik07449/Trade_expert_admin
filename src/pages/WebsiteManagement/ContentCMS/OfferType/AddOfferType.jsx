@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Tradetypeservice from "../../../../service/tradetype.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddOfferType() {
     const { id } = useParams()
@@ -29,15 +30,26 @@ export default function AddOfferType() {
             setSubmitting(true);
             try {
 
+                let res
                 if (id) {
-                    await Tradetypeservice.updateTradetype(id, values)
+                    res = await Tradetypeservice.updateTradetype(id, values)
                 } else {
-                    await Tradetypeservice.addTradetype(values);
+                    res = await Tradetypeservice.addTradetype(values);
                 }
                 resetForm()
                 navigate("/website-management/content/offer-type")
+                toast({
+                    variant: "success",
+                    title: "Offer Type",
+                    description: res?.data?.message,
+                });
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Offer Type Failed",
+                    description: "Offer Type Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
             }

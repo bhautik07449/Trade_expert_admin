@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Homebannerservice from "../../../../service/homebanner.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddHomeBanner() {
     const { id } = useParams()
@@ -42,9 +43,19 @@ export default function AddHomeBanner() {
                 if (res) {
                     resetForm()
                     navigate("/website-management/content/home-banner")
+                    toast({
+                        variant: "success",
+                        title: "Home Banner",
+                        description: res?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Home Banner Failed",
+                    description: "Home Banner Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
                 resetForm()

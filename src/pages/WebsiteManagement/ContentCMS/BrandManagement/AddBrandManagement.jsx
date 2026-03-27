@@ -11,6 +11,7 @@ import Brandservice from "../../../../service/brands.service";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddBrandManagement() {
     const [list, setList] = useState()
@@ -98,9 +99,19 @@ export default function AddBrandManagement() {
                 if (res) {
                     resetForm()
                     navigate("/website-management/content/brands")
+                    toast({
+                        variant: "success",
+                        title: "Brands",
+                        description: res?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Brands Failed",
+                    description: "Brands Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
                 resetForm()

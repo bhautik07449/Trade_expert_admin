@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Pageservice from "../../../../service/pages.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddPageManagement() {
     const { id } = useParams()
@@ -47,15 +48,26 @@ export default function AddPageManagement() {
             setSubmitting(true);
             try {
 
+                let res
                 if (id) {
-                    await Pageservice.updatePage(id, values)
+                    res = await Pageservice.updatePage(id, values)
                 } else {
-                    await Pageservice.addPage(values);
+                    res = await Pageservice.addPage(values);
                 }
                 resetForm()
                 navigate("/website-management/content/pages")
+                toast({
+                    variant: "success",
+                    title: "Pages",
+                    description: res?.data?.message,
+                });
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Pages Failed",
+                    description: "Pages Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
             }

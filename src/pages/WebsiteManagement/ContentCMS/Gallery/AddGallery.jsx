@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Galleryservice from "../../../../service/gallery.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddGallery() {
     const { id } = useParams()
@@ -49,9 +50,19 @@ export default function AddGallery() {
                 if (res) {
                     resetForm()
                     navigate("/website-management/content/gallery")
+                    toast({
+                        variant: "success",
+                        title: "Gallery",
+                        description: res?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Gallery Failed",
+                    description: "Gallery Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
                 resetForm()

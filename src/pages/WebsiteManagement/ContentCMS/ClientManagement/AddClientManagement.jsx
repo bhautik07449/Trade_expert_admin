@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import Clientservice from "../../../../service/client.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddClientManagement() {
     const { id } = useParams()
@@ -42,16 +43,26 @@ export default function AddClientManagement() {
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             setSubmitting(true);
             try {
-
+                let res
                 if (id) {
-                    await Clientservice.updateClient(id, values)
+                    res = await Clientservice.updateClient(id, values)
                 } else {
-                    await Clientservice.addClient(values);
+                    res = await Clientservice.addClient(values);
                 }
                 resetForm()
                 navigate("/website-management/content/client")
+                toast({
+                    variant: "success",
+                    title: "Client",
+                    description: res?.data?.message,
+                });
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Client Failed",
+                    description: "Client Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
             }

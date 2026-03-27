@@ -10,6 +10,7 @@ import { fetchClient } from "../../../../store/slice/clientSlice";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Testimonialservice from "../../../../service/testimonial.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddTestimonialManagement() {
     const [data, setData] = useState()
@@ -73,9 +74,19 @@ export default function AddTestimonialManagement() {
                 if (res) {
                     resetForm()
                     navigate("/website-management/content/testinomial")
+                    toast({
+                        variant: "success",
+                        title: "Testinomial",
+                        description: res?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Testinomial Failed",
+                    description: "Testinomial Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
                 resetForm()

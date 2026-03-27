@@ -10,6 +10,7 @@ import * as Yup from "yup";
 import Categoriesservice from "../../../service/categories.service";
 import { useNavigate, useParams } from "react-router";
 import { fetchFlatCategories } from "../../../store/slice/categoriesSlice";
+import { toast } from "../../../components/ui/use-toast";
 
 export default function AddCategory() {
     const { id } = useParams()
@@ -76,9 +77,19 @@ export default function AddCategory() {
                 if (res) {
                     resetForm()
                     navigate("/stock-management/category-management")
+                    toast({
+                        variant: "success",
+                        title: "Category",
+                        description: res?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Category Failed",
+                    description: "Category Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
             }

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Certificationsliderservice from "../../../../service/certificationslider.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddCertificationSliderManagement() {
 
@@ -43,9 +44,19 @@ export default function AddCertificationSliderManagement() {
                 if (res) {
                     resetForm()
                     navigate("/website-management/content/certification-slider")
+                    toast({
+                        variant: "success",
+                        title: "Certification Slider",
+                        description: res?.data?.message,
+                    });
                 }
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Certification Slider Failed",
+                    description: "Certification Slider Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
                 resetForm()

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import Measurementsservice from "../../../../service/measurements.service";
 import { useFormik } from "formik";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddMeasurement() {
     const { id } = useParams()
@@ -31,15 +32,26 @@ export default function AddMeasurement() {
             setSubmitting(true);
             try {
 
+                let res
                 if (id) {
-                    await Measurementsservice.updateMeasurements(id, values)
+                    res = await Measurementsservice.updateMeasurements(id, values)
                 } else {
-                    await Measurementsservice.addMeasurements(values);
+                    res = await Measurementsservice.addMeasurements(values);
                 }
                 resetForm()
                 navigate("/website-management/content/measurement")
+                toast({
+                    variant: "success",
+                    title: "Measurement",
+                    description: res?.data?.message || "Measurement",
+                });
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Measurement Failed",
+                    description: "Measurement Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
             }

@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Cuurrencyservice from "../../../../service/currency.service";
 import { useEffect, useState } from "react";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddCurrency() {
     const { id } = useParams()
@@ -38,15 +39,26 @@ export default function AddCurrency() {
             setSubmitting(true);
             try {
 
+                let res
                 if (id) {
-                    await Cuurrencyservice.updateCurrency(id, values)
+                    res = await Cuurrencyservice.updateCurrency(id, values)
                 } else {
-                    await Cuurrencyservice.addCurrency(values);
+                    res = await Cuurrencyservice.addCurrency(values);
                 }
                 resetForm()
                 navigate("/website-management/content/currency")
+                toast({
+                    variant: "success",
+                    title: "Currency",
+                    description: res?.data?.message || "Currency",
+                });
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Currency Failed",
+                    description: "Currency Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
                 resetForm()

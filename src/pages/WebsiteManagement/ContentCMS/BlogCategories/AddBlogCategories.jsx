@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { toast } from "../../../../components/ui/use-toast";
 
 export default function AddBlogCategories() {
     const { id } = useParams()
@@ -28,16 +29,26 @@ export default function AddBlogCategories() {
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             setSubmitting(true);
             try {
-
+                let res
                 if (id) {
-                    await Blogservice.updateBlog(id, values)
+                    res = await Blogservice.updateBlog(id, values)
                 } else {
-                    await Blogservice.addBlog(values);
+                    res = await Blogservice.addBlog(values);
                 }
                 resetForm()
                 navigate("/website-management/content/blog-categories")
+                toast({
+                    variant: "success",
+                    title: "Blog Category",
+                    description: res?.data?.message,
+                });
             } catch (error) {
                 console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "Blog Category Failed",
+                    description: "Blog Category Failed resubmit",
+                });
             } finally {
                 setSubmitting(false);
             }

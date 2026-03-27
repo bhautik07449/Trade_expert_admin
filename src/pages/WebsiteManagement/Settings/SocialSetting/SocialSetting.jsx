@@ -8,6 +8,7 @@ import { Label } from "../../../../components/ui/label";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Settingservice from "../../../../service/setting.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 const SOCIALS = [
   { key: "facebook", label: "Facebook", placeholder: "https://facebook.com/username" },
@@ -54,10 +55,20 @@ export default function SocialSetting() {
 
         if (res) {
           getData();
+          toast({
+            variant: "success",
+            title: "Update Social data",
+            description: res?.data?.message,
+          });
         }
 
       } catch (error) {
         console.log(error);
+        toast({
+          variant: "error",
+          title: "Social Data Failed",
+          description: "Social Data Failed resubmit",
+        });
       } finally {
         setSubmitting(false);
       }

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../../store/slice/categoriesSlice";
 import { useNavigate, useParams } from "react-router";
 import DMRservice from "../../../service/dmr.service";
+import { toast } from "../../../components/ui/use-toast";
 
 const AddDMR = () => {
     const { id } = useParams()
@@ -84,10 +85,19 @@ const AddDMR = () => {
 
                 if (res) {
                     navigate("/stock-management/dmr-management")
+                    toast({
+                        variant: "success",
+                        title: "DMR",
+                        description: res?.data?.message,
+                    });
                 }
 
             } catch (error) {
-                console.log("error", error);
+                toast({
+                    variant: "error",
+                    title: "DMR Failed",
+                    description: "DMR Failed resubmit",
+                });
             }
         },
     });
