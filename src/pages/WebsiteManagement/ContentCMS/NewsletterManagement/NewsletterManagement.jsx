@@ -3,29 +3,46 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
 // import { CircleFadingPlus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
-
-const Newsletter = [
-    { SrNo: 1, Email: "horosinoleg@gmail.com", Subscribe_Date: "14/11/2023", Unsubscribe_Date: "14/11/2023" },
-    { SrNo: 2, Email: "horosinoleg@gmail.com", Subscribe_Date: "14/11/2023", Unsubscribe_Date: "14/11/2023" },
-    { SrNo: 3, Email: "horosinoleg@gmail.com", Subscribe_Date: "14/11/2023", Unsubscribe_Date: "14/11/2023" },
-    { SrNo: 4, Email: "horosinoleg@gmail.com", Subscribe_Date: "14/11/2023", Unsubscribe_Date: "14/11/2023" },
-]
+import Emailtemplateservice from "../../../../service/emailtemplate.service";
+import { formatDate } from "../../../../common/constants";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
-    { field: "Email", headerName: "Email", flex: 6 },
+    { field: "email", headerName: "Email", flex: 6 },
     { field: "Subscribe_Date", headerName: "Subscribe_Date", flex: 2 },
     { field: "Unsubscribe_Date", headerName: "Unsubscribe_Date", flex: 2 }
 ]
 
 export default function NewsletterManagement() {
 
+    const [list, setList] = useState([])
     const [search, setSearch] = useState("");
-    // const navigate = useNavigate();
     console.log("search", search);
+
+    const getData = async () => {
+        try {
+            const res = await Emailtemplateservice.getList();
+            if (res) {
+                const formattedData = res?.data?.data?.map((item, index) => ({
+                    ...item,
+                    SrNo: index + 1,
+                    Subscribe_Date: formatDate(item?.createdAt),
+                    Unsubscribe_Date: formatDate(item?.createdAt),
+                }))
+                setList(formattedData);
+            }
+
+        } catch (error) {
+            console.log(error, "error");
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
@@ -38,6 +55,19 @@ export default function NewsletterManagement() {
 
     const handleClearFilters = () => {
         console.log("Filters Cleared");
+    }
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await Emailtemplateservice.deleteEmailtemplate(id)
+
+            if (res) {
+                getData()
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+
     }
 
     return (
@@ -53,7 +83,7 @@ export default function NewsletterManagement() {
                         <CommonTextField
                             type="text"
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Currency"
+                            placeholder="Search Email"
                             className="w-full"
                         />
                     </div>
@@ -73,11 +103,9 @@ export default function NewsletterManagement() {
 
                 <CommonTable
                     columns={columns}
-                    rows={Newsletter || []}
-                    showEdit={true}
+                    rows={list || []}
                     showDelete={true}
-                    onEdit={() => { }}
-                    onDelete={() => { }}
+                    onDelete={handleDelete}
                 />
             </Card>
         </div>

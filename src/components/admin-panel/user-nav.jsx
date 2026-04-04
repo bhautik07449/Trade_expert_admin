@@ -20,7 +20,7 @@ export function UserNav({ profile }) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center space-x-2 cursor-pointer">
-            <img src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_1280.png" alt="" srcset="" className="w-8 h-8 rounded-full" />
+            <img src={profile?.photo} alt="" srcset="" className="w-8 h-8 rounded-full object-cover" />
             <p className="capitalize font-sans text-slate-200">{profile?.firstName}{" "}{profile?.lastName}</p>
           </div>
         </DropdownMenuTrigger>
