@@ -47,7 +47,7 @@ export default function AddProduct() {
         teriff: Yup.string().required("Teriff is required"),
         slug: Yup.string().required("Slug is required"),
         category: Yup.string().required("Category is required"),
-        subCategory: Yup.string().required("Sub Category is required"),
+        // subCategory: Yup.string().required("Sub Category is required"),
         pageTitle: Yup.string().required("Page title is required"),
         metaKeywords: Yup.string().required("Meta keywords required"),
         metaDescription: Yup.string().required("Meta description required"),
