@@ -2,7 +2,7 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
 import { useEffect, useState } from "react";
-import Emailtemplateservice from "../../../../service/emailtemplate.service";
+import Emailtemplateservice from "../../../../service/newsletter.service";
 import { formatDate } from "../../../../common/constants";
 import { getStatusStyles } from "../../../../lib/funcation";
 

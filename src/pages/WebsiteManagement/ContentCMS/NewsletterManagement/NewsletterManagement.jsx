@@ -4,10 +4,10 @@ import CommonTable from "../../../..//components/widgets/common_table";
 import { CommonTextField } from "../../../..//components/widgets/common_textField";
 // import { CircleFadingPlus } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
-import Emailtemplateservice from "../../../../service/emailtemplate.service";
+import Emailtemplateservice from "../../../../service/newsletter.service";
 import { formatDate } from "../../../../common/constants";
+import Newsletterservice from "../../../../service/newsletter.service";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -24,7 +24,7 @@ export default function NewsletterManagement() {
 
     const getData = async () => {
         try {
-            const res = await Emailtemplateservice.getList();
+            const res = await Newsletterservice.getList();
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -59,7 +59,7 @@ export default function NewsletterManagement() {
 
     const handleDelete = async (id) => {
         try {
-            const res = await Emailtemplateservice.deleteEmailtemplate(id)
+            const res = await Emailtemplateservice.deleteNewsletter(id)
 
             if (res) {
                 getData()
