@@ -1,23 +1,16 @@
 import { Card } from "../../../../components/ui/card";
-import CommonTable from "../../../..//components/widgets/common_table";
-import { CommonTextField } from "../../../..//components/widgets/common_textField";
+import CommonTable from "../../../../components/widgets/common_table";
+import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { useEffect, useState } from "react";
-import Emailtemplateservice from "../../../../service/newsletter.service";
 import { formatDate } from "../../../../common/constants";
 import { getStatusStyles } from "../../../../lib/funcation";
+import Emailtemplateservice from "../../../../service/emailtemplate.service";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
-    { field: "email", headerName: "email", flex: 2 },
-    // { field: "subject", headerName: "Subject", flex: 6 },
-    {
-        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
-            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
-                {params.value}
-            </span>
-        )
-    },
-    { field: "createdAt", headerName: "Created", flex: 1 },
+    { field: "template_name", headerName: "Template Name", flex: 2 },
+    { field: "email_subject", headerName: "Email Subject", flex: 2 },
+    { field: "email_body", headerName: "Email Body", flex: 6 }
 ]
 
 export default function EmailTemplate() {
@@ -32,7 +25,6 @@ export default function EmailTemplate() {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
-                    createdAt: formatDate(item?.createdAt),
                 }))
                 setList(formattedData);
             }
