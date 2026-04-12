@@ -267,7 +267,12 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddEmailTemplate />,
-        path: "/website-management/content/email-template/:type",
+        path: "/website-management/content/email-template/add",
+        index: true,
+      },
+      {
+        element: <AddEmailTemplate />,
+        path: "/website-management/content/email-template/:id",
         index: true,
       },
       {

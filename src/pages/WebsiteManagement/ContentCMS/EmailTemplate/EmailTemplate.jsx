@@ -2,20 +2,29 @@ import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../../components/widgets/common_table";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { useEffect, useState } from "react";
-import { formatDate } from "../../../../common/constants";
-import { getStatusStyles } from "../../../../lib/funcation";
 import Emailtemplateservice from "../../../../service/emailtemplate.service";
+import { useNavigate } from "react-router";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "template_name", headerName: "Template Name", flex: 2 },
     { field: "email_subject", headerName: "Email Subject", flex: 2 },
-    { field: "email_body", headerName: "Email Body", flex: 6 }
+    {
+        field: "email_body",
+        headerName: "Email Body",
+        flex: 6,
+        renderCell: (params) => (
+            <div
+                dangerouslySetInnerHTML={{ __html: params.value || "" }}
+            />
+        ),
+    }
 ]
 
 export default function EmailTemplate() {
     const [list, setList] = useState([])
     const [search, setSearch] = useState("");
+    const navigate = useNavigate()
     console.log("search", search);
 
     const getData = async () => {
@@ -48,7 +57,10 @@ export default function EmailTemplate() {
         } catch (error) {
             console.log("error", error);
         }
+    }
 
+    const handleEdit = (row) => {
+        navigate(`/website-management/content/email-template/${row.id}`)
     }
 
     return (
@@ -76,6 +88,8 @@ export default function EmailTemplate() {
                     rows={list || []}
                     showDelete={true}
                     onDelete={handleDelete}
+                    showEdit={true}
+                    onEdit={handleEdit}
                 />
             </Card>
         </div>
