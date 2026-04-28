@@ -141,22 +141,30 @@ export function getMenuList(pathname) {
               icon: MessageSquareQuote,
             },
             {
-              href: "/website-management/content/offer-type",
-              label: "Offer Type",
-              active: pathname.includes("/website-management/content/offer-type"),
-              icon: Tag,
-            },
-            {
-              href: "/website-management/content/trade-offer",
-              label: "Trade Offer",
-              active: pathname.includes("/website-management/content/trade-offer"),
-              icon: Percent,
-            },
-            {
-              href: "/website-management/content/offer_req",
-              label: "Offer Requests",
-              active: pathname.includes("/website-management/content/offer_req"),
-              icon: ClipboardList,
+              href: "/website-management/content/trade-management",
+              label: "Trade Management",
+              active: pathname.includes("/website-management/content/trade-management"),
+              icon: FileEdit,
+              submenus: [
+                {
+                  href: "/website-management/content/offer-type",
+                  label: "Offer Type",
+                  active: pathname.includes("/website-management/content/offer-type"),
+                  icon: Tag,
+                },
+                {
+                  href: "/website-management/content/trade-offer",
+                  label: "Trade Offer",
+                  active: pathname.includes("/website-management/content/trade-offer"),
+                  icon: Percent,
+                },
+                {
+                  href: "/website-management/content/offer_req",
+                  label: "Offer Requests",
+                  active: pathname.includes("/website-management/content/offer_req"),
+                  icon: ClipboardList,
+                }
+              ]
             },
             {
               href: "/website-management/content/home-banner",
