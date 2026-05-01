@@ -76,6 +76,7 @@ export default function AddProduct() {
         commercialAspect: data ? data?.commercialAspect : [],
         images: data ? data?.images : [],
         certification: data ? data?.certification : '',
+        season: data ? data?.season : 'All',
         status: data ? data?.status : 'Indenting'
     };
 
