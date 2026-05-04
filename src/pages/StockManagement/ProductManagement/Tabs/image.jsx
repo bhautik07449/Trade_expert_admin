@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ImageUploadField from "../../../../components/common/ImageUploadField";
+import { getImageUrl } from "../../../../utils/imageUtils";
 
 export default function Image({ formik }) {
     const [tempImage, setTempImage] = useState("");
@@ -39,7 +40,7 @@ export default function Image({ formik }) {
                             className="w-24 h-24 border rounded-lg overflow-hidden"
                         >
                             <img
-                                src={img}
+                                src={getImageUrl(img)}
                                 alt="uploaded"
                                 className="w-full h-full object-cover"
                             />

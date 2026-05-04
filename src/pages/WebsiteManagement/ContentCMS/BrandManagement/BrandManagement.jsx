@@ -9,6 +9,7 @@ import CommonFiltter from "../../../../components/widgets/common_filter";
 import { getStatusStyles } from "../../../../lib/funcation";
 import Brandservice from "../../../../service/brands.service";
 import { formatDate } from "../../../../common/constants";
+import { getImageUrl } from "../../../../utils/imageUtils";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -18,9 +19,9 @@ const columns = [
         field: "image", headerName: "Image", flex: 2,
         renderCell: ({ row }) => (
             <img
-                src={row?.logo}
+                src={getImageUrl(row?.logo)}
                 alt={row?.name}
-                className="h-52 w-[300px] object-fill rounded p-0.5"
+                className="h-52 w-[300px] object-cover rounded p-0.5"
             />
         )
     },

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ImageUploadService from '../../service/imageupload.service';
+import { getImageUrl } from '../../utils/imageUtils';
 
 const ImageUploadField = ({
   onImageUpload,
@@ -62,7 +63,7 @@ const ImageUploadField = ({
       {preview && (
         <div className="image-preview">
           <img
-            src={preview}
+            src={getImageUrl(preview)}
             alt="Preview"
             className="preview-image h-36 object-cover"
           />

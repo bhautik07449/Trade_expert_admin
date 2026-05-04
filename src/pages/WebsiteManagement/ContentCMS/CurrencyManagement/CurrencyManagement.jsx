@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import CommonFiltter from "../../../../components/widgets/common_filter";
 import Cuurrencyservice from "../../../../service/currency.service";
 import { formatDate } from "../../../../common/constants";
+import { getImageUrl } from "../../../../utils/imageUtils";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -16,7 +17,7 @@ const columns = [
         field: "image", headerName: "Image", flex: 1,
         renderCell: ({ row }) => (
             <img
-                src={row?.image}
+                src={getImageUrl(row?.image)}
                 alt={row?.name}
                 className="h-10 w-10 object-cover rounded p-0.5"
             />

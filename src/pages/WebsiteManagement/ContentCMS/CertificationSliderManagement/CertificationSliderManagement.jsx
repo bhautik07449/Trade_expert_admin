@@ -7,6 +7,7 @@ import { getStatusStyles } from "../../../../lib/funcation";
 import { useEffect, useState } from "react";
 import Certificationsliderservice from "../../../../service/certificationslider.service";
 import { formatDate } from "../../../../common/constants";
+import { getImageUrl } from "../../../../utils/imageUtils";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -14,9 +15,9 @@ const columns = [
         field: "image", headerName: "Image", flex: 5,
         renderCell: ({ row }) => (
             <img
-                src={row?.image}
+                src={getImageUrl(row?.image)}
                 alt={row?.name}
-                className="h-52 w-[300px] object-fill rounded p-0.5"
+                className="h-52 w-[300px] object-cover rounded p-0.5"
             />
         )
     },

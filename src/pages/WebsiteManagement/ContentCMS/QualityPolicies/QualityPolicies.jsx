@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../../lib/funcation";
 import QualityPolicyservice from "../../../../service/qualityPolicy.service";
 import { formatDate } from "../../../../common/constants";
+import { getImageUrl } from "../../../../utils/imageUtils";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -16,7 +17,7 @@ const columns = [
         field: "logo", headerName: "Image", flex: 2,
         renderCell: ({ row }) => (
             <img
-                src={row?.logo}
+                src={getImageUrl(row?.logo)}
                 alt={row?.name}
                 className="h-16 w-16 object-cover rounded p-0.5"
             />
