@@ -9,16 +9,16 @@ const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "template_name", headerName: "Template Name", flex: 2 },
     { field: "email_subject", headerName: "Email Subject", flex: 2 },
-    {
-        field: "email_body",
-        headerName: "Email Body",
-        flex: 6,
-        renderCell: (params) => (
-            <div
-                dangerouslySetInnerHTML={{ __html: params.value || "" }}
-            />
-        ),
-    }
+    // {
+    //     field: "email_body",
+    //     headerName: "Email Body",
+    //     flex: 6,
+    //     renderCell: (params) => (
+    //         <div
+    //             dangerouslySetInnerHTML={{ __html: params.value || "" }}
+    //         />
+    //     ),
+    // }
 ]
 
 export default function EmailTemplate() {
