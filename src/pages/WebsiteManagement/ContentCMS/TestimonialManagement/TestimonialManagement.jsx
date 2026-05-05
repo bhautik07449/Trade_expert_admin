@@ -98,7 +98,7 @@ export default function TestimonialManagement() {
         <div className="grid gap-4 lg:gap-6">
             <div className="flex items-center justify-between gap-2">
                 <h3 className="h4-bold">Testimonial Management</h3>
-                <h4 className="h6-bold">Total: 12</h4>
+                <h4 className="h6-bold">Total: {list?.length}</h4>
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
