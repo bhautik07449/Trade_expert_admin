@@ -65,6 +65,8 @@ import ExportInvoice from "../pages/Document/ExportInvoice/ExportInvoice";
 import Inprogress from "../pages/Inprogress";
 import DocumentRenderer from "../pages/Document/ExportInvoice/DocumentRenderer";
 import AddCategory from "../pages/StockManagement/CategoryManagement/AddCategory";
+import Abc from "../pages/WebsiteManagement/ContentCMS/Abc/Abc";
+import AddAbc from "../pages/WebsiteManagement/ContentCMS/Abc/AddAbc";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -463,6 +465,21 @@ const routes = (isLoggedIn) => [
       {
         element: <AddGallery />,
         path: "/website-management/content/gallery/:id",
+        index: true,
+      },
+      {
+        element: <Abc />,
+        path: "/website-management/content/abc",
+        index: true,
+      },
+      {
+        element: <AddAbc />,
+        path: "/website-management/content/abc/add",
+        index: true,
+      },
+      {
+        element: <AddAbc />,
+        path: "/website-management/content/abc/:id",
         index: true,
       },
       {

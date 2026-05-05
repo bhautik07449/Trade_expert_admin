@@ -185,6 +185,12 @@ export function getMenuList(pathname) {
               icon: Images,
             },
             {
+              href: "/website-management/content/abc",
+              label: "ABC",
+              active: pathname.includes("/website-management/content/abc"),
+              icon: HelpCircle,
+            },
+            {
               href: "/website-management/content/faq",
               label: "FAQ Management",
               active: pathname.includes("/website-management/content/faq"),
