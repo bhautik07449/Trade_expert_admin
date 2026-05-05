@@ -31,8 +31,7 @@ export default function AddPageManagement() {
         page_name: Yup.string().required("Page Name is required"),
         page_title: Yup.string().required("Page Title is required"),
         page_url: Yup.string()
-            .required("Page URL is required")
-            .matches(/^[a-z0-9-]+$/, "Only lowercase letters, numbers and hyphen allowed"),
+            .required("Page URL is required"),
         page_meta_title: Yup.string().required("Meta Title is required"),
         meta_keyword: Yup.string().required("Meta Keyword is required"),
         meta_description: Yup.string().required("Meta Description is required"),
