@@ -40,7 +40,7 @@ export default function Abc() {
                     SrNo: index + 1,
                     category: item?.category?.name,
                     subcategory: item?.subcategory?.name,
-                    product: item?.product?.name,
+                    product: item?.products?.map(p => p.name).join(", "),
                     createdAt: formatDate(item?.createdAt),
                 }))
                 setList(formattedData)

@@ -10,6 +10,7 @@ import AbcService from "../../../../service/abc.service";
 import { fetchProducts } from "../../../../store/slice/productSlice";
 import { fetchCategories } from "../../../../store/slice/categoriesSlice";
 import CommonBox from "../../../../components/common/common_box";
+import MultiSelectBox from "../../../../components/common/MultiSelectBox";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function AddAbc() {
@@ -36,13 +37,13 @@ export default function AddAbc() {
     const initialValues = {
         category: data ? data?.category?.id : "",
         subcategory: data ? data?.subcategory?.id : "",
-        product: data ? data?.product?.id : "",
+        products: data ? data?.products?.map((p) => p.id) : [],
     };
 
     const validationSchema = Yup.object().shape({
         category: Yup.string().required("Category is required"),
         subcategory: Yup.string().required("Sub Category is required"),
-        product: Yup.string().required("Product is required")
+        products: Yup.array().min(1, "At least one product is required").required("Products are required")
     });
 
     const formik = useFormik({
@@ -159,14 +160,14 @@ export default function AddAbc() {
                                 error={formik.touched.subcategory && formik.errors.subcategory}
                             />
 
-                            <CommonBox
+                            <MultiSelectBox
                                 label="Product"
                                 placeholders="Select Product"
                                 options={productOptions}
-                                name="product"
-                                value={formik.values.product}
-                                onChange={(value) => formik.setFieldValue("product", value)}
-                                error={formik.touched.product && formik.errors.product}
+                                name="products"
+                                value={formik.values.products}
+                                onChange={(value) => formik.setFieldValue("products", value)}
+                                error={formik.touched.products && formik.errors.products}
                             />
                         </div>
                     </div>
