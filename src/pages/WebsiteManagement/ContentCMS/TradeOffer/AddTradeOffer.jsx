@@ -11,6 +11,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Tradeofferservice from "../../../../service/tradeoffer.service";
 import { toast } from "../../../../components/ui/use-toast";
+import { fetchCategories } from "../../../../store/slice/categoriesSlice";
+import { fetchProducts } from "../../../../store/slice/productSlice";
 
 export default function AddTradeOffer() {
     const { id } = useParams()
@@ -21,11 +23,20 @@ export default function AddTradeOffer() {
 
     useEffect(() => {
         dispatch(fetchTradeType());
+        dispatch(fetchCategories());
+        dispatch(fetchProducts());
     }, []);
 
+    const { categories } = useSelector(
+        (state) => state.categories
+    );
 
     const { flatList, loading } = useSelector(
         (state) => state.tradeType
+    );
+
+    const { list } = useSelector(
+        (state) => state.products
     );
 
     const parentOptions = useMemo(() => {
@@ -39,6 +50,9 @@ export default function AddTradeOffer() {
         trade_type: data ? data?.trade_type?.id : "",
         description: data ? data?.description : "",
         name: data ? data?.name : "",
+        product: data ? data?.product?.map((item) => item.id) : [],
+        category: data ? data?.category?.map((item) => item.id) : [],
+        subCategory: data ? data?.subCategory?.map((item) => item.id) : [],
     };
 
     const validationSchema = Yup.object().shape({
@@ -64,6 +78,16 @@ export default function AddTradeOffer() {
 
                 if (values.trade_type) {
                     payload.trade_type = { id: values.trade_type };
+                }
+
+                if (values?.product) {
+                    payload.product = values?.product?.map((item) => ({ id: item }));
+                }
+                if (values?.category) {
+                    payload.category = values?.category?.map((item) => ({ id: item }));
+                }
+                if (values?.subCategory) {
+                    payload.subCategory = values?.subCategory?.map((item) => ({ id: item }));
                 }
 
                 let res
@@ -95,6 +119,33 @@ export default function AddTradeOffer() {
             }
         }
     });
+
+    const productOptions = useMemo(() => {
+        return list?.map((item) => ({
+            label: item?.name,
+            value: item?.id
+        }));
+    }, [list]);
+
+    const categoryOptions = useMemo(() => {
+        return categories?.map((cat) => ({
+            label: cat.name,
+            value: cat.id
+        }));
+    }, [categories]);
+
+    const selectedCategory = categories?.find(
+        (cat) => cat.id === formik.values.category
+    );
+
+    const subCategoryOptions = useMemo(() => {
+        if (!selectedCategory) return [];
+
+        return selectedCategory.children?.map((sub) => ({
+            label: sub.name,
+            value: sub.id
+        })) || [];
+    }, [selectedCategory]);
 
     useEffect(() => {
         const getData = async (id) => {
@@ -155,6 +206,43 @@ export default function AddTradeOffer() {
                                 error={formik.touched.description && formik.errors.description}
                             />
                         </div>
+
+                        {id && (
+                            <div className="space-y-5">
+                                <CommonBox
+                                    label="Category"
+                                    placeholders="Select Category"
+                                    options={categoryOptions}
+                                    name="category"
+                                    value={formik.values.category}
+                                    onChange={(value) => {
+                                        formik.setFieldValue("category", value);
+                                        formik.setFieldValue("subCategory", "");
+                                    }}
+                                    error={formik.touched.category && formik.errors.category}
+                                />
+
+                                <CommonBox
+                                    label="Sub Category"
+                                    placeholders="Select Sub Category"
+                                    options={subCategoryOptions}
+                                    name="subCategory"
+                                    value={formik.values.subCategory}
+                                    onChange={(value) => formik.setFieldValue("subCategory", value)}
+                                    error={formik.touched.subCategory && formik.errors.subCategory}
+                                />
+
+                                <CommonBox
+                                    label="Product"
+                                    placeholders="Select Product"
+                                    options={productOptions}
+                                    name="product"
+                                    value={formik.values.product}
+                                    onChange={(value) => formik.setFieldValue("product", value)}
+                                    error={formik.touched.product && formik.errors.product}
+                                />
+                            </div>
+                        )}
                     </div>
 
                     <div className="flex justify-end gap-3 pt-5 border-t">
