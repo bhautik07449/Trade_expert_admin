@@ -13,6 +13,15 @@ import Tradeofferservice from "../../../../service/tradeoffer.service";
 import { toast } from "../../../../components/ui/use-toast";
 import { fetchCategories } from "../../../../store/slice/categoriesSlice";
 import { fetchProducts } from "../../../../store/slice/productSlice";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "../../../../components/ui/table";
+import { Trash2 } from "lucide-react";
 
 export default function AddTradeOffer() {
     const { id } = useParams()
@@ -50,13 +59,20 @@ export default function AddTradeOffer() {
         trade_type: data ? data?.trade_type?.id : "",
         description: data ? data?.description : "",
         name: data ? data?.name : "",
-        product: data ? data?.product?.map((item) => item.id) : [],
-        category: data ? data?.category?.map((item) => item.id) : [],
-        subCategory: data ? data?.subCategory?.map((item) => item.id) : [],
+        category: "",
+        subCategory: "",
+        product: "",
+        hsncode: "",
+        quantity: "",
+        unit_measurement: "",
+        packing_configure: "",
+        actual_price: "",
+        discounted_price: "",
+        items: data ? data?.items || [] : [],
     };
 
     const validationSchema = Yup.object().shape({
-        trade_type: Yup.string().required("client select is required"),
+        trade_type: Yup.string().required("Trade type is required"),
         description: Yup.string().required("Description is required"),
         name: Yup.string().required("Name is required"),
     });
@@ -73,22 +89,20 @@ export default function AddTradeOffer() {
 
                 const payload = {
                     name: values?.name,
-                    description: values?.description
+                    description: values?.description,
+                    trade_type: { id: values.trade_type },
+                    items: values.items.map((item) => ({
+                        category: { id: item.category },
+                        subCategory: { id: item.subCategory },
+                        product: { id: item.product },
+                        hsncode: item.hsncode,
+                        quantity: item.quantity,
+                        unit_measurement: item.unit_measurement,
+                        packing_configure: item.packing_configure,
+                        actual_price: item.actual_price,
+                        discounted_price: item.discounted_price,
+                    }))
                 };
-
-                if (values.trade_type) {
-                    payload.trade_type = { id: values.trade_type };
-                }
-
-                if (values?.product) {
-                    payload.product = values?.product?.map((item) => ({ id: item }));
-                }
-                if (values?.category) {
-                    payload.category = values?.category?.map((item) => ({ id: item }));
-                }
-                if (values?.subCategory) {
-                    payload.subCategory = values?.subCategory?.map((item) => ({ id: item }));
-                }
 
                 let res
                 if (id) {
@@ -115,7 +129,6 @@ export default function AddTradeOffer() {
                 });
             } finally {
                 setSubmitting(false);
-                resetForm()
             }
         }
     });
@@ -146,6 +159,51 @@ export default function AddTradeOffer() {
             value: sub.id
         })) || [];
     }, [selectedCategory]);
+
+    const handleAddItem = () => {
+        const { category, subCategory, product, hsncode, quantity, unit_measurement, packing_configure, actual_price, discounted_price } = formik.values;
+
+        if (!category || !subCategory || !product || !quantity || !actual_price) {
+            toast({
+                variant: "error",
+                title: "Validation Error",
+                description: "Please fill all required fields before adding an item.",
+            });
+            return;
+        }
+
+        const newItem = {
+            category,
+            subCategory,
+            product,
+            hsncode,
+            quantity,
+            unit_measurement,
+            packing_configure,
+            actual_price,
+            discounted_price,
+            categoryName: categoryOptions.find(c => c.value === category)?.label,
+            subCategoryName: subCategoryOptions.find(s => s.value === subCategory)?.label,
+            productName: productOptions.find(p => p.value === product)?.label,
+        };
+
+        formik.setFieldValue("items", [...formik.values.items, newItem]);
+
+        formik.setFieldValue("category", "");
+        formik.setFieldValue("subCategory", "");
+        formik.setFieldValue("product", "");
+        formik.setFieldValue("hsncode", "");
+        formik.setFieldValue("quantity", "");
+        formik.setFieldValue("unit_measurement", "");
+        formik.setFieldValue("packing_configure", "");
+        formik.setFieldValue("actual_price", "");
+        formik.setFieldValue("discounted_price", "");
+    };
+
+    const handleRemoveItem = (index) => {
+        const updatedItems = formik.values.items.filter((_, i) => i !== index);
+        formik.setFieldValue("items", updatedItems);
+    };
 
     useEffect(() => {
         const getData = async (id) => {
@@ -206,45 +264,148 @@ export default function AddTradeOffer() {
                                 error={formik.touched.description && formik.errors.description}
                             />
                         </div>
-
-                        {id && (
-                            <div className="space-y-5">
-                                <CommonBox
-                                    label="Category"
-                                    placeholders="Select Category"
-                                    options={categoryOptions}
-                                    name="category"
-                                    value={formik.values.category}
-                                    onChange={(value) => {
-                                        formik.setFieldValue("category", value);
-                                        formik.setFieldValue("subCategory", "");
-                                    }}
-                                    error={formik.touched.category && formik.errors.category}
-                                />
-
-                                <CommonBox
-                                    label="Sub Category"
-                                    placeholders="Select Sub Category"
-                                    options={subCategoryOptions}
-                                    name="subCategory"
-                                    value={formik.values.subCategory}
-                                    onChange={(value) => formik.setFieldValue("subCategory", value)}
-                                    error={formik.touched.subCategory && formik.errors.subCategory}
-                                />
-
-                                <CommonBox
-                                    label="Product"
-                                    placeholders="Select Product"
-                                    options={productOptions}
-                                    name="product"
-                                    value={formik.values.product}
-                                    onChange={(value) => formik.setFieldValue("product", value)}
-                                    error={formik.touched.product && formik.errors.product}
-                                />
-                            </div>
-                        )}
                     </div>
 
+                    {id && (
+                        <>
+                            <div className="space-y-5">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <CommonBox
+                                        label="Category"
+                                        placeholders="Select Category"
+                                        options={categoryOptions}
+                                        name="category"
+                                        value={formik.values.category}
+                                        onChange={(value) => {
+                                            formik.setFieldValue("category", value);
+                                            formik.setFieldValue("subCategory", "");
+                                        }}
+                                        error={formik.touched.category && formik.errors.category}
+                                    />
+
+                                    <CommonBox
+                                        label="Sub Category"
+                                        placeholders="Select Sub Category"
+                                        options={subCategoryOptions}
+                                        name="subCategory"
+                                        value={formik.values.subCategory}
+                                        onChange={(value) => formik.setFieldValue("subCategory", value)}
+                                        error={formik.touched.subCategory && formik.errors.subCategory}
+                                    />
+
+                                    <CommonBox
+                                        label="Product"
+                                        placeholders="Select Product"
+                                        options={productOptions}
+                                        name="product"
+                                        value={formik.values.product}
+                                        onChange={(value) => formik.setFieldValue("product", value)}
+                                        error={formik.touched.product && formik.errors.product}
+                                    />
+
+                                    <CommonTextField
+                                        label="Hsncode"
+                                        placeholder="Hsncode"
+                                        name="hsncode"
+                                        value={formik.values.hsncode}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    <CommonTextField
+                                        label="Quantity"
+                                        placeholder="Quantity"
+                                        name="quantity"
+                                        value={formik.values.quantity}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    <CommonTextField
+                                        label="Unit Measurement"
+                                        placeholder="Unit Measurement"
+                                        name="unit_measurement"
+                                        value={formik.values.unit_measurement}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    <CommonTextField
+                                        label="Packing Configure"
+                                        placeholder="Packing Configure"
+                                        name="packing_configure"
+                                        value={formik.values.packing_configure}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    <CommonTextField
+                                        label="Actual Price"
+                                        placeholder="Actual Price"
+                                        name="actual_price"
+                                        value={formik.values.actual_price}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                    <CommonTextField
+                                        label="Discounted Price"
+                                        placeholder="Discounted Price"
+                                        name="discounted_price"
+                                        value={formik.values.discounted_price}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                </div>
+                                <div className="flex justify-end">
+                                    <CommonButton type="button" onClick={handleAddItem}>
+                                        Add Item
+                                    </CommonButton>
+                                </div>
+                            </div>
+
+                            {formik.values.items.length > 0 && (
+                                <div className="mt-6">
+                                    <h4 className="h6-bold mb-4">Added Items</h4>
+                                    <div className="border rounded-lg overflow-hidden">
+                                        <Table>
+                                            <TableHeader>
+                                                <TableRow>
+                                                    <TableHead>Category</TableHead>
+                                                    <TableHead>Sub Category</TableHead>
+                                                    <TableHead>Product</TableHead>
+                                                    <TableHead>HSN code</TableHead>
+                                                    <TableHead>Quantity</TableHead>
+                                                    <TableHead>Price</TableHead>
+                                                    <TableHead className="text-right">Action</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {formik.values.items.map((item, index) => (
+                                                    <TableRow key={index}>
+                                                        <TableCell>{item.category?.name}</TableCell>
+                                                        <TableCell>{item.subCategory?.name}</TableCell>
+                                                        <TableCell>{item.product?.name}</TableCell>
+                                                        <TableCell>{item.hsncode}</TableCell>
+                                                        <TableCell>{item.quantity} {item.unit_measurement}</TableCell>
+                                                        <TableCell>{item.actual_price}</TableCell>
+                                                        <TableCell className="text-right">
+                                                            <CommonButton
+                                                                type="button"
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                onClick={() => handleRemoveItem(index)}
+                                                            >
+                                                                <Trash2 className="w-4 h-4 text-destructive" />
+                                                            </CommonButton>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                    {formik.touched.items && formik.errors.items && (
+                                        <p className="text-sm text-destructive mt-2">{formik.errors.items}</p>
+                                    )}
+                                </div>
+                            )}
+                        </>
+                    )}
                     <div className="flex justify-end gap-3 pt-5 border-t">
                         <CommonButton type="button" variant="outline">
                             Cancel
