@@ -12,6 +12,7 @@ import { fetchCategories } from "../../../store/slice/categoriesSlice";
 import { useNavigate, useParams } from "react-router";
 import DMRservice from "../../../service/dmr.service";
 import { toast } from "../../../components/ui/use-toast";
+import { fetchProducts } from "../../../store/slice/productSlice";
 
 const AddDMR = () => {
     const { id } = useParams()
@@ -25,12 +26,18 @@ const AddDMR = () => {
 
     useEffect(() => {
         dispatch(fetchCategories());
+        dispatch(fetchProducts());
     }, [dispatch]);
+
+    const { list } = useSelector(
+        (state) => state.products
+    );
 
     const initialValues = {
         category: data ? data?.category?.id : "",
         subCategory: data ? data?.subcategory?.id : "",
         name: data ? data?.name : "",
+        product: data ? data?.product?.id : "",
         market: data ? data?.market : [
             {
                 country: "",
@@ -164,6 +171,13 @@ const AddDMR = () => {
         );
     }, [selectedCategory]);
 
+    const productOptions = useMemo(() => {
+        return list?.map((item) => ({
+            label: item?.name,
+            value: item?.id
+        }));
+    }, [list]);
+
     return (
         <div className="grid gap-6">
             <div className="grid gap-4">
@@ -198,6 +212,16 @@ const AddDMR = () => {
                             error={
                                 formik.touched.subCategory && formik.errors.subCategory
                             }
+                        />
+
+                        <CommonBox
+                            label="Product"
+                            placeholders="Select Product"
+                            options={productOptions}
+                            name="product"
+                            value={formik.values.product}
+                            onChange={(value) => formik.setFieldValue("product", value)}
+                            error={formik.touched.product && formik.errors.product}
                         />
 
                         <CommonTextField
