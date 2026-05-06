@@ -60,10 +60,6 @@ const CommonBox = ({
                         key={option.value}
                         value={option.value}
                         onSelect={() => {
-                          const selectedOption = options.find(
-                            (option) => option.value === option.value
-                          );
-
                           onChange(
                             option.value === value ? "" : option.value
                           );
