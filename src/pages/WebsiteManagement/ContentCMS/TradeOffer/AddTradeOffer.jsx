@@ -173,18 +173,15 @@ export default function AddTradeOffer() {
         }
 
         const newItem = {
-            category,
-            subCategory,
-            product,
+            category: { id: category, name: categoryOptions.find(c => c.value === category)?.label },
+            subCategory: { id: subCategory, name: subCategoryOptions.find(s => s.value === subCategory)?.label },
+            product: { id: product, name: productOptions.find(p => p.value === product)?.label },
             hsncode,
             quantity,
             unit_measurement,
             packing_configure,
             actual_price,
             discounted_price,
-            categoryName: categoryOptions.find(c => c.value === category)?.label,
-            subCategoryName: subCategoryOptions.find(s => s.value === subCategory)?.label,
-            productName: productOptions.find(p => p.value === product)?.label,
         };
 
         formik.setFieldValue("items", [...formik.values.items, newItem]);
