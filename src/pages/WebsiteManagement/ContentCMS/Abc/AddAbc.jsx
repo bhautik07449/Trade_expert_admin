@@ -12,6 +12,7 @@ import { fetchCategories } from "../../../../store/slice/categoriesSlice";
 import CommonBox from "../../../../components/common/common_box";
 import MultiSelectBox from "../../../../components/common/MultiSelectBox";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchAbcType } from "../../../../store/slice/abctypeSlice";
 
 export default function AddAbc() {
     const { id } = useParams()
@@ -24,6 +25,7 @@ export default function AddAbc() {
     useEffect(() => {
         dispatch(fetchCategories());
         dispatch(fetchProducts());
+        dispatch(fetchAbcType())
     }, []);
 
     const { categories } = useSelector(
@@ -34,13 +36,19 @@ export default function AddAbc() {
         (state) => state.products
     );
 
+    const { type } = useSelector(
+        (state) => state.abctype
+    );
+
     const initialValues = {
+        abc_type: data ? data?.abc_type : "",
         category: data ? data?.category?.id : "",
         subcategory: data ? data?.subcategory?.id : "",
         products: data ? data?.products?.map((p) => p.id) : [],
     };
 
     const validationSchema = Yup.object().shape({
+        abc_type: Yup.string().required("ABC Type is required"),
         category: Yup.string().required("Category is required"),
         subcategory: Yup.string().required("Sub Category is required"),
         products: Yup.array().min(1, "At least one product is required").required("Products are required")
@@ -79,6 +87,13 @@ export default function AddAbc() {
             }
         }
     });
+
+    const abctypeOptions = useMemo(() => {
+        return type?.map((item) => ({
+            label: item?.name,
+            value: item?.id
+        }));
+    }, [type]);
 
     const productOptions = useMemo(() => {
         return list?.map((item) => ({
@@ -137,6 +152,16 @@ export default function AddAbc() {
                 <form className="grid gap-6" onSubmit={formik.handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-5">
+                            <CommonBox
+                                label="ABC Type"
+                                placeholders="Select ABC Type"
+                                options={abctypeOptions}
+                                name="abc_type"
+                                value={formik.values.abc_type}
+                                onChange={(value) => formik.setFieldValue("abc_type", value)}
+                                error={formik.touched.abc_type && formik.errors.abc_type}
+                            />
+
                             <CommonBox
                                 label="Category"
                                 placeholders="Select Category"

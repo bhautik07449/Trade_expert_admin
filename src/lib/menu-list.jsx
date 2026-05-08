@@ -185,10 +185,24 @@ export function getMenuList(pathname) {
               icon: Images,
             },
             {
-              href: "/website-management/content/abc",
-              label: "ABC",
-              active: pathname.includes("/website-management/content/abc"),
+              href: "/website-management/content/abc-management",
+              label: "ABC Management",
+              active: pathname.includes("/website-management/content/abc-management"),
               icon: HelpCircle,
+              submenus: [
+                {
+                  href: "/website-management/content/abc-type",
+                  label: "ABC Type",
+                  active: pathname.includes("/website-management/content/abc-type"),
+                  icon: Tag,
+                },
+                {
+                  href: "/website-management/content/abc",
+                  label: "ABC",
+                  active: pathname.includes("/website-management/content/abc"),
+                  icon: Percent,
+                }
+              ]
             },
             {
               href: "/website-management/content/faq",

@@ -7,6 +7,7 @@ import tradeOfferSlice from './slice/tradeofferSlice'
 import blogcategoriesSlice from './slice/blogcategorySlice'
 import measurementSlice from './slice/measurementSlice'
 import productSlice from './slice/productSlice'
+import abctypeSlice from './slice/abctypeSlice'
 
 const reducer = {
   auth: authReducer,
@@ -16,7 +17,8 @@ const reducer = {
   tradeOffer: tradeOfferSlice,
   blogcategory: blogcategoriesSlice,
   measurements: measurementSlice,
-  products: productSlice
+  products: productSlice,
+  abctype:abctypeSlice
 };
 
 const store = configureStore({
