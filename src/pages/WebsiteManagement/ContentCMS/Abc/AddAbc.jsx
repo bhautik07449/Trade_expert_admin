@@ -41,7 +41,7 @@ export default function AddAbc() {
     );
 
     const initialValues = {
-        abc_type: data ? data?.abc_type : "",
+        abc_type: data ? data?.abc_type?.id : "",
         category: data ? data?.category?.id : "",
         subcategory: data ? data?.subcategory?.id : "",
         products: data ? data?.products?.map((p) => p.id) : [],
