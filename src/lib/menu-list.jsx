@@ -255,6 +255,12 @@ export function getMenuList(pathname) {
               label: "Analytical",
               active: pathname.includes("/website-management/country/analytical"),
               icon: PieChart,
+            },
+            {
+              href: "/website-management/country/trade-history",
+              label: "Trade History",
+              active: pathname.includes("/website-management/country/trade-history"),
+              icon: PieChart,
             }
           ]
         }

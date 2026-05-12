@@ -75,6 +75,8 @@ import Presences from "../pages/WebsiteManagement/Country/Presences/Presences";
 import AddPresences from "../pages/WebsiteManagement/Country/Presences/AddPresences";
 import Analytical from "../pages/WebsiteManagement/Country/Analytical/Analytical";
 import AddAnalytical from "../pages/WebsiteManagement/Country/Analytical/AddAnalytical";
+import TradeHistory from "../pages/WebsiteManagement/Country/TradeHistory/TradeHistory";
+import AddTradeHistory from "../pages/WebsiteManagement/Country/TradeHistory/AddTradeHistory";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -588,6 +590,21 @@ const routes = (isLoggedIn) => [
       {
         element: <AddAnalytical />,
         path: "/website-management/country/analytical/:id",
+        index: true,
+      },
+      {
+        element: <TradeHistory />,
+        path: "/website-management/country/trade-history",
+        index: true,
+      },
+      {
+        element: <AddTradeHistory />,
+        path: "/website-management/country/trade-history/add",
+        index: true,
+      },
+      {
+        element: <AddTradeHistory />,
+        path: "/website-management/country/trade-history/:id",
         index: true,
       },
     ],
