@@ -6,20 +6,24 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "../../../../components/ui/use-toast";
-import PresencesService from "../../../../service/presences.service";
 import CountrySelection from "../../../../components/widgets/country_selection";
+import Analyticalservice from "../../../../service/analytical.service";
+import { CommonTextField } from "../../../../components/widgets/common_textField";
 
-export default function AddPresences() {
+export default function AddAnalytical() {
     const { id } = useParams()
     const navigate = useNavigate()
     const [data, setData] = useState()
 
     const initialValues = {
+        title: data ? data?.title : "",
+        value: data ? data?.value : "",
         country: data ? data?.country : ""
     };
 
     const validationSchema = Yup.object().shape({
-        country: Yup.string().required("Country is required"),
+        title: Yup.string().required("Title is required"),
+        value: Yup.string().required("Value is required"),
     });
 
     const formik = useFormik({
@@ -32,23 +36,23 @@ export default function AddPresences() {
 
                 let res
                 if (id) {
-                    res = await PresencesService.updatePresences(id, values)
+                    res = await Analyticalservice.updateAnalytical(id, values)
                 } else {
-                    res = await PresencesService.addPresences(values);
+                    res = await Analyticalservice.addAnalytical(values);
                 }
                 resetForm()
-                navigate("/website-management/country/presences")
+                navigate("/website-management/country/analytical")
                 toast({
                     variant: "success",
-                    title: "Presences",
+                    title: "Analytical",
                     description: res?.data?.message,
                 });
             } catch (error) {
                 console.log("error", error);
                 toast({
                     variant: "error",
-                    title: "Presences Failed",
-                    description: error?.response?.data?.message || error?.message || "Presences Failed resubmit",
+                    title: "Analytical Failed",
+                    description: error?.response?.data?.message || error?.message || "Analytical Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);
@@ -59,7 +63,7 @@ export default function AddPresences() {
     useEffect(() => {
         const getData = async (id) => {
             try {
-                const res = await PresencesService.getByid(id);
+                const res = await Analyticalservice.getByid(id);
                 if (res) {
                     const data = res?.data?.data
                     setData(data)
@@ -70,7 +74,7 @@ export default function AddPresences() {
                 toast({
                     variant: "error",
                     title: "Fetch Failed",
-                    description: error?.response?.data?.message || error?.message || "Failed to fetch presence data",
+                    description: error?.response?.data?.message || error?.message || "Failed to fetch analytical data",
                 });
             }
         }
@@ -84,13 +88,33 @@ export default function AddPresences() {
         <div className="grid gap-6">
             <div className="grid gap-4">
                 <BackPath />
-                <h3 className="h5-bold">{id ? "Edit" : "Add"} Presences</h3>
+                <h3 className="h5-bold">{id ? "Edit" : "Add"} Analytical</h3>
             </div>
 
             <Card className="p-6">
                 <form className="grid gap-6" onSubmit={formik.handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-5">
+                        <div className="space-y-8">
+                            <CommonTextField
+                                label="Title"
+                                placeholder="Title"
+                                name="title"
+                                value={formik.values.title}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.title && formik.errors.title}
+                            />
+
+                            <CommonTextField
+                                label="Value"
+                                placeholder="Value"
+                                name="value"
+                                value={formik.values.value}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.value && formik.errors.value}
+                            />
+
                             <CountrySelection formik={formik} />
                         </div>
                     </div>

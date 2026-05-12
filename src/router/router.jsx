@@ -73,6 +73,8 @@ import Events from "../pages/WebsiteManagement/Country/Events/Events";
 import AddEvents from "../pages/WebsiteManagement/Country/Events/AddEvents";
 import Presences from "../pages/WebsiteManagement/Country/Presences/Presences";
 import AddPresences from "../pages/WebsiteManagement/Country/Presences/AddPresences";
+import Analytical from "../pages/WebsiteManagement/Country/Analytical/Analytical";
+import AddAnalytical from "../pages/WebsiteManagement/Country/Analytical/AddAnalytical";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -571,6 +573,21 @@ const routes = (isLoggedIn) => [
       {
         element: <AddPresences />,
         path: "/website-management/country/presences/:id",
+        index: true,
+      },
+      {
+        element: <Analytical />,
+        path: "/website-management/country/analytical",
+        index: true,
+      },
+      {
+        element: <AddAnalytical />,
+        path: "/website-management/country/analytical/add",
+        index: true,
+      },
+      {
+        element: <AddAnalytical />,
+        path: "/website-management/country/analytical/:id",
         index: true,
       },
     ],

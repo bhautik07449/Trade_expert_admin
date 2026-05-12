@@ -1,4 +1,4 @@
-import { Award, BadgeCheck, BookOpen, Boxes, Briefcase, ClipboardList, CreditCard, DollarSign, FileEdit, FileSpreadsheet, FileText, Flag, Folder, FolderTree, Globe, Handshake, HelpCircle, Images, LayoutDashboard, Mail, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, Ruler, Settings, ShieldCheck, Tag, Tags, Truck, User, Users } from "lucide-react";
+import { Award, BadgeCheck, BookOpen, Boxes, Briefcase, ClipboardList, CreditCard, DollarSign, FileEdit, FileSpreadsheet, FileText, Flag, Folder, FolderTree, Globe, Handshake, HelpCircle, Images, LayoutDashboard, Mail, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, PieChart, Ruler, Settings, ShieldCheck, Tag, Tags, Truck, User, Users } from "lucide-react";
 
 export function getMenuList(pathname) {
 
@@ -249,6 +249,12 @@ export function getMenuList(pathname) {
               label: "Presences",
               active: pathname.includes("/website-management/country/presences"),
               icon: Handshake,
+            },
+            {
+              href: "/website-management/country/analytical",
+              label: "Analytical",
+              active: pathname.includes("/website-management/country/analytical"),
+              icon: PieChart,
             }
           ]
         }
