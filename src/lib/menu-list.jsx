@@ -1,4 +1,4 @@
-import { Award, BadgeCheck, BookOpen, Boxes, Briefcase, ClipboardList, CreditCard, DollarSign, FileEdit, FileSpreadsheet, FileText, Folder, FolderTree, Globe, Handshake, HelpCircle, Images, LayoutDashboard, Mail, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, Ruler, Settings, ShieldCheck, Tag, Tags, Truck, User, Users } from "lucide-react";
+import { Award, BadgeCheck, BookOpen, Boxes, Briefcase, ClipboardList, CreditCard, DollarSign, FileEdit, FileSpreadsheet, FileText, Flag, Folder, FolderTree, Globe, Handshake, HelpCircle, Images, LayoutDashboard, Mail, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, Ruler, Settings, ShieldCheck, Tag, Tags, Truck, User, Users } from "lucide-react";
 
 export function getMenuList(pathname) {
 
@@ -228,6 +228,26 @@ export function getMenuList(pathname) {
               href: "/website-management/settings/social-settings",
               label: "Social Settings",
               active: pathname.includes("/website-management/settings/social-settings"),
+              icon: Handshake,
+            }
+          ]
+        },
+        {
+          href: "/website-management/country",
+          label: "Country Management",
+          active: pathname.includes("/website-management/country"),
+          icon: Flag,
+          submenus: [
+            {
+              href: "/website-management/country/events",
+              label: "Events",
+              active: pathname.includes("/website-management/country/events"),
+              icon: User,
+            },
+            {
+              href: "/website-management/country/presences",
+              label: "Presences",
+              active: pathname.includes("/website-management/country/presences"),
               icon: Handshake,
             }
           ]

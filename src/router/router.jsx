@@ -69,6 +69,10 @@ import Abc from "../pages/WebsiteManagement/ContentCMS/Abc/Abc";
 import AddAbc from "../pages/WebsiteManagement/ContentCMS/Abc/AddAbc";
 import AbcType from "../pages/WebsiteManagement/ContentCMS/AbcType/AbcType";
 import AddAbcType from "../pages/WebsiteManagement/ContentCMS/AbcType/AddAbcType";
+import Events from "../pages/WebsiteManagement/Country/Events/Events";
+import AddEvents from "../pages/WebsiteManagement/Country/Events/AddEvents";
+import Presences from "../pages/WebsiteManagement/Country/Presences/Presences";
+import AddPresences from "../pages/WebsiteManagement/Country/Presences/AddPresences";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -469,7 +473,7 @@ const routes = (isLoggedIn) => [
         path: "/website-management/content/gallery/:id",
         index: true,
       },
-       {
+      {
         element: <AbcType />,
         path: "/website-management/content/abc-type",
         index: true,
@@ -538,7 +542,37 @@ const routes = (isLoggedIn) => [
         element: <DocumentRenderer />,
         path: "/documents/export-invoice/:formSlug",
         index: true,
-      }
+      },
+      {
+        element: <Events />,
+        path: "/website-management/country/events",
+        index: true,
+      },
+      {
+        element: <AddEvents />,
+        path: "/website-management/country/events/add",
+        index: true,
+      },
+      {
+        element: <AddEvents />,
+        path: "/website-management/country/events/:id",
+        index: true,
+      },
+      {
+        element: <Presences />,
+        path: "/website-management/country/presences",
+        index: true,
+      },
+      {
+        element: <AddPresences />,
+        path: "/website-management/country/presences/add",
+        index: true,
+      },
+      {
+        element: <AddPresences />,
+        path: "/website-management/country/presences/:id",
+        index: true,
+      },
     ],
   },
   {
