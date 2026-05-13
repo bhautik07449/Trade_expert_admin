@@ -51,7 +51,8 @@ export default function AddProduct() {
         pageTitle: Yup.string().required("Page title is required"),
         metaKeywords: Yup.string().required("Meta keywords required"),
         metaDescription: Yup.string().required("Meta description required"),
-        seasonalChart: Yup.string().required("Seasonal chart required")
+        seasonalChart: Yup.string().required("Seasonal chart required"),
+        country: Yup.string().required("Country is required")
     });
 
     const initialValues = {
@@ -77,7 +78,8 @@ export default function AddProduct() {
         images: data ? data?.images : [],
         certification: data ? data?.certification : '',
         season: data ? data?.season : 'All',
-        status: data ? data?.status : 'Indenting'
+        status: data ? data?.status : 'Indenting',
+        country: data ? data?.country : '',
     };
 
     const formik = useFormik({
