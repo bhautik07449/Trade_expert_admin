@@ -3,11 +3,15 @@ import ImageUploadField from "../../../../components/common/ImageUploadField";
 import { Card } from "../../../../components/ui/card";
 import BackPath from "../../../../components/common/BackPath";
 import { useNavigate, useParams } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Homebannerservice from "../../../../service/homebanner.service";
 import { toast } from "../../../../components/ui/use-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories } from "../../../../store/slice/categoriesSlice";
+import CommonBox from "../../../../components/common/common_box";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddHomeBanner() {
     const { id } = useParams()
@@ -15,12 +19,26 @@ export default function AddHomeBanner() {
 
     const navigate = useNavigate()
 
+    const dispatch = useDispatch();
+
+    const { categories } = useSelector(
+        (state) => state.categories
+    );
+
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch]);
+
     const initialValues = {
-        image: data ? data?.image : ""
+        image: data ? data?.image : "",
+        country: data ? data?.country : "",
+        category: data ? data?.category?.id : ""
     };
 
     const validationSchema = Yup.object().shape({
-        image: Yup.string().required("Name is required")
+        image: Yup.string().required("Name is required"),
+        country: Yup.string().required("Country is required"),
+        category: Yup.string().required("Category is required"),
     });
 
     const formik = useFormik({
@@ -63,6 +81,13 @@ export default function AddHomeBanner() {
         }
     });
 
+    const categoryOptions = useMemo(() => {
+        return categories?.map((cat) => ({
+            label: cat.name,
+            value: cat.id
+        }));
+    }, [categories]);
+
     useEffect(() => {
         const getData = async (id) => {
             try {
@@ -97,7 +122,22 @@ export default function AddHomeBanner() {
                                 value={formik.values.image}
                                 onImageUpload={(url) => {
                                     formik.setFieldValue("image", url);
-                                }} />
+                                }}
+                            />
+
+                            <CommonBox
+                                label="Category"
+                                placeholders="Select Category"
+                                options={categoryOptions}
+                                name="category"
+                                value={formik.values.category}
+                                onChange={(value) => {
+                                    formik.setFieldValue("category", value);
+                                }}
+                                error={formik.touched.category && formik.errors.category}
+                            />
+
+                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 
