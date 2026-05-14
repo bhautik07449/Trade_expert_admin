@@ -13,6 +13,7 @@ import MultiSelectBox from "../../../../components/common/MultiSelectBox";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductName } from "../../../../store/slice/productnameSlice";
 import CountryProductService from "../../../../service/countryproduct.service";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddProductList() {
     const { id } = useParams()
@@ -43,13 +44,15 @@ export default function AddProductList() {
         category: data ? data?.category?.id : "",
         subcategory: data ? data?.subcategory?.id : "",
         products: data ? data?.products?.map((p) => p.id) : [],
+        country: data?.country || "",
     };
 
     const validationSchema = Yup.object().shape({
         productname: Yup.string().required("Product Name is required"),
         category: Yup.string().required("Category is required"),
         subcategory: Yup.string().required("Sub Category is required"),
-        products: Yup.array().min(1, "At least one product is required").required("Products are required")
+        products: Yup.array().min(1, "At least one product is required").required("Products are required"),
+        country: Yup.string().required("Country is required")
     });
 
     const formik = useFormik({
@@ -192,6 +195,8 @@ export default function AddProductList() {
                                 onChange={(value) => formik.setFieldValue("products", value)}
                                 error={formik.touched.products && formik.errors.products}
                             />
+
+                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 
