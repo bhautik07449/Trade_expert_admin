@@ -21,6 +21,8 @@ const columns = [
             />
         )
     },
+    { field: "country", headerName: "Country", flex: 2 },
+    { field: "category", headerName: "Category", flex: 2 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
             <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
@@ -42,6 +44,7 @@ export default function HomeBanner() {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
+                    category: item?.category?.name,
                     createdAt: formatDate(item?.createdAt),
                 }))
                 setList(formattedData)
