@@ -1,4 +1,4 @@
-import { Award, BadgeCheck, BookOpen, Boxes, Briefcase, ClipboardList, CreditCard, DollarSign, FileEdit, FileSpreadsheet, FileText, Flag, Folder, FolderTree, Globe, Handshake, HelpCircle, Images, LayoutDashboard, Mail, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, PieChart, Ruler, Settings, ShieldCheck, Tag, Tags, Truck, User, Users } from "lucide-react";
+import { Award, BadgeCheck, BookOpen, Boxes, Briefcase, ClipboardList, CreditCard, DollarSign, FileEdit, FileSpreadsheet, FileText, Flag, Folder, FolderTree, Globe, Handshake, HelpCircle, Images, LayoutDashboard, List, Mail, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, PieChart, Ruler, Settings, ShieldCheck, Tag, Tags, Truck, User, Users } from "lucide-react";
 
 export function getMenuList(pathname) {
 
@@ -261,7 +261,27 @@ export function getMenuList(pathname) {
               label: "Trade History",
               active: pathname.includes("/website-management/country/trade-history"),
               icon: PieChart,
-            }
+            },
+            {
+              href: "/website-management/country/product",
+              label: "Product",
+              active: pathname.includes("/website-management/country/product"),
+              icon: Package,
+              submenus: [
+                {
+                  href: "/website-management/country/product-name",
+                  label: "Product Name",
+                  active: pathname.includes("/website-management/country/product-name"),
+                  icon: List,
+                },
+                {
+                  href: "/website-management/country/product-list",
+                  label: "Product List",
+                  active: pathname.includes("/website-management/country/product-list"),
+                  icon: Tag,
+                }
+              ]
+            },
           ]
         }
       ],

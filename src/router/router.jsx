@@ -77,6 +77,10 @@ import Analytical from "../pages/WebsiteManagement/Country/Analytical/Analytical
 import AddAnalytical from "../pages/WebsiteManagement/Country/Analytical/AddAnalytical";
 import TradeHistory from "../pages/WebsiteManagement/Country/TradeHistory/TradeHistory";
 import AddTradeHistory from "../pages/WebsiteManagement/Country/TradeHistory/AddTradeHistory";
+import ProductName from "../pages/WebsiteManagement/Country/ProductName/ProductName";
+import AddProductName from "../pages/WebsiteManagement/Country/ProductName/AddProductName";
+import ProductList from "../pages/WebsiteManagement/Country/ProductList/ProductList";
+import AddProductList from "../pages/WebsiteManagement/Country/ProductList/AddProductList";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -605,6 +609,36 @@ const routes = (isLoggedIn) => [
       {
         element: <AddTradeHistory />,
         path: "/website-management/country/trade-history/:id",
+        index: true,
+      },
+      {
+        element: <ProductName />,
+        path: "/website-management/country/product-name",
+        index: true,
+      },
+      {
+        element: <AddProductName />,
+        path: "/website-management/country/product-name/add",
+        index: true,
+      },
+      {
+        element: <AddProductName />,
+        path: "/website-management/country/product-name/edit/:id",
+        index: true,
+      },
+      {
+        element: <ProductList />,
+        path: "/website-management/country/product-list",
+        index: true,
+      },
+      {
+        element: <AddProductList />,
+        path: "/website-management/country/product-list/add",
+        index: true,
+      },
+      {
+        element: <AddProductList />,
+        path: "/website-management/country/product-list/edit/:id",
         index: true,
       },
     ],
