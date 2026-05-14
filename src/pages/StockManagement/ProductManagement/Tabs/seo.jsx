@@ -35,7 +35,7 @@ export default function SEO({ formik }) {
                 onChange={formik.handleChange}
                 error={formik.touched.metaDescription && formik.errors.metaDescription}
             />
-            
+
             <div className="mt-4">
                 <Label className="mb-2 block">Season</Label>
                 <div className="flex gap-6">
@@ -65,8 +65,6 @@ export default function SEO({ formik }) {
                     </div>
                 </div>
             </div>
-
-            <CountrySelection formik={formik}/>
         </div>
     );
 }
