@@ -81,6 +81,8 @@ import ProductName from "../pages/WebsiteManagement/Country/ProductName/ProductN
 import AddProductName from "../pages/WebsiteManagement/Country/ProductName/AddProductName";
 import ProductList from "../pages/WebsiteManagement/Country/ProductList/ProductList";
 import AddProductList from "../pages/WebsiteManagement/Country/ProductList/AddProductList";
+import ContentOverview from "../pages/WebsiteManagement/Country/ContentOverview/ContentOverview";
+import AddContentOverview from "../pages/WebsiteManagement/Country/ContentOverview/AddContentOverview";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -639,6 +641,21 @@ const routes = (isLoggedIn) => [
       {
         element: <AddProductList />,
         path: "/website-management/country/product-list/edit/:id",
+        index: true,
+      },
+      {
+        element: <ContentOverview />,
+        path: "/website-management/country/content-overview",
+        index: true,
+      },
+      {
+        element: <AddContentOverview />,
+        path: "/website-management/country/content-overview/add",
+        index: true,
+      },
+      {
+        element: <AddContentOverview />,
+        path: "/website-management/country/content-overview/edit/:id",
         index: true,
       },
     ],
