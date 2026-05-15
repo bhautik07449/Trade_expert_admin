@@ -22,7 +22,9 @@ const columns = [
         )
     },
     { field: "content", headerName: "Content", flex: 2 },
-    { field: "country", headerName: "Country", flex: 2 },
+    { field: "year", headerName: "Year", flex: 1 },
+    { field: "label", headerName: "Label", flex: 1 },
+    { field: "country", headerName: "Country", flex: 1 },
     { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 

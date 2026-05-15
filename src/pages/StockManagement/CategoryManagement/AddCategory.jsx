@@ -11,6 +11,7 @@ import Categoriesservice from "../../../service/categories.service";
 import { useNavigate, useParams } from "react-router";
 import { fetchFlatCategories } from "../../../store/slice/categoriesSlice";
 import { toast } from "../../../components/ui/use-toast";
+import CountrySelection from "../../../components/widgets/country_selection";
 
 export default function AddCategory() {
     const { id } = useParams()
@@ -31,6 +32,7 @@ export default function AddCategory() {
         metaKeyword: data ? data?.metaKeyword : "",
         metaDescription: data ? data?.metaDescription : "",
         parent: data ? data?.parent?.id : "",
+        country: data ? data?.country : "",
         status: data ? data?.status : "active"
     };
 
@@ -40,6 +42,7 @@ export default function AddCategory() {
         pageTitle: Yup.string().required("Page Title is required"),
         metaKeyword: Yup.string().required("Meta Keyword is required"),
         metaDescription: Yup.string().required("Meta Description is required"),
+        country: Yup.string().required("Country is required"),
         status: Yup.string().required("Status is required")
     });
 
@@ -59,6 +62,7 @@ export default function AddCategory() {
                     pageTitle: values.pageTitle,
                     metaKeyword: values.metaKeyword,
                     metaDescription: values.metaDescription,
+                    country: values.country,
                     status: values.status,
                 };
 
@@ -88,7 +92,7 @@ export default function AddCategory() {
                 toast({
                     variant: "error",
                     title: "Category Failed",
-                    description: "Category Failed resubmit",
+                    description: error?.response?.data?.message || "Category Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);
@@ -193,6 +197,8 @@ export default function AddCategory() {
                             onChange={(value) => formik.setFieldValue("parent", value)}
                             error={formik.touched.parent && formik.errors.parent}
                         />
+
+                        <CountrySelection formik={formik} />
 
                         <CommonBox
                             label="Status"

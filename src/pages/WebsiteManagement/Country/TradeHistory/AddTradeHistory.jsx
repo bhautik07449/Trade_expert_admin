@@ -20,11 +20,15 @@ export default function AddTradeHistory() {
         content: data ? data?.content : "",
         image: data ? data?.image : "",
         country: data ? data?.country : "",
+        year: data ? data?.year : "",
+        label: data ? data?.label : "",
     };
 
     const validationSchema = Yup.object().shape({
         content: Yup.string().required("Content is required"),
-        image: Yup.string().required("Image is required")
+        image: Yup.string().required("Image is required"),
+        year: Yup.string().required("Year is required"),
+        label: Yup.string().required("Label is required"),
     });
 
     const formik = useFormik({
@@ -103,6 +107,26 @@ export default function AddTradeHistory() {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.content && formik.errors.content}
+                            />
+
+                            <CommonTextField
+                                label="Year"
+                                placeholder="Year"
+                                name="year"
+                                value={formik.values.year}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.year && formik.errors.year}
+                            />
+
+                            <CommonTextField
+                                label="Label"
+                                placeholder="Label"
+                                name="label"
+                                value={formik.values.label}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.label && formik.errors.label}
                             />
 
                             <div className="space-y-5">
