@@ -7,7 +7,6 @@ import CommonTable from "../../../components/widgets/common_table";
 import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../lib/funcation";
 import Supplierservice from "../../../service/suppliers.service";
-import CustomLoader from "../../../components/widgets/custom_loader";
 import { formatDate } from "../../../common/constants";
 
 const columns = [
@@ -97,20 +96,15 @@ const SuppliersManagement = () => {
                         </Button>
                     </div>
                 </div>
-                {loder ? (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <CustomLoader size={20} color="currentColor" />
-                    </div>
-                ) :
-                    <CommonTable
-                        columns={columns}
-                        rows={list || []}
-                        showEdit={true}
-                        showDelete={true}
-                        onEdit={handleEdit}
-                        onDelete={handleDelete}
-                    />
-                }
+                <CommonTable
+                    columns={columns}
+                    rows={list || []}
+                    loading={loder}
+                    showEdit={true}
+                    showDelete={true}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                />
             </Card>
         </div>
     );

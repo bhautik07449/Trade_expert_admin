@@ -6,7 +6,6 @@ import { Button } from "../../../components/ui/button";
 import CommonTable from "../../../components/widgets/common_table";
 import { formatDate } from "../../../common/constants";
 import { useNavigate } from "react-router";
-import CustomLoader from "../../../components/widgets/custom_loader";
 import Adminservice from "../../../service/admin.service";
 import { toast } from "../../../components/ui/use-toast";
 
@@ -100,20 +99,15 @@ const AdminsManagement = () => {
                         </Button>
                     </div>
                 </div>
-                {loder ? (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <CustomLoader size={20} color="currentColor" />
-                    </div>
-                ) :
-                    <CommonTable
-                        columns={columns}
-                        rows={user || []}
-                        showEdit={true}
-                        showDelete={true}
-                        onEdit={(row) => { handleEdit(row) }}
-                        onDelete={handleDelete}
-                    />
-                }
+                <CommonTable
+                    columns={columns}
+                    rows={user || []}
+                    loading={loder}
+                    showEdit={true}
+                    showDelete={true}
+                    onEdit={(row) => { handleEdit(row) }}
+                    onDelete={handleDelete}
+                />
             </Card>
         </div>
     );
