@@ -13,6 +13,7 @@ import CommonBox from "../../../../components/common/common_box";
 import MultiSelectBox from "../../../../components/common/MultiSelectBox";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAbcType } from "../../../../store/slice/abctypeSlice";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddAbc() {
     const { id } = useParams()
@@ -44,6 +45,7 @@ export default function AddAbc() {
         abc_type: data ? data?.abc_type?.id : "",
         category: data ? data?.category?.id : "",
         subcategory: data ? data?.subcategory?.id : "",
+        country: data ? data?.country : "",
         products: data ? data?.products?.map((p) => p.id) : [],
     };
 
@@ -51,6 +53,7 @@ export default function AddAbc() {
         abc_type: Yup.string().required("ABC Type is required"),
         category: Yup.string().required("Category is required"),
         subcategory: Yup.string().required("Sub Category is required"),
+        country: Yup.string().required("Country is required"),
         products: Yup.array().min(1, "At least one product is required").required("Products are required")
     });
 
@@ -184,6 +187,8 @@ export default function AddAbc() {
                                 onChange={(value) => formik.setFieldValue("subcategory", value)}
                                 error={formik.touched.subcategory && formik.errors.subcategory}
                             />
+
+                            <CountrySelection formik={formik} />
 
                             <MultiSelectBox
                                 label="Product"
