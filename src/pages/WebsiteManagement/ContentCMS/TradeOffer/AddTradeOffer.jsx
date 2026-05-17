@@ -22,6 +22,7 @@ import {
     TableRow,
 } from "../../../../components/ui/table";
 import { Trash2 } from "lucide-react";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddTradeOffer() {
     const { id } = useParams()
@@ -69,12 +70,14 @@ export default function AddTradeOffer() {
         actual_price: "",
         discounted_price: "",
         items: data ? data?.items || [] : [],
+        country: data?.country ? data?.country : "",
     };
 
     const validationSchema = Yup.object().shape({
         trade_type: Yup.string().required("Trade type is required"),
         description: Yup.string().required("Description is required"),
         name: Yup.string().required("Name is required"),
+        country: Yup.string().required("Country is required"),
     });
 
     const formik = useFormik({
@@ -91,6 +94,7 @@ export default function AddTradeOffer() {
                     name: values?.name,
                     description: values?.description,
                     trade_type: { id: values.trade_type },
+                    country: values?.country,
                     items: values.items.map((item) => ({
                         category: { id: item.category },
                         subCategory: { id: item.subCategory },
@@ -260,6 +264,7 @@ export default function AddTradeOffer() {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.description && formik.errors.description}
                             />
+                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 
