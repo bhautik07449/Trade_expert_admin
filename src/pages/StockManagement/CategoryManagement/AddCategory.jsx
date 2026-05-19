@@ -105,11 +105,17 @@ export default function AddCategory() {
     );
 
     const parentOptions = useMemo(() => {
-        return flatList.map((item) => ({
-            label: item.name,
-            value: item.id
-        }));
-    }, [flatList]);
+        return flatList
+            .filter((item) => {
+                const isNotSelf = !id || item.id !== Number(id);
+                const matchesCountry = !formik.values.country || item.country === formik.values.country;
+                return isNotSelf && matchesCountry;
+            })
+            .map((item) => ({
+                label: item.name,
+                value: item.id
+            }));
+    }, [flatList, formik.values.country, id]);
 
     const getData = async (id) => {
         try {

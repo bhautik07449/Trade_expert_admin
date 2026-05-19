@@ -1,8 +1,10 @@
 import serverCall from "../serverCall";
 
-const getList = async () => {
+const getList = async (country) => {
     try {
-        const response = serverCall.get('/categories')
+        const response = serverCall.get('/categories/hierarchy', {
+            params: country ? { country } : {}
+        })
         return response
     } catch (error) {
         throw error
