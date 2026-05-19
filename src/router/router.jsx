@@ -83,6 +83,8 @@ import ProductList from "../pages/WebsiteManagement/Country/ProductList/ProductL
 import AddProductList from "../pages/WebsiteManagement/Country/ProductList/AddProductList";
 import ContentOverview from "../pages/WebsiteManagement/Country/ContentOverview/ContentOverview";
 import AddContentOverview from "../pages/WebsiteManagement/Country/ContentOverview/AddContentOverview";
+import Career from "../pages/WebsiteManagement/ContentCMS/Career/Career";
+import ViewCareer from "../pages/WebsiteManagement/ContentCMS/Career/ViewCareer";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -656,6 +658,16 @@ const routes = (isLoggedIn) => [
       {
         element: <AddContentOverview />,
         path: "/website-management/country/content-overview/edit/:id",
+        index: true,
+      },
+      {
+        element: <Career />,
+        path: "/website-management/content/career",
+        index: true,
+      },
+      {
+        element: <ViewCareer />,
+        path: "/website-management/content/career/view/:id",
         index: true,
       },
     ],

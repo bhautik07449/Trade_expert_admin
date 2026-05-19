@@ -210,6 +210,12 @@ export function getMenuList(pathname) {
               active: pathname.includes("/website-management/content/faq"),
               icon: HelpCircle,
             },
+            {
+              href: "/website-management/content/career",
+              label: "Career",
+              active: pathname.includes("/website-management/content/career"),
+              icon: HelpCircle,
+            },
           ]
         },
         {

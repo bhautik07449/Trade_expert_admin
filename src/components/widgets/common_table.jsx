@@ -9,7 +9,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import "../../App.css";
 
 import { AiFillEdit } from "react-icons/ai";
-import { Trash2 } from "lucide-react";
+import { Trash2, View } from "lucide-react";
 
 import Delete from "./common_Delete_dialog";
 import CommonButton from "./common_button";
@@ -96,8 +96,10 @@ const CommonTable = ({
   columns = [],
   rows = [],
   showEdit = false,
+  showView = false,
   showDelete = false,
   onEdit = () => { },
+  onShow = () => { },
   onDelete = () => { },
   rowHeight = 50,
   tableHeight = "400px",
@@ -154,6 +156,16 @@ const CommonTable = ({
                 onClick={() => onEdit(params.data)}
               >
                 <AiFillEdit className="size-4" />
+              </CommonButton>
+            )}
+
+            {showView && (
+              <CommonButton
+                variant="outline"
+                className="size-8 rounded-md"
+                onClick={() => onShow(params.data)}
+              >
+                <View className="size-4" />
               </CommonButton>
             )}
 
