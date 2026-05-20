@@ -14,6 +14,7 @@ const columns = [
     { field: "name", headerName: "name", flex: 1 },
     { field: "email", headerName: "email", flex: 1 },
     { field: "phone", headerName: "PhoneNo", flex: 1 },
+    { field: "country", headerName: "Country", flex: 1 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
             <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>

@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router";
 import Supplierservice from "../../../service/suppliers.service";
 import { toast } from "../../../components/ui/use-toast";
+import CountrySelection from "../../../components/widgets/country_selection";
 
 const AddEditSuppliers = () => {
     const [data, setData] = useState([])
@@ -36,6 +37,7 @@ const AddEditSuppliers = () => {
         productCategory: data ? data?.productCategory : "",
         products: data ? data?.products : "",
         productStatus: data ? data?.productStatus : "",
+        country: data ? data?.country : "",
     };
 
     const validationSchema = Yup.object().shape({
@@ -52,6 +54,7 @@ const AddEditSuppliers = () => {
         supplierType: Yup.string().required("Supplier Type is required"),
         productCategory: Yup.string().required("Product Category is required"),
         products: Yup.string().required("Products is required"),
+        country: Yup.string().required("Country is required"),
     });
 
     const formik = useFormik({
@@ -253,6 +256,8 @@ const AddEditSuppliers = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.products && formik.errors.products}
                         />
+
+                        <CountrySelection formik={formik} />
                     </div>
 
                     <div className="flex justify-end gap-3 pt-5 border-t">
