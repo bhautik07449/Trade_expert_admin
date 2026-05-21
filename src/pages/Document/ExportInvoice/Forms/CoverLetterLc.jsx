@@ -32,11 +32,11 @@ export default function CoverLetterLc() {
                     }
                 }
             `}</style>
-            
+
             <form id="print-section" className="w-full max-w-4xl mx-auto text-black bg-white print:text-[12px]">
                 <div className="text-center mb-4 print:mb-2">
-                    <div className="mx-auto w-14 h-14 rounded-full border border-amber-900 flex items-center justify-center font-bold text-xl mb-1 text-amber-900">
-                        S2
+                    <div className="mx-auto w-16 h-16 rounded-full border border-amber-900 flex items-center justify-center font-bold text-lg mb-0.5 text-amber-900">
+                        <img src="/logo.jpg" alt="Logo" className="w-full h-full object-contain" />
                     </div>
                     <p className="text-[10px] text-gray-500 mb-0.5">SourceSeas</p>
                     <h2 className="font-bold text-sm print:text-sm">SourceSeas Overseas Pvt. Ltd.</h2>
@@ -48,11 +48,11 @@ export default function CoverLetterLc() {
 
                 <div className="border border-gray-400 p-6 print:p-4 text-[13px] print:text-[12px]">
                     <h1 className="text-center text-lg font-bold mb-6 uppercase underline">Covering Letter For Post Shipment Under LC</h1>
-                    
+
                     <div className="space-y-4">
                         <Field label="Date" type="date" />
                         <Field label="The Manager," type="text" />
-                        
+
                         <h2 className="text-sm font-semibold mt-6 mb-2">Dear Sir,</h2>
                         <Field label="Subject" type="text" />
 
@@ -66,14 +66,14 @@ export default function CoverLetterLc() {
                             {documentFields.map((doc, index) => (
                                 <div key={index} className="contents">
                                     <span className="py-1">{doc}</span>
-                                    <input 
-                                        type="text" 
-                                        placeholder="Originals" 
+                                    <input
+                                        type="text"
+                                        placeholder="Originals"
                                         className="w-full outline-none border border-transparent hover:border-gray-300 focus:border-gray-400 rounded px-2 py-1 bg-transparent print:border-none print:p-0 print:m-0"
                                     />
-                                    <input 
-                                        type="text" 
-                                        placeholder="Copies" 
+                                    <input
+                                        type="text"
+                                        placeholder="Copies"
                                         className="w-full outline-none border border-transparent hover:border-gray-300 focus:border-gray-400 rounded px-2 py-1 bg-transparent print:border-none print:p-0 print:m-0"
                                     />
                                 </div>
@@ -120,7 +120,7 @@ function Field({ label, type }) {
     return (
         <div className="grid grid-cols-[1fr_2fr] items-center gap-2 border-b border-gray-200 pb-2 print:border-none print:pb-0">
             <span className="font-medium">{label} :</span>
-            <input 
+            <input
                 type={type || 'text'}
                 className="w-full outline-none border border-transparent hover:border-gray-300 focus:border-gray-400 rounded px-2 py-1 bg-transparent print:border-none print:p-0 print:m-0"
             />

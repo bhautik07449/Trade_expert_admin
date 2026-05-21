@@ -35,8 +35,8 @@ export default function BillOfExchangeLC() {
 
             <form id="print-section" className="w-full max-w-4xl mx-auto text-black bg-white print:text-[12px]">
                 <div className="text-center mb-4 print:mb-2">
-                    <div className="mx-auto w-14 h-14 rounded-full border border-amber-900 flex items-center justify-center font-bold text-xl mb-1 text-amber-900">
-                        S2
+                    <div className="mx-auto w-16 h-16 rounded-full border border-amber-900 flex items-center justify-center font-bold text-lg mb-0.5 text-amber-900">
+                        <img src="/logo.jpg" alt="Logo" className="w-full h-full object-contain" />
                     </div>
                     <p className="text-[10px] text-gray-500 mb-0.5">SourceSeas</p>
                     <h2 className="font-bold text-sm print:text-sm">SourceSeas Overseas Pvt. Ltd.</h2>

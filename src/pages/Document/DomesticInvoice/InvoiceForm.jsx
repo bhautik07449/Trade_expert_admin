@@ -31,8 +31,8 @@ export default function InvoiceForm({ title }) {
             
             <form id="print-section" className="w-full max-w-5xl mx-auto text-black bg-white print:text-[10px]">
                 <div className="text-center mb-1 print:mb-0">
-                    <div className="mx-auto w-12 h-12 rounded-full border border-amber-900 flex items-center justify-center font-bold text-lg mb-0.5 text-amber-900">
-                        S2
+                    <div className="mx-auto w-16 h-16 rounded-full border border-amber-900 flex items-center justify-center font-bold text-lg mb-0.5 text-amber-900">
+                        <img src="/logo.jpg" alt="Logo" className="w-full h-full object-contain" />
                     </div>
                     <p className="text-[9px] text-gray-500 mb-0.5">SourceSeas</p>
                     <h2 className="font-bold text-sm print:text-xs">SourceSeas Overseas Pvt. Ltd.</h2>
