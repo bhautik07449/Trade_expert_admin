@@ -65,7 +65,7 @@ export default function AddPageManagement() {
                 toast({
                     variant: "error",
                     title: "Pages Failed",
-                    description: "Pages Failed resubmit",
+                    description: error?.response?.data?.message || "Pages Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

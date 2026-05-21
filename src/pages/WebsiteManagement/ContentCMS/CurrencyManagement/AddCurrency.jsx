@@ -57,7 +57,7 @@ export default function AddCurrency() {
                 toast({
                     variant: "error",
                     title: "Currency Failed",
-                    description: "Currency Failed resubmit",
+                    description: error?.response?.data?.message || "Currency Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

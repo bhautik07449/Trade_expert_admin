@@ -87,7 +87,7 @@ const AddEditSuppliers = () => {
                 toast({
                     variant: "error",
                     title: "Suppliers Failed",
-                    description: "Suppliers Failed resubmit",
+                    description: error?.response?.data?.message || "Suppliers Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

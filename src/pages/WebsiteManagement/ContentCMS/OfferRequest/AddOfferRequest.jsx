@@ -93,7 +93,7 @@ export default function AddOfferRequest() {
                 toast({
                     variant: "error",
                     title: "Offer Req. Failed",
-                    description: "Offer Req. Failed resubmit",
+                    description: error?.response?.data?.message || "Offer Req. Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

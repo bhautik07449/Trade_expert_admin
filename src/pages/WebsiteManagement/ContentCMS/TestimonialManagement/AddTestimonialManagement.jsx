@@ -85,7 +85,7 @@ export default function AddTestimonialManagement() {
                 toast({
                     variant: "error",
                     title: "Testinomial Failed",
-                    description: "Testinomial Failed resubmit",
+                    description: error?.response?.data?.message || "Testinomial Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

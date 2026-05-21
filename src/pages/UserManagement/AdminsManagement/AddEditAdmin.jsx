@@ -69,7 +69,7 @@ const AddEditAdmin = () => {
                 toast({
                     variant: "error",
                     title: "Admin Failed",
-                    description: "Admin Failed resubmit",
+                    description: error?.response?.data?.message || "Admin Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

@@ -129,7 +129,7 @@ export default function AddTradeOffer() {
                 toast({
                     variant: "error",
                     title: "Trade Offer Failed",
-                    description: "Trade Offer Failed resubmit",
+                    description: error?.response?.data?.message || "Trade Offer Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

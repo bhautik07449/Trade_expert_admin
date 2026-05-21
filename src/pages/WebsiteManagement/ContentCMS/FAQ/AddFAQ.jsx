@@ -58,7 +58,7 @@ export default function AddFAQ() {
                 toast({
                     variant: "error",
                     title: "FAQs Failed",
-                    description: "FAQs Failed resubmit",
+                    description: error?.response?.data?.message || "FAQs Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

@@ -110,7 +110,7 @@ export default function AddQualityPolicies() {
                 toast({
                     variant: "error",
                     title: "Quality Policies Failed",
-                    description: "Quality Policies Failed resubmit",
+                    description: error?.response?.data?.message || "Quality Policies Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

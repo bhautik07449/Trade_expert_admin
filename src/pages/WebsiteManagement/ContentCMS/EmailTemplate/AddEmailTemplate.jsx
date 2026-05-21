@@ -53,7 +53,7 @@ export default function AddEmailTemplate() {
                 toast({
                     variant: "error",
                     title: "Email Template Failed",
-                    description: "Email Template Failed resubmit",
+                    description: error?.response?.data?.message || "Email Template Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

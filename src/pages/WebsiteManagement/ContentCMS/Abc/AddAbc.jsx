@@ -83,7 +83,7 @@ export default function AddAbc() {
                 toast({
                     variant: "error",
                     title: "Offer Type Failed",
-                    description: "Offer Type Failed resubmit",
+                    description: error?.response?.data?.message || "Offer Type Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

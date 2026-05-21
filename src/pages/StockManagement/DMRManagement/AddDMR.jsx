@@ -103,7 +103,7 @@ const AddDMR = () => {
                 toast({
                     variant: "error",
                     title: "DMR Failed",
-                    description: "DMR Failed resubmit",
+                    description: error?.response?.data?.message || "DMR Failed resubmit",
                 });
             }
         },

@@ -81,7 +81,7 @@ export default function AddTeamManagement() {
                 toast({
                     variant: "error",
                     title: "Team Failed",
-                    description: "Team Failed resubmit",
+                    description: error?.response?.data?.message || "Team Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

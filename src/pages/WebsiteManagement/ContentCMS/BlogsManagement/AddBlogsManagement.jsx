@@ -97,7 +97,7 @@ export default function AddBlogsManagement() {
                 toast({
                     variant: "error",
                     title: "Blogs Failed",
-                    description: "Blogs Failed resubmit",
+                    description: error?.response?.data?.message || "Blogs Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

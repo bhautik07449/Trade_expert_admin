@@ -50,7 +50,7 @@ export default function AddMeasurement() {
                 toast({
                     variant: "error",
                     title: "Measurement Failed",
-                    description: "Measurement Failed resubmit",
+                    description: error?.response?.data?.message || "Measurement Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

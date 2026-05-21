@@ -48,7 +48,7 @@ export default function AddAbcType() {
                 toast({
                     variant: "error",
                     title: "Abc Type Failed",
-                    description: "Abc Type Failed resubmit",
+                    description: error?.response?.data?.message || "Abc Type Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

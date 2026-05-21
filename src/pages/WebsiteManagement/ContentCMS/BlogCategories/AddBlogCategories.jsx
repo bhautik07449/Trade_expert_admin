@@ -47,7 +47,7 @@ export default function AddBlogCategories() {
                 toast({
                     variant: "error",
                     title: "Blog Category Failed",
-                    description: "Blog Category Failed resubmit",
+                    description: error?.response?.data?.message || "Blog Category Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

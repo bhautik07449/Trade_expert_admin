@@ -61,7 +61,7 @@ export default function AddClientManagement() {
                 toast({
                     variant: "error",
                     title: "Client Failed",
-                    description: "Client Failed resubmit",
+                    description: error?.response?.data?.message || "Client Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

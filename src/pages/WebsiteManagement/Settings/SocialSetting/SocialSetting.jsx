@@ -67,7 +67,7 @@ export default function SocialSetting() {
         toast({
           variant: "error",
           title: "Social Data Failed",
-          description: "Social Data Failed resubmit",
+          description: error?.response?.data?.message || "Social Data Failed resubmit",
         });
       } finally {
         setSubmitting(false);

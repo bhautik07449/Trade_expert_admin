@@ -87,7 +87,7 @@ export default function GeneralSetting() {
                 toast({
                     variant: "error",
                     title: "General Setting Failed",
-                    description: "General Setting Failed resubmit",
+                    description: error?.response?.data?.message || "General Setting Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

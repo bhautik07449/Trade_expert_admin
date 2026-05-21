@@ -72,7 +72,7 @@ export default function AddHomeBanner() {
                 toast({
                     variant: "error",
                     title: "Home Banner Failed",
-                    description: "Home Banner Failed resubmit",
+                    description: error?.response?.data?.message || "Home Banner Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

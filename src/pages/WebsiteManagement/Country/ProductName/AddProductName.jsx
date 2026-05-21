@@ -48,7 +48,7 @@ export default function AddProductName() {
                 toast({
                     variant: "error",
                     title: "Product Name Failed",
-                    description: "Product Name Failed resubmit",
+                    description: error?.response?.data?.message || "Product Name Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

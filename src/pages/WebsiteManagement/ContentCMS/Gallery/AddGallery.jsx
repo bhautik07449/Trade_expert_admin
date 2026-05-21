@@ -61,7 +61,7 @@ export default function AddGallery() {
                 toast({
                     variant: "error",
                     title: "Gallery Failed",
-                    description: "Gallery Failed resubmit",
+                    description: error?.response?.data?.message || "Gallery Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

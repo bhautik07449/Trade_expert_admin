@@ -55,7 +55,7 @@ export default function AddCertificationSliderManagement() {
                 toast({
                     variant: "error",
                     title: "Certification Slider Failed",
-                    description: "Certification Slider Failed resubmit",
+                    description: error?.response?.data?.message || "Certification Slider Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

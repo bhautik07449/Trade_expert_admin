@@ -110,7 +110,7 @@ export default function AddBrandManagement() {
                 toast({
                     variant: "error",
                     title: "Brands Failed",
-                    description: "Brands Failed resubmit",
+                    description: error?.response?.data?.message || "Brands Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);

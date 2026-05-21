@@ -55,7 +55,7 @@ export default function AddEvents() {
                 toast({
                     variant: "error",
                     title: "Events Failed",
-                    description: "Events Failed resubmit",
+                    description: error?.response?.data?.message || "Events Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);
