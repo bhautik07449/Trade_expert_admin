@@ -156,9 +156,10 @@ export default function AddClientManagement() {
 
                         <CommonButton
                             type="submit"
-                            disabled={formik.isSubmitting || !formik.isValid}
+                            isLoading={formik.isSubmitting}
+                            disabled={!formik.isValid}
                         >
-                            {formik.isSubmitting ? "Saving..." : id ? "Update" : "Add"}
+                            {id ? "Update" : "Add"}
                         </CommonButton>
                     </div>
                 </form>

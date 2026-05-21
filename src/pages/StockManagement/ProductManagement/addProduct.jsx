@@ -219,7 +219,7 @@ export default function AddProduct() {
                                 Next
                             </CommonButton>
                         ) : (
-                            <CommonButton type="submit">
+                            <CommonButton type="submit" isLoading={formik.isSubmitting}>
                                 Save Product
                             </CommonButton>
                         )}

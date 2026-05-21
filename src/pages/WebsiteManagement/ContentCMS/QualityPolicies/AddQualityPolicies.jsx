@@ -173,8 +173,12 @@ export default function AddQualityPolicies() {
                             Cancel
                         </CommonButton>
 
-                        <CommonButton type="submit" disabled={formik.isSubmitting}>
-                            {formik.isSubmitting ? "Adding..." : id ? "Edit" : "Add"}
+                        <CommonButton
+                            type="submit"
+                            isLoading={formik.isSubmitting}
+                            disabled={!formik.isValid}
+                        >
+                            {id ? "Update" : "Add"}
                         </CommonButton>
                     </div>
                 </form>

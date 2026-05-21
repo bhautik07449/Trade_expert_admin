@@ -156,9 +156,10 @@ export default function AddCurrency() {
 
                         <CommonButton
                             type="submit"
-                            disabled={formik.isSubmitting || !formik.isValid}
+                            isLoading={formik.isSubmitting}
+                            disabled={!formik.isValid}
                         >
-                            {formik.isSubmitting ? "Saving..." : id ? "Update Admin" : "Add Admin"}
+                            {id ? "Update Currency" : "Add Currency"}
                         </CommonButton>
                     </div>
                 </form>

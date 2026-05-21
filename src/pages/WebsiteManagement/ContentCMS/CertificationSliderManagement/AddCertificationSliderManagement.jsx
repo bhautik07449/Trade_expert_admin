@@ -107,8 +107,8 @@ export default function AddCertificationSliderManagement() {
                             Cancel
                         </CommonButton>
 
-                        <CommonButton type="submit" disabled={formik.isSubmitting}>
-                            {formik.isSubmitting ? "Adding..." : id ? "Edit" : "Add"}
+                        <CommonButton type="submit" isLoading={formik.isSubmitting}>
+                            {id ? "Edit" : "Add"}
                         </CommonButton>
                     </div>
                 </form>

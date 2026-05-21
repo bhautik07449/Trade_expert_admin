@@ -293,8 +293,12 @@ export default function GeneralSetting() {
                             />
                         </div>
                     </div>
-                    <CommonButton type="submit" disabled={formik.isSubmitting}>
-                        {formik.isSubmitting ? "Adding..." : "Save"}
+                    <CommonButton
+                        type="submit"
+                        isLoading={formik.isSubmitting}
+                        disabled={!formik.isValid}
+                    >
+                        Save
                     </CommonButton>
                 </form>
             </Card>

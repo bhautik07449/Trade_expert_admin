@@ -159,8 +159,12 @@ export default function SocialSetting() {
             })}
           </div>
           <div className="flex justify-end pt-4 border-t">
-            <CommonButton type="submit" disabled={formik.isSubmitting}>
-              {formik.isSubmitting ? "Saving..." : "Save Changes"}
+            <CommonButton
+              type="submit"
+              isLoading={formik.isSubmitting}
+              disabled={!formik.isValid}
+            >
+              Save Changes
             </CommonButton>
           </div>
 

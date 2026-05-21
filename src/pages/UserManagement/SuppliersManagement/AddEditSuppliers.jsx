@@ -265,8 +265,8 @@ const AddEditSuppliers = () => {
                             Cancel
                         </CommonButton>
 
-                        <CommonButton type="submit">
-                            Add Supplier
+                        <CommonButton type="submit" isLoading={formik.isSubmitting}>
+                            {id ? "Edit" : "Add"} Supplier
                         </CommonButton>
                     </div>
                 </form>

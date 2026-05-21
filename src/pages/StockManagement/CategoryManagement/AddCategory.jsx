@@ -225,8 +225,8 @@ export default function AddCategory() {
                             Cancel
                         </CommonButton>
 
-                        <CommonButton type="submit" disabled={formik.isSubmitting}>
-                            {formik.isSubmitting ? "Adding..." : "Add"}
+                        <CommonButton type="submit" isLoading={formik.isSubmitting}>
+                            {id ? "Edit" : "Add"}
                         </CommonButton>
                     </div>
                 </form>

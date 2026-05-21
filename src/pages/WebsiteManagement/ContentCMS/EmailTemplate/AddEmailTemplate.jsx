@@ -133,9 +133,10 @@ export default function AddEmailTemplate() {
 
                         <CommonButton
                             type="submit"
-                            disabled={formik.isSubmitting || !formik.isValid}
+                            isLoading={formik.isSubmitting}
+                            disabled={!formik.isValid}
                         >
-                            {formik.isSubmitting ? "Saving..." : id ? "Update Email Template" : "Add Email Template"}
+                            {id ? "Update Email Template" : "Add Email Template"}
                         </CommonButton>
                     </div>
                 </form>

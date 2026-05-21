@@ -219,8 +219,12 @@ export default function AddContentOverview() {
                             Cancel
                         </CommonButton>
 
-                        <CommonButton type="submit" isLoading={formik.isSubmitting}>
-                            {id ? "Edit" : "Add"}
+                        <CommonButton
+                            type="submit"
+                            isLoading={formik.isSubmitting}
+                            disabled={!formik.isValid}
+                        >
+                            {id ? "Update" : "Add"}
                         </CommonButton>
                     </div>
                 </form>

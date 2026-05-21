@@ -381,7 +381,7 @@ const AddDMR = () => {
                             Cancel
                         </CommonButton>
 
-                        <CommonButton type="submit">
+                        <CommonButton type="submit" isLoading={formik.isSubmitting}>
                             {id ? "Edit" : "Add"} DMR
                         </CommonButton>
                     </div>
