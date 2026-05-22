@@ -1,5 +1,5 @@
 import BackPath from "../../components/common/BackPath";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import { Button } from "../../components/ui/button";
@@ -7,10 +7,13 @@ import Process from "./process";
 import Stages from "./Stages";
 import { toast } from "../../components/ui/use-toast";
 import MarketDevelopmentservice from "../../service/marketdevelopment.service";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 export default function AddMarketDevelopment() {
+    const { id } = useParams()
+
     const [activeTab, setActiveTab] = useState("steps");
+    const [data, setData] = useState({});
     const navigate = useNavigate();
 
     const [stages, setStages] = useState([]);
@@ -30,28 +33,36 @@ export default function AddMarketDevelopment() {
                     market_data: {
                         processSteps: steps,
                         stages: stages,
-                    }
+                    },
                 };
 
-                console.log("values:", payload);
+                let res;
 
-                let res = await MarketDevelopmentservice.addMarketDevelopment(payload);
+                if (id) {
+                    res = await MarketDevelopmentservice.updateMarketDevelopment(id, payload);
+                } else {
+                    res = await MarketDevelopmentservice.addMarketDevelopment(payload);
+                }
 
-                if (res) {
+                if (res?.status === 200 || res?.status === 201) {
+                    navigate("/market-development");
 
-                    resetForm()
-                    navigate("/market-development")
                     toast({
                         variant: "success",
                         title: "Market Development Saved",
-                        description: res?.data?.message,
+                        description: res?.data?.message || "Saved successfully",
                     });
                 }
             } catch (error) {
+                console.log("submit error", error);
+
                 toast({
                     variant: "error",
                     title: "Market Development Failed",
-                    description: error?.response?.data?.message || "Market Development Failed resubmit",
+                    description:
+                        error?.response?.data?.message ||
+                        error?.message ||
+                        "Market Development Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);
@@ -59,10 +70,33 @@ export default function AddMarketDevelopment() {
         },
     });
 
+    const getData = async (id) => {
+        try {
+            const res = await MarketDevelopmentservice.getByid(id)
+
+            if (res) {
+                const marketData = res?.data?.data;
+
+                setData(marketData);
+
+                setSteps(marketData?.market_data?.processSteps || []);
+                setStages(marketData?.market_data?.stages || []);
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
+    useEffect(() => {
+        if (id) {
+            getData(id)
+        }
+    }, [id])
+
     return (
         <div className="grid gap-6">
             <div className="flex justify-between items-center gap-4">
-                <h3 className="h5-bold">Add Market Development</h3>
+                <h3 className="h5-bold">{id ? "Edit" : "Add"} Market Development</h3>
                 <BackPath />
             </div>
 

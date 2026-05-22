@@ -4,9 +4,9 @@ import MarketDevelopmentservice from "../../service/marketdevelopment.service";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { CommonTextField } from "../../components/widgets/common_textField";
-import { CircleFadingPlus } from "lucide-react";
+// import { CircleFadingPlus } from "lucide-react";
 import CommonTable from "../../components/widgets/common_table";
-import { Button } from "../../components/ui/button";
+// import { Button } from "../../components/ui/button";
 import { getStatusStyles } from "../../lib/funcation";
 
 const columns = [
@@ -53,6 +53,10 @@ export default function MarketDevelopment() {
         getData()
     }, [])
 
+    const handleEdit = (row) => {
+        navigate(`/market-development/edit/${row?.id}`)
+    }
+
     const handleDelete = async (id) => {
         try {
             const res = await MarketDevelopmentservice.deleteMarketDevelopment(id)
@@ -83,12 +87,12 @@ export default function MarketDevelopment() {
                             className="w-full"
                         />
                     </div>
-                    <div className="flex gap-3 items-center">
+                    {/* <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/market-development/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
 
 
@@ -96,6 +100,8 @@ export default function MarketDevelopment() {
                     columns={columns}
                     rows={list || []}
                     showDelete={true}
+                    showEdit={true}
+                    onEdit={handleEdit}
                     onDelete={handleDelete}
                 />
             </Card>
