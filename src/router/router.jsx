@@ -85,6 +85,8 @@ import ContentOverview from "../pages/WebsiteManagement/Country/ContentOverview/
 import AddContentOverview from "../pages/WebsiteManagement/Country/ContentOverview/AddContentOverview";
 import Career from "../pages/WebsiteManagement/ContentCMS/Career/Career";
 import ViewCareer from "../pages/WebsiteManagement/ContentCMS/Career/ViewCareer";
+import AddMarketDevelopment from "../pages/MarketDevelopment/AddMarketDevelopment";
+import MarketDevelopment from "../pages/MarketDevelopment/MarketDevelopment";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -670,6 +672,21 @@ const routes = (isLoggedIn) => [
         path: "/website-management/content/career/view/:id",
         index: true,
       },
+      {
+        element: <AddMarketDevelopment />,
+        path: "/market-development/add",
+        index: true,
+      },
+      {
+        element: <AddMarketDevelopment />,
+        path: "/market-development/edit/:id",
+        index: true,
+      },
+      {
+        element: <MarketDevelopment />,
+        path: "/market-development",
+        index: true,
+      }
     ],
   },
   {

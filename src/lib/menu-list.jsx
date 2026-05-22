@@ -381,6 +381,13 @@ export function getMenuList(pathname) {
         }
       ],
     },
+    {
+      href: "/market-development",
+      label: "Market Development",
+      active: pathname === "/market-development",
+      icon: Globe,
+      submenus: [],
+    },
   ]
 
   const activeMenu = menus.find(menu => menu.active);
