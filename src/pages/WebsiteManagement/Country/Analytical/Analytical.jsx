@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { formatDate } from "../../../../common/constants";
 import AnalyticalService from "../../../../service/analytical.service";
+import FilterByCountry from "../../../../components/widgets/filterByCountry";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -18,9 +19,8 @@ const columns = [
 
 export default function Analytical() {
     const [list, setList] = useState([])
-    const [search, setSearch] = useState("");
+    const [selectedCountry, setSelectedCountry] = useState("");
     const navigate = useNavigate();
-    console.log("search", search);
 
     const getList = async () => {
         try {
@@ -68,11 +68,9 @@ export default function Analytical() {
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-between gap-4">
                     <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search..."
-                            className="w-full"
+                        <FilterByCountry
+                            selectedCountry={selectedCountry}
+                            setSelectedCountry={setSelectedCountry}
                         />
                     </div>
                     <div className="flex gap-3 items-center">

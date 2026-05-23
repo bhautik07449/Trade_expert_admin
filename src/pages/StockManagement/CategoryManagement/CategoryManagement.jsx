@@ -5,8 +5,7 @@ import Categoriesservice from "../../../service/categories.service";
 import Productservice from "../../../service/product.service";
 import CustomLoader from "../../../components/widgets/custom_loader";
 import { useNavigate } from "react-router";
-import CommonBox from "../../../components/common/common_box";
-import PresencesService from "../../../service/presences.service";
+import FilterByCountry from "../../../components/widgets/filterByCountry";
 
 const levelColors = {
     0: "bg-blue-50 border-blue-300",
@@ -162,7 +161,6 @@ const CategoryManagement = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState("");
-    const [countryOptions, setCountryOptions] = useState([]);
 
     const navigate = useNavigate();
 
@@ -182,30 +180,6 @@ const CategoryManagement = () => {
     useEffect(() => {
         getList(selectedCountry);
     }, [selectedCountry]);
-
-    useEffect(() => {
-        const getCountries = async () => {
-            try {
-                const res = await PresencesService.getCountry();
-                if (res?.data?.objects?.countries?.geometries) {
-                    const countries = res.data.objects.countries.geometries
-                        .map((item) => ({
-                            label: item?.properties?.name,
-                            value: item?.properties?.name,
-                        }))
-                        .filter((item) => item.label)
-                        .sort((a, b) => a.label.localeCompare(b.label));
-                    setCountryOptions([
-                        { label: "All Countries", value: "" },
-                        ...countries
-                    ]);
-                }
-            } catch (error) {
-                console.log(error, "error fetching countries");
-            }
-        };
-        getCountries();
-    }, []);
 
     const handleEdit = (node) => {
         navigate(`/stock-management/category-management/${node?.id}`)
@@ -246,11 +220,9 @@ const CategoryManagement = () => {
                 <h2 className="h4-bold">Category Management</h2>
                 <div className="flex items-center gap-4">
                     <div className="w-56">
-                        <CommonBox
-                            placeholders="Select Country"
-                            options={countryOptions}
-                            value={selectedCountry}
-                            onChange={(value) => setSelectedCountry(value)}
+                        <FilterByCountry
+                            selectedCountry={selectedCountry}
+                            setSelectedCountry={setSelectedCountry}
                         />
                     </div>
                     <div>
