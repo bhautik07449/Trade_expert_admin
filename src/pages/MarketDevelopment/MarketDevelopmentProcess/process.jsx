@@ -1,6 +1,6 @@
-import { Card } from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
-import { CommonTextField } from "../../components/widgets/common_textField";
+import { Card } from "../../../components/ui/card";
+import { Button } from "../../../components/ui/button";
+import { CommonTextField } from "../../../components/widgets/common_textField";
 
 export default function Process({ formik, setSteps, steps }) {
 

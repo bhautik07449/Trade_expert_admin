@@ -1,19 +1,19 @@
-import BackPath from "../../components/common/BackPath";
+import BackPath from "../../../components/common/BackPath";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
-import { Button } from "../../components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../components/ui/tabs";
+import { Button } from "../../../components/ui/button";
+import { toast } from "../../../components/ui/use-toast";
+import MarketDevelopmentservice from "../../../service/marketdevelopment.service";
+import { useNavigate, useParams } from "react-router";
 import Process from "./process";
 import Stages from "./Stages";
-import { toast } from "../../components/ui/use-toast";
-import MarketDevelopmentservice from "../../service/marketdevelopment.service";
-import { useNavigate, useParams } from "react-router";
 
 export default function AddMarketDevelopment() {
     const { id } = useParams()
 
     const [activeTab, setActiveTab] = useState("steps");
-    const [data, setData] = useState({});
+
     const navigate = useNavigate();
 
     const [stages, setStages] = useState([]);
@@ -27,7 +27,7 @@ export default function AddMarketDevelopment() {
             fieldType: "text",
             optionValue: "",
         },
-        onSubmit: async ({ setSubmitting, resetForm }) => {
+        onSubmit: async ({ setSubmitting }) => {
             try {
                 const payload = {
                     market_data: {
@@ -45,7 +45,7 @@ export default function AddMarketDevelopment() {
                 }
 
                 if (res?.status === 200 || res?.status === 201) {
-                    navigate("/market-development");
+                    navigate("/market-development/process");
 
                     toast({
                         variant: "success",
@@ -76,8 +76,6 @@ export default function AddMarketDevelopment() {
 
             if (res) {
                 const marketData = res?.data?.data;
-
-                setData(marketData);
 
                 setSteps(marketData?.market_data?.processSteps || []);
                 setStages(marketData?.market_data?.stages || []);

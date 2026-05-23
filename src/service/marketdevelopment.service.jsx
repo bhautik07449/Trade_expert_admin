@@ -45,8 +45,53 @@ const deleteMarketDevelopment = async (id) => {
     }
 }
 
+const getMarketData = async () => {
+    try {
+        const response = serverCall.get('/marketdata')
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
+const getMarketDataByid = async (id) => {
+    try {
+        const response = serverCall.get(`/marketdata/${id}`)
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
+const addMarketData = async (body) => {
+    try {
+        const response = await serverCall.post('/marketdata', body);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const updateMarketData = async (id, body) => {
+    try {
+        const response = await serverCall.patch(`/marketdata/${id}`, body);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const deleteMarketData = async (id) => {
+    try {
+        const response = await serverCall.delete(`/marketdata/${id}`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const MarketDevelopmentservice = {
-    getList, addMarketDevelopment, getByid, updateMarketDevelopment, deleteMarketDevelopment
+    getList, addMarketData, getMarketDataByid, updateMarketData, deleteMarketData, getByid, addMarketDevelopment, updateMarketDevelopment, deleteMarketDevelopment, getMarketData
 };
 
 export default MarketDevelopmentservice;

@@ -1,13 +1,13 @@
-import { Card } from "../../components/ui/card";
-import { formatDate } from "../../common/constants";
-import MarketDevelopmentservice from "../../service/marketdevelopment.service";
+import { Card } from "../../../components/ui/card";
+import { formatDate } from "../../../common/constants";
+import MarketDevelopmentservice from "../../../service/marketdevelopment.service";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { CommonTextField } from "../../components/widgets/common_textField";
+import { CommonTextField } from "../../../components/widgets/common_textField";
 // import { CircleFadingPlus } from "lucide-react";
-import CommonTable from "../../components/widgets/common_table";
+import CommonTable from "../../../components/widgets/common_table";
 // import { Button } from "../../components/ui/button";
-import { getStatusStyles } from "../../lib/funcation";
+import { getStatusStyles } from "../../../lib/funcation";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -54,7 +54,7 @@ export default function MarketDevelopment() {
     }, [])
 
     const handleEdit = (row) => {
-        navigate(`/market-development/edit/${row?.id}`)
+        navigate(`/market-development/process/edit/${row?.id}`)
     }
 
     const handleDelete = async (id) => {
@@ -88,7 +88,7 @@ export default function MarketDevelopment() {
                         />
                     </div>
                     {/* <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/market-development/add')}>
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/market-development/process/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>

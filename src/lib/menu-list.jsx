@@ -1,4 +1,4 @@
-import { Award, BadgeCheck, BookOpen, Boxes, Briefcase, ClipboardList, CreditCard, DollarSign, FileEdit, FileSpreadsheet, FileText, Flag, Folder, FolderTree, Globe, Handshake, HelpCircle, Images, LayoutDashboard, List, Mail, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, PieChart, Ruler, Settings, ShieldCheck, TableOfContentsIcon, Tag, Tags, Truck, User, Users } from "lucide-react";
+import { Award, BadgeCheck, BookOpen, Boxes, Briefcase, ClipboardList, CreditCard, Database, DollarSign, FileEdit, FileSpreadsheet, FileText, Flag, Folder, FolderTree, Globe, Handshake, HelpCircle, Images, LayoutDashboard, List, Mail, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, PieChart, Ruler, Settings, ShieldCheck, TableOfContentsIcon, Tag, Tags, Truck, User, Users } from "lucide-react";
 
 export function getMenuList(pathname) {
 
@@ -382,12 +382,25 @@ export function getMenuList(pathname) {
       ],
     },
     {
-      href: "/market-development",
+      href: "",
       label: "Market Development",
-      active: pathname === "/market-development",
+      active: pathname.includes("/market-development"),
       icon: Globe,
-      submenus: [],
-    },
+      submenus: [
+        {
+          href: "/market-development/process",
+          label: "Process",
+          active: pathname.includes("/market-development/process"),
+          icon: FileText,
+        },
+        {
+          href: "/market-development/data",
+          label: "Data",
+          active: pathname.includes("/market-development/data"),
+          icon: Database,
+        }
+      ],
+    }
   ]
 
   const activeMenu = menus.find(menu => menu.active);

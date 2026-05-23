@@ -16,7 +16,6 @@ import CommonButton from "./common_button";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-// Beautiful shimmer skeleton component for loading state
 const TableSkeleton = ({ columns, showEdit, showDelete, rowHeight }) => {
   const cols = columns && columns.length > 0 ? columns : [
     { headerName: "SrNo", flex: 1 },
@@ -30,7 +29,6 @@ const TableSkeleton = ({ columns, showEdit, showDelete, rowHeight }) => {
 
   return (
     <div className="w-full border border-gray-200 rounded-xl overflow-hidden bg-white dark:bg-[#1a1c1e] dark:border-gray-800 transition-all duration-300">
-      {/* Table Header */}
       <div className="flex border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#25282c] py-3.5 px-4">
         {cols.map((col, index) => (
           <div
@@ -52,7 +50,6 @@ const TableSkeleton = ({ columns, showEdit, showDelete, rowHeight }) => {
         )}
       </div>
 
-      {/* Table Body */}
       <div className="divide-y divide-gray-100 dark:divide-gray-800 animate-pulse">
         {skeletonRows.map((_, rowIndex) => (
           <div
@@ -61,7 +58,7 @@ const TableSkeleton = ({ columns, showEdit, showDelete, rowHeight }) => {
             style={{ height: rowHeight }}
           >
             {cols.map((col, colIndex) => {
-              // Varying widths for a more natural layout
+
               const widths = ["w-3/4", "w-1/2", "w-5/6", "w-2/3", "w-full"];
               const widthClass = widths[(rowIndex + colIndex) % widths.length];
 
@@ -103,12 +100,11 @@ const CommonTable = ({
   onDelete = () => { },
   rowHeight = 50,
   tableHeight = "400px",
-  loading = false, // New explicit loading prop
+  loading = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
-  // Auto-detect loading on initial mount if rows are empty (up to 1.5 seconds maximum)
   const [isTimeoutActive, setIsTimeoutActive] = useState(true);
 
   useEffect(() => {
@@ -130,8 +126,10 @@ const CommonTable = ({
     const gridCols = columns.map((col) => ({
       headerName: col.headerName,
       field: col.field,
-      flex: col.flex || 1,
-      width: col.width,
+
+      width: col.width || 180,
+      minWidth: col.minWidth || 150,
+
       sortable: true,
       filter: true,
       cellRenderer: col.renderCell
@@ -143,10 +141,11 @@ const CommonTable = ({
         : undefined,
     }));
 
-    if (showEdit || showDelete) {
+    if (showEdit || showView || showDelete) {
       gridCols.push({
         headerName: "Actions",
-        width: 120,
+        width: 140,
+        minWidth: 140,
         cellRenderer: (params) => (
           <div className="custom-actions">
             {showEdit && (
@@ -187,11 +186,11 @@ const CommonTable = ({
     }
 
     return gridCols;
-  }, [columns, showEdit, showDelete]);
+  }, [columns, showEdit, showView, showDelete]);
 
   return (
     <>
-      <div className="w-full" style={{ minHeight: tableHeight }}>
+      <div className="w-full max-w-full" style={{ minHeight: tableHeight }}>
         {activeLoading ? (
           <TableSkeleton
             columns={columns}
@@ -200,10 +199,13 @@ const CommonTable = ({
             rowHeight={rowHeight}
           />
         ) : (
-          <div className="ag-theme-quartz w-full"
+          <div
+            className="ag-theme-quartz w-full"
             style={{
               height: tableHeight,
-            }}>
+              width: "100%",
+            }}
+          >
             <AgGridReact
               rowData={rows}
               columnDefs={agColumns}
@@ -212,6 +214,8 @@ const CommonTable = ({
               paginationPageSize={10}
               paginationPageSizeSelector={[10, 20, 50, 100]}
               animateRows={true}
+              domLayout="normal"
+              suppressHorizontalScroll={false}
               rowSelection={{
                 mode: "multiRow",
                 enableClickSelection: true,

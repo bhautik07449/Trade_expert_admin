@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
 import { CommonTextField } from "../../components/widgets/common_textField";
 import CommonButton from "../../components/widgets/common_button";
-import { AppImages } from "../../common/ImagePath";
 import { login, setLoggedIn } from "../../store/slice/auth";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";

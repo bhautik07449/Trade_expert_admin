@@ -1,8 +1,8 @@
-import { Card } from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
-import { CommonTextField } from "../../components/widgets/common_textField";
+import { Card } from "../../../components/ui/card";
+import { Button } from "../../../components/ui/button";
+import { CommonTextField } from "../../../components/widgets/common_textField";
 import { useState } from "react";
-import CommonBox from "../../components/common/common_box";
+import CommonBox from "../../../components/common/common_box";
 
 export default function Stages({ formik, setStages, stages }) {
     const [fields, setFields] = useState([]);
