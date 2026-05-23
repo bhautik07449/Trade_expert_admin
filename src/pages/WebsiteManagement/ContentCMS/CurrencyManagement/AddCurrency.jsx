@@ -53,7 +53,6 @@ export default function AddCurrency() {
                     description: res?.data?.message || "Currency",
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Currency Failed",
@@ -76,7 +75,11 @@ export default function AddCurrency() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Currency Failed",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

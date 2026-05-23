@@ -5,10 +5,10 @@ import { CommonTextField } from "../../../..//components/widgets/common_textFiel
 import { CircleFadingPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import CommonFiltter from "../../../../components/widgets/common_filter";
 import { getStatusStyles } from "../../../../lib/funcation";
 import Blogservice from "../../../../service/blogs.service";
 import { formatDate } from "../../../../common/constants";
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -25,10 +25,7 @@ const columns = [
 
 export default function BlogCategories() {
     const [list, setList] = useState([])
-
-    const [search, setSearch] = useState("");
     const navigate = useNavigate();
-    console.log("search", search);
 
     const getData = async () => {
         try {
@@ -43,7 +40,11 @@ export default function BlogCategories() {
             }
 
         } catch (error) {
-            console.log(error, "error");
+            toast({
+                variant: "error",
+                title: "Fetch Blog Categories Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -57,9 +58,18 @@ export default function BlogCategories() {
 
             if (res) {
                 getData()
+                toast({
+                    variant: "success",
+                    title: "Blog Category Deleted",
+                    description: "The blog category has been deleted successfully.",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Delete Blog Category Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
 
     }
@@ -76,15 +86,7 @@ export default function BlogCategories() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Blog Categories"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/blog-categories/add')}>
                             <CircleFadingPlus className="size-5" />

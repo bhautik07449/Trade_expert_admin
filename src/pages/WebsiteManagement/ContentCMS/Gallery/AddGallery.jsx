@@ -35,8 +35,6 @@ export default function AddGallery() {
         enableReinitialize: true,
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
-
             setSubmitting(true);
             try {
 
@@ -57,7 +55,6 @@ export default function AddGallery() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Gallery Failed",
@@ -80,7 +77,11 @@ export default function AddGallery() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Gallery Data Fetch Error",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

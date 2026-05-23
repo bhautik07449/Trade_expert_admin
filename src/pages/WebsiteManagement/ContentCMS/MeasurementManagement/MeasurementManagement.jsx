@@ -3,19 +3,12 @@ import { Button } from "../../../../components/ui/button";
 import { Card } from "../../../../components/ui/card";
 import CommonFiltter from "../../../../components/widgets/common_filter";
 import CommonTable from "../../../../components/widgets/common_table";
-import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../../lib/funcation";
 import Measurementsservice from "../../../../service/measurements.service";
 import { formatDate } from "../../../../common/constants";
-
-const Measurement = [
-    { SrNo: 1, name: "JMD", description: "", status: "Active", Created: "14/11/2023" },
-    { SrNo: 2, name: "INR", description: "", status: "Deactive", Created: "14/11/2023" },
-    { SrNo: 3, name: "SGD", description: "", status: "Active", Created: "14/11/2023" },
-    { SrNo: 4, name: "AED", description: "", status: "Deactive", Created: "14/11/2023" },
-]
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -32,11 +25,9 @@ const columns = [
 ]
 
 export default function MeasurementManagement() {
-    const [search, setSearch] = useState("");
     const [list, setList] = useState([])
 
     const navigate = useNavigate();
-    console.log("search", search);
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
@@ -56,7 +47,11 @@ export default function MeasurementManagement() {
             }
 
         } catch (error) {
-            console.log(error, "error");
+            toast({
+                variant: "error",
+                title: "Measurement Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -81,7 +76,11 @@ export default function MeasurementManagement() {
                 getData()
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Measurement Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
 
     }
@@ -98,15 +97,7 @@ export default function MeasurementManagement() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Measurement"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/measurement/add')}>
                             <CircleFadingPlus className="size-5" />
@@ -119,7 +110,6 @@ export default function MeasurementManagement() {
                         />
                     </div>
                 </div>
-
 
                 <CommonTable
                     columns={columns}

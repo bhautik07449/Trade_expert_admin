@@ -19,18 +19,16 @@ import {
   CartesianGrid,
 } from "recharts";
 import Adminservice from "../../service/admin.service";
+import { toast } from "../../components/ui/use-toast";
 
-// Beautiful dashboard skeleton loader
 const DashboardSkeleton = () => {
   return (
     <div className="space-y-8">
-      {/* Title & Description Skeleton */}
       <div>
         <div className="h-8 w-64 bg-gray-200 dark:bg-gray-700 rounded-lg animate-shimmer mb-2" />
         <div className="h-4 w-96 bg-gray-100 dark:bg-gray-800 rounded-lg animate-shimmer" />
       </div>
 
-      {/* Stats Cards Grid Skeleton */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {Array(4).fill(0).map((_, index) => (
           <div
@@ -38,21 +36,16 @@ const DashboardSkeleton = () => {
             className="p-5 flex items-center justify-between rounded-2xl bg-white dark:bg-[#1a1c1e] border border-gray-100 dark:border-gray-800 shadow-sm"
           >
             <div className="flex flex-col gap-3 w-1/2">
-              {/* Stat Title */}
               <div className="h-4 w-28 bg-gray-200 dark:bg-gray-700 rounded animate-shimmer" />
-              {/* Stat Value */}
               <div className="h-8 w-16 bg-gray-300 dark:bg-gray-600 rounded-md animate-shimmer" />
             </div>
 
-            {/* Stat Icon */}
             <div className="w-12 h-12 rounded-xl bg-gray-200 dark:bg-gray-700 animate-shimmer" />
           </div>
         ))}
       </div>
 
-      {/* Charts Grid Skeleton */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Chart 1: Bar Chart Skeleton */}
         <div className="p-6 rounded-2xl bg-white dark:bg-[#1a1c1e] border border-gray-100 dark:border-gray-800 shadow-sm">
           <div className="h-5 w-48 bg-gray-200 dark:bg-gray-700 rounded mb-6 animate-shimmer" />
           <div className="h-72 flex items-end justify-between gap-2 pt-4 px-2">
@@ -66,15 +59,12 @@ const DashboardSkeleton = () => {
           </div>
         </div>
 
-        {/* Chart 2: Line Chart Skeleton */}
         <div className="p-6 rounded-2xl bg-white dark:bg-[#1a1c1e] border border-gray-100 dark:border-gray-800 shadow-sm">
           <div className="h-5 w-48 bg-gray-200 dark:bg-gray-700 rounded mb-6 animate-shimmer" />
           <div className="h-72 flex flex-col justify-between py-2 relative">
-            {/* Grid lines placeholder */}
             {[1, 2, 3, 4, 5].map((_, i) => (
               <div key={i} className="w-full h-px bg-gray-100 dark:bg-gray-800" />
             ))}
-            {/* Simulated curve elements */}
             <div className="absolute inset-x-0 bottom-12 h-32 flex items-center justify-around px-4">
               {[20, 35, 25, 45, 30, 55, 40, 65, 50, 75, 60, 80].map((val, i) => (
                 <div
@@ -105,7 +95,11 @@ const Dashboard = () => {
       }
 
     } catch (error) {
-      console.log(error, "error");
+      toast({
+        variant: "error",
+        title: "Dashboard Data Fetch Failed",
+        description: error?.response?.data?.message || "Something went wrong",
+      });
     } finally {
       setLoder(false);
     }

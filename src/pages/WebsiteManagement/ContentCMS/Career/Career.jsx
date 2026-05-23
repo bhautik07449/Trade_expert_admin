@@ -1,6 +1,5 @@
 import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../../components/widgets/common_table";
-import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../../lib/funcation";
@@ -25,9 +24,7 @@ const columns = [
 
 export default function Career() {
     const [list, setList] = useState([])
-    const [search, setSearch] = useState("");
     const navigate = useNavigate();
-    console.log("search", search);
 
     const getList = async () => {
         try {
@@ -41,7 +38,11 @@ export default function Career() {
                 setList(formattedData)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "career List Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -56,12 +57,16 @@ export default function Career() {
                 getList()
                 toast({
                     variant: "success",
-                    title: "Offer Type",
+                    title: "Career Deleted",
                     description: res?.data?.message,
                 });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Delete Career Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -77,18 +82,6 @@ export default function Career() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search..."
-                            className="w-full"
-                        />
-                    </div>
-                </div>
-
-
                 <CommonTable
                     columns={columns}
                     rows={list || []}

@@ -59,8 +59,6 @@ export default function AddBlogsManagement() {
         enableReinitialize: true,
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
-
             setSubmitting(true);
             try {
 
@@ -93,7 +91,6 @@ export default function AddBlogsManagement() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Blogs Failed",
@@ -116,7 +113,11 @@ export default function AddBlogsManagement() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Fetch Blog Failed",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

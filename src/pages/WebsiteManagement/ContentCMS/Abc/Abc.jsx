@@ -1,14 +1,13 @@
 import { Button } from "../../../../components/ui/button";
 import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../../components/widgets/common_table";
-import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import CommonFiltter from "../../../../components/widgets/common_filter";
 import { getStatusStyles } from "../../../../lib/funcation";
 import { formatDate } from "../../../../common/constants";
 import AbcService from "../../../../service/abc.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -27,9 +26,7 @@ const columns = [
 
 export default function Abc() {
     const [list, setList] = useState([])
-    const [search, setSearch] = useState("");
     const navigate = useNavigate();
-    console.log("search", search);
 
     const getList = async () => {
         try {
@@ -46,7 +43,11 @@ export default function Abc() {
                 setList(formattedData)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Abc List Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -59,9 +60,18 @@ export default function Abc() {
             const res = await AbcService.deleteAbc(id)
             if (res) {
                 getList()
+                toast({
+                    variant: "success",
+                    title: "Abc Deleted",
+                    description: res?.data?.message || "Abc has been deleted successfully",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Delete Abc Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -77,15 +87,7 @@ export default function Abc() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search..."
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/abc/add')}>
                             <CircleFadingPlus className="size-5" />
@@ -93,7 +95,6 @@ export default function Abc() {
                         </Button>
                     </div>
                 </div>
-
 
                 <CommonTable
                     columns={columns}

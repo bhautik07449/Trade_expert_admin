@@ -1,4 +1,3 @@
-import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
 import React, { useEffect, useState } from "react";
 import CommonTable from "../../../components/widgets/common_table";
@@ -25,9 +24,6 @@ const columns = [
 ]
 
 export default function QuotationManagement() {
-    const [search, setSearch] = useState("");
-    console.log("search", search);
-
     const [list, setList] = useState([]);
 
     const fetchData = async () => {
@@ -94,15 +90,7 @@ export default function QuotationManagement() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Quotations"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-4">
                         <ExportData
                             data={list}

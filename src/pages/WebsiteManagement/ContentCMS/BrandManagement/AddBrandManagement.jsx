@@ -31,7 +31,11 @@ export default function AddBrandManagement() {
                 setList(res?.data)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Brand Details",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -41,7 +45,7 @@ export default function AddBrandManagement() {
         }
     }, [])
 
-    const { flatList, loading } = useSelector(
+    const { flatList } = useSelector(
         (state) => state.categories
     );
 
@@ -73,7 +77,6 @@ export default function AddBrandManagement() {
         enableReinitialize: true,
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
 
             setSubmitting(true);
             try {
@@ -106,7 +109,6 @@ export default function AddBrandManagement() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Brands Failed",

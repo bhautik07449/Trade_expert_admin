@@ -54,8 +54,6 @@ export default function AddMarketDevelopment() {
                     });
                 }
             } catch (error) {
-                console.log("submit error", error);
-
                 toast({
                     variant: "error",
                     title: "Market Development Failed",
@@ -81,7 +79,11 @@ export default function AddMarketDevelopment() {
                 setStages(marketData?.market_data?.stages || []);
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Market Development Fetch Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 

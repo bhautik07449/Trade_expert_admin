@@ -1,3 +1,4 @@
+import { toast } from "../../../../components/ui/use-toast";
 import CareerService from "../../../../service/career.service";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
@@ -16,7 +17,11 @@ export default function ViewCareer() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Career Data Fetch Failed",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

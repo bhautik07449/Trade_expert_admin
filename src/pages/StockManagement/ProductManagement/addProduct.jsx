@@ -9,7 +9,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router";
 import CommonButton from "../../../components/widgets/common_button";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../../store/slice/categoriesSlice";
 import { fetchFlatMeasurement } from "../../../store/slice/measurementSlice";
@@ -21,11 +21,10 @@ export default function AddProduct() {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("basic_info");
     const [data, setData] = useState()
-    console.log("data", data);
 
     const dispatch = useDispatch();
 
-    const { categories, loading } = useSelector(
+    const { categories } = useSelector(
         (state) => state.categories
     );
 

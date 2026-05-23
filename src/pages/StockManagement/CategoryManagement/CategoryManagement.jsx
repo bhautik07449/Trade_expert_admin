@@ -6,6 +6,7 @@ import Productservice from "../../../service/product.service";
 import CustomLoader from "../../../components/widgets/custom_loader";
 import { useNavigate } from "react-router";
 import FilterByCountry from "../../../components/widgets/filterByCountry";
+import { toast } from "../../../components/ui/use-toast";
 
 const levelColors = {
     0: "bg-blue-50 border-blue-300",
@@ -171,7 +172,11 @@ const CategoryManagement = () => {
 
             setCategories(response?.data || []);
         } catch (error) {
-            console.log("Error fetching categories:", error);
+            toast({
+                variant: "error",
+                title: "Category Fetch Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         } finally {
             setLoading(false);
         }
@@ -190,9 +195,18 @@ const CategoryManagement = () => {
             const res = await Categoriesservice.deleteCat(nodeToDelete?.id)
             if (res) {
                 getList(selectedCountry)
+                toast({
+                    variant: "success",
+                    title: "Category Deleted Successfully",
+                    description: res?.data?.message || "Something went wrong",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Category Deletion Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     };
 
@@ -210,7 +224,11 @@ const CategoryManagement = () => {
                 getList(selectedCountry);
             }
         } catch (error) {
-            console.log("error deleting product", error);
+            toast({
+                variant: "error",
+                title: "Product Deletion Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     };
 

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../../lib/funcation";
 import Faqservice from "../../../../service/faq.service";
 import { formatDate } from "../../../../common/constants";
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -44,7 +45,11 @@ export default function FAQ() {
                 setList(formattedData)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Failed to fetch data",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -57,9 +62,18 @@ export default function FAQ() {
             const res = await Faqservice.deleteFaq(id)
             if (res) {
                 getList()
+                toast({
+                    variant: "success",
+                    title: "Deleted",
+                    description: res?.data?.message || "Faq has been deleted successfully",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Failed to delete",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 

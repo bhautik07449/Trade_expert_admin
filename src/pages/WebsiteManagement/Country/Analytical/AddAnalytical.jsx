@@ -48,7 +48,6 @@ export default function AddAnalytical() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Analytical Failed",
@@ -70,7 +69,6 @@ export default function AddAnalytical() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
                 toast({
                     variant: "error",
                     title: "Fetch Failed",

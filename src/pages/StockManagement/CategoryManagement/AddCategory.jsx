@@ -51,7 +51,6 @@ export default function AddCategory() {
         enableReinitialize: true,
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
 
             setSubmitting(true);
             try {
@@ -88,7 +87,6 @@ export default function AddCategory() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Category Failed",
@@ -100,7 +98,7 @@ export default function AddCategory() {
         }
     });
 
-    const { flatList, loading } = useSelector(
+    const { flatList } = useSelector(
         (state) => state.categories
     );
 
@@ -125,7 +123,11 @@ export default function AddCategory() {
                 setData(res?.data)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Category Fetch Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 

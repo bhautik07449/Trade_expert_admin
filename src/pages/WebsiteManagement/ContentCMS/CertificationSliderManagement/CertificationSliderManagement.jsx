@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Certificationsliderservice from "../../../../service/certificationslider.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -47,7 +48,11 @@ export default function CertificationSliderManagement() {
                 setList(formattedData)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Certification Slider Management Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -60,9 +65,18 @@ export default function CertificationSliderManagement() {
             const res = await Certificationsliderservice.deleteCertificationslider(id)
             if (res) {
                 getList()
+                toast({
+                    variant: "success",
+                    title: "Certification Slider Deleted",
+                    description: res?.data?.message || "Certification Slider has been deleted successfully",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Delete Certification Slider Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -86,6 +100,7 @@ export default function CertificationSliderManagement() {
                         </Button>
                     </div>
                 </div>
+
                 <CommonTable
                     columns={columns}
                     rows={list || []}

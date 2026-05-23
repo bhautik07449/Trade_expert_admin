@@ -1,4 +1,3 @@
-import CommonBox from "../../../../components/common/common_box";
 import BackPath from "../../../../components/common/BackPath";
 import ImageUploadField from "../../../../components/common/ImageUploadField";
 import { Card } from "../../../../components/ui/card";
@@ -57,7 +56,6 @@ export default function AddClientManagement() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Client Failed",
@@ -79,7 +77,11 @@ export default function AddClientManagement() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Client Details",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

@@ -53,7 +53,6 @@ export default function AddTradeHistory() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Trade History Failed",

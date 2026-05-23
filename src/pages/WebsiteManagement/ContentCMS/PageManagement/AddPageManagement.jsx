@@ -61,7 +61,6 @@ export default function AddPageManagement() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Pages Failed",
@@ -83,7 +82,11 @@ export default function AddPageManagement() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Page Failed",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

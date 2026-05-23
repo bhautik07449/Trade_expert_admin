@@ -3,11 +3,9 @@ import { formatDate } from "../../../common/constants";
 import MarketDevelopmentservice from "../../../service/marketdevelopment.service";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { CommonTextField } from "../../../components/widgets/common_textField";
-// import { CircleFadingPlus } from "lucide-react";
 import CommonTable from "../../../components/widgets/common_table";
-// import { Button } from "../../components/ui/button";
 import { getStatusStyles } from "../../../lib/funcation";
+import { toast } from "../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -25,9 +23,7 @@ const columns = [
 
 export default function MarketDevelopment() {
     const [list, setList] = useState([])
-    const [search, setSearch] = useState("");
     const navigate = useNavigate();
-    console.log("search", search);
 
     const getData = async () => {
         try {
@@ -45,7 +41,11 @@ export default function MarketDevelopment() {
             }
 
         } catch (error) {
-            console.log(error, "error");
+            toast({
+                variant: "error",
+                title: "Market Development Process Fetch Failed",
+                description: error?.response?.data?.message || "Failed to fetch market development process data",
+            });
         }
     }
 
@@ -63,9 +63,18 @@ export default function MarketDevelopment() {
 
             if (res) {
                 getData()
+                toast({
+                    variant: "success",
+                    title: "Market Development Process Deleted",
+                    description: res?.data?.message || "Market Development Process has been deleted successfully",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Market Development Process Delete Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
 
     }
@@ -78,24 +87,6 @@ export default function MarketDevelopment() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Market Development"
-                            className="w-full"
-                        />
-                    </div>
-                    {/* <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/market-development/process/add')}>
-                            <CircleFadingPlus className="size-5" />
-                            <span className="max-lg:hidden uppercase"> Add</span>
-                        </Button>
-                    </div> */}
-                </div>
-
-
                 <CommonTable
                     columns={columns}
                     rows={list || []}

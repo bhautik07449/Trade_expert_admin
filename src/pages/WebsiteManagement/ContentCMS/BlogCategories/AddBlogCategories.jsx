@@ -43,7 +43,6 @@ export default function AddBlogCategories() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Blog Category Failed",
@@ -65,7 +64,11 @@ export default function AddBlogCategories() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Fetch Blog Category Failed",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 
@@ -73,6 +76,7 @@ export default function AddBlogCategories() {
             getData(id)
         }
     }, [id])
+
     return (
         <div className="grid gap-6">
             <div className="grid gap-4">

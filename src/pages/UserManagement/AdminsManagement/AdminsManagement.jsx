@@ -1,4 +1,3 @@
-import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
 import React, { useEffect, useState } from "react";
 import { CircleFadingPlus } from "lucide-react";
@@ -19,10 +18,8 @@ const columns = [
 ]
 
 const AdminsManagement = () => {
-    const [search, setSearch] = useState("");
     const [user, setUserList] = useState([]);
     const [loder, setLoder] = useState(false);
-    console.log("search", search);
 
     const navigate = useNavigate();
 
@@ -41,7 +38,11 @@ const AdminsManagement = () => {
             }
 
         } catch (error) {
-            console.log(error, "error");
+            toast({
+                variant: "error",
+                title: "Admin",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         } finally {
             setLoder(false);
         }
@@ -68,7 +69,11 @@ const AdminsManagement = () => {
                 });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Admin",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
 
     }
@@ -81,15 +86,7 @@ const AdminsManagement = () => {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Admins"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div>
                         <Button className="flex items-center gap-2"
                             onClick={() => navigate('/user-management/admins-management/add')}

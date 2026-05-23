@@ -10,6 +10,7 @@ import { getStatusStyles } from "../../../../lib/funcation";
 import Teamservice from "../../../../service/teams.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -37,9 +38,7 @@ const columns = [
 
 export default function TeamManagement() {
     const [list, setList] = useState([])
-    const [search, setSearch] = useState("");
     const navigate = useNavigate();
-    console.log("search", search);
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
@@ -59,7 +58,11 @@ export default function TeamManagement() {
             }
 
         } catch (error) {
-            console.log(error, "error");
+            toast({
+                variant: "error",
+                title: "Fetch Teams Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -81,9 +84,18 @@ export default function TeamManagement() {
 
             if (res) {
                 getData()
+                toast({
+                    variant: "success",
+                    title: "Team Deleted",
+                    description: "The team has been deleted successfully.",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Delete Team Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
 
     }
@@ -100,15 +112,7 @@ export default function TeamManagement() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Teams"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/team/add')}>
                             <CircleFadingPlus className="size-5" />
@@ -121,7 +125,6 @@ export default function TeamManagement() {
                         />
                     </div>
                 </div>
-
 
                 <CommonTable
                     columns={columns}

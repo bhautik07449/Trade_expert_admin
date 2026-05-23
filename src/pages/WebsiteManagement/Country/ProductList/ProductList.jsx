@@ -8,6 +8,7 @@ import { getStatusStyles } from "../../../../lib/funcation";
 import { formatDate } from "../../../../common/constants";
 import CountryProductService from "../../../../service/countryproduct.service";
 import FilterByCountry from "../../../../components/widgets/filterByCountry";
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -45,7 +46,11 @@ export default function ProductList() {
                 setList(formattedData)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Product List Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -58,9 +63,18 @@ export default function ProductList() {
             const res = await CountryProductService.deleteProduct(id)
             if (res) {
                 getList(selectedCountry)
+                toast({
+                    variant: "success",
+                    title: "Product Deleted",
+                    description: res?.data?.message || "Product has been deleted successfully",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Product List Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 

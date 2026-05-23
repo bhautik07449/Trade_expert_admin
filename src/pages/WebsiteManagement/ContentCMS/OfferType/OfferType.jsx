@@ -1,12 +1,12 @@
 import { Button } from "../../../..//components/ui/button";
 import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
-import { CommonTextField } from "../../../..//components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Tradetypeservice from "../../../../service/tradetype.service";
 import { formatDate } from "../../../../common/constants";
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -17,9 +17,7 @@ const columns = [
 
 export default function OfferType() {
     const [list, setList] = useState([])
-    const [search, setSearch] = useState("");
     const navigate = useNavigate();
-    console.log("search", search);
 
     const getData = async () => {
         try {
@@ -35,7 +33,11 @@ export default function OfferType() {
             }
 
         } catch (error) {
-            console.log(error, "error");
+            toast({
+                variant: "error",
+                title: "Offer Type",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -49,9 +51,18 @@ export default function OfferType() {
 
             if (res) {
                 getData()
+                toast({
+                    variant: "success",
+                    title: "Offer Type",
+                    description: res?.data?.message || "Offer Type deleted successfully",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Offer Type",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
 
     }
@@ -68,15 +79,7 @@ export default function OfferType() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Trade Types"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/offer-type/add')}>
                             <CircleFadingPlus className="size-5" />

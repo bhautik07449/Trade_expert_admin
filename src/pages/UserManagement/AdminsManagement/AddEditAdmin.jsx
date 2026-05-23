@@ -79,13 +79,11 @@ const AddEditAdmin = () => {
 
     useEffect(() => {
         const getAdmin = async (id) => {
-            // setLoder(true);
             try {
                 const res = await Adminservice.getAdminByid(id);
                 if (res) {
                     const data = res?.data
                     setList(data);
-                    // setLoder(false);
                 }
 
             } catch (error) {
@@ -93,10 +91,8 @@ const AddEditAdmin = () => {
                 toast({
                     variant: "error",
                     title: "Error",
-                    description: error?.message,
+                    description: error?.response?.data?.message || "Something went wrong",
                 });
-            } finally {
-                // setLoder(false);
             }
         }
 

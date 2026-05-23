@@ -24,7 +24,7 @@ export default function AddTestimonialManagement() {
     }, []);
 
 
-    const { list, loading } = useSelector(
+    const { list } = useSelector(
         (state) => state.client
     );
 
@@ -50,8 +50,6 @@ export default function AddTestimonialManagement() {
         enableReinitialize: true,
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
-
             setSubmitting(true);
             try {
 
@@ -81,7 +79,6 @@ export default function AddTestimonialManagement() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Testinomial Failed",
@@ -104,7 +101,11 @@ export default function AddTestimonialManagement() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Testimonial Details",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

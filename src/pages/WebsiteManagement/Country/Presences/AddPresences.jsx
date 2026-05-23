@@ -44,7 +44,6 @@ export default function AddPresences() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Presences Failed",
@@ -66,7 +65,6 @@ export default function AddPresences() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
                 toast({
                     variant: "error",
                     title: "Fetch Failed",

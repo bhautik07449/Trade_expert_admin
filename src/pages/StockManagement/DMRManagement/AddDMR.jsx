@@ -17,7 +17,6 @@ import { fetchProducts } from "../../../store/slice/productSlice";
 const AddDMR = () => {
     const { id } = useParams()
     const [data, setData] = useState()
-    console.log("data", data);
 
     const navigate = useNavigate()
     const dispatch = useDispatch();
@@ -78,7 +77,6 @@ const AddDMR = () => {
         validationSchema,
         enableReinitialize: true,
         onSubmit: async (values) => {
-            console.log("Form Data:", values);
 
             try {
 
@@ -116,7 +114,11 @@ const AddDMR = () => {
                 setData(res?.data?.data)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "DMR Failed",
+                description: error?.response?.data?.message || "DMR Failed resubmit",
+            });
         }
     }
 

@@ -29,8 +29,6 @@ export default function AddCertificationSliderManagement() {
         enableReinitialize: true,
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
-
             setSubmitting(true);
             try {
 
@@ -51,7 +49,6 @@ export default function AddCertificationSliderManagement() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Certification Slider Failed",
@@ -74,7 +71,11 @@ export default function AddCertificationSliderManagement() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Certification Slider Management Error",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

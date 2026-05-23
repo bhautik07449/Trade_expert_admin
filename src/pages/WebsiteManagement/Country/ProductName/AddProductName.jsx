@@ -44,7 +44,6 @@ export default function AddProductName() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Product Name Failed",
@@ -66,7 +65,11 @@ export default function AddProductName() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Product Name Error",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

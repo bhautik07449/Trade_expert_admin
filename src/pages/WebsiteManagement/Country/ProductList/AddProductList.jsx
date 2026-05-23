@@ -77,7 +77,6 @@ export default function AddProductList() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Product Failed",
@@ -133,7 +132,11 @@ export default function AddProductList() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Fetch Product Failed",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

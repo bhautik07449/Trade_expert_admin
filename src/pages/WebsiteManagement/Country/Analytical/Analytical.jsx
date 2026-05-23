@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { formatDate } from "../../../../common/constants";
 import AnalyticalService from "../../../../service/analytical.service";
 import FilterByCountry from "../../../../components/widgets/filterByCountry";
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -34,7 +35,11 @@ export default function Analytical() {
                 setList(formattedData)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Analytical Dashboard Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -47,9 +52,18 @@ export default function Analytical() {
             const res = await AnalyticalService.deleteAnalytical(id)
             if (res) {
                 getList()
+                toast({
+                    variant: "success",
+                    title: "Delete Analytical Dashboard",
+                    description: res?.data?.message || "Analytical Dashboard deleted successfully",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Delete Analytical Dashboard Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 

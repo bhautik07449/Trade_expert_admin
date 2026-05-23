@@ -1,12 +1,12 @@
 import { Button } from "../../../..//components/ui/button";
 import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../..//components/widgets/common_table";
-import { CommonTextField } from "../../../..//components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { formatDate } from "../../../../common/constants";
 import Abctypeservice from "../../../../service/abctype.service";
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -18,9 +18,7 @@ const columns = [
 
 export default function AbcType() {
     const [list, setList] = useState([])
-    const [search, setSearch] = useState("");
     const navigate = useNavigate();
-    console.log("search", search);
 
     const getData = async () => {
         try {
@@ -36,7 +34,11 @@ export default function AbcType() {
             }
 
         } catch (error) {
-            console.log(error, "error");
+            toast({
+                variant: "error",
+                title: "Abc Type List Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -50,9 +52,18 @@ export default function AbcType() {
 
             if (res) {
                 getData()
+                toast({
+                    variant: "success",
+                    title: "Abc Type Deleted",
+                    description: res?.data?.message || "Abc Type has been deleted successfully",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Delete Abc Type Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
 
     }
@@ -69,15 +80,7 @@ export default function AbcType() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search ABC Types"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/abc-type/add')}>
                             <CircleFadingPlus className="size-5" />
@@ -85,7 +88,6 @@ export default function AbcType() {
                         </Button>
                     </div>
                 </div>
-
 
                 <CommonTable
                     columns={columns}

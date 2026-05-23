@@ -46,7 +46,6 @@ export default function AddMeasurement() {
                     description: res?.data?.message || "Measurement",
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Measurement Failed",
@@ -68,7 +67,11 @@ export default function AddMeasurement() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Measurement Failed",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

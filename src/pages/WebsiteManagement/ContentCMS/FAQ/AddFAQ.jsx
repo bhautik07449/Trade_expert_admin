@@ -1,5 +1,4 @@
 import CommonButton from "../../../../components/widgets/common_button";
-import ImageUploadField from "../../../../components/common/ImageUploadField";
 import { Card } from "../../../../components/ui/card";
 import BackPath from "../../../../components/common/BackPath";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
@@ -32,8 +31,6 @@ export default function AddFAQ() {
         enableReinitialize: true,
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
-
             setSubmitting(true);
             try {
 
@@ -54,7 +51,6 @@ export default function AddFAQ() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "FAQs Failed",
@@ -77,7 +73,11 @@ export default function AddFAQ() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "FAQs Data Fetch Failed",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

@@ -51,7 +51,6 @@ export default function AddEvents() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Events Failed",
@@ -73,7 +72,11 @@ export default function AddEvents() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Events Details Error",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

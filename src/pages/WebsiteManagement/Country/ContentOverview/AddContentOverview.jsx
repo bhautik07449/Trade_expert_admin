@@ -92,7 +92,11 @@ export default function AddContentOverview() {
                 setData(res?.data?.data)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Fetch Content Overview Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 

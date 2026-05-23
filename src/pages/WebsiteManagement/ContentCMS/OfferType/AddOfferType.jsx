@@ -44,7 +44,6 @@ export default function AddOfferType() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Offer Type Failed",
@@ -66,7 +65,11 @@ export default function AddOfferType() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Offer Type",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

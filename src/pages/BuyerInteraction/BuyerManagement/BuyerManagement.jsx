@@ -1,4 +1,3 @@
-import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
 import React, { useEffect, useState } from "react";
 import CommonTable from "../../../components/widgets/common_table";
@@ -6,6 +5,7 @@ import CommonFiltter from "../../../components/widgets/common_filter";
 import ExportData from "../../../components/widgets/export_data";
 import Buyerservice from "../../../service/buyer.service";
 import { getStatusStyles } from "../../../lib/funcation";
+import { toast } from "../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -39,7 +39,6 @@ const handleClearFilters = () => {
 }
 
 export default function BuyerManagement() {
-    const [search, setSearch] = useState("");
     const [list, setList] = useState([]);
 
     useEffect(() => {
@@ -56,7 +55,11 @@ export default function BuyerManagement() {
                     setList(formattedData);
                 }
             } catch (error) {
-                console.error("Error fetching buyer list:", error);
+                toast({
+                    variant: "error",
+                    title: "Buyer Fetch Failed",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
         fetchData();
@@ -67,7 +70,11 @@ export default function BuyerManagement() {
             await Buyerservice.deleteBuyer(id);
             setList(prevList => prevList.filter(item => item.id !== id));
         } catch (error) {
-            console.error("Error deleting buyer:", error);
+            toast({
+                variant: "error",
+                title: "Buyer Delete Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -79,15 +86,7 @@ export default function BuyerManagement() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search buyers"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-4">
                         <ExportData
                             data={list}

@@ -41,7 +41,7 @@ export default function AddTradeOffer() {
         (state) => state.categories
     );
 
-    const { flatList, loading } = useSelector(
+    const { flatList } = useSelector(
         (state) => state.tradeType
     );
 
@@ -85,8 +85,6 @@ export default function AddTradeOffer() {
         enableReinitialize: true,
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
-
             setSubmitting(true);
             try {
 
@@ -125,7 +123,6 @@ export default function AddTradeOffer() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Trade Offer Failed",
@@ -216,7 +213,11 @@ export default function AddTradeOffer() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Trade Offer",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

@@ -63,7 +63,6 @@ export default function SocialSetting() {
         }
 
       } catch (error) {
-        console.log(error);
         toast({
           variant: "error",
           title: "Social Data Failed",
@@ -94,7 +93,11 @@ export default function SocialSetting() {
       }
 
     } catch (error) {
-      console.log(error);
+      toast({
+        variant: "error",
+        title: "Fetch Social Data Failed",
+        description: error?.response?.data?.message || "Something went wrong",
+      });
     }
   };
 

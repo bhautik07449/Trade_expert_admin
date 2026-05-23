@@ -83,7 +83,6 @@ export default function GeneralSetting() {
                 }
 
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "General Setting Failed",
@@ -105,7 +104,11 @@ export default function GeneralSetting() {
             }
 
         } catch (error) {
-            console.log(error, "error");
+            toast({
+                variant: "error",
+                title: "Get General Setting Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 

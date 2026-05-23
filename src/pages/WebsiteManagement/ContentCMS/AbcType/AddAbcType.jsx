@@ -47,7 +47,6 @@ export default function AddAbcType() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Abc Type Failed",
@@ -69,7 +68,11 @@ export default function AddAbcType() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Abc Type Details Error",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

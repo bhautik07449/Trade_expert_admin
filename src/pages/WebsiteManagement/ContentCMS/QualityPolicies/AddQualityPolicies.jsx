@@ -31,7 +31,11 @@ export default function AddQualityPolicies() {
                 setList(res?.data?.data)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Quality Policy",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -41,7 +45,7 @@ export default function AddQualityPolicies() {
         }
     }, [])
 
-    const { flatList, loading } = useSelector(
+    const { flatList } = useSelector(
         (state) => state.categories
     );
 
@@ -73,7 +77,6 @@ export default function AddQualityPolicies() {
         enableReinitialize: true,
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
 
             setSubmitting(true);
             try {
@@ -106,7 +109,6 @@ export default function AddQualityPolicies() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Quality Policies Failed",

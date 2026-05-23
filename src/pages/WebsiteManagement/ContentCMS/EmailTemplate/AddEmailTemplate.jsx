@@ -49,7 +49,6 @@ export default function AddEmailTemplate() {
                     description: res?.data?.message || "Email Template added successfully",
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Email Template Failed",
@@ -72,7 +71,11 @@ export default function AddEmailTemplate() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Email Template",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

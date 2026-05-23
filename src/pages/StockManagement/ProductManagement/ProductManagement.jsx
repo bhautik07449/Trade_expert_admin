@@ -1,4 +1,3 @@
-import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
 import React, { useEffect, useState } from "react";
 import { CircleFadingPlus } from "lucide-react";
@@ -8,6 +7,7 @@ import CommonTable from "../../../components/widgets/common_table";
 import { useNavigate } from "react-router";
 import { getStatus } from "../../../lib/funcation";
 import { formatDate } from "../../../common/constants";
+import { toast } from "../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -32,10 +32,8 @@ const columns = [
 ]
 
 const ProductManagement = () => {
-    const [search, setSearch] = useState("");
     const [list, setList] = useState([]);
     const navigate = useNavigate();
-    console.log("search", search);
 
     const getList = async () => {
         try {
@@ -50,7 +48,11 @@ const ProductManagement = () => {
             }
 
         } catch (error) {
-            console.log(error, "error");
+            toast({
+                variant: "error",
+                title: "Product List",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -65,7 +67,11 @@ const ProductManagement = () => {
                 getList()
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Product List",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -81,15 +87,7 @@ const ProductManagement = () => {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search products"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div onClick={() => navigate("/stock-management/product_management/add")}>
                         <Button className="flex items-center gap-2">
                             <CircleFadingPlus className="size-5" />

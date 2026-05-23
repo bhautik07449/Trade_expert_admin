@@ -43,7 +43,11 @@ export default function ContentOverview() {
                 setList(formattedData);
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Content Overview Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -56,7 +60,12 @@ export default function ContentOverview() {
             const res = await ContentOverviewservice.deleteContentOverview(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
+                toast({
+                    variant: "success",
+                    title: "Content Overview Deleted",
+                    description: res?.data?.message || "Content Overview Deleted",
+                });
             }
         } catch (error) {
             toast({

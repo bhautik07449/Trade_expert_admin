@@ -1,4 +1,3 @@
-import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
 import React, { useEffect, useState } from "react";
 import CommonTable from "../../../components/widgets/common_table";
@@ -35,7 +34,11 @@ export default function RequestSamplesManagement() {
                 setList(formattedData)
             }
         } catch (error) {
-            toast.error("data not fetch")
+            toast({
+                variant: "error",
+                title: "Inquiry List Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -85,15 +88,7 @@ export default function RequestSamplesManagement() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Request Samples"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-4">
                         <ExportData
                             data={list}

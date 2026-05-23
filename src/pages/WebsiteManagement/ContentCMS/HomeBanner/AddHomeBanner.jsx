@@ -46,8 +46,6 @@ export default function AddHomeBanner() {
         enableReinitialize: true,
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
-
             setSubmitting(true);
             try {
 
@@ -68,7 +66,6 @@ export default function AddHomeBanner() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Home Banner Failed",
@@ -98,7 +95,11 @@ export default function AddHomeBanner() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Home Banner",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

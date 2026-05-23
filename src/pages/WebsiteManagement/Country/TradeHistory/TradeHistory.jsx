@@ -8,6 +8,7 @@ import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import TradeHistoryservice from "../../../../service/tradeHistory.service";
 import FilterByCountry from "../../../../components/widgets/filterByCountry";
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -46,7 +47,11 @@ export default function TradeHistory() {
                 setList(formattedData)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Failed to Fetch Trade History",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -59,9 +64,18 @@ export default function TradeHistory() {
             const res = await TradeHistoryservice.deleteTradeHistory(id)
             if (res) {
                 getList()
+                toast({
+                    variant: "success",
+                    title: "Trade History Deleted",
+                    description: res?.data?.message || "Trade history has been deleted successfully",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Trade History Delete Failed",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -91,7 +105,6 @@ export default function TradeHistory() {
                         </Button>
                     </div>
                 </div>
-
 
                 <CommonTable
                     columns={columns}

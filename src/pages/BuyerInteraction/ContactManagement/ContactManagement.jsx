@@ -1,4 +1,3 @@
-import { CommonTextField } from "../../../components/widgets/common_textField";
 import { Card } from "../../../components/ui/card";
 import React, { useEffect, useState } from "react";
 import CommonTable from "../../../components/widgets/common_table";
@@ -6,6 +5,7 @@ import CommonFiltter from "../../../components/widgets/common_filter";
 import ExportData from "../../../components/widgets/export_data";
 import Contactservice from "../../../service/contact.service";
 import { getStatusStyles } from "../../../lib/funcation";
+import { toast } from "../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -25,8 +25,6 @@ const columns = [
 
 export default function ContactManagement() {
     const [list, setList] = useState([])
-    const [search, setSearch] = useState("");
-    console.log("search", search);
 
     const getData = async () => {
         try {
@@ -41,7 +39,11 @@ export default function ContactManagement() {
                 setList(formattedData);
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Contact List Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -68,9 +70,18 @@ export default function ContactManagement() {
             const res = await Contactservice.deleteContact(id)
             if (res) {
                 getData()
+                toast({
+                    variant: "success",
+                    title: "Contact",
+                    description: res?.data?.message || "Contact deleted successfully",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Contact List Error",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -82,15 +93,7 @@ export default function ContactManagement() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Contacts"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-4">
                         <ExportData
                             data={list}

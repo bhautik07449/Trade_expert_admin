@@ -18,7 +18,6 @@ export default function AddAbc() {
     const { id } = useParams()
     const [data, setData] = useState()
 
-
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
@@ -78,7 +77,6 @@ export default function AddAbc() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Offer Type Failed",
@@ -134,7 +132,11 @@ export default function AddAbc() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Get Abc Error",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../lib/funcation";
 import DMRservice from "../../../service/dmr.service";
 import { formatDate } from "../../../common/constants";
+import { toast } from "../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -25,9 +26,8 @@ const columns = [
 ]
 
 const DMRManagement = () => {
-    const [search, setSearch] = useState("");
     const [list, setList] = useState([])
-    console.log("search", search);
+
     const navigate = useNavigate();
 
     const getData = async () => {
@@ -44,7 +44,11 @@ const DMRManagement = () => {
                 setList(formattedData);
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "DMR",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -58,9 +62,18 @@ const DMRManagement = () => {
 
             if (res) {
                 getData()
+                toast({
+                    variant: "success",
+                    title: "DMR",
+                    description: res?.data?.message || "Something went wrong",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "DMR",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -76,15 +89,7 @@ const DMRManagement = () => {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search DMR"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div onClick={() => navigate("/stock-management/dmr-management/add")}>
                         <Button className="flex items-center gap-2">
                             <CircleFadingPlus className="size-5" />

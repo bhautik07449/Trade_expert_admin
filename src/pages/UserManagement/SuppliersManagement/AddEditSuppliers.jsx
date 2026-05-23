@@ -61,10 +61,9 @@ const AddEditSuppliers = () => {
         initialValues,
         validationSchema,
         enableReinitialize: true,
-        onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
-
+        onSubmit: async (values, { setSubmitting }) => {
             setSubmitting(true);
+
             try {
                 let response
 
@@ -83,7 +82,6 @@ const AddEditSuppliers = () => {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Suppliers Failed",
@@ -106,7 +104,11 @@ const AddEditSuppliers = () => {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Supplier",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

@@ -1,4 +1,3 @@
-import CommonBox from "../../../../components/common/common_box";
 import BackPath from "../../../../components/common/BackPath";
 import ImageUploadField from "../../../../components/common/ImageUploadField";
 import { Card } from "../../../../components/ui/card";
@@ -10,7 +9,6 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import Teamservice from "../../../../service/teams.service";
 import { toast } from "../../../../components/ui/use-toast";
-
 
 export default function AddTeamManagement() {
     const { id } = useParams()
@@ -77,7 +75,6 @@ export default function AddTeamManagement() {
                     description: res?.data?.message,
                 });
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Team Failed",
@@ -99,7 +96,11 @@ export default function AddTeamManagement() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Fetch Team Failed",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 

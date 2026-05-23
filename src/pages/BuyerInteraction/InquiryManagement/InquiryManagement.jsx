@@ -27,8 +27,6 @@ const columns = [
 
 export default function InquiryManagement() {
     const [list, setList] = useState([])
-    const [search, setSearch] = useState("");
-    console.log("search", search);
 
     const getData = async () => {
         try {
@@ -95,15 +93,7 @@ export default function InquiryManagement() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Inquiries"
-                            className="w-full"
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-4">
                         <ExportData
                             data={list}

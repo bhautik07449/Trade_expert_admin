@@ -1,7 +1,6 @@
 import { Checkbox } from "../../../../components/ui/checkbox";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { Label } from "../../../../components/ui/label";
-import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function SEO({ formik }) {
     return (

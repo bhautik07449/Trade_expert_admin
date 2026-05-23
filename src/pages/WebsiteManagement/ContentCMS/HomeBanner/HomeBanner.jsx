@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Homebannerservice from "../../../../service/homebanner.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
+import { toast } from "../../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -50,7 +51,11 @@ export default function HomeBanner() {
                 setList(formattedData)
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Home Banner",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -63,9 +68,18 @@ export default function HomeBanner() {
             const res = await Homebannerservice.deleteHomeBanner(id)
             if (res) {
                 getList()
+                toast({
+                    variant: "success",
+                    title: "Home Banner",
+                    description: res?.data?.message || "Deleted successfully",
+                });
             }
         } catch (error) {
-            console.log("error", error);
+            toast({
+                variant: "error",
+                title: "Home Banner",
+                description: error?.response?.data?.message || "Something went wrong",
+            });
         }
     }
 
@@ -89,6 +103,7 @@ export default function HomeBanner() {
                         </Button>
                     </div>
                 </div>
+                
                 <CommonTable
                     columns={columns}
                     rows={list || []}

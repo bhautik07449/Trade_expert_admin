@@ -56,8 +56,6 @@ export default function AddOfferRequest() {
         enableReinitialize: true,
         validationSchema,
         onSubmit: async (values, { setSubmitting, resetForm }) => {
-            console.log("values", values);
-
             setSubmitting(true);
             try {
 
@@ -89,7 +87,6 @@ export default function AddOfferRequest() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Offer Req. Failed",
@@ -112,7 +109,11 @@ export default function AddOfferRequest() {
                 }
 
             } catch (error) {
-                console.log(error, "error");
+                toast({
+                    variant: "error",
+                    title: "Failed to fetch Offer Req. data",
+                    description: error?.response?.data?.message || "Something went wrong",
+                });
             }
         }
 
