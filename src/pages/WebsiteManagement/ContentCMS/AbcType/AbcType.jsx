@@ -11,6 +11,7 @@ import Abctypeservice from "../../../../service/abctype.service";
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 4 },
+    { field: "country", headerName: "Country", flex: 2 },
     { field: "createdAt", headerName: "Created", flex: 1 },
     { field: "lastUpdatedAt", headerName: "Updated", flex: 1 },
 ]

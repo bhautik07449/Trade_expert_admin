@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "../../../../components/ui/use-toast";
 import Abctypeservice from "../../../../service/abctype.service";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddAbcType() {
     const { id } = useParams()
@@ -15,11 +16,13 @@ export default function AddAbcType() {
     const [list, setList] = useState()
 
     const initialValues = {
-        name: list ? list?.name : ""
+        name: list ? list?.name : "",
+        country: list ? list?.country : ""
     };
 
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required("Name is required")
+        name: Yup.string().required("Name is required"),
+        country: Yup.string().required("Country is required")
     });
 
     const formik = useFormik({
@@ -95,6 +98,8 @@ export default function AddAbcType() {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.name && formik.errors.name}
                             />
+
+                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 

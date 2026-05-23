@@ -13,7 +13,6 @@ import CommonBox from "../../../../components/common/common_box";
 import MultiSelectBox from "../../../../components/common/MultiSelectBox";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAbcType } from "../../../../store/slice/abctypeSlice";
-import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddAbc() {
     const { id } = useParams()
@@ -161,7 +160,15 @@ export default function AddAbc() {
                                 options={abctypeOptions}
                                 name="abc_type"
                                 value={formik.values.abc_type}
-                                onChange={(value) => formik.setFieldValue("abc_type", value)}
+                                onChange={(value) => {
+                                    formik.setFieldValue("abc_type", value)
+
+                                    const selectedAbcType = type?.find(
+                                        (item) => Number(item.id) === Number(value)
+                                    );
+
+                                    formik.setFieldValue("country", selectedAbcType?.country || "");
+                                }}
                                 error={formik.touched.abc_type && formik.errors.abc_type}
                             />
 
@@ -187,8 +194,6 @@ export default function AddAbc() {
                                 onChange={(value) => formik.setFieldValue("subcategory", value)}
                                 error={formik.touched.subcategory && formik.errors.subcategory}
                             />
-
-                            <CountrySelection formik={formik} />
 
                             <MultiSelectBox
                                 label="Product"
