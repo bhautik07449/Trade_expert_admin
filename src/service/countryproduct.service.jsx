@@ -46,9 +46,9 @@ const deleteProductName = async (id) => {
 }
 
 
-const getProduct = async () => {
+const getProduct = async (country) => {
     try {
-        const response = serverCall.get('/countryproduct')
+        const response = serverCall.get('/countryproduct', { params: country ? { country: country } : {} })
         return response
     } catch (error) {
         throw error

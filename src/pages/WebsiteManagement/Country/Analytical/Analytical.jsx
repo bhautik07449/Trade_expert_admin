@@ -1,7 +1,6 @@
 import { Button } from "../../../../components/ui/button";
 import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../../components/widgets/common_table";
-import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
@@ -22,9 +21,9 @@ export default function Analytical() {
     const [selectedCountry, setSelectedCountry] = useState("");
     const navigate = useNavigate();
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await AnalyticalService.getList()
+            const res = await AnalyticalService.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -40,8 +39,8 @@ export default function Analytical() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const handledelete = async (id) => {
         try {

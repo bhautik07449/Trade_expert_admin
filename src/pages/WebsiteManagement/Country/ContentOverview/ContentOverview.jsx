@@ -1,4 +1,3 @@
-import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { Card } from "../../../../components/ui/card";
 import React, { useEffect, useState } from "react";
 import { CircleFadingPlus } from "lucide-react";
@@ -9,6 +8,7 @@ import { getStatusStyles } from "../../../../lib/funcation";
 import { formatDate } from "../../../../common/constants";
 import ContentOverviewservice from "../../../../service/contentoverview.service";
 import { toast } from "../../../../components/ui/use-toast";
+import FilterByCountry from "../../../../components/widgets/filterByCountry";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -25,14 +25,14 @@ const columns = [
 ]
 
 export default function ContentOverview() {
-    const [search, setSearch] = useState("");
     const [list, setList] = useState([])
-    console.log("search", search);
+    const [selectedCountry, setSelectedCountry] = useState("");
+
     const navigate = useNavigate();
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await ContentOverviewservice.getList()
+            const res = await ContentOverviewservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -48,8 +48,8 @@ export default function ContentOverview() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {
@@ -81,11 +81,9 @@ export default function ContentOverview() {
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-between gap-4">
                     <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search Content Overview"
-                            className="w-full"
+                        <FilterByCountry
+                            selectedCountry={selectedCountry}
+                            setSelectedCountry={setSelectedCountry}
                         />
                     </div>
                     <div onClick={() => navigate("/website-management/country/content-overview/add")}>

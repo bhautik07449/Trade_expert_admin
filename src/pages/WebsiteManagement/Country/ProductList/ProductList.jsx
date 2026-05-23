@@ -1,13 +1,13 @@
 import { Button } from "../../../../components/ui/button";
 import { Card } from "../../../../components/ui/card";
 import CommonTable from "../../../../components/widgets/common_table";
-import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { CircleFadingPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getStatusStyles } from "../../../../lib/funcation";
 import { formatDate } from "../../../../common/constants";
 import CountryProductService from "../../../../service/countryproduct.service";
+import FilterByCountry from "../../../../components/widgets/filterByCountry";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -26,13 +26,13 @@ const columns = [
 
 export default function ProductList() {
     const [list, setList] = useState([])
-    const [search, setSearch] = useState("");
-    const navigate = useNavigate();
-    console.log("search", search);
+    const [selectedCountry, setSelectedCountry] = useState(null);
 
-    const getList = async () => {
+    const navigate = useNavigate();
+
+    const getList = async (country) => {
         try {
-            const res = await CountryProductService.getProduct()
+            const res = await CountryProductService.getProduct(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -50,14 +50,14 @@ export default function ProductList() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const handledelete = async (id) => {
         try {
             const res = await CountryProductService.deleteProduct(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
             }
         } catch (error) {
             console.log("error", error);
@@ -78,11 +78,9 @@ export default function ProductList() {
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-between gap-4">
                     <div className="lg:max-w-72 w-full grid gap-1">
-                        <CommonTextField
-                            type="text"
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder="Search..."
-                            className="w-full"
+                        <FilterByCountry
+                            selectedCountry={selectedCountry}
+                            setSelectedCountry={setSelectedCountry}
                         />
                     </div>
                     <div className="flex gap-3 items-center">
