@@ -250,12 +250,12 @@ export function getMenuList(pathname) {
               active: pathname.includes("/website-management/country/events"),
               icon: User,
             },
-            {
-              href: "/website-management/country/presences",
-              label: "Presences",
-              active: pathname.includes("/website-management/country/presences"),
-              icon: Handshake,
-            },
+            // {
+            //   href: "/website-management/country/presences",
+            //   label: "Presences",
+            //   active: pathname.includes("/website-management/country/presences"),
+            //   icon: Handshake,
+            // },
             {
               href: "/website-management/country/analytical",
               label: "Analytical",
