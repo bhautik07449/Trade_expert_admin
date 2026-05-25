@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchFlatCategories } from "../../../../store/slice/categoriesSlice";
 import QualityPolicyservice from "../../../../service/qualityPolicy.service";
 import { toast } from "../../../../components/ui/use-toast";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddQualityPolicies() {
     const [list, setList] = useState()
@@ -61,7 +62,8 @@ export default function AddQualityPolicies() {
         description: list?.description ? list?.description : "",
         logo: list?.logo ? list?.logo : "",
         category: list?.category ? list?.category?.id : "",
-        status: list?.status ? list?.status : "active"
+        status: list?.status ? list?.status : "active",
+        country: list?.country ? list?.country : "",
     };
 
     const validationSchema = Yup.object().shape({
@@ -69,7 +71,8 @@ export default function AddQualityPolicies() {
         description: Yup.string().required("Description is required"),
         logo: Yup.string().required("logo is required"),
         category: Yup.string().required("Category is required"),
-        status: Yup.string().required("Status is required")
+        status: Yup.string().required("Status is required"),
+        country: Yup.string().required("Country is required"),
     });
 
     const formik = useFormik({
@@ -85,7 +88,8 @@ export default function AddQualityPolicies() {
                     name: values?.name,
                     description: values?.description,
                     logo: values?.logo,
-                    status: values?.status
+                    status: values?.status,
+                    country: values?.country,
                 };
 
                 if (values.category) {
@@ -167,6 +171,8 @@ export default function AddQualityPolicies() {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.description && formik.errors.description}
                             />
+
+                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 

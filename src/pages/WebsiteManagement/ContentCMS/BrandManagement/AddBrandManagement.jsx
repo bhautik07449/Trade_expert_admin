@@ -12,6 +12,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "../../../../components/ui/use-toast";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddBrandManagement() {
     const [list, setList] = useState()
@@ -61,7 +62,8 @@ export default function AddBrandManagement() {
         description: list?.description ? list?.description : "",
         logo: list?.logo ? list?.logo : "",
         category: list?.category ? list?.category?.id : "",
-        status: list?.status ? list?.status : "active"
+        status: list?.status ? list?.status : "active",
+        country: list?.country ? list?.country : ""
     };
 
     const validationSchema = Yup.object().shape({
@@ -69,7 +71,8 @@ export default function AddBrandManagement() {
         description: Yup.string().required("Description is required"),
         logo: Yup.string().required("logo is required"),
         category: Yup.string().required("Category is required"),
-        status: Yup.string().required("Status is required")
+        status: Yup.string().required("Status is required"),
+        country: Yup.string().required("Country is required")
     });
 
     const formik = useFormik({
@@ -85,7 +88,8 @@ export default function AddBrandManagement() {
                     name: values?.name,
                     description: values?.description,
                     logo: values?.logo,
-                    status: values?.status
+                    status: values?.status,
+                    country: values?.country
                 };
 
                 if (values.category) {
@@ -180,6 +184,8 @@ export default function AddBrandManagement() {
                                     formik.setFieldValue("logo", url);
                                 }} />
                         </div>
+
+                        <CountrySelection formik={formik} />
                     </div>
 
                     <div className="flex justify-end gap-3 pt-5 border-t">

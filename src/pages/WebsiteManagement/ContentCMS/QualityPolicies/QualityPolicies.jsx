@@ -9,10 +9,12 @@ import QualityPolicyservice from "../../../../service/qualityPolicy.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { toast } from "../../../../components/ui/use-toast";
+import FilterByCountry from "../../../../components/widgets/filterByCountry";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 2 },
+    { field: "country", headerName: "Country", flex: 1 },
     {
         field: "logo", headerName: "Image", flex: 2,
         renderCell: ({ row }) => (
@@ -36,12 +38,13 @@ const columns = [
 
 export default function QualityPolicies() {
     const [list, setList] = useState([])
+    const [selectedCountry, setSelectedCountry] = useState("");
 
     const navigate = useNavigate();
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await QualityPolicyservice.getList();
+            const res = await QualityPolicyservice.getList(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -61,8 +64,8 @@ export default function QualityPolicies() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry);
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {
@@ -98,7 +101,12 @@ export default function QualityPolicies() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-end gap-4">
+                <div className="flex items-center justify-between gap-4">
+                    <FilterByCountry
+                        selectedCountry={selectedCountry}
+                        setSelectedCountry={setSelectedCountry}
+                    />
+
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/quality-policies/add')}>
                             <CircleFadingPlus className="size-5" />

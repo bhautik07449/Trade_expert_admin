@@ -10,11 +10,13 @@ import Brandservice from "../../../../service/brands.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { toast } from "../../../../components/ui/use-toast";
+import FilterByCountry from "../../../../components/widgets/filterByCountry";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "category", headerName: "Category", flex: 2 },
     { field: "name", headerName: "Name", flex: 2 },
+    { field: "country", headerName: "Country", flex: 1 },
     {
         field: "image", headerName: "Image", flex: 2,
         renderCell: ({ row }) => (
@@ -37,11 +39,12 @@ const columns = [
 
 export default function BrandManagement() {
     const [list, setList] = useState([])
+    const [selectedCountry, setSelectedCountry] = useState("");
     const navigate = useNavigate();
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await Brandservice.getList()
+            const res = await Brandservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.map((item, index) => ({
                     ...item,
@@ -61,8 +64,8 @@ export default function BrandManagement() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry);
+    }, [selectedCountry])
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
@@ -109,7 +112,12 @@ export default function BrandManagement() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-end gap-4">
+                <div className="flex items-center justify-between gap-4">
+                    <FilterByCountry
+                        selectedCountry={selectedCountry}
+                        setSelectedCountry={setSelectedCountry}
+                    />
+
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/brands/add')}>
                             <CircleFadingPlus className="size-5" />
