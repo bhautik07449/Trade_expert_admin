@@ -222,6 +222,18 @@ export function getMenuList(pathname) {
               active: pathname.includes("/website-management/content/delivery_reach"),
               icon: HelpCircle,
             },
+            {
+              href: "/website-management/content/multilingual",
+              label: "Multilingual",
+              active: pathname.includes("/website-management/content/multilingual"),
+              icon: HelpCircle,
+            },
+            {
+              href: "/website-management/content/policy_preamble",
+              label: "Policy Preamble",
+              active: pathname.includes("/website-management/content/policy_preamble"),
+              icon: HelpCircle,
+            },
           ]
         },
         {

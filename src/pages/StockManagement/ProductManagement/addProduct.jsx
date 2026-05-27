@@ -107,7 +107,6 @@ export default function AddProduct() {
                     });
                 }
             } catch (error) {
-                console.log("error", error);
                 toast({
                     variant: "error",
                     title: "Product Failed",

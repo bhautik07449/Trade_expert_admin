@@ -90,6 +90,10 @@ import MarketDevelopment from "../pages/MarketDevelopment/MarketDevelopmentProce
 import MarketData from "../pages/MarketDevelopment/MarketData/MarketData";
 import DeliveryReach from "../pages/WebsiteManagement/ContentCMS/DeliveryReach/DeliveryReach";
 import AddDeliveryReach from "../pages/WebsiteManagement/ContentCMS/DeliveryReach/AddDeliveryReach";
+import Multilingual from "../pages/WebsiteManagement/ContentCMS/Multilingual/Multilingual";
+import AddMultilingual from "../pages/WebsiteManagement/ContentCMS/Multilingual/AddMultilingual";
+import PolicyPreamble from "../pages/WebsiteManagement/ContentCMS/PolicyPreamble/PolicyPreamble";
+import AddPolicyPreamble from "../pages/WebsiteManagement/ContentCMS/PolicyPreamble/AddPolicyPreamble";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -708,6 +712,36 @@ const routes = (isLoggedIn) => [
       {
         element: <AddDeliveryReach />,
         path: "/website-management/content/delivery_reach/edit/:id",
+        index: true,
+      },
+      {
+        element: <Multilingual />,
+        path: "/website-management/content/multilingual",
+        index: true,
+      },
+      {
+        element: <AddMultilingual />,
+        path: "/website-management/content/multilingual/add",
+        index: true,
+      },
+      {
+        element: <AddMultilingual />,
+        path: "/website-management/content/multilingual/edit/:id",
+        index: true,
+      },
+      {
+        element: <PolicyPreamble />,
+        path: "/website-management/content/policy_preamble",
+        index: true,
+      },
+      {
+        element: <AddPolicyPreamble />,
+        path: "/website-management/content/policy_preamble/add",
+        index: true,
+      },
+      {
+        element: <AddPolicyPreamble />,
+        path: "/website-management/content/policy_preamble/edit/:id",
         index: true,
       },
     ],
