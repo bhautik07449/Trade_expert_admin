@@ -79,11 +79,16 @@ export default function AddPolicyPreamble() {
     });
 
     const categoryOptions = useMemo(() => {
-        return categories?.map((cat) => ({
+        const selectedCountry = formik.values.country;
+        const filtered = categories?.filter((cat) => {
+
+            return !selectedCountry || cat.country === selectedCountry;
+        }) || [];
+        return filtered.map((cat) => ({
             label: cat.name,
             value: cat.id
         }));
-    }, [categories]);
+    }, [categories, formik.values.country]);
 
     useEffect(() => {
         const getData = async (id) => {
