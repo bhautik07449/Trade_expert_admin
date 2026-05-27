@@ -216,6 +216,12 @@ export function getMenuList(pathname) {
               active: pathname.includes("/website-management/content/career"),
               icon: HelpCircle,
             },
+            {
+              href: "/website-management/content/delivery_reach",
+              label: "Delivery Reach",
+              active: pathname.includes("/website-management/content/delivery_reach"),
+              icon: HelpCircle,
+            },
           ]
         },
         {
