@@ -9,6 +9,7 @@ import { toast } from "../../../../components/ui/use-toast";
 import Eventsservice from "../../../../service/events.service";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
 import ImageUploadField from "../../../../components/common/ImageUploadField";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddEvents() {
     const { id } = useParams()
@@ -20,13 +21,15 @@ export default function AddEvents() {
         title: data ? data?.title : "",
         description: data ? data?.description : "",
         image: data ? data?.image : "",
+        country: data ? data?.country : ""
     };
 
     const validationSchema = Yup.object().shape({
         tag: Yup.string().required("Tag is required"),
         title: Yup.string().required("Title is required"),
         description: Yup.string().required("Description is required"),
-        image: Yup.string().required("Image is required")
+        image: Yup.string().required("Image is required"),
+        country: Yup.string().required("Country is required")
     });
 
     const formik = useFormik({
@@ -134,6 +137,8 @@ export default function AddEvents() {
                                         formik.setFieldValue("image", url);
                                     }} />
                             </div>
+
+                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 

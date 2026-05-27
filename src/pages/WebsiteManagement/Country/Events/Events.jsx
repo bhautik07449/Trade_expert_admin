@@ -8,6 +8,7 @@ import { formatDate } from "../../../../common/constants";
 import Eventsservice from "../../../../service/events.service";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { toast } from "../../../../components/ui/use-toast";
+import FilterByCountry from "../../../../components/widgets/filterByCountry";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -21,6 +22,7 @@ const columns = [
             />
         )
     },
+    { field: "country", headerName: "Country", flex: 1 },
     { field: "tag", headerName: "Tag", flex: 2 },
     { field: "title", headerName: "Title", flex: 2 },
     { field: "description", headerName: "Description", flex: 3 },
@@ -28,12 +30,13 @@ const columns = [
 ]
 
 export default function Events() {
+    const [selectedCountry, setSelectedCountry] = useState()
     const [list, setList] = useState([])
     const navigate = useNavigate();
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await Eventsservice.getList()
+            const res = await Eventsservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -52,8 +55,8 @@ export default function Events() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const handledelete = async (id) => {
         try {
@@ -87,7 +90,13 @@ export default function Events() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-end gap-4">
+                <div className="flex items-center justify-between gap-4">
+                    <div className="lg:max-w-72 w-full grid gap-1">
+                        <FilterByCountry
+                            selectedCountry={selectedCountry}
+                            setSelectedCountry={setSelectedCountry}
+                        />
+                    </div>
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/country/events/add')}>
                             <CircleFadingPlus className="size-5" />
