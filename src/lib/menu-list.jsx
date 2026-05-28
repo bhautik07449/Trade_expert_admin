@@ -312,6 +312,18 @@ export function getMenuList(pathname) {
               active: pathname.includes("/website-management/country/content-overview"),
               icon: TableOfContentsIcon,
             },
+            {
+              href: "/website-management/country/affiliation",
+              label: "Affiliation",
+              active: pathname.includes("/website-management/country/affiliation"),
+              icon: TableOfContentsIcon,
+            },
+            {
+              href: "/website-management/country/membership",
+              label: "Membership",
+              active: pathname.includes("/website-management/country/membership"),
+              icon: TableOfContentsIcon,
+            },
           ]
         }
       ],

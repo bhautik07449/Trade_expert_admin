@@ -94,6 +94,10 @@ import Multilingual from "../pages/WebsiteManagement/ContentCMS/Multilingual/Mul
 import AddMultilingual from "../pages/WebsiteManagement/ContentCMS/Multilingual/AddMultilingual";
 import PolicyPreamble from "../pages/WebsiteManagement/ContentCMS/PolicyPreamble/PolicyPreamble";
 import AddPolicyPreamble from "../pages/WebsiteManagement/ContentCMS/PolicyPreamble/AddPolicyPreamble";
+import Affiliation from "../pages/WebsiteManagement/Country/Affiliation/Affiliation";
+import AddAffiliation from "../pages/WebsiteManagement/Country/Affiliation/AddAffiliation";
+import Membership from "../pages/WebsiteManagement/Country/Membership/Membership";
+import AddMembership from "../pages/WebsiteManagement/Country/Membership/AddMembership";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -742,6 +746,36 @@ const routes = (isLoggedIn) => [
       {
         element: <AddPolicyPreamble />,
         path: "/website-management/content/policy_preamble/edit/:id",
+        index: true,
+      },
+      {
+        element: <Affiliation />,
+        path: "/website-management/country/affiliation",
+        index: true,
+      },
+      {
+        element: <AddAffiliation />,
+        path: "/website-management/country/affiliation/add",
+        index: true,
+      },
+      {
+        element: <AddAffiliation />,
+        path: "/website-management/country/affiliation/edit/:id",
+        index: true,
+      },
+      {
+        element: <Membership />,
+        path: "/website-management/country/membership",
+        index: true,
+      },
+      {
+        element: <AddMembership />,
+        path: "/website-management/country/membership/add",
+        index: true,
+      },
+      {
+        element: <AddMembership />,
+        path: "/website-management/country/membership/edit/:id",
         index: true,
       },
     ],
