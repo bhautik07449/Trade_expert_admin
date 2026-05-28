@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "./config";
+import { encryptPayload, decryptPayload } from "./utils/crypto";
 
 const BASE_URL = config.baseApi;
 
@@ -14,6 +15,12 @@ const requestHandler = (request) => {
     const token = user;
     request.headers.Authorization = `Bearer ${token}`;
   }
+
+  // Automatically encrypt request body if not a multipart file upload
+  if (request.data && !(request.data instanceof FormData)) {
+    request.data = encryptPayload(request.data);
+  }
+
   return request;
 };
 
@@ -27,6 +34,11 @@ const responseHandler = (response) => {
     alert("Server is down")
   }
 
+  // Automatically decrypt response if it is encrypted
+  if (response.data && response.data.encrypted && response.data.payload) {
+    response.data = decryptPayload(response.data.payload);
+  }
+
   return response;
 };
 
@@ -36,6 +48,13 @@ const requestErrorHandler = (error) => {
 
 const responseErrorHandler = (error) => {
   if (error.response) {
+    // Automatically decrypt error response if it is encrypted
+    if (error.response.data && error.response.data.encrypted && error.response.data.payload) {
+      try {
+        error.response.data = decryptPayload(error.response.data.payload);
+      } catch (e) {}
+    }
+
     if (error.response.status === 401 || error.response.status === 403) {
       localStorage.clear();
       window.location.replace("/login");
