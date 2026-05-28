@@ -370,6 +370,12 @@ export function getMenuList(pathname) {
           active: pathname.includes("/buyer-interaction/credit-account-management"),
           icon: CreditCard,
         },
+        {
+          href: "/buyer-interaction/investor_relations",
+          label: "Investor Relations",
+          active: pathname.includes("/buyer-interaction/investor_relations"),
+          icon: CreditCard,
+        },
       ],
     },
     {

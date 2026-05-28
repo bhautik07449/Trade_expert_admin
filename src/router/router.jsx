@@ -98,6 +98,7 @@ import Affiliation from "../pages/WebsiteManagement/Country/Affiliation/Affiliat
 import AddAffiliation from "../pages/WebsiteManagement/Country/Affiliation/AddAffiliation";
 import Membership from "../pages/WebsiteManagement/Country/Membership/Membership";
 import AddMembership from "../pages/WebsiteManagement/Country/Membership/AddMembership";
+import Investorrelations from "../pages/BuyerInteraction/Investorrelations/Investorrelations";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -776,6 +777,11 @@ const routes = (isLoggedIn) => [
       {
         element: <AddMembership />,
         path: "/website-management/country/membership/edit/:id",
+        index: true,
+      },
+      {
+        element: <Investorrelations />,
+        path: "/buyer-interaction/investor_relations",
         index: true,
       },
     ],

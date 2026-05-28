@@ -3,15 +3,19 @@ import CommonBox from "../../../../components/common/common_box";
 import { CommonTextField } from "../../../../components/widgets/common_textField";
 import { Checkbox } from "../../../../components/ui/checkbox";
 import { Label } from "../../../../components/ui/label";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function BasicInfo({ formik, categories, flatList }) {
 
     const categoryOptions = useMemo(() => {
-        return categories?.map((cat) => ({
-            label: cat.name,
-            value: cat.id
-        }));
-    }, [categories]);
+        // Filter categories by selected country if a country is chosen
+        return categories
+            ?.filter(cat => !formik.values.country || cat.country === formik.values.country)
+            .map(cat => ({
+                label: cat.name,
+                value: cat.id,
+            }));
+    }, [categories, formik.values.country]);
 
     const selectedCategory = categories?.find(
         (cat) => cat.id === formik.values.category
@@ -80,6 +84,7 @@ export default function BasicInfo({ formik, categories, flatList }) {
                     onChange={formik.handleChange}
                     error={formik.touched.slug && formik.errors.slug}
                 />
+                <CountrySelection formik={formik} />
                 <CommonBox
                     label="Category"
                     placeholders="Select Category"

@@ -12,6 +12,7 @@ import { toast } from "../../../components/ui/use-toast";
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "name", flex: 1 },
+    { field: "country", headerName: "Country", flex: 1 },
     {
         field: "description", headerName: "Description", flex: 3, renderCell: (params) => (
             <div

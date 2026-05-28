@@ -76,6 +76,7 @@ export default function AddProduct() {
         images: data ? data?.images : [],
         certification: data ? data?.certification : '',
         season: data ? data?.season : 'All',
+        country: data ? data?.country : "",
         status: data ? data?.status : 'Indenting'
     };
 
