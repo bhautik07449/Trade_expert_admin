@@ -1,4 +1,4 @@
-import { Award, BadgeCheck, BookOpen, Boxes, Briefcase, ClipboardList, CreditCard, Database, DollarSign, FileEdit, FileSpreadsheet, FileText, Flag, Folder, FolderTree, Globe, Handshake, HelpCircle, Images, LayoutDashboard, List, Mail, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, PieChart, Ruler, Settings, ShieldCheck, TableOfContentsIcon, Tag, Tags, Truck, User, Users } from "lucide-react";
+import { Award, BadgeCheck, BarChart3, BookOpen, Boxes, Briefcase, BriefcaseBusiness, CalendarDays, CircleHelp, ClipboardList, CreditCard, Crown, Database, DollarSign, FileBox, FileCheck2, FileEdit, FileSpreadsheet, FileText, FileX2, Flag, Folder, FolderTree, Globe, Handshake, HandshakeIcon, HelpCircle, Images, Landmark, Languages, LayoutDashboard, Leaf, List, Mail, MapPinned, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, PieChart, ReceiptText, Ruler, ScrollText, Settings, ShieldCheck, TableOfContentsIcon, Tag, Tags, TrendingUp, Truck, User, Users, Workflow } from "lucide-react";
 
 export function getMenuList(pathname) {
 
@@ -208,31 +208,37 @@ export function getMenuList(pathname) {
               href: "/website-management/content/faq",
               label: "FAQ Management",
               active: pathname.includes("/website-management/content/faq"),
-              icon: HelpCircle,
+              icon: CircleHelp,
             },
             {
               href: "/website-management/content/career",
               label: "Career",
               active: pathname.includes("/website-management/content/career"),
-              icon: HelpCircle,
+              icon: BriefcaseBusiness,
             },
             {
               href: "/website-management/content/delivery_reach",
               label: "Delivery Reach",
               active: pathname.includes("/website-management/content/delivery_reach"),
-              icon: HelpCircle,
+              icon: MapPinned,
             },
             {
               href: "/website-management/content/multilingual",
               label: "Multilingual",
               active: pathname.includes("/website-management/content/multilingual"),
-              icon: HelpCircle,
+              icon: Languages,
             },
             {
               href: "/website-management/content/policy_preamble",
               label: "Policy Preamble",
               active: pathname.includes("/website-management/content/policy_preamble"),
-              icon: HelpCircle,
+              icon: ScrollText,
+            },
+            {
+              href: "/website-management/content/esg",
+              label: "ESG",
+              active: pathname.includes("/website-management/content/esg"),
+              icon: Leaf,
             },
           ]
         },
@@ -266,7 +272,7 @@ export function getMenuList(pathname) {
               href: "/website-management/country/events",
               label: "Events",
               active: pathname.includes("/website-management/country/events"),
-              icon: User,
+              icon: CalendarDays,
             },
             // {
             //   href: "/website-management/country/presences",
@@ -278,13 +284,13 @@ export function getMenuList(pathname) {
               href: "/website-management/country/analytical",
               label: "Analytical",
               active: pathname.includes("/website-management/country/analytical"),
-              icon: PieChart,
+              icon: BarChart3,
             },
             {
               href: "/website-management/country/trade-history",
               label: "Trade History",
               active: pathname.includes("/website-management/country/trade-history"),
-              icon: PieChart,
+              icon: TrendingUp,
             },
             {
               href: "/website-management/country/product",
@@ -316,13 +322,13 @@ export function getMenuList(pathname) {
               href: "/website-management/country/affiliation",
               label: "Affiliation",
               active: pathname.includes("/website-management/country/affiliation"),
-              icon: TableOfContentsIcon,
+              icon: HandshakeIcon,
             },
             {
               href: "/website-management/country/membership",
               label: "Membership",
               active: pathname.includes("/website-management/country/membership"),
-              icon: TableOfContentsIcon,
+              icon: Crown,
             },
           ]
         }
@@ -374,7 +380,7 @@ export function getMenuList(pathname) {
           href: "/buyer-interaction/investor_relations",
           label: "Investor Relations",
           active: pathname.includes("/buyer-interaction/investor_relations"),
-          icon: CreditCard,
+          icon: Landmark,
         },
       ],
     },
@@ -382,30 +388,31 @@ export function getMenuList(pathname) {
       href: "",
       label: "Documents",
       active: pathname.includes("/documents"),
-      icon: Folder,
+      icon: FileBox,
       submenus: [
         {
           href: "/documents/domestic-invoice",
           label: "Domestic Invoice",
           active: pathname.includes("/domestic-invoice"),
-          icon: Folder,
+          icon: ReceiptText,
           submenus: [
             {
               href: "/documents/domestic-invoice/bill-of-supply",
               label: "Bill of Supply",
               active: pathname === "/documents/domestic-invoice/bill-of-supply",
-              icon: Folder,
+              icon: FileCheck2,
             },
             {
               href: "/documents/domestic-invoice/gst-invoice",
               label: "GST Invoice",
               active: pathname === "/documents/domestic-invoice/gst-invoice",
-              icon: Folder,
-            }, {
+              icon: ReceiptText,
+            },
+            {
               href: "/documents/domestic-invoice/non-gst-invoice",
               label: "Non GST Invoice",
               active: pathname === "/documents/domestic-invoice/non-gst-invoice",
-              icon: Folder,
+              icon: FileX2,
             }
           ]
         },
@@ -421,13 +428,13 @@ export function getMenuList(pathname) {
       href: "",
       label: "Market Development",
       active: pathname.includes("/market-development"),
-      icon: Globe,
+      icon: TrendingUp,
       submenus: [
         {
           href: "/market-development/process",
           label: "Process",
           active: pathname.includes("/market-development/process"),
-          icon: FileText,
+          icon: Workflow,
         },
         {
           href: "/market-development/data",

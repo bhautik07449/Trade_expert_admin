@@ -99,6 +99,8 @@ import AddAffiliation from "../pages/WebsiteManagement/Country/Affiliation/AddAf
 import Membership from "../pages/WebsiteManagement/Country/Membership/Membership";
 import AddMembership from "../pages/WebsiteManagement/Country/Membership/AddMembership";
 import Investorrelations from "../pages/BuyerInteraction/Investorrelations/Investorrelations";
+import ESG from "../pages/WebsiteManagement/ContentCMS/ESG/ESG";
+import AddESG from "../pages/WebsiteManagement/ContentCMS/ESG/AddESG";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -782,6 +784,21 @@ const routes = (isLoggedIn) => [
       {
         element: <Investorrelations />,
         path: "/buyer-interaction/investor_relations",
+        index: true,
+      },
+      {
+        element: <ESG />,
+        path: "/website-management/content/esg",
+        index: true,
+      },
+      {
+        element: <AddESG />,
+        path: "/website-management/content/esg/add",
+        index: true,
+      },
+      {
+        element: <AddESG />,
+        path: "/website-management/content/esg/edit/:id",
         index: true,
       },
     ],
