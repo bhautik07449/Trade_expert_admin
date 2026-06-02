@@ -42,9 +42,9 @@ export default function ESG() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await ESGService.getList()
+            const res = await ESGService.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
