@@ -15,9 +15,12 @@ const AddEditSuppliers = () => {
     const [data, setData] = useState([])
 
     const roles = [
-        { label: "Manufacturer", value: "Manufacturer" },
-        { label: "Trader", value: "Trader" },
-        { label: "Agent", value: "Agent" },
+        { label: "Sole Single Commodity", value: "Sole Single Commodity" },
+        { label: "Sole Multiple Commodity", value: "Sole Multiple Commodity" },
+        { label: "Consolidator Single Commodity", value: "Consolidator Single Commodity" },
+        { label: "Consolidator Multiple Commodity", value: "Consolidator Multiple Commodity" },
+        { label: "Composite Single Commodity", value: "Composite Single Commodity" },
+        { label: "Composite Multiple Commodity", value: "Composite Multiple Commodity" },
     ];
 
     const { id } = useParams()
@@ -26,34 +29,32 @@ const AddEditSuppliers = () => {
     const initialValues = {
         firstName: data ? data?.firstName : "",
         lastName: data ? data?.lastName : "",
-        firmName: data ? data?.firmName : "",
+        company_name: data ? data?.company_name : "",
         email: data ? data?.email : "",
         website: data ? data?.website : "",
         phone: data ? data?.phone : "",
         city: data ? data?.city : "",
         state: data ? data?.state : "",
         address: data ? data?.address : "",
-        supplierType: data ? data?.supplierType : "",
-        productCategory: data ? data?.productCategory : "",
-        products: data ? data?.products : "",
-        productStatus: data ? data?.productStatus : "",
+        service_type: data ? data?.service_type : "",
         country: data ? data?.country : "",
     };
 
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().required("First Name is required"),
         lastName: Yup.string().required("Last Name is required"),
-        firmName: Yup.string().required("Firm Name is required"),
+        company_name: Yup.string().required("Company Name is required"),
         email: Yup.string().email("Invalid email").required("Email is required"),
         website: Yup.string().required("Website is required"),
         phone: Yup.string().matches(/^[0-9]+$/, "Phone number must be digits"),
         city: Yup.string().required("City is required"),
         state: Yup.string().required("State is required"),
         address: Yup.string().required("Address is required"),
-        productStatus: Yup.string().required("Product Status is required"),
-        supplierType: Yup.string().required("Supplier Type is required"),
-        productCategory: Yup.string().required("Product Category is required"),
-        products: Yup.string().required("Products is required"),
+        password: id ?
+            Yup.string() :
+            Yup.string()
+                .min(6, "Password must be at least 6 characters")
+                .required("Password is required"),
         country: Yup.string().required("Country is required"),
     });
 
@@ -150,13 +151,13 @@ const AddEditSuppliers = () => {
                             error={formik.touched.lastName && formik.errors.lastName}
                         />
                         <CommonTextField
-                            label="Firm Name"
-                            placeholder="Enter Firm Name"
-                            name="firmName"
-                            value={formik.values.firmName}
+                            label="Company Name"
+                            placeholder="Enter Company Name"
+                            name="company_name"
+                            value={formik.values.company_name}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            error={formik.touched.firmName && formik.errors.firmName}
+                            error={formik.touched.company_name && formik.errors.company_name}
                         />
                         <CommonTextField
                             label="Email"
@@ -221,42 +222,26 @@ const AddEditSuppliers = () => {
                             />
                         </div>
 
-                        <CommonBox
-                            label="Product Status"
-                            placeholders="Select Product Status"
-                            options={roles}
-                            value={formik.values.productStatus}
-                            onChange={(value) => formik.setFieldValue("productStatus", value)}
-                            error={formik.touched.productStatus && formik.errors.productStatus}
-                        />
+                        {!id && (
+                            <CommonTextField
+                                label="Password"
+                                type="password"
+                                placeholder="Enter Password"
+                                name="password"
+                                value={formik.values.password}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                error={formik.touched.password && formik.errors.password}
+                            />
+                        )}
 
                         <CommonBox
-                            label="Supplier Type"
-                            placeholders="Select Supplier Type"
+                            label="Services Type"
+                            placeholders="Select Services Type"
                             options={roles}
-                            value={formik.values.supplierType}
-                            onChange={(value) => formik.setFieldValue("supplierType", value)}
-                            error={formik.touched.supplierType && formik.errors.supplierType}
-                        />
-
-                        <CommonTextField
-                            label="Product Category"
-                            placeholder="Enter Product Category"
-                            name="productCategory"
-                            value={formik.values.productCategory}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.productCategory && formik.errors.productCategory}
-                        />
-
-                        <CommonTextField
-                            label="Products"
-                            placeholder="Enter Products"
-                            name="products"
-                            value={formik.values.products}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.products && formik.errors.products}
+                            value={formik.values.service_type}
+                            onChange={(value) => formik.setFieldValue("service_type", value)}
+                            error={formik.touched.service_type && formik.errors.service_type}
                         />
 
                         <CountrySelection formik={formik} />

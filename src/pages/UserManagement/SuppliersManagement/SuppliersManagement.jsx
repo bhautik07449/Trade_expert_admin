@@ -11,9 +11,13 @@ import { toast } from "../../../components/ui/use-toast";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
-    { field: "name", headerName: "name", flex: 1 },
+    { field: "name", headerName: "Name", flex: 1 },
+    { field: "company_name", headerName: "Company Name", flex: 1 },
     { field: "email", headerName: "email", flex: 1 },
     { field: "phone", headerName: "PhoneNo", flex: 1 },
+    { field: "city", headerName: "City", flex: 1 },
+    { field: "state", headerName: "State", flex: 1 },
+    { field: "service_type", headerName: "Service Type", flex: 3 },
     { field: "country", headerName: "Country", flex: 1 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
