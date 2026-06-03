@@ -15,6 +15,7 @@ import { fetchCategories } from "../../../store/slice/categoriesSlice";
 import { fetchFlatMeasurement } from "../../../store/slice/measurementSlice";
 import Productservice from "../../../service/product.service";
 import { toast } from "../../../components/ui/use-toast";
+import OfferCheck from "./Tabs/OfferCheck";
 
 export default function AddProduct() {
     const { id } = useParams()
@@ -77,7 +78,8 @@ export default function AddProduct() {
         certification: data ? data?.certification : '',
         season: data ? data?.season : 'All',
         country: data ? data?.country : "",
-        status: data ? data?.status : 'Indenting'
+        offer_type: data ? data?.offer_type?.id : "",
+        status: data ? data?.status : 'Indenting',
     };
 
     const formik = useFormik({
@@ -126,11 +128,13 @@ export default function AddProduct() {
 
         if (activeTab === "basic_info") setActiveTab("details");
         else if (activeTab === "details") setActiveTab("image");
-        else if (activeTab === "image") setActiveTab("seo");
+        else if (activeTab === "image") setActiveTab("offer");
+        else if (activeTab === "offer") setActiveTab("seo")
     };
 
     const goBack = () => {
-        if (activeTab === "seo") setActiveTab("image");
+        if (activeTab === "seo") setActiveTab("offer");
+        else if (activeTab === "offer") setActiveTab("image")
         else if (activeTab === "image") setActiveTab("details");
         else if (activeTab === "details") setActiveTab("basic_info");
     };
@@ -177,6 +181,7 @@ export default function AddProduct() {
                             <TabsTrigger type="button" value="basic_info">Basic Info</TabsTrigger>
                             <TabsTrigger type="button" value="details">Details</TabsTrigger>
                             <TabsTrigger type="button" value="image">Image</TabsTrigger>
+                            <TabsTrigger type="button" value="offer">Offer</TabsTrigger>
                             <TabsTrigger type="button" value="seo">SEO</TabsTrigger>
                         </TabsList>
 
@@ -188,6 +193,9 @@ export default function AddProduct() {
                         </TabsContent>
                         <TabsContent value="image">
                             <Image formik={formik} />
+                        </TabsContent>
+                        <TabsContent value="offer">
+                            <OfferCheck formik={formik} />
                         </TabsContent>
                         <TabsContent value="details">
                             <Details formik={formik} />

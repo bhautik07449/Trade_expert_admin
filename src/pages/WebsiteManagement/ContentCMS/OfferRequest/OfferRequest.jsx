@@ -16,6 +16,7 @@ const columns = [
     { field: "email", headerName: "Email", flex: 2 },
     { field: "phone", headerName: "Phone", flex: 2 },
     { field: "message", headerName: "Message", flex: 3 },
+    { field: "type", headerName: "Type", flex: 3 },
     { field: "createdAt", headerName: "Created", flex: 2 },
 ]
 
