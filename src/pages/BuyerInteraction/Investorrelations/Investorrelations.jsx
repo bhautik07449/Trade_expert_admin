@@ -10,6 +10,7 @@ const columns = [
     { field: "name", headerName: "name", flex: 2 },
     { field: "email", headerName: "Email", flex: 2 },
     { field: "product", headerName: "Product", flex: 4 },
+    { field: "service", headerName: "Service", flex: 4 },
     { field: "country", headerName: "Country", flex: 2 },
     { field: "email", headerName: "Email", flex: 2 },
     { field: "message", headerName: "Message", flex: 4 },
@@ -28,6 +29,7 @@ export default function Investorrelations() {
                         ...item,
                         SrNo: index + 1,
                         product: item?.product?.name,
+                        service: item?.service?.name,
                         lastUpdatedAt: new Date(item.lastUpdatedAt).toLocaleDateString(),
                     }));
                     setList(formattedData);

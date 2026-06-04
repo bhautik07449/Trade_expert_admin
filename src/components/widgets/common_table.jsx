@@ -99,7 +99,7 @@ const CommonTable = ({
   onShow = () => { },
   onDelete = () => { },
   rowHeight = 50,
-  tableHeight = "400px",
+  tableHeight = "calc(100vh - 250px)",
   loading = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
