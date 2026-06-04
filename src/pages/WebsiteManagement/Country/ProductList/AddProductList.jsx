@@ -96,11 +96,25 @@ export default function AddProductList() {
     }, [type]);
 
     const productOptions = useMemo(() => {
-        return list?.map((item) => ({
+        let filteredList = list;
+
+        if (formik?.values?.category) {
+            filteredList = filteredList?.filter(
+                (item) => item?.category?.id === formik.values.category || item?.category === formik.values.category
+            );
+        }
+
+        if (formik?.values?.subcategory) {
+            filteredList = filteredList?.filter(
+                (item) => item?.subcategory?.id === formik.values.subcategory || item?.subcategory === formik.values.subcategory
+            );
+        }
+
+        return filteredList?.map((item) => ({
             label: item?.name,
             value: item?.id
         }));
-    }, [list]);
+    }, [list, formik?.values?.category, formik?.values?.subcategory]);
 
     const categoryOptions = useMemo(() => {
         return categories
@@ -178,6 +192,7 @@ export default function AddProductList() {
                                 onChange={(value) => {
                                     formik.setFieldValue("category", value);
                                     formik.setFieldValue("subcategory", "");
+                                    formik.setFieldValue("products", []);
                                 }}
                                 disabled={!formik?.values?.country}
                                 error={formik.touched.category && formik.errors.category}
@@ -189,7 +204,10 @@ export default function AddProductList() {
                                 options={subCategoryOptions}
                                 name="subcategory"
                                 value={formik.values.subcategory}
-                                onChange={(value) => formik.setFieldValue("subcategory", value)}
+                                onChange={(value) => {
+                                    formik.setFieldValue("subcategory", value);
+                                    formik.setFieldValue("products", []);
+                                }}
                                 error={formik.touched.subcategory && formik.errors.subcategory}
                             />
 
