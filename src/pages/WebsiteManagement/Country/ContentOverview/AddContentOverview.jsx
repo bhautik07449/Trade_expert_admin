@@ -173,7 +173,6 @@ export default function AddContentOverview() {
                             error={formik.touched.category && formik.errors.category}
                         />
 
-                        <CountrySelection formik={formik} />
                     </div>
 
                     <CommonButton type="button" onClick={addGlobalImportance}>

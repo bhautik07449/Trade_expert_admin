@@ -24,6 +24,7 @@ const CommonBox = ({
   onChange,
   label,
   error,
+  disabled
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -38,6 +39,7 @@ const CommonBox = ({
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
+                disabled={disabled}
                 className="justify-between w-full hover:bg-transparent capitalize"
               >
                 {value ? (

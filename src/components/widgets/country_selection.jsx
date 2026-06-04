@@ -40,7 +40,15 @@ export default function CountrySelection({ formik }) {
                 name="country"
                 options={countryOptions}
                 value={formik.values.country}
-                onChange={(value) => formik.setFieldValue("country", value)}
+                onChange={(value) => {
+                    formik.setFieldValue("country", value);
+                    if (formik.values.category !== undefined) {
+                        formik.setFieldValue("category", "");
+                    }
+                    if (formik.values.subcategory !== undefined) {
+                        formik.setFieldValue("subcategory", "");
+                    }
+                }}
                 error={formik.touched.country && formik.errors.country}
             />
         </div>

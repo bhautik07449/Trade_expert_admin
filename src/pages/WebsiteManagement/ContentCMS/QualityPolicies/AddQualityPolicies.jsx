@@ -50,13 +50,6 @@ export default function AddQualityPolicies() {
         (state) => state.categories
     );
 
-    const parentOptions = useMemo(() => {
-        return flatList.map((item) => ({
-            label: item.name,
-            value: item.id
-        }));
-    }, [flatList]);
-
     const initialValues = {
         name: list?.name ? list?.name : "",
         description: list?.description ? list?.description : "",
@@ -125,6 +118,16 @@ export default function AddQualityPolicies() {
         }
     });
 
+
+    const parentOptions = useMemo(() => {
+        return flatList
+            .filter((item) => !formik?.values?.country || item.country === formik.values.country)
+            .map((item) => ({
+                label: item.name,
+                value: item.id
+            }));
+    }, [flatList, formik?.values?.country]);
+
     return (
         <div className="grid gap-6">
             <div className="grid gap-4">
@@ -136,6 +139,7 @@ export default function AddQualityPolicies() {
                 <form className="grid gap-6" onSubmit={formik.handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-5">
+                            <CountrySelection formik={formik} />
                             <CommonBox
                                 label="Category"
                                 placeholders="Select Category"
@@ -143,6 +147,7 @@ export default function AddQualityPolicies() {
                                 options={parentOptions}
                                 value={formik.values.category}
                                 onChange={(value) => formik.setFieldValue("category", value)}
+                                disabled={!formik?.values?.country}
                                 error={formik.touched.category && formik.errors.category}
                             />
                             <CommonTextField
@@ -172,7 +177,6 @@ export default function AddQualityPolicies() {
                                 error={formik.touched.description && formik.errors.description}
                             />
 
-                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 

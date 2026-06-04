@@ -79,11 +79,13 @@ export default function AddHomeBanner() {
     });
 
     const categoryOptions = useMemo(() => {
-        return categories?.map((cat) => ({
-            label: cat.name,
-            value: cat.id
-        }));
-    }, [categories]);
+        return categories
+            ?.filter((cat) => !formik?.values?.country || cat.country === formik.values.country)
+            .map((cat) => ({
+                label: cat.name,
+                value: cat.id
+            }));
+    }, [categories, formik?.values?.country]);
 
     useEffect(() => {
         const getData = async (id) => {
@@ -126,6 +128,7 @@ export default function AddHomeBanner() {
                                 }}
                             />
 
+                            <CountrySelection formik={formik} />
                             <CommonBox
                                 label="Category"
                                 placeholders="Select Category"
@@ -135,10 +138,10 @@ export default function AddHomeBanner() {
                                 onChange={(value) => {
                                     formik.setFieldValue("category", value);
                                 }}
+                                disabled={!formik?.values?.country}
                                 error={formik.touched.category && formik.errors.category}
                             />
 
-                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 

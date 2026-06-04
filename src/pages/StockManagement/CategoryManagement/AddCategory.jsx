@@ -206,7 +206,6 @@ export default function AddCategory() {
                             error={formik.touched.parent && formik.errors.parent}
                         />
 
-                        <CountrySelection formik={formik} />
 
                         <CommonBox
                             label="Status"

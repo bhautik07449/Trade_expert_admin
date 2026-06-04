@@ -146,8 +146,8 @@ export default function AddPolicyPreamble() {
                                 error={formik.touched.description && formik.errors.description}
                             />
 
-                            <CountrySelection formik={formik} />
 
+                            <CountrySelection formik={formik} />
                             <CommonBox
                                 label="Category"
                                 placeholders="Select Category"
@@ -155,6 +155,7 @@ export default function AddPolicyPreamble() {
                                 name="category"
                                 value={formik.values.category}
                                 onChange={(value) => { formik.setFieldValue("category", value); }}
+                                disabled={!formik?.values?.country}
                                 error={formik.touched.category && formik.errors.category}
                             />
 

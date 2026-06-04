@@ -152,8 +152,8 @@ export default function AddESG() {
                                 }}
                             />
 
-                            <CountrySelection formik={formik} />
 
+                            <CountrySelection formik={formik} />
                             <CommonBox
                                 label="Category"
                                 placeholders="Select Category"
@@ -163,6 +163,7 @@ export default function AddESG() {
                                 onChange={(value) => {
                                     formik.setFieldValue("category", value);
                                 }}
+                                disabled={!formik?.values?.country}
                                 error={formik.touched.category && formik.errors.category}
                             />
 

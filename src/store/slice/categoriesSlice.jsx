@@ -3,9 +3,11 @@ import serverCall from "../../serverCall";
 
 export const fetchFlatCategories = createAsyncThunk(
     "categories/fetchFlat",
-    async (_, { rejectWithValue }) => {
+    async (country, { rejectWithValue }) => {
         try {
-            const response = await serverCall.get("/categories/parents");
+            const response = await serverCall.get("/categories/parents", {
+                params: country ? { country } : {}
+            });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "Error");
@@ -15,9 +17,11 @@ export const fetchFlatCategories = createAsyncThunk(
 
 export const fetchCategories = createAsyncThunk(
     "categories/fetchAll",
-    async (_, { rejectWithValue }) => {
+    async (country, { rejectWithValue }) => {
         try {
-            const response = await serverCall.get("/categories");
+            const response = await serverCall.get("/categories", {
+                params: country ? { country } : {}
+            });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "Error");

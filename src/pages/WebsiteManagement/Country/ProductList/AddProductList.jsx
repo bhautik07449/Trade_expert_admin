@@ -103,11 +103,13 @@ export default function AddProductList() {
     }, [list]);
 
     const categoryOptions = useMemo(() => {
-        return categories?.map((cat) => ({
-            label: cat.name,
-            value: cat.id
-        }));
-    }, [categories]);
+        return categories
+            ?.filter((cat) => !formik?.values?.country || cat.country === formik.values.country)
+            .map((cat) => ({
+                label: cat.name,
+                value: cat.id
+            }));
+    }, [categories, formik?.values?.country]);
 
     const selectedCategory = categories?.find(
         (cat) => cat.id === formik.values.category
@@ -156,6 +158,7 @@ export default function AddProductList() {
                 <form className="grid gap-6" onSubmit={formik.handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-5">
+                            <CountrySelection formik={formik} />
                             <CommonBox
                                 label="Product Name"
                                 placeholders="Select Product Name"
@@ -176,6 +179,7 @@ export default function AddProductList() {
                                     formik.setFieldValue("category", value);
                                     formik.setFieldValue("subcategory", "");
                                 }}
+                                disabled={!formik?.values?.country}
                                 error={formik.touched.category && formik.errors.category}
                             />
 
@@ -199,7 +203,6 @@ export default function AddProductList() {
                                 error={formik.touched.products && formik.errors.products}
                             />
 
-                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 
