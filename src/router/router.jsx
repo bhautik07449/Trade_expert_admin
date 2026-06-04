@@ -101,6 +101,8 @@ import AddMembership from "../pages/WebsiteManagement/Country/Membership/AddMemb
 import Investorrelations from "../pages/BuyerInteraction/Investorrelations/Investorrelations";
 import ESG from "../pages/WebsiteManagement/ContentCMS/ESG/ESG";
 import AddESG from "../pages/WebsiteManagement/ContentCMS/ESG/AddESG";
+import Project from "../pages/WebsiteManagement/ContentCMS/Project/Project";
+import AddProject from "../pages/WebsiteManagement/ContentCMS/Project/AddProject";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -799,6 +801,21 @@ const routes = (isLoggedIn) => [
       {
         element: <AddESG />,
         path: "/website-management/content/esg/edit/:id",
+        index: true,
+      },
+      {
+        element: <Project />,
+        path: "/website-management/content/ir_project",
+        index: true,
+      },
+      {
+        element: <AddProject />,
+        path: "/website-management/content/ir_project/add",
+        index: true,
+      },
+      {
+        element: <AddProject />,
+        path: "/website-management/content/ir_project/edit/:id",
         index: true,
       },
     ],

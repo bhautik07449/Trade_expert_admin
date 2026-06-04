@@ -1,4 +1,4 @@
-import { Award, BadgeCheck, BarChart3, BookOpen, Boxes, Briefcase, BriefcaseBusiness, CalendarDays, CircleHelp, ClipboardList, CreditCard, Crown, Database, DollarSign, FileBox, FileCheck2, FileEdit, FileSpreadsheet, FileText, FileX2, Flag, Folder, FolderTree, Globe, Handshake, HandshakeIcon, HelpCircle, Images, Landmark, Languages, LayoutDashboard, Leaf, List, Mail, MapPinned, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, PieChart, ReceiptText, Ruler, ScrollText, Settings, ShieldCheck, TableOfContentsIcon, Tag, Tags, TrendingUp, Truck, User, Users, Workflow } from "lucide-react";
+import { Award, BadgeCheck, BarChart3, BookOpen, Boxes, Briefcase, BriefcaseBusiness, CalendarDays, CircleHelp, ClipboardList, CreditCard, Crown, Database, DollarSign, FileBox, FileCheck2, FileEdit, FileSpreadsheet, FileText, FileX2, Flag, Folder, FolderTree, Globe, Handshake, HandshakeIcon, HelpCircle, Images, Landmark, Languages, LayoutDashboard, Leaf, List, Mail, MapPinned, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, PieChart, Projector, ReceiptText, Ruler, ScrollText, Settings, ShieldCheck, TableOfContentsIcon, Tag, Tags, TrendingUp, Truck, User, Users, Workflow } from "lucide-react";
 
 export function getMenuList(pathname) {
 
@@ -239,6 +239,12 @@ export function getMenuList(pathname) {
               label: "ESG",
               active: pathname.includes("/website-management/content/esg"),
               icon: Leaf,
+            },
+            {
+              href: "/website-management/content/ir_project",
+              label: "Project",
+              active: pathname.includes("/website-management/content/ir_project"),
+              icon: Projector,
             },
           ]
         },
