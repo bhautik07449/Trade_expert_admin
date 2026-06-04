@@ -10,6 +10,7 @@ const columns = [
     { field: "name", headerName: "name", flex: 2 },
     { field: "email", headerName: "Email", flex: 2 },
     { field: "product", headerName: "Product", flex: 4 },
+    { field: "project", headerName: "Project", flex: 4 },
     { field: "service", headerName: "Service", flex: 4 },
     { field: "country", headerName: "Country", flex: 2 },
     { field: "email", headerName: "Email", flex: 2 },
@@ -28,7 +29,8 @@ export default function Investorrelations() {
                     const formattedData = response?.data?.data?.map((item, index) => ({
                         ...item,
                         SrNo: index + 1,
-                        product: item?.product?.name,
+                        product: item?.product?.name || 'NA',
+                        project: item?.project?.title || 'NA',
                         service: item?.service?.name,
                         lastUpdatedAt: new Date(item.lastUpdatedAt).toLocaleDateString(),
                     }));
