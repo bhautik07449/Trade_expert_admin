@@ -126,7 +126,7 @@ export default function Details({ formik }) {
 
                     </div>
 
-                    {formik.values.shipmentmanual.map((item, index) => (
+                    {formik.values.shipmentmanual?.map((item, index) => (
                         <div
                             key={index}
                             className="flex justify-between border p-2 rounded"

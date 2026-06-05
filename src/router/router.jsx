@@ -103,6 +103,10 @@ import ESG from "../pages/WebsiteManagement/ContentCMS/ESG/ESG";
 import AddESG from "../pages/WebsiteManagement/ContentCMS/ESG/AddESG";
 import Project from "../pages/WebsiteManagement/ContentCMS/Project/Project";
 import AddProject from "../pages/WebsiteManagement/ContentCMS/Project/AddProject";
+import AddFinacialService from "../pages/WebsiteManagement/ContentCMS/FinacialService/AddFinacialService";
+import FinacialService from "../pages/WebsiteManagement/ContentCMS/FinacialService/FinacialService";
+import UpcomingCollaboration from "../pages/WebsiteManagement/ContentCMS/UpcomingCollaboration/UpcomingCollaboration";
+import AddUpcomingCollaboration from "../pages/WebsiteManagement/ContentCMS/UpcomingCollaboration/AddUpcomingCollaboration";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -816,6 +820,36 @@ const routes = (isLoggedIn) => [
       {
         element: <AddProject />,
         path: "/website-management/content/ir_project/edit/:id",
+        index: true,
+      },
+      {
+        element: <FinacialService />,
+        path: "/website-management/content/finacial_service",
+        index: true,
+      },
+      {
+        element: <AddFinacialService />,
+        path: "/website-management/content/finacial_service/add",
+        index: true,
+      },
+      {
+        element: <AddFinacialService />,
+        path: "/website-management/content/finacial_service/edit/:id",
+        index: true,
+      },
+      {
+        element: <UpcomingCollaboration />,
+        path: "/website-management/content/upcoming_collaboration",
+        index: true,
+      },
+      {
+        element: <AddUpcomingCollaboration />,
+        path: "/website-management/content/upcoming_collaboration/add",
+        index: true,
+      },
+      {
+        element: <AddUpcomingCollaboration />,
+        path: "/website-management/content/upcoming_collaboration/edit/:id",
         index: true,
       },
     ],

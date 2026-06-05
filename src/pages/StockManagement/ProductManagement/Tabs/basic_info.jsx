@@ -58,7 +58,6 @@ export default function BasicInfo({ formik, categories, flatList }) {
                         error={formik.touched.price && formik.errors.price}
                     />
 
-                    <CountrySelection formik={formik} />
                     <CommonBox
                         label="Measure"
                         placeholders="Select Measure"
@@ -85,6 +84,7 @@ export default function BasicInfo({ formik, categories, flatList }) {
                     onChange={formik.handleChange}
                     error={formik.touched.slug && formik.errors.slug}
                 />
+                <CountrySelection formik={formik} />
                 <CommonBox
                     label="Category"
                     placeholders="Select Category"

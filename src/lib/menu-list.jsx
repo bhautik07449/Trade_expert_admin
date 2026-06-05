@@ -246,6 +246,18 @@ export function getMenuList(pathname) {
               active: pathname.includes("/website-management/content/ir_project"),
               icon: Projector,
             },
+            {
+              href: "/website-management/content/finacial_service",
+              label: "Finacial Service",
+              active: pathname.includes("/website-management/content/finacial_service"),
+              icon: Projector,
+            },
+            {
+              href: "/website-management/content/upcoming_collaboration",
+              label: "Upcoming Collaboration",
+              active: pathname.includes("/website-management/content/upcoming_collaboration"),
+              icon: Projector,
+            },
           ]
         },
         {

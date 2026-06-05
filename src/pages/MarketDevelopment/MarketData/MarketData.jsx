@@ -34,9 +34,9 @@ export default function MarketData() {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
-                    category: item?.category_id?.name,
-                    subcategory: item?.sub_category_id?.name,
-                    product: item?.product_id?.name,
+                    category: item?.category?.name,
+                    subcategory: item?.subCategory?.name,
+                    product: item?.product?.name,
                     lastUpdatedAt: formatDate(item?.lastUpdatedAt),
                     createdAt: formatDate(item?.createdAt),
                 }))
