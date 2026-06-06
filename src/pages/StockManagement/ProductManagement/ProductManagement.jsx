@@ -13,6 +13,8 @@ const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "name", flex: 1 },
     { field: "country", headerName: "Country", flex: 1 },
+    { field: "category", headerName: "Category", flex: 1 },
+    { field: "subcategory", headerName: "Sub Category", flex: 1 },
     { field: "offer_type", headerName: "Offer", flex: 1 },
     {
         field: "description", headerName: "Description", flex: 3, renderCell: (params) => (
@@ -44,6 +46,8 @@ const ProductManagement = () => {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
+                    category: item?.category?.name || "-",
+                    subcategory: item?.subcategory?.name || "-",
                     offer_type: item?.offer_type?.name || "-",
                     createdAt: formatDate(item?.lastUpdatedAt),
                 }))

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import Tradetypeservice from "../../../../service/tradetype.service";
+import Tradeofferservice from "../../../../service/tradeoffer.service";
 import CommonBox from "../../../../components/common/common_box";
 
 export default function OfferCheck({ formik }) {
@@ -7,7 +7,7 @@ export default function OfferCheck({ formik }) {
 
     const getData = async () => {
         try {
-            const res = await Tradetypeservice.getList();
+            const res = await Tradeofferservice.getList();
 
             if (res) {
                 setList(res?.data?.data || []);
