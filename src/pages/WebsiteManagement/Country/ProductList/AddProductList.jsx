@@ -13,6 +13,7 @@ import MultiSelectBox from "../../../../components/common/MultiSelectBox";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductName } from "../../../../store/slice/productnameSlice";
 import CountryProductService from "../../../../service/countryproduct.service";
+import { MapPin } from "lucide-react";
 
 export default function AddProductList() {
     const { id } = useParams()
@@ -40,6 +41,7 @@ export default function AddProductList() {
 
     const initialValues = {
         productname: data ? data?.productname?.id : "",
+        country: data ? data?.productname?.country || data?.country || "" : "",
         category: data ? data?.category?.id : "",
         subcategory: data ? data?.subcategory?.id : "",
         products: data ? data?.products?.map((p) => p.id) : [],
@@ -47,6 +49,7 @@ export default function AddProductList() {
 
     const validationSchema = Yup.object().shape({
         productname: Yup.string().required("Product Name is required"),
+        country: Yup.string().required("Country is required"),
         category: Yup.string().required("Category is required"),
         subcategory: Yup.string().required("Sub Category is required"),
         products: Yup.array().min(1, "At least one product is required").required("Products are required"),
@@ -88,9 +91,21 @@ export default function AddProductList() {
     const productnameOptions = useMemo(() => {
         return type?.map((item) => ({
             label: item?.name,
-            value: item?.id
+            value: item?.id,
+            country: item?.country,
         }));
     }, [type]);
+
+    // When productname changes → auto-set country from the selected productname
+    const handleProductNameChange = (value) => {
+        formik.setFieldValue("productname", value);
+        formik.setFieldValue("category", "");
+        formik.setFieldValue("subcategory", "");
+        formik.setFieldValue("products", []);
+
+        const selected = productnameOptions?.find((opt) => opt.value === value);
+        formik.setFieldValue("country", selected?.country || "");
+    };
 
     const productOptions = useMemo(() => {
         let filteredList = list;
@@ -169,15 +184,42 @@ export default function AddProductList() {
                 <form className="grid gap-6" onSubmit={formik.handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-5">
+
+                            {/* Product Name — selecting this auto-fills Country */}
                             <CommonBox
                                 label="Product Name"
                                 placeholders="Select Product Name"
                                 options={productnameOptions}
                                 name="productname"
                                 value={formik.values.productname}
-                                onChange={(value) => formik.setFieldValue("productname", value)}
+                                onChange={handleProductNameChange}
                                 error={formik.touched.productname && formik.errors.productname}
                             />
+
+                            {/* Country — auto-filled from Product Name, read-only display */}
+                            <div className="grid gap-2">
+                                <label className="text-sm font-medium text-gray-700">Country</label>
+                                <div
+                                    className={`flex items-center gap-2 h-10 px-3 rounded-md border text-sm ${
+                                        formik.values.country
+                                            ? "bg-blue-50 border-blue-200 text-blue-800"
+                                            : "bg-gray-50 border-gray-200 text-gray-400"
+                                    }`}
+                                >
+                                    <MapPin className={`w-4 h-4 shrink-0 ${formik.values.country ? "text-blue-500" : "text-gray-300"}`} />
+                                    <span className="flex-1">
+                                        {formik.values.country || "Auto-filled from Product Name"}
+                                    </span>
+                                    {formik.values.country && (
+                                        <span className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-medium">
+                                            Auto
+                                        </span>
+                                    )}
+                                </div>
+                                {formik.touched.country && formik.errors.country && (
+                                    <p className="text-destructive text-xs">{formik.errors.country}</p>
+                                )}
+                            </div>
 
                             <CommonBox
                                 label="Category"

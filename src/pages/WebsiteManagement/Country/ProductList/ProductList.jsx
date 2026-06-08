@@ -42,7 +42,6 @@ export default function ProductList() {
                     category: item?.category?.name,
                     subcategory: item?.subcategory?.name,
                     product: item?.products?.map(p => p.name).join(", "),
-                    country: item?.productname?.country,
                     createdAt: formatDate(item?.createdAt),
                 }))
                 setList(formattedData)
