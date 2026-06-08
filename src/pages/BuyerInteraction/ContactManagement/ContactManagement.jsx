@@ -6,12 +6,14 @@ import ExportData from "../../../components/widgets/export_data";
 import Contactservice from "../../../service/contact.service";
 import { getStatusStyles } from "../../../lib/funcation";
 import { toast } from "../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "name", flex: 1 },
     { field: "email", headerName: "Email", flex: 1 },
     { field: "phone", headerName: "Phone", flex: 1 },
+    { field: "country", headerName: "Country", flex: 1 },
     { field: "message", headerName: "Message", flex: 3 },
     {
         field: "status", headerName: "Status", flex: 2, renderCell: (params) => (
@@ -25,10 +27,11 @@ const columns = [
 
 export default function ContactManagement() {
     const [list, setList] = useState([])
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await Contactservice.getList()
+            const res = await Contactservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -48,8 +51,8 @@ export default function ContactManagement() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const filterData = [
         { type: "text", placeholder: "Buyer Name", label: "Buyer Name" },
@@ -69,7 +72,7 @@ export default function ContactManagement() {
         try {
             const res = await Contactservice.deleteContact(id)
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Contact",

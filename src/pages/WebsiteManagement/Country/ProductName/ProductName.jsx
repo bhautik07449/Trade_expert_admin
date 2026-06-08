@@ -7,21 +7,24 @@ import { useNavigate } from "react-router";
 import { formatDate } from "../../../../common/constants";
 import CountryProductService from "../../../../service/countryproduct.service";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 4 },
+    { field: "country", headerName: "Country", flex: 4 },
     { field: "createdAt", headerName: "Created", flex: 1 },
     { field: "lastUpdatedAt", headerName: "Updated", flex: 1 },
 ]
 
 export default function ProductName() {
     const [list, setList] = useState([])
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
     const navigate = useNavigate();
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await CountryProductService.getProductName();
+            const res = await CountryProductService.getProductName(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -42,15 +45,15 @@ export default function ProductName() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {
             const res = await CountryProductService.deleteProductName(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Product Name Deleted",

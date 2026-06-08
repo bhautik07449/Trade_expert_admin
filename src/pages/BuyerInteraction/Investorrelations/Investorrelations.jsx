@@ -4,6 +4,7 @@ import CommonTable from "../../../components/widgets/common_table";
 import ExportData from "../../../components/widgets/export_data";
 import { toast } from "../../../components/ui/use-toast";
 import InvestorrelationsService from "../../../service/investorrelations.service";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -20,11 +21,12 @@ const columns = [
 
 export default function Investorrelations() {
     const [list, setList] = useState([]);
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (country) => {
             try {
-                const response = await InvestorrelationsService.getList();
+                const response = await InvestorrelationsService.getList(country);
                 if (response && response.data) {
                     const formattedData = response?.data?.data?.map((item, index) => ({
                         ...item,
@@ -44,8 +46,8 @@ export default function Investorrelations() {
                 });
             }
         }
-        fetchData();
-    }, [])
+        fetchData(selectedCountry);
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {

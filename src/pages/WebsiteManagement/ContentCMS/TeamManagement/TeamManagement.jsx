@@ -86,7 +86,7 @@ export default function TeamManagement() {
             const res = await Teamservice.deleteTeam(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Team Deleted",

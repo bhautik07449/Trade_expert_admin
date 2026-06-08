@@ -6,6 +6,7 @@ import CommonFiltter from "../../../components/widgets/common_filter";
 import Creditaccountservice from "../../../service/creditaccount.service";
 import { formatDate } from "../../../common/constants";
 import { toast } from "../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -19,10 +20,11 @@ const columns = [
 
 export default function CreditAccountManagement() {
     const [list, setList] = useState([])
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await Creditaccountservice.getList()
+            const res = await Creditaccountservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.accounts?.map((item, index) => ({
                     ...item,
@@ -42,8 +44,8 @@ export default function CreditAccountManagement() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const filterData = [
         { type: "text", placeholder: "Buyer Name", label: "Buyer Name" },
@@ -69,7 +71,7 @@ export default function CreditAccountManagement() {
                     title: "Inquiry",
                     description: res?.data?.message,
                 });
-                getData()
+                getData(selectedCountry)
             }
 
         } catch (error) {

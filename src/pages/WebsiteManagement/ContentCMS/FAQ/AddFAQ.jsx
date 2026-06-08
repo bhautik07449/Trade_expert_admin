@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Faqservice from "../../../../service/faq.service";
 import { toast } from "../../../../components/ui/use-toast";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddFAQ() {
     const { id } = useParams()
@@ -18,11 +19,13 @@ export default function AddFAQ() {
 
     const initialValues = {
         title: data ? data?.title : "",
+        country: data ? data?.country : "",
         answer: data ? data?.answer : ""
     };
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required("Title is required"),
+        country: Yup.string().required("Country is required"),
         answer: Yup.string().required("Answer is required")
     });
 
@@ -97,6 +100,7 @@ export default function AddFAQ() {
                 <form className="grid gap-6" onSubmit={formik.handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-5">
+                            <CountrySelection formik={formik} />
                             <CommonTextField
                                 label="Title"
                                 placeholder="Title"

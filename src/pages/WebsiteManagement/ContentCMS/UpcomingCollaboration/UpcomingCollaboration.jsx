@@ -8,6 +8,7 @@ import { formatDate } from "../../../../common/constants";
 import { toast } from "../../../../components/ui/use-toast";
 import UpcomingCollaborationService from "../../../../service/upcomingcollaboration.service";
 import { getImageUrl } from "../../../../utils/imageUtils";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -29,11 +30,12 @@ const columns = [
 
 export default function UpcomingCollaboration() {
     const [list, setList] = useState([])
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
     const navigate = useNavigate();
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await UpcomingCollaborationService.getList();
+            const res = await UpcomingCollaborationService.getList(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -54,15 +56,15 @@ export default function UpcomingCollaboration() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {
             const res = await UpcomingCollaborationService.deleteUpcomingCollaboration(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Upcoming Collaboration Deleted",

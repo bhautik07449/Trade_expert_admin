@@ -64,7 +64,7 @@ const AdminsManagement = () => {
             const res = await Adminservice.deleteAdmin(id)
 
             if (res) {
-                getUserData()
+                getUserData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Admin",

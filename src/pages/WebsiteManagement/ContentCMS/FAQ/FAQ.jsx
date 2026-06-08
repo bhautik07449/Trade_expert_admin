@@ -8,10 +8,12 @@ import { getStatusStyles } from "../../../../lib/funcation";
 import Faqservice from "../../../../service/faq.service";
 import { formatDate } from "../../../../common/constants";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "title", headerName: "Title", flex: 3 },
+    { field: "country", headerName: "country", flex: 3 },
     {
         field: "answer", headerName: "Answer", flex: 3, renderCell: (params) => (
             <div
@@ -32,10 +34,11 @@ const columns = [
 export default function FAQ() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await Faqservice.getList()
+            const res = await Faqservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -54,14 +57,14 @@ export default function FAQ() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const handledelete = async (id) => {
         try {
             const res = await Faqservice.deleteFaq(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Deleted",

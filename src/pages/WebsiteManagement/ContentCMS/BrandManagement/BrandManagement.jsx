@@ -85,7 +85,7 @@ export default function BrandManagement() {
         try {
             const res = await Brandservice.deleteBrand(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Brand List",

@@ -53,7 +53,7 @@ export default function OfferType() {
             const res = await Tradetypeservice.deleteTradetype(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Offer Type",

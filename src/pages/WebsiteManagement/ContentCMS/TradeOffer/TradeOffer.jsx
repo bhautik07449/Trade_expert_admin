@@ -74,7 +74,7 @@ export default function TradeOffer() {
         try {
             const res = await Tradeofferservice.deleteTradeoffer(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Trade Offer",

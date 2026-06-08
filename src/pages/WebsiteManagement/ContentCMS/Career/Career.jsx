@@ -6,10 +6,12 @@ import { getStatusStyles } from "../../../../lib/funcation";
 import { formatDate } from "../../../../common/constants";
 import CareerService from "../../../../service/career.service";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 2 },
+    { field: "country", headerName: "Country", flex: 2 },
     { field: "contact", headerName: "Contact", flex: 2 },
     { field: "email", headerName: "Email", flex: 3 },
     {
@@ -25,10 +27,11 @@ const columns = [
 export default function Career() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await CareerService.getList()
+            const res = await CareerService.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -47,14 +50,14 @@ export default function Career() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const handledelete = async (id) => {
         try {
             const res = await CareerService.deleteCareer(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Career Deleted",

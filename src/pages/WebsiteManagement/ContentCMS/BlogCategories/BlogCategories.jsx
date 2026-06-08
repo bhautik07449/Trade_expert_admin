@@ -60,7 +60,7 @@ export default function BlogCategories() {
             const res = await Blogservice.deleteBlog(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Blog Category Deleted",

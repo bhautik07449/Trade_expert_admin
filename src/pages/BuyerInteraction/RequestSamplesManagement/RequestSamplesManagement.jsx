@@ -18,8 +18,6 @@ const columns = [
 
 export default function RequestSamplesManagement() {
     const [list, setList] = useState([])
-    const [search, setSearch] = useState("");
-    console.log("search", search);
 
     const getData = async () => {
         try {

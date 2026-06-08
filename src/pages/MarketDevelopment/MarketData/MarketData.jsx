@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import CommonTable from "../../../components/widgets/common_table";
 import { getStatusStyles } from "../../../lib/funcation";
 import { toast } from "../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", width: 80 },
@@ -26,10 +27,11 @@ const columns = [
 
 export default function MarketData() {
     const [list, setList] = useState([])
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await MarketDevelopmentservice.getMarketData();
+            const res = await MarketDevelopmentservice.getMarketData(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -53,15 +55,15 @@ export default function MarketData() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {
             const res = await MarketDevelopmentservice.deleteMarketData(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Market Development Data Deleted",

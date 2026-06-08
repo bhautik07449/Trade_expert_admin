@@ -10,6 +10,7 @@ import { toast } from "../../../../components/ui/use-toast";
 import ESGService from "../../../../service/esg.service";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import FilterByCountry from "../../../../components/widgets/filterByCountry";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -38,7 +39,7 @@ const columns = [
 ]
 
 export default function ESG() {
-    const [selectedCountry, setSelectedCountry] = useState("");
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
     const [list, setList] = useState([])
     const navigate = useNavigate();
 
@@ -101,13 +102,7 @@ export default function ESG() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <FilterByCountry
-                            selectedCountry={selectedCountry}
-                            setSelectedCountry={setSelectedCountry}
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/esg/add')}>
                             <CircleFadingPlus className="size-5" />

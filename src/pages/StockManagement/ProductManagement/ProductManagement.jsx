@@ -73,7 +73,7 @@ const ProductManagement = () => {
         try {
             const res = await Productservice.deleteProduct(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
             }
         } catch (error) {
             toast({

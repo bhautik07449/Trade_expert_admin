@@ -8,6 +8,7 @@ import { formatDate } from "../../../../common/constants";
 import FilterByCountry from "../../../../components/widgets/filterByCountry";
 import { toast } from "../../../../components/ui/use-toast";
 import Deliveryreachservice from "../../../../service/deliveryreach.service";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -18,7 +19,7 @@ const columns = [
 
 export default function DeliveryReach() {
     const [list, setList] = useState([])
-    const [selectedCountry, setSelectedCountry] = useState("");
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
     const navigate = useNavigate();
 
     const getList = async (country) => {
@@ -49,7 +50,7 @@ export default function DeliveryReach() {
         try {
             const res = await Deliveryreachservice.deleteDeliveryreach(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Delivery Reach Deleted",
@@ -77,13 +78,7 @@ export default function DeliveryReach() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <FilterByCountry
-                            selectedCountry={selectedCountry}
-                            setSelectedCountry={setSelectedCountry}
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/delivery_reach/add')}>
                             <CircleFadingPlus className="size-5" />

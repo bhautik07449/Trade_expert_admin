@@ -15,6 +15,7 @@ const columns = [
     { field: "category", headerName: "Category", flex: 2 },
     { field: "subcategory", headerName: "Sub Category", flex: 2 },
     { field: "product", headerName: "Product", flex: 3 },
+    { field: "country", headerName: "Country", flex: 3 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
             <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
@@ -41,6 +42,7 @@ export default function ProductList() {
                     category: item?.category?.name,
                     subcategory: item?.subcategory?.name,
                     product: item?.products?.map(p => p.name).join(", "),
+                    country: item?.productname?.country,
                     createdAt: formatDate(item?.createdAt),
                 }))
                 setList(formattedData)

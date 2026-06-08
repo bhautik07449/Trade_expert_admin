@@ -1,8 +1,8 @@
 import serverCall from "../serverCall";
 
-const getList = async () => {
+const getList = async (country) => {
     try {
-        const response = serverCall.get('/upcoming_collaboration')
+        const response = serverCall.get('/upcoming_collaboration', { params: country ? { country: country } : {} })
         return response
     } catch (error) {
         throw error

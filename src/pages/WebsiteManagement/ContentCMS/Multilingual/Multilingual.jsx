@@ -10,6 +10,7 @@ import Multilingualservice from "../../../../service/multilingual.service";
 import FilterByCountry from "../../../../components/widgets/filterByCountry";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { getStatusStyles } from "../../../../lib/funcation";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo" },
@@ -38,7 +39,7 @@ const columns = [
 
 export default function Multilingual() {
     const [list, setList] = useState([])
-    const [selectedCountry, setSelectedCountry] = useState("")
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
     const navigate = useNavigate();
 
     const getData = async (country) => {
@@ -72,7 +73,7 @@ export default function Multilingual() {
             const res = await Multilingualservice.deleteMultilingual(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Multilingual Deleted",
@@ -101,14 +102,7 @@ export default function Multilingual() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <FilterByCountry
-                            selectedCountry={selectedCountry}
-                            setSelectedCountry={setSelectedCountry}
-                        />
-                    </div>
-
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/multilingual/add')}>
                             <CircleFadingPlus className="size-5" />

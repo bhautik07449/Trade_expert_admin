@@ -79,7 +79,7 @@ export default function CurrencyManagement() {
             const res = await Cuurrencyservice.deleteCurrency(id)
             if (res) {
                 navigate('/website-management/content/currency')
-                getList()
+                getList(selectedCountry)
             }
         } catch (error) {
             toast({

@@ -88,7 +88,7 @@ export default function ClientManagement() {
             const res = await Clientservice.deleteClient(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Client List",

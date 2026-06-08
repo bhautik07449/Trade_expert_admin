@@ -73,7 +73,7 @@ export default function QualityPolicies() {
             const res = await QualityPolicyservice.deleteQualityPolicy(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Quality Policy",

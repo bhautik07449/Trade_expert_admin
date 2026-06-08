@@ -70,7 +70,7 @@ const SuppliersManagement = () => {
         try {
             const res = await Supplierservice.deleteSupplier(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
             }
         } catch (error) {
             toast({

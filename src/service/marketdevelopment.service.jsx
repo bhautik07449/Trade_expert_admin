@@ -45,9 +45,9 @@ const deleteMarketDevelopment = async (id) => {
     }
 }
 
-const getMarketData = async () => {
+const getMarketData = async (country) => {
     try {
-        const response = serverCall.get('/marketdata')
+        const response = serverCall.get('/marketdata', { params: country ? { country: country } : {} })
         return response
     } catch (error) {
         throw error

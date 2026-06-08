@@ -78,7 +78,7 @@ export default function BlogsManagement() {
             const res = await Blogservice.deleteblog(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Blogs Deleted",

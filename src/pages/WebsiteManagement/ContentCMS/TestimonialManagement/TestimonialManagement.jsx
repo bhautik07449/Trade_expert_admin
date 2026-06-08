@@ -89,7 +89,7 @@ export default function TestimonialManagement() {
         try {
             const res = await Testimonialservice.deleteTestimonial(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Testimonial Details",

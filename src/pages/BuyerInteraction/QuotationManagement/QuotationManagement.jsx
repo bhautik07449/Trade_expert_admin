@@ -6,6 +6,7 @@ import CommonFiltter from "../../../components/widgets/common_filter";
 import Buyerinteractionservice from "../../../service/buyerinteraction.service";
 import { getStatusStyles } from "../../../lib/funcation";
 import { toast } from "../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -13,6 +14,7 @@ const columns = [
     { field: "businessEmail", headerName: "Email", flex: 1 },
     { field: "category", headerName: "Category", flex: 1 },
     { field: "sub_category", headerName: "Sub Category", flex: 1 },
+    { field: "country", headerName: "Country", flex: 1 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
             <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
@@ -25,16 +27,18 @@ const columns = [
 
 export default function QuotationManagement() {
     const [list, setList] = useState([]);
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const fetchData = async () => {
+    const fetchData = async (country) =>{
         try {
-            const response = await Buyerinteractionservice.getQuotation();
+            const response = await Buyerinteractionservice.getQuotation(country);
             if (response && response.data) {
                 const formattedData = response?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
                     category: item?.category?.name,
                     sub_category: item?.subCategory?.name,
+                    country: item?.category?.country,
                     createdAt: new Date(item.createdAt).toLocaleDateString(),
                 }));
                 setList(formattedData);
@@ -45,8 +49,8 @@ export default function QuotationManagement() {
     }
 
     useEffect(() => {
-        fetchData();
-    }, [])
+        fetchData(selectedCountry);
+    }, [selectedCountry])
 
     const filterData = [
         { type: "text", placeholder: "Buyer Name", label: "Buyer Name" },
@@ -71,7 +75,7 @@ export default function QuotationManagement() {
                     title: "Inquiry",
                     description: res?.data?.message,
                 });
-                fetchData()
+                fetchData(selectedCountry)
             }
         } catch (error) {
             toast({
