@@ -9,10 +9,12 @@ import { getStatusStyles } from "../../../../lib/funcation";
 import Blogservice from "../../../../service/blogs.service";
 import { formatDate } from "../../../../common/constants";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 3 },
+    { field: "country", headerName: "Country", flex: 3 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
             <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
@@ -26,10 +28,11 @@ const columns = [
 export default function BlogCategories() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await Blogservice.getBlogList();
+            const res = await Blogservice.getBlogList(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -49,8 +52,8 @@ export default function BlogCategories() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {

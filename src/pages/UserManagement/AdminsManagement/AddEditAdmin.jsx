@@ -9,6 +9,7 @@ import { Card } from "../../../components/ui/card"
 import { useNavigate, useParams } from "react-router";
 import ImageUploadField from "../../../components/common/ImageUploadField";
 import { toast } from "../../../components/ui/use-toast";
+import CountrySelection from "../../../components/widgets/country_selection";
 
 const AddEditAdmin = () => {
     const params = useParams();
@@ -23,6 +24,7 @@ const AddEditAdmin = () => {
         lastName: list ? list?.lastName : "",
         email: list ? list?.email : "",
         phone: list ? list?.phone : "",
+        country: list ? list?.country : "",
         password: "",
         photo: list ? list?.photo : "",
         status: list ? list?.status : "active"
@@ -36,6 +38,7 @@ const AddEditAdmin = () => {
             .matches(/^[0-9]+$/, "Phone number must be digits")
             .min(10, "Phone number must be at least 10 digits")
             .required("Phone number is required"),
+        country: Yup.string().required('Country is required'),
         password: isEdit ?
             Yup.string() :
             Yup.string()
@@ -153,6 +156,9 @@ const AddEditAdmin = () => {
                             onBlur={formik.handleBlur}
                             error={formik.touched.phone && formik.errors.phone}
                         />
+
+                        <CountrySelection formik={formik} />
+
                         {!isEdit && (
                             <CommonTextField
                                 label="Password"

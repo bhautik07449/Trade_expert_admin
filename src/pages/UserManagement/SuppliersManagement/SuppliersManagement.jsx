@@ -8,6 +8,7 @@ import { getStatusStyles } from "../../../lib/funcation";
 import Supplierservice from "../../../service/suppliers.service";
 import { formatDate } from "../../../common/constants";
 import { toast } from "../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -31,12 +32,14 @@ const columns = [
 const SuppliersManagement = () => {
     const [list, setList] = useState([])
     const [loder, setLoder] = useState(false);
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
+
     const navigate = useNavigate();
 
-    const getList = async () => {
+    const getList = async (country) => {
         setLoder(true);
         try {
-            const res = await Supplierservice.getList();
+            const res = await Supplierservice.getList(country);
             if (res) {
                 const formattedData = res?.data?.map((item, index) => ({
                     ...item,
@@ -60,8 +63,8 @@ const SuppliersManagement = () => {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {

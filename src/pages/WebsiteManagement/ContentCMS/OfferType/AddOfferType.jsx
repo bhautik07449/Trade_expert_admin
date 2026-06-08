@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import Tradetypeservice from "../../../../service/tradetype.service";
 import { toast } from "../../../../components/ui/use-toast";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddOfferType() {
     const { id } = useParams()
@@ -15,11 +16,13 @@ export default function AddOfferType() {
     const [list, setList] = useState()
 
     const initialValues = {
-        name: list ? list?.name : ""
+        name: list ? list?.name : "",
+        country: list ? list?.country : ""
     };
 
     const validationSchema = Yup.object().shape({
-        name: Yup.string().required("Name is required")
+        name: Yup.string().required("Name is required"),
+        country: Yup.string().required("Country is required")
     });
 
     const formik = useFormik({
@@ -98,6 +101,8 @@ export default function AddOfferType() {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.name && formik.errors.name}
                             />
+
+                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 

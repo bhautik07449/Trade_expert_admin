@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import Clientservice from "../../../../service/client.service";
 import { toast } from "../../../../components/ui/use-toast";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddClientManagement() {
     const { id } = useParams()
@@ -18,6 +19,7 @@ export default function AddClientManagement() {
     const initialValues = {
         first_name: list ? list?.first_name : "",
         last_name: list ? list?.last_name : "",
+        country: list ? list?.country : "",
         email: list ? list?.email : "",
         phone: list ? list?.phone : "",
         image: list ? list?.image : ""
@@ -30,6 +32,7 @@ export default function AddClientManagement() {
         last_name: Yup.string()
             .trim()
             .required("last Namr is required"),
+        country: Yup.string().required("Country is Required"),
         email: Yup.string().email().required("Email is Required"),
         phone: Yup.string().required("Phone No. is Required"),
         image: Yup.string().required("Image is required")
@@ -119,6 +122,7 @@ export default function AddClientManagement() {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.last_name && formik.errors.last_name}
                             />
+                            <CountrySelection formik={formik} />
                             <CommonTextField
                                 label="Email"
                                 placeholder="Email"

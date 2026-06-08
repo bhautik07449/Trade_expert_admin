@@ -1,8 +1,8 @@
 import serverCall from "../serverCall";
 
-const getBlogList = async () => {
+const getBlogList = async (country) => {
     try {
-        const response = serverCall.get('/blogcategory')
+        const response = serverCall.get('/blogcategory', { params: country ? { country: country } : {} })
         return response
     } catch (error) {
         throw error
@@ -45,9 +45,9 @@ const deleteBlog = async (id) => {
     }
 }
 
-const getList = async () => {
+const getList = async (country) => {
     try {
-        const response = serverCall.get('/blogs')
+        const response = serverCall.get('/blogs', { params: country ? { country: country } : {} })
         return response
     } catch (error) {
         throw error

@@ -9,11 +9,13 @@ import Galleryservice from "../../../../service/gallery.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 1 },
     { field: "description", headerName: "Description", flex: 1 },
+    { field: "country", headerName: "Country", flex: 1 },
     {
         field: "image", headerName: "Image", flex: 1,
         renderCell: ({ row }) => (
@@ -37,12 +39,12 @@ const columns = [
 
 export default function Gallery() {
     const [list, setList] = useState([])
-
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
     const navigate = useNavigate();
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await Galleryservice.getList()
+            const res = await Galleryservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -61,14 +63,14 @@ export default function Gallery() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const handledelete = async (id) => {
         try {
             const res = await Galleryservice.deleteGallery(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Gallery Deleted",

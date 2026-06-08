@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Certificationsliderservice from "../../../../service/certificationslider.service";
 import { toast } from "../../../../components/ui/use-toast";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddCertificationSliderManagement() {
 
@@ -17,11 +18,13 @@ export default function AddCertificationSliderManagement() {
     const navigate = useNavigate()
 
     const initialValues = {
-        image: data ? data?.image : ""
+        image: data ? data?.image : "",
+        country: data ? data?.country : ""
     };
 
     const validationSchema = Yup.object().shape({
-        image: Yup.string().required("Image is required")
+        image: Yup.string().required("Image is required"),
+        country: Yup.string().required("Country is required")
     });
 
     const formik = useFormik({
@@ -99,7 +102,9 @@ export default function AddCertificationSliderManagement() {
                                 value={formik.values.image}
                                 onImageUpload={(url) => {
                                     formik.setFieldValue("image", url);
-                                }} />
+                                }}
+                            />
+                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 

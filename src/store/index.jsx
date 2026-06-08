@@ -9,6 +9,7 @@ import measurementSlice from './slice/measurementSlice'
 import productSlice from './slice/productSlice'
 import abctypeSlice from './slice/abctypeSlice'
 import productnameSlice from './slice/productnameSlice'
+import countryFilterReducer from './slice/countryFilterSlice'
 
 const reducer = {
   auth: authReducer,
@@ -20,7 +21,8 @@ const reducer = {
   measurements: measurementSlice,
   products: productSlice,
   abctype: abctypeSlice,
-  productname: productnameSlice
+  productname: productnameSlice,
+  countryFilter: countryFilterReducer,
 };
 
 const store = configureStore({

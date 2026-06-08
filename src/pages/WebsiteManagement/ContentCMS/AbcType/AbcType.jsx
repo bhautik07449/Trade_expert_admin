@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { formatDate } from "../../../../common/constants";
 import Abctypeservice from "../../../../service/abctype.service";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -19,10 +20,11 @@ const columns = [
 export default function AbcType() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await Abctypeservice.getList();
+            const res = await Abctypeservice.getList(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -43,15 +45,15 @@ export default function AbcType() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {
             const res = await Abctypeservice.deleteAbctype(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Abc Type Deleted",

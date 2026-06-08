@@ -8,6 +8,7 @@ import { getStatusStyles } from "../../../../lib/funcation";
 import { formatDate } from "../../../../common/constants";
 import AbcService from "../../../../service/abc.service";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -27,10 +28,11 @@ const columns = [
 export default function Abc() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await AbcService.getList()
+            const res = await AbcService.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -52,14 +54,14 @@ export default function Abc() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const handledelete = async (id) => {
         try {
             const res = await AbcService.deleteAbc(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Abc Deleted",

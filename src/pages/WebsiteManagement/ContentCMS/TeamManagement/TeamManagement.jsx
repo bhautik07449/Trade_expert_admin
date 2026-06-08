@@ -11,6 +11,7 @@ import Teamservice from "../../../../service/teams.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -25,6 +26,7 @@ const columns = [
             />
         )
     },
+    { field: "country", headerName: "Country", flex: 1 },
     { field: "description", headerName: "Description", flex: 1 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
@@ -39,15 +41,16 @@ const columns = [
 export default function TeamManagement() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
         { type: "text", placeholder: "Rate", label: "Rate" },
     ]
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await Teamservice.getList();
+            const res = await Teamservice.getList(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -67,8 +70,8 @@ export default function TeamManagement() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const handleApplyFilters = (filters) => {
         console.log("Applied Filters:", filters);

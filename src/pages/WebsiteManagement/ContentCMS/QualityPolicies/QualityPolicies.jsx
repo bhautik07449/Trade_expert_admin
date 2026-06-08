@@ -10,6 +10,7 @@ import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { toast } from "../../../../components/ui/use-toast";
 import FilterByCountry from "../../../../components/widgets/filterByCountry";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -38,7 +39,7 @@ const columns = [
 
 export default function QualityPolicies() {
     const [list, setList] = useState([])
-    const [selectedCountry, setSelectedCountry] = useState("");
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
     const navigate = useNavigate();
 
@@ -101,12 +102,7 @@ export default function QualityPolicies() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <FilterByCountry
-                        selectedCountry={selectedCountry}
-                        setSelectedCountry={setSelectedCountry}
-                    />
-
+                <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/quality-policies/add')}>
                             <CircleFadingPlus className="size-5" />

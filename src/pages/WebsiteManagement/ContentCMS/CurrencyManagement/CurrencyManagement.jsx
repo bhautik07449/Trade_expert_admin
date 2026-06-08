@@ -10,6 +10,7 @@ import Cuurrencyservice from "../../../../service/currency.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -26,6 +27,7 @@ const columns = [
     },
     { field: "symbol", headerName: "Sybmol", flex: 1 },
     { field: "rate", headerName: "Rate", flex: 1 },
+    { field: "country", headerName: "Country", flex: 1 },
     { field: "description", headerName: "Description", flex: 1 },
     { field: "createdAt", headerName: "Created", flex: 1 },
 ]
@@ -33,15 +35,16 @@ const columns = [
 export default function CurrencyManagement() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
         { type: "text", placeholder: "Rate", label: "Rate" },
     ]
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await Cuurrencyservice.getList()
+            const res = await Cuurrencyservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -60,8 +63,8 @@ export default function CurrencyManagement() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const handleApplyFilters = (filters) => {
         console.log("Applied Filters:", filters);

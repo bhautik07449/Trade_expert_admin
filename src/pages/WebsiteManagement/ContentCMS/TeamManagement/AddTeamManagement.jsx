@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import Teamservice from "../../../../service/teams.service";
 import { toast } from "../../../../components/ui/use-toast";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddTeamManagement() {
     const { id } = useParams()
@@ -18,6 +19,7 @@ export default function AddTeamManagement() {
     const initialValues = {
         name: list ? list?.name : "",
         description: list ? list?.description : "",
+        country: list ? list?.country : "",
         facebook: list ? list?.facebook : "",
         twitter: list ? list?.twitter : "",
         linkedin: list ? list?.linkedin : "",
@@ -35,6 +37,7 @@ export default function AddTeamManagement() {
             .trim()
             .required("Description is required")
             .min(10, "Description must be at least 10 characters"),
+        country: Yup.string().required("Country is required"),
         facebook: Yup.string()
             .nullable()
             .url("Enter a valid Facebook URL"),
@@ -145,6 +148,8 @@ export default function AddTeamManagement() {
                                 onImageUpload={(url) => {
                                     formik.setFieldValue("image", url);
                                 }} />
+
+                            <CountrySelection formik={formik} />
                         </div>
                         <div className="space-y-5">
                             <CommonTextField

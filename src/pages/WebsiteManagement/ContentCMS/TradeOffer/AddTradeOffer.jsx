@@ -253,14 +253,19 @@ export default function AddTradeOffer() {
                 <form className="grid gap-6" onSubmit={formik.handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-5">
-                            <CountrySelection formik={formik} />
                             <CommonBox
                                 placeholders="Select Trade Type"
                                 label="Trade Type"
                                 name="trade_type"
                                 options={parentOptions}
                                 value={formik.values.trade_type}
-                                onChange={(value) => formik.setFieldValue("trade_type", value)}
+                                onChange={(value) => {
+                                    formik.setFieldValue("trade_type", value);
+                                    const selectedTradeType = flatList?.find((t) => t.id === value);
+                                    if (selectedTradeType?.country) {
+                                        formik.setFieldValue("country", selectedTradeType.country);
+                                    }
+                                }}
                                 error={formik.touched.trade_type && formik.errors.trade_type}
                             />
                             <CommonTextField

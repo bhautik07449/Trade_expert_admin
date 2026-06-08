@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import Cuurrencyservice from "../../../../service/currency.service";
 import { useEffect, useState } from "react";
 import { toast } from "../../../../components/ui/use-toast";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddCurrency() {
     const { id } = useParams()
@@ -20,7 +21,8 @@ export default function AddCurrency() {
         rate: list ? list?.rate : "",
         symbol: list ? list?.symbol : "",
         image: list ? list?.image : "",
-        description: list ? list?.description : ""
+        description: list ? list?.description : "",
+        country: list ? list?.country : ""
     };
 
     const validationSchema = Yup.object().shape({
@@ -28,7 +30,8 @@ export default function AddCurrency() {
         rate: Yup.number().required("Rate is required"),
         symbol: Yup.string().required("Symbol is required"),
         image: Yup.mixed().required("Image is required"),
-        description: Yup.mixed().required("Description is required")
+        description: Yup.mixed().required("Description is required"),
+        country: Yup.string().required("Country is required")
     });
 
     const formik = useFormik({
@@ -127,6 +130,7 @@ export default function AddCurrency() {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.symbol && formik.errors.symbol}
                             />
+                            <CountrySelection formik={formik} />
                         </div>
                         <div className="space-y-5">
                             <CommonTextField

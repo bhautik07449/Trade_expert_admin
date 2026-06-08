@@ -10,11 +10,13 @@ import Blogservice from "../../../../service/blogs.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "postDate", headerName: "Post Date", flex: 1 },
     { field: "blog_category", headerName: "Blog Category", flex: 1 },
+    { field: "country", headerName: "Country", flex: 1 },
     { field: "name", headerName: "Name", flex: 3 },
     {
         field: "slider", headerName: "Photo", flex: 1,
@@ -40,16 +42,18 @@ export default function BlogsManagement() {
 
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await Blogservice.getList();
+            const res = await Blogservice.getList(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
                     postDate: formatDate(item?.postDate),
                     blog_category: item?.blog_category?.name,
+                    country: item?.blog_category?.country,
                     lastUpdatedAt: formatDate(item?.lastUpdatedAt),
                     createdAt: formatDate(item?.createdAt),
                 }))
@@ -66,8 +70,8 @@ export default function BlogsManagement() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {

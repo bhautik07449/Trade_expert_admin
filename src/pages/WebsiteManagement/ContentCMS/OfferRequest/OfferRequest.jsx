@@ -8,11 +8,13 @@ import CommonFiltter from "../../../../components/widgets/common_filter";
 import Traderequestservice from "../../../../service/traderequest.service";
 import { formatDate } from "../../../../common/constants";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "trade_offer", headerName: "Trade Offer", flex: 3 },
     { field: "name", headerName: "Name", flex: 2 },
+    { field: "country", headerName: "Country", flex: 2 },
     { field: "email", headerName: "Email", flex: 2 },
     { field: "phone", headerName: "Phone", flex: 2 },
     { field: "message", headerName: "Message", flex: 3 },
@@ -23,15 +25,17 @@ const columns = [
 export default function OfferRequest() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await Traderequestservice.getList()
+            const res = await Traderequestservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
                     trade_offer: item?.trade_offer?.name,
+                    country: item?.trade_offer?.country,
                     createdAt: formatDate(item?.createdAt),
                 }))
                 setList(formattedData)
@@ -46,8 +50,8 @@ export default function OfferRequest() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },
@@ -66,7 +70,7 @@ export default function OfferRequest() {
         try {
             const res = await Traderequestservice.deleteTraderequest(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Offer Request Deleted",

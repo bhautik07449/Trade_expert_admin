@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import Galleryservice from "../../../../service/gallery.service";
 import { toast } from "../../../../components/ui/use-toast";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddGallery() {
     const { id } = useParams()
@@ -20,14 +21,16 @@ export default function AddGallery() {
         name: data ? data?.name : "",
         description: data ? data?.description : "",
         image: data ? data?.image : "",
-        sr_no: data ? data?.sr_no : ""
+        sr_no: data ? data?.sr_no : "",
+        country: data ? data?.country : ""
     };
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
         description: Yup.string().required("Description is required"),
         image: Yup.string().required("Image is required"),
-        sr_no: Yup.number().required("position number is required")
+        sr_no: Yup.number().required("position number is required"),
+        country: Yup.string().required("Country is required")
     });
 
     const formik = useFormik({
@@ -121,6 +124,7 @@ export default function AddGallery() {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.description && formik.errors.description}
                             />
+                            <CountrySelection formik={formik} />
                             <ImageUploadField
                                 value={formik.values.image}
                                 onImageUpload={(url) => {

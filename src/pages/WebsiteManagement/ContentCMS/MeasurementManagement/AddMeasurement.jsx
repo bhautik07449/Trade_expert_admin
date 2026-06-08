@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import Measurementsservice from "../../../../service/measurements.service";
 import { useFormik } from "formik";
 import { toast } from "../../../../components/ui/use-toast";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddMeasurement() {
     const { id } = useParams()
@@ -16,11 +17,13 @@ export default function AddMeasurement() {
 
     const initialValues = {
         name: list ? list?.name : "",
+        country: list ? list?.country : "",
         description: list ? list?.description : ""
     };
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
+        country: Yup.string().required("Country is required"),
         description: Yup.string().required("description is required")
     });
 
@@ -100,6 +103,7 @@ export default function AddMeasurement() {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.name && formik.errors.name}
                             />
+                            <CountrySelection formik={formik} />
                             <CommonTextField
                                 label="Description"
                                 placeholder="Description"

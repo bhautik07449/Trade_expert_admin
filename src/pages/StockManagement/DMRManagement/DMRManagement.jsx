@@ -9,12 +9,14 @@ import { getStatusStyles } from "../../../lib/funcation";
 import DMRservice from "../../../service/dmr.service";
 import { formatDate } from "../../../common/constants";
 import { toast } from "../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "name", flex: 1 },
-    { field: "category", headerName: "category", flex: 1 },
-    { field: "sub_category", headerName: "sub_category", flex: 1 },
+    { field: "country", headerName: "Country", flex: 1 },
+    { field: "category", headerName: "Category", flex: 1 },
+    { field: "sub_category", headerName: "Sub Category", flex: 1 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
             <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
@@ -27,17 +29,19 @@ const columns = [
 
 const DMRManagement = () => {
     const [list, setList] = useState([])
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
     const navigate = useNavigate();
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await DMRservice.getList()
+            const res = await DMRservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
                     category: item?.category?.name,
+                    country: item?.category?.country,
                     sub_category: item?.subcategory?.name,
                     createdAt: formatDate(item?.lastUpdatedAt),
                 }))
@@ -53,15 +57,15 @@ const DMRManagement = () => {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {
             const res = await DMRservice.deleteDMR(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
                 toast({
                     variant: "success",
                     title: "DMR",

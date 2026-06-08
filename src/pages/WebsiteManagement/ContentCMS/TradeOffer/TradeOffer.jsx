@@ -9,11 +9,13 @@ import { getStatusStyles } from "../../../../lib/funcation";
 import Tradeofferservice from "../../../../service/tradeoffer.service";
 import { formatDate } from "../../../../common/constants";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "trade_type", headerName: "Trade Type", flex: 3 },
     { field: "name", headerName: "Name", flex: 2 },
+    { field: "country", headerName: "Country", flex: 2 },
     { field: "description", headerName: "Description", flex: 3 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
@@ -28,10 +30,11 @@ const columns = [
 export default function TradeOffer() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await Tradeofferservice.getList()
+            const res = await Tradeofferservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -51,8 +54,8 @@ export default function TradeOffer() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },

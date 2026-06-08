@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "../../../../components/ui/use-toast";
+import CountrySelection from "../../../../components/widgets/country_selection";
 
 export default function AddBlogCategories() {
     const { id } = useParams()
@@ -15,7 +16,8 @@ export default function AddBlogCategories() {
     const [list, setList] = useState()
 
     const initialValues = {
-        name: list ? list?.name : ""
+        name: list ? list?.name : "",
+        country: list ? list?.country : ""
     };
 
     const validationSchema = Yup.object().shape({
@@ -97,6 +99,8 @@ export default function AddBlogCategories() {
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.name && formik.errors.name}
                             />
+
+                            <CountrySelection formik={formik} />
                         </div>
                     </div>
 

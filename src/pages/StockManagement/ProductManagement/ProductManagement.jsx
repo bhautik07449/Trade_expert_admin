@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { getStatus } from "../../../lib/funcation";
 import { formatDate } from "../../../common/constants";
 import { toast } from "../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -38,10 +39,11 @@ const columns = [
 const ProductManagement = () => {
     const [list, setList] = useState([]);
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await Productservice.getProductList();
+            const res = await Productservice.getProductList(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -64,8 +66,8 @@ const ProductManagement = () => {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {

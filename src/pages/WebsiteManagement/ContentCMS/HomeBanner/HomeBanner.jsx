@@ -9,6 +9,7 @@ import Homebannerservice from "../../../../service/homebanner.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -37,10 +38,11 @@ const columns = [
 export default function HomeBanner() {
     const navigate = useNavigate();
     const [list, setList] = useState([])
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await Homebannerservice.getList()
+            const res = await Homebannerservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -60,14 +62,14 @@ export default function HomeBanner() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const handledelete = async (id) => {
         try {
             const res = await Homebannerservice.deleteHomeBanner(id)
             if (res) {
-                getList()
+                getList(selectedCountry)
                 toast({
                     variant: "success",
                     title: "Home Banner",
@@ -103,7 +105,7 @@ export default function HomeBanner() {
                         </Button>
                     </div>
                 </div>
-                
+
                 <CommonTable
                     columns={columns}
                     rows={list || []}

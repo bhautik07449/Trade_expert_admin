@@ -7,11 +7,13 @@ import { formatDate } from "../../../common/constants";
 import { useNavigate } from "react-router";
 import Adminservice from "../../../service/admin.service";
 import { toast } from "../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "firstName", headerName: "FirstName", flex: 1 },
     { field: "lastName", headerName: "LastName", flex: 1 },
+    { field: "country", headerName: "Country", flex: 1 },
     { field: "email", headerName: "email", flex: 1 },
     { field: "phone", headerName: "PhoneNo", flex: 1 },
     { field: "createdAt", headerName: "Created", flex: 1 },
@@ -20,13 +22,14 @@ const columns = [
 const AdminsManagement = () => {
     const [user, setUserList] = useState([]);
     const [loder, setLoder] = useState(false);
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
     const navigate = useNavigate();
 
-    const getUserData = async () => {
+    const getUserData = async (country) => {
         setLoder(true);
         try {
-            const res = await Adminservice.getAdmin();
+            const res = await Adminservice.getAdmin(country);
             if (res) {
                 const formattedData = res?.data?.map((item, index) => ({
                     ...item,
@@ -49,8 +52,8 @@ const AdminsManagement = () => {
     }
 
     useEffect(() => {
-        getUserData()
-    }, [])
+        getUserData(selectedCountry)
+    }, [selectedCountry])
 
     const handleEdit = (row) => {
         navigate(`/user-management/admins-management/edit/${row?.id}`)

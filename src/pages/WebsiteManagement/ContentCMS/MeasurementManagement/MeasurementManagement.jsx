@@ -9,10 +9,12 @@ import { getStatusStyles } from "../../../../lib/funcation";
 import Measurementsservice from "../../../../service/measurements.service";
 import { formatDate } from "../../../../common/constants";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 1 },
+    { field: "country", headerName: "Country", flex: 1 },
     { field: "description", headerName: "Description", flex: 2 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
@@ -26,6 +28,7 @@ const columns = [
 
 export default function MeasurementManagement() {
     const [list, setList] = useState([])
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
     const navigate = useNavigate();
 
@@ -34,9 +37,9 @@ export default function MeasurementManagement() {
         { type: "text", placeholder: "Rate", label: "Rate" },
     ]
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await Measurementsservice.getList();
+            const res = await Measurementsservice.getList(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -56,8 +59,8 @@ export default function MeasurementManagement() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
 
     const handleApplyFilters = (filters) => {
@@ -73,7 +76,7 @@ export default function MeasurementManagement() {
             const res = await Measurementsservice.deleteMeasurements(id)
 
             if (res) {
-                getData()
+                getData(selectedCountry)
             }
         } catch (error) {
             toast({

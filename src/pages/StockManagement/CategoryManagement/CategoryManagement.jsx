@@ -7,6 +7,7 @@ import CustomLoader from "../../../components/widgets/custom_loader";
 import { useNavigate } from "react-router";
 import FilterByCountry from "../../../components/widgets/filterByCountry";
 import { toast } from "../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const levelColors = {
     0: "bg-blue-50 border-blue-300",
@@ -161,7 +162,7 @@ const CategoryNode = ({ node, level = 0, onEdit, onDelete, onEditProduct, onDele
 const CategoryManagement = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [selectedCountry, setSelectedCountry] = useState("");
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
     const navigate = useNavigate();
 
@@ -237,12 +238,6 @@ const CategoryManagement = () => {
             <div className="flex justify-between items-center mb-6">
                 <h2 className="h4-bold">Category Management</h2>
                 <div className="flex items-center gap-4">
-                    <div className="w-56">
-                        <FilterByCountry
-                            selectedCountry={selectedCountry}
-                            setSelectedCountry={setSelectedCountry}
-                        />
-                    </div>
                     <div>
                         <Button className="flex items-center gap-2" onClick={() => navigate('/stock-management/category-management/add')}>
                             <CircleFadingPlus className="size-5" />

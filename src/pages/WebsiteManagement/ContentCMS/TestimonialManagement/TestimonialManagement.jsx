@@ -10,6 +10,7 @@ import Testimonialservice from "../../../../service/testimonial.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -26,6 +27,7 @@ const columns = [
     { field: "name", headerName: "Name", flex: 1 },
     { field: "email", headerName: "Email", flex: 2 },
     { field: "review", headerName: "Review", flex: 2 },
+    { field: "country", headerName: "Country", flex: 2 },
     {
         field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
             <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
@@ -39,16 +41,18 @@ const columns = [
 export default function TestimonialManagement() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getList = async () => {
+    const getList = async (country) => {
         try {
-            const res = await Testimonialservice.getList()
+            const res = await Testimonialservice.getList(country)
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
                     image: item?.client?.image,
                     name: item?.client?.first_name + " " + item?.client?.last_name,
+                    country: item?.client?.country,
                     email: item?.client?.email,
                     category: item?.category?.name,
                     createdAt: formatDate(item?.lastUpdatedAt),
@@ -65,8 +69,8 @@ export default function TestimonialManagement() {
     }
 
     useEffect(() => {
-        getList()
-    }, [])
+        getList(selectedCountry)
+    }, [selectedCountry])
 
     const filterData = [
         { type: "text", placeholder: "Name", label: "Name" },

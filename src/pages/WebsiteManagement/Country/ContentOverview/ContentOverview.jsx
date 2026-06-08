@@ -8,7 +8,7 @@ import { getStatusStyles } from "../../../../lib/funcation";
 import { formatDate } from "../../../../common/constants";
 import ContentOverviewservice from "../../../../service/contentoverview.service";
 import { toast } from "../../../../components/ui/use-toast";
-import FilterByCountry from "../../../../components/widgets/filterByCountry";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -26,7 +26,7 @@ const columns = [
 
 export default function ContentOverview() {
     const [list, setList] = useState([])
-    const [selectedCountry, setSelectedCountry] = useState("");
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
     const navigate = useNavigate();
 
@@ -88,13 +88,7 @@ export default function ContentOverview() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-between gap-4">
-                    <div className="lg:max-w-72 w-full grid gap-1">
-                        <FilterByCountry
-                            selectedCountry={selectedCountry}
-                            setSelectedCountry={setSelectedCountry}
-                        />
-                    </div>
+                <div className="flex items-center justify-end gap-4">
                     <div onClick={() => navigate("/website-management/country/content-overview/add")}>
                         <Button className="flex items-center gap-2">
                             <CircleFadingPlus className="size-5" />
@@ -102,7 +96,6 @@ export default function ContentOverview() {
                         </Button>
                     </div>
                 </div>
-
 
                 <CommonTable
                     columns={columns}

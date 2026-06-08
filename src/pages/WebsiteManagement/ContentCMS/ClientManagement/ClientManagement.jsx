@@ -10,6 +10,7 @@ import Clientservice from "../../../../service/client.service";
 import { formatDate } from "../../../../common/constants";
 import { getImageUrl } from "../../../../utils/imageUtils";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -26,6 +27,7 @@ const columns = [
     { field: "name", headerName: "Name", flex: 2 },
     { field: "email", headerName: "Email", flex: 4 },
     { field: "phone", headerName: "Phone No.", flex: 2 },
+    { field: "country", headerName: "Country", flex: 2 },
     {
         field: "status", headerName: "Status", flex: 2, renderCell: (params) => (
             <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
@@ -39,10 +41,11 @@ const columns = [
 export default function ClientManagement() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await Clientservice.getList();
+            const res = await Clientservice.getList(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -63,8 +66,8 @@ export default function ClientManagement() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
 
     const filterData = [

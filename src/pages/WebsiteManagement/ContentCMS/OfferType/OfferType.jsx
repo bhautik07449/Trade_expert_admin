@@ -7,10 +7,12 @@ import { useNavigate } from "react-router";
 import Tradetypeservice from "../../../../service/tradetype.service";
 import { formatDate } from "../../../../common/constants";
 import { toast } from "../../../../components/ui/use-toast";
+import { useSelector } from "react-redux";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 4 },
+    { field: "country", headerName: "Country", flex: 4 },
     { field: "createdAt", headerName: "Created", flex: 1 },
     { field: "lastUpdatedAt", headerName: "Updated", flex: 1 },
 ]
@@ -18,10 +20,11 @@ const columns = [
 export default function OfferType() {
     const [list, setList] = useState([])
     const navigate = useNavigate();
+    const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
-    const getData = async () => {
+    const getData = async (country) => {
         try {
-            const res = await Tradetypeservice.getList();
+            const res = await Tradetypeservice.getList(country);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -42,8 +45,8 @@ export default function OfferType() {
     }
 
     useEffect(() => {
-        getData()
-    }, [])
+        getData(selectedCountry)
+    }, [selectedCountry])
 
     const handleDelete = async (id) => {
         try {
