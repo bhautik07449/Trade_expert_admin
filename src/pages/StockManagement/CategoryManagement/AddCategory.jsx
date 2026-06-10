@@ -202,10 +202,19 @@ export default function AddCategory() {
                             placeholders="Select Category"
                             options={parentOptions}
                             value={formik.values.parent}
-                            onChange={(value) => formik.setFieldValue("parent", value)}
+                            onChange={(value) => {
+                                formik.setFieldValue("parent", value);
+                                if (value) {
+                                    const selectedParent = flatList.find((item) => item.id === value);
+                                    if (selectedParent && selectedParent.country) {
+                                        formik.setFieldValue("country", selectedParent.country);
+                                    }
+                                }
+                            }}
                             error={formik.touched.parent && formik.errors.parent}
                         />
 
+                        <CountrySelection formik={formik} />
 
                         <CommonBox
                             label="Status"
