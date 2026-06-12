@@ -17,7 +17,7 @@ export function getMenuList(pathname) {
       icon: Users,
       submenus: [
         {
-          href: "/user-management/internal-users",
+          href: "",
           label: "Internal Users",
           active: pathname.includes("/user-management/internal-users"),
           icon: ShieldCheck,
@@ -32,116 +32,102 @@ export function getMenuList(pathname) {
               href: "/user-management/internal-users/service_personnel",
               label: "Service Personnel",
               active: pathname.includes("/user-management/internal-users/service_personnel"),
-              icon: ShieldCheck,
+              icon: User,
             }
           ]
         },
         {
-          href: "/user-management/scm",
+          href: "",
           label: "SCM",
           active: pathname.includes("/user-management/scm"),
-          icon: Truck,
+          icon: Workflow,
           submenus: [
             {
               href: "/user-management/scm/suppliers",
-              label: "Suppliers ",
+              label: "Suppliers",
               active: pathname.includes("/user-management/scm/suppliers"),
-              icon: ShieldCheck,
+              icon: Truck,
             }
-          ],
+          ]
         },
         {
-          href: "/user-management/crm",
+          href: "",
           label: "CRM",
-          active: pathname.includes("/user-management/crm"),
-          icon: ShieldCheck,
+          active: pathname.includes("/user-management/crm") || pathname.includes("/user-management/trade"),
+          icon: Handshake,
           submenus: [
             {
               href: "/user-management/crm/buyers",
               label: "Buyers",
               active: pathname.includes("/user-management/crm/buyers"),
-              icon: ShieldCheck,
+              icon: Users,
             },
             {
-              href: "/user-management/trade",
+              href: "",
               label: "Trade",
               active: pathname.includes("/user-management/trade"),
-              icon: ShieldCheck,
+              icon: BriefcaseBusiness,
               submenus: [
                 {
                   href: "/user-management/trade/product-inquiries",
                   label: "Product Inquiries",
                   active: pathname.includes("/user-management/trade/product-inquiries"),
-                  icon: ShieldCheck,
+                  icon: MessageSquare,
                 },
                 {
                   href: "/user-management/trade/request-sample",
                   label: "Request Sample",
                   active: pathname.includes("/user-management/trade/request-sample"),
-                  icon: ShieldCheck,
+                  icon: PackageSearch,
                 },
                 {
-                  //pending
                   href: "/user-management/trade/trade-deal",
                   label: "Trade Deal",
                   active: pathname.includes("/user-management/trade/trade-deal"),
-                  icon: ShieldCheck,
+                  icon: HandshakeIcon,
                 },
                 {
                   href: "/user-management/trade/request-quote",
                   label: "Request Quote",
                   active: pathname.includes("/user-management/trade/request-quote"),
-                  icon: ShieldCheck,
+                  icon: FileSpreadsheet,
                 },
                 {
                   href: "/user-management/trade/get-in-touch",
                   label: "Get in Touch",
                   active: pathname.includes("/user-management/trade/get-in-touch"),
-                  icon: ShieldCheck,
-                }
-              ],
-            },
-            {
-              href: "/user-management/stakeholder-interest",
-              label: "Stakeholder Interest",
-              active: pathname.includes("/user-management/stakeholder-interest"),
-              icon: ShieldCheck,
-              submenus: [
-                {
-                  href: "/user-management/stakeholder-interest/product",
-                  label: "Product",
-                  active: pathname.includes("/user-management/stakeholder-interest"),
-                  icon: ShieldCheck,
+                  icon: Phone,
                 }
               ]
-            },
-            {
-              href: "/user-management/crm/credit-account",
-              label: "Credit Account Management",
-              active: pathname.includes("/user-management/crm/credit-account"),
-              icon: CreditCard,
-            },
-          ],
+            }
+          ]
         },
+        {
+          href: "/user-management/stakeholder-interest/product",
+          label: "Stakeholder Interest (IR)",
+          active: pathname.includes("/user-management/stakeholder-interest"),
+          icon: Landmark,
+          submenus: []
+        }
       ],
     },
     {
-      href: "/",
+      href: "",
       label: "Stock Management",
-      active: pathname === "/stock-management",
-      icon: LayoutDashboard,
+      active: pathname.includes("/stock-management"),
+      icon: Boxes,
       submenus: [
         {
           href: "/stock-management/category-management",
           label: "Category Management",
           active: pathname.includes("/stock-management/category-management"),
-          icon: ShieldCheck,
+          icon: Tags
         },
         {
           href: "/stock-management/product-management",
           label: "Product Management",
           active: pathname.includes("/stock-management/product-management"),
-          icon: ShieldCheck,
+          icon: Package,
         },
         {
           href: "/stock-management/dmr-management",
@@ -153,17 +139,17 @@ export function getMenuList(pathname) {
           href: "/stock-management/brands-management",
           label: "Brands Management",
           active: pathname.includes("/stock-management/brands-management"),
-          icon: ShieldCheck,
+          icon: Award,
         },
         {
-          href: "/stock-management/trade-diversity-management",
+          href: "",
           label: "Trade Diversity Management",
           active: pathname.includes("/stock-management/trade-diversity-management"),
           icon: HelpCircle,
           submenus: [
             {
               href: "/stock-management/trade-diversity-management/type",
-              label: "Trade Diversity Type",
+              label: "ABC Type",
               active: pathname.includes("/stock-management/trade-diversity-management/type"),
               icon: Tag,
             },
@@ -206,13 +192,13 @@ export function getMenuList(pathname) {
     {
       href: "/",
       label: "Website Management",
-      active: pathname === "/",
+      active: pathname === "",
       icon: LayoutDashboard,
       submenus: [
         {
-          href: "/website-management/pages-management",
+          href: "/",
           label: "Pages Management",
-          active: pathname.includes("/user-management/admins-management"),
+          active: pathname.includes("/website-management/pages-management"),
           icon: ShieldCheck,
           submenus: [
             {
@@ -434,9 +420,9 @@ export function getMenuList(pathname) {
           ],
         },
         {
-          href: "/website-management",
+          href: "",
           label: "Settings",
-          active: pathname.includes("/website-management"),
+          active: pathname.includes("/website-management/settings"),
           icon: ShieldCheck,
           submenus: [
             {

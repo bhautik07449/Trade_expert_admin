@@ -9,6 +9,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuPortal,
 } from "../ui/dropdown-menu";
 import {
   Collapsible,
@@ -43,6 +47,38 @@ export function CollapseMenuButton({
     } else {
       onToggle(menuKey, parentKey);
     }
+  };
+
+  const renderDropdownItem = (item, index) => {
+    if (item?.submenus && item?.submenus.length > 0) {
+      return (
+        <DropdownMenuSub key={index}>
+          <DropdownMenuSubTrigger className="flex items-center gap-2 py-2 w-full cursor-pointer">
+            {item.icon && <item.icon size={16} />}
+            <span className="max-w-[180px] truncate text-sm">{item.label}</span>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent className="w-48 z-[100]">
+              {item.submenus.map((nestedItem, nestedIndex) =>
+                renderDropdownItem(nestedItem, nestedIndex)
+              )}
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
+      );
+    }
+
+    return (
+      <DropdownMenuItem key={index} asChild>
+        <Link
+          className="cursor-pointer flex items-center gap-2 py-2 w-full"
+          to={item.href || "#"}
+        >
+          {item.icon && <item.icon size={16} />}
+          <span className="max-w-[180px] truncate text-sm">{item.label}</span>
+        </Link>
+      </DropdownMenuItem>
+    );
   };
 
   return isOpen ? (
@@ -104,7 +140,7 @@ export function CollapseMenuButton({
                 )}
                 asChild
               >
-                <Link to={submenu.href}>
+                <Link to={submenu.href || "#"}>
                   <span className="mr-3">
                     {submenu.icon && <submenu.icon size={17} />}
                   </span>
@@ -149,7 +185,7 @@ export function CollapseMenuButton({
         side="right"
         sideOffset={25}
         align="start"
-        className="w-64 max-h-[500px] overflow-y-auto"
+        className="w-64 max-h-[500px] overflow-y-auto z-[100]"
       >
         <DropdownMenuLabel className="max-w-[190px] truncate font-semibold text-base">
           {label}
@@ -162,29 +198,13 @@ export function CollapseMenuButton({
               <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-2">
                 {submenu.label}
               </DropdownMenuLabel>
-              {submenu.submenus.map((nestedSubmenu, nestedIndex) => (
-                <DropdownMenuItem key={nestedIndex} asChild>
-                  <Link
-                    className="cursor-pointer flex items-center gap-2 py-2"
-                    to={nestedSubmenu.href}
-                  >
-                    {nestedSubmenu.icon && <nestedSubmenu.icon size={16} />}
-                    <p className="max-w-[180px] truncate text-sm">{nestedSubmenu.label}</p>
-                  </Link>
-                </DropdownMenuItem>
-              ))}
+              {submenu.submenus.map((nestedSubmenu, nestedIndex) =>
+                renderDropdownItem(nestedSubmenu, nestedIndex)
+              )}
               {index < submenus.length - 1 && <DropdownMenuSeparator />}
             </div>
           ) : (
-            <DropdownMenuItem key={index} asChild>
-              <Link
-                className="cursor-pointer flex items-center gap-2 py-2"
-                to={submenu.href}
-              >
-                {submenu.icon && <submenu.icon size={16} />}
-                <p className="max-w-[180px] truncate text-sm">{submenu.label}</p>
-              </Link>
-            </DropdownMenuItem>
+            renderDropdownItem(submenu, index)
           )
         )}
         <DropdownMenuArrow className="fill-border" />
