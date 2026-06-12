@@ -106,7 +106,7 @@ export default function TestimonialManagement() {
     }
 
     const handleEdit = (row) => {
-        navigate(`/website-management/content/testinomial/${row.id}`)
+        navigate(`/website-management/section-management/testinomial/${row.id}`)
     }
 
     return (
@@ -119,7 +119,7 @@ export default function TestimonialManagement() {
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/testinomial/add')}>
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/section-management/testinomial/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>

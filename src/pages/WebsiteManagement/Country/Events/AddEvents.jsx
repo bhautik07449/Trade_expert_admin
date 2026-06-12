@@ -47,7 +47,7 @@ export default function AddEvents() {
                     res = await Eventsservice.addEvents(values);
                 }
                 resetForm()
-                navigate("/website-management/country/events")
+                navigate("/website-management/section-management/events")
                 toast({
                     variant: "success",
                     title: "Events",

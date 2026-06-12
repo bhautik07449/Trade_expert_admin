@@ -71,7 +71,7 @@ export default function AddTestimonialManagement() {
 
                 if (res) {
                     resetForm()
-                    navigate("/website-management/content/testinomial")
+                    navigate("/website-management/section-management/testinomial")
                     toast({
                         variant: "success",
                         title: "Testinomial",

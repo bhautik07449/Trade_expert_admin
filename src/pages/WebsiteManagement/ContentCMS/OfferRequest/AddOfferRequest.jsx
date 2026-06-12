@@ -79,7 +79,7 @@ export default function AddOfferRequest() {
 
                 if (res) {
                     resetForm()
-                    navigate("/website-management/content/offer_req")
+                    navigate("/stock-management/offer_req")
                     toast({
                         variant: "success",
                         title: "Offer Req.",

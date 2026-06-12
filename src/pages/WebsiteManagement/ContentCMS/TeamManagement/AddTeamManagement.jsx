@@ -71,7 +71,7 @@ export default function AddTeamManagement() {
                     res = await Teamservice.addTeam(values);
                 }
                 resetForm()
-                navigate("/website-management/content/team")
+                navigate("/website-management/section-management/team")
                 toast({
                     variant: "success",
                     title: "Team",

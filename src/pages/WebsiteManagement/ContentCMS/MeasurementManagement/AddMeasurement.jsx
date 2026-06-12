@@ -42,7 +42,7 @@ export default function AddMeasurement() {
                     res = await Measurementsservice.addMeasurements(values);
                 }
                 resetForm()
-                navigate("/website-management/content/measurement")
+                navigate("/website-management/general-management/measurement")
                 toast({
                     variant: "success",
                     title: "Measurement",

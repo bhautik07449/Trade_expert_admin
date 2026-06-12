@@ -38,7 +38,7 @@ export default function AddBlogCategories() {
                     res = await Blogservice.addBlog(values);
                 }
                 resetForm()
-                navigate("/website-management/content/blog-categories")
+                navigate("/website-management/pages-management/blog-categories")
                 toast({
                     variant: "success",
                     title: "Blog Category",

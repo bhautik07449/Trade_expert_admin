@@ -43,7 +43,7 @@ export default function AddUpcomingCollaboration() {
                     res = await UpcomingCollaborationService.addUpcomingCollaboration(values);
                 }
                 resetForm()
-                navigate("/website-management/content/upcoming_collaboration")
+                navigate("/website-management/section-management/upcoming_collaboration")
                 toast({
                     variant: "success",
                     title: "Upcoming Collaboration",

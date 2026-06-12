@@ -41,7 +41,7 @@ export default function AddMembership() {
                     res = await ResourcesService.addMembership(values);
                 }
                 resetForm()
-                navigate("/website-management/country/membership")
+                navigate("/website-management/section-management/membership")
                 toast({
                     variant: "success",
                     title: "Membership Resources",

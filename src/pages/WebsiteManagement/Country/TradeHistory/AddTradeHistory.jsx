@@ -46,7 +46,7 @@ export default function AddTradeHistory() {
                     res = await TradeHistoryservice.addTradeHistory(values);
                 }
                 resetForm()
-                navigate("/website-management/country/trade-history")
+                navigate("/website-management/section-management/trade-history")
                 toast({
                     variant: "success",
                     title: "Trade History",

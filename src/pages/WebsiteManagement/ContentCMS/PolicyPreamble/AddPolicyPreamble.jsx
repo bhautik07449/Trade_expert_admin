@@ -60,7 +60,7 @@ export default function AddPolicyPreamble() {
                     res = await Policypreambleservice.addPolicypreamble(values);
                 }
                 resetForm()
-                navigate("/website-management/content/policy_preamble")
+                navigate("/website-management/section-management/policy_preamble")
                 toast({
                     variant: "success",
                     title: "Policy Preamble",

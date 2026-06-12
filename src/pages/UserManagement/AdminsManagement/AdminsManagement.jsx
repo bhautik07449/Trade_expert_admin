@@ -56,7 +56,7 @@ const AdminsManagement = () => {
     }, [selectedCountry])
 
     const handleEdit = (row) => {
-        navigate(`/user-management/admins-management/edit/${row?.id}`)
+        navigate(`/user-management/internal-users/admins-management/edit/${row?.id}`)
     }
 
     const handleDelete = async (id) => {
@@ -92,7 +92,7 @@ const AdminsManagement = () => {
                 <div className="flex items-center justify-end gap-4">
                     <div>
                         <Button className="flex items-center gap-2"
-                            onClick={() => navigate('/user-management/admins-management/add')}
+                            onClick={() => navigate('/user-management/internal-users/admins-management/add')}
                         >
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>

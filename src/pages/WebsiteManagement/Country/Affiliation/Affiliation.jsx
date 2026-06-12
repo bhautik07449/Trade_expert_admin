@@ -76,7 +76,7 @@ export default function Affiliation() {
     }
 
     const handleEdit = (row) => {
-        navigate(`/website-management/country/affiliation/edit/${row.id}`)
+        navigate(`/website-management/section-management/affiliation/edit/${row.id}`)
     }
 
     return (
@@ -89,7 +89,7 @@ export default function Affiliation() {
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/country/affiliation/add')}>
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/section-management/affiliation/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>

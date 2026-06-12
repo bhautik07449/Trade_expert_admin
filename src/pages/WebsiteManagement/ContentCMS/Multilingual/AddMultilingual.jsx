@@ -45,7 +45,7 @@ export default function AddMultilingual() {
                     res = await Multilingualservice.addMultilingual(values);
                 }
                 resetForm()
-                navigate("/website-management/content/multilingual")
+                navigate("/website-management/section-management/multilingual")
                 toast({
                     variant: "success",
                     title: "Multilingual",

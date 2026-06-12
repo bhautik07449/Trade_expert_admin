@@ -102,7 +102,7 @@ export default function AddProduct() {
 
                 if (res) {
                     resetForm()
-                    navigate("/stock-management/product_management")
+                    navigate("/stock-management/product-management")
                     toast({
                         variant: "success",
                         title: "Product",

@@ -54,7 +54,7 @@ export default function MarketDevelopment() {
     }, [])
 
     const handleEdit = (row) => {
-        navigate(`/market-development/process/edit/${row?.id}`)
+        navigate(`/website-management/section-management/process/edit/${row?.id}`)
     }
 
     const handleDelete = async (id) => {

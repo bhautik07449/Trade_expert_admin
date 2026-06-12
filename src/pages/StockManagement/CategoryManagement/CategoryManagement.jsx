@@ -212,7 +212,7 @@ const CategoryManagement = () => {
     };
 
     const handleEditProduct = (product) => {
-        navigate(`/stock-management/product_management/${product.id}`);
+        navigate(`/stock-management/category-management/${product.id}`);
     };
 
     const handleDeleteProduct = async (productToDelete) => {

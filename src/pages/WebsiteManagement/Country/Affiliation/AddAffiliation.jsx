@@ -40,7 +40,7 @@ export default function AddAffiliation() {
                     res = await ResourcesService.addAffiliation(values);
                 }
                 resetForm()
-                navigate("/website-management/country/affiliation")
+                navigate("/website-management/section-management/affiliation")
                 toast({
                     variant: "success",
                     title: "Affiliation Resources",

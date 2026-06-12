@@ -76,7 +76,7 @@ export default function AddProject() {
                     res = await IRProjectservice.addIRProject(values);
                 }
                 resetForm()
-                navigate("/website-management/content/ir_project")
+                navigate("/website-management/section-management/ir_project")
                 toast({
                     variant: "success",
                     title: "Project",

@@ -83,7 +83,7 @@ export default function AddBlogsManagement() {
 
                 if (res) {
                     resetForm()
-                    navigate("/website-management/content/blogs")
+                    navigate("/website-management/pages-management/blogs")
                     toast({
                         variant: "success",
                         title: "Blogs",

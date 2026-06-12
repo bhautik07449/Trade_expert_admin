@@ -52,7 +52,7 @@ export default function AddClientManagement() {
                     res = await Clientservice.addClient(values);
                 }
                 resetForm()
-                navigate("/website-management/content/client")
+                navigate("/website-management/section-management/client")
                 toast({
                     variant: "success",
                     title: "Client",

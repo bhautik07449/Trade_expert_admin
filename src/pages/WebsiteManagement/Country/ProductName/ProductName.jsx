@@ -71,7 +71,7 @@ export default function ProductName() {
     }
 
     const handleEdit = (row) => {
-        navigate(`/website-management/country/product-name/edit/${row.id}`)
+        navigate(`/website-management/section-management/product-name/edit/${row.id}`)
     }
 
     return (
@@ -84,7 +84,7 @@ export default function ProductName() {
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/country/product-name/add')}>
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/section-management/product-name/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>

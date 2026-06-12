@@ -44,7 +44,7 @@ export default function AddCertificationSliderManagement() {
 
                 if (res) {
                     resetForm()
-                    navigate("/website-management/content/certification-slider")
+                    navigate("/website-management/section-management/certification-slider")
                     toast({
                         variant: "success",
                         title: "Certification Slider",

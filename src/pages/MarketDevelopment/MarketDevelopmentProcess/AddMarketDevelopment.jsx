@@ -45,7 +45,7 @@ export default function AddMarketDevelopment() {
                 }
 
                 if (res?.status === 200 || res?.status === 201) {
-                    navigate("/market-development/process");
+                    navigate("/website-management/section-management/process");
 
                     toast({
                         variant: "success",

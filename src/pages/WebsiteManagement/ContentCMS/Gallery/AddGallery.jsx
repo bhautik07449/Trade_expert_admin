@@ -50,7 +50,7 @@ export default function AddGallery() {
 
                 if (res) {
                     resetForm()
-                    navigate("/website-management/content/gallery")
+                    navigate("/website-management/pages-management/gallery")
                     toast({
                         variant: "success",
                         title: "Gallery",

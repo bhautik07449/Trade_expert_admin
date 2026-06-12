@@ -70,7 +70,7 @@ export default function AddProductList() {
                     res = await CountryProductService.addProduct(values);
                 }
                 resetForm()
-                navigate("/website-management/country/product-list")
+                navigate("/website-management/section-management/product-list")
                 toast({
                     variant: "success",
                     title: "Product",

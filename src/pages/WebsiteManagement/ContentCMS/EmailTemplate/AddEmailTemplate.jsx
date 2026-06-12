@@ -42,7 +42,7 @@ export default function AddEmailTemplate() {
                     res = await Emailtemplateservice.addEmailtemplate(values);
                 }
                 resetForm()
-                navigate("/website-management/content/email-template")
+                navigate("/website-management/general-management/email-template")
                 toast({
                     variant: "success",
                     title: "Email Template",

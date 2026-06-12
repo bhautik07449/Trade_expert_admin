@@ -61,7 +61,7 @@ export default function EmailTemplate() {
     }
 
     const handleEdit = (row) => {
-        navigate(`/website-management/content/email-template/${row.id}`)
+        navigate(`/website-management/general-management/email-template/${row.id}`)
     }
 
     return (

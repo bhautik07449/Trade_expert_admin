@@ -91,7 +91,7 @@ export default function ESG() {
     }
 
     const handleEdit = (row) => {
-        navigate(`/website-management/content/esg/edit/${row.id}`)
+        navigate(`/website-management/pages-management/esg/edit/${row.id}`)
     }
 
     return (
@@ -104,7 +104,7 @@ export default function ESG() {
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/esg/add')}>
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/pages-management/esg/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>

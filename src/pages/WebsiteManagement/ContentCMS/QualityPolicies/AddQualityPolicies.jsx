@@ -98,7 +98,7 @@ export default function AddQualityPolicies() {
 
                 if (res) {
                     resetForm()
-                    navigate("/website-management/content/quality-policies")
+                    navigate("/website-management/pages-management/quality-policies")
                     toast({
                         variant: "success",
                         title: "Quality Policies",

@@ -40,7 +40,7 @@ export default function AddAbcType() {
                     res = await Abctypeservice.addAbctype(values);
                 }
                 resetForm()
-                navigate("/website-management/content/abc-type")
+                navigate("/stock-management/trade-diversity-management/type")
                 toast({
                     variant: "success",
                     title: "ABC Type",

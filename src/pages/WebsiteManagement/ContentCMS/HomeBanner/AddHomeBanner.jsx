@@ -58,7 +58,7 @@ export default function AddHomeBanner() {
 
                 if (res) {
                     resetForm()
-                    navigate("/website-management/content/home-banner")
+                    navigate("/website-management/section-management/home-banner")
                     toast({
                         variant: "success",
                         title: "Home Banner",

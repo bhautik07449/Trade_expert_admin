@@ -96,7 +96,7 @@ export default function BlogsManagement() {
     }
 
     const handleEdit = (row) => {
-        navigate(`/website-management/content/blogs/${row.id}`)
+        navigate(`/website-management/pages-management/blogs/${row.id}`)
     }
 
     const filterData = [
@@ -122,7 +122,7 @@ export default function BlogsManagement() {
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/blogs/add')}>
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/pages-management/blogs/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>

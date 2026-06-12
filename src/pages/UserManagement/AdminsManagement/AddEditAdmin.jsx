@@ -61,7 +61,7 @@ const AddEditAdmin = () => {
                     await Adminservice.addAdmin(values);
                 }
                 resetForm()
-                navigate("/user-management/admins-management")
+                navigate("/user-management/internal-users/admins-management")
                 toast({
                     variant: "success",
                     title: "Admin",

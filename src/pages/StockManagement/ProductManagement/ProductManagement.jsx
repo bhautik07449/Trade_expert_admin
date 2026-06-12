@@ -85,7 +85,7 @@ const ProductManagement = () => {
     }
 
     const handleEdit = (row) => {
-        navigate(`/stock-management/product_management/${row?.id}`)
+        navigate(`/stock-management/product-management/${row?.id}`)
     }
 
     return (
@@ -97,7 +97,7 @@ const ProductManagement = () => {
 
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-end gap-4">
-                    <div onClick={() => navigate("/stock-management/product_management/add")}>
+                    <div onClick={() => navigate("/stock-management/product-management/add")}>
                         <Button className="flex items-center gap-2">
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>

@@ -46,7 +46,7 @@ export default function AddFAQ() {
 
                 if (res) {
                     resetForm()
-                    navigate("/website-management/content/faq")
+                    navigate("/website-management/pages-management/faq")
                     toast({
                         variant: "success",
                         title: "FAQs",

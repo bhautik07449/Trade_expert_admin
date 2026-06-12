@@ -67,7 +67,7 @@ export default function AddContentOverview() {
                 }
 
                 if (res) {
-                    navigate("/website-management/country/content-overview")
+                    navigate("/website-management/section-management/content-overview")
                     toast({
                         variant: "success",
                         title: "Content Overview",

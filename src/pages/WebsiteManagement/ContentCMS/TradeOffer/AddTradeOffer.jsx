@@ -115,7 +115,7 @@ export default function AddTradeOffer() {
 
                 if (res) {
                     resetForm()
-                    navigate("/website-management/content/trade-offer")
+                    navigate("/stock-management/trade-offer")
                     toast({
                         variant: "success",
                         title: "Trade Offer",

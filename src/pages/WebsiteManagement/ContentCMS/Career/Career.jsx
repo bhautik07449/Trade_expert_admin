@@ -74,13 +74,13 @@ export default function Career() {
     }
 
     const handleShow = (row) => {
-        navigate(`/website-management/content/career/view/${row.id}`)
+        navigate(`/user-management/internal-users/service_personnel/view/${row.id}`)
     }
 
     return (
         <div className="grid gap-4 lg:gap-6">
             <div className="flex items-center justify-between gap-2">
-                <h3 className="h4-bold">Career</h3>
+                <h3 className="h4-bold">Service Personnel</h3>
                 <h4 className="h6-bold">Total: {list.length}</h4>
             </div>
 

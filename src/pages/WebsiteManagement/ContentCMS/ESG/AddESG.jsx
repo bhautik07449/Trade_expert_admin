@@ -62,7 +62,7 @@ export default function AddESG() {
                     res = await ESGService.addESG(values);
                 }
                 resetForm()
-                navigate("/website-management/content/esg")
+                navigate("/website-management/pages-management/esg")
                 toast({
                     variant: "success",
                     title: "ESG Saved",

@@ -81,7 +81,7 @@ export default function FAQ() {
     }
 
     const handleEdit = (row) => {
-        navigate(`/website-management/content/faq/${row.id}`)
+        navigate(`/website-management/pages-management/faq/${row.id}`)
     }
 
     return (
@@ -94,7 +94,7 @@ export default function FAQ() {
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/faq/add')}>
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/pages-management/faq/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>

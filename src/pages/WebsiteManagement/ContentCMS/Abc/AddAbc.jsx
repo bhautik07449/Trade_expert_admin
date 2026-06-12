@@ -70,7 +70,7 @@ export default function AddAbc() {
                     res = await AbcService.addAbc(values);
                 }
                 resetForm()
-                navigate("/website-management/content/abc")
+                navigate("/stock-management/trade-diversity-management/name")
                 toast({
                     variant: "success",
                     title: "Offer Type",

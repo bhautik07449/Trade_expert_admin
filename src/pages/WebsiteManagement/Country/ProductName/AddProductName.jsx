@@ -40,7 +40,7 @@ export default function AddProductName() {
                     res = await CountryProductService.addProductName(values);
                 }
                 resetForm()
-                navigate("/website-management/country/product-name")
+                navigate("/website-management/section-management/product-name")
                 toast({
                     variant: "success",
                     title: "Product Name",

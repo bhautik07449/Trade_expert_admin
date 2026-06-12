@@ -40,7 +40,7 @@ export default function AddOfferType() {
                     res = await Tradetypeservice.addTradetype(values);
                 }
                 resetForm()
-                navigate("/website-management/content/offer-type")
+                navigate("/stock-management/offer-type")
                 toast({
                     variant: "success",
                     title: "Offer Type",

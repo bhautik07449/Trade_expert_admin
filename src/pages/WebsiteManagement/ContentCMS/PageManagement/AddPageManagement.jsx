@@ -54,7 +54,7 @@ export default function AddPageManagement() {
                     res = await Pageservice.addPage(values);
                 }
                 resetForm()
-                navigate("/website-management/content/pages")
+                navigate("/website-management/general-management/pages")
                 toast({
                     variant: "success",
                     title: "Pages",

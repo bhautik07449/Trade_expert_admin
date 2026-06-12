@@ -75,7 +75,7 @@ const AddEditSuppliers = () => {
                 }
 
                 if (response) {
-                    navigate("/user-management/suppliers-management")
+                    navigate("/user-management/scm/suppliers")
                     toast({
                         variant: "success",
                         title: "Suppliers",

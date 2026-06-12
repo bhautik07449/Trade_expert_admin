@@ -43,7 +43,7 @@ export default function AddFinacialService() {
                     res = await FinancialServiceservice.addFinancialService(values);
                 }
                 resetForm()
-                navigate("/website-management/content/finacial_service")
+                navigate("/website-management/section-management/finacial_service")
                 toast({
                     variant: "success",
                     title: "Finacial Service",

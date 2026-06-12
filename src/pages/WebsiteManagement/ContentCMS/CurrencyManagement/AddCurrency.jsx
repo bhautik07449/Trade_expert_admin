@@ -49,7 +49,7 @@ export default function AddCurrency() {
                     res = await Cuurrencyservice.addCurrency(values);
                 }
                 resetForm()
-                navigate("/website-management/content/currency")
+                navigate("/website-management/general-management/currency")
                 toast({
                     variant: "success",
                     title: "Currency",

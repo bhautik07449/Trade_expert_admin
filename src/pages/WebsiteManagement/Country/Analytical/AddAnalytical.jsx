@@ -41,7 +41,7 @@ export default function AddAnalytical() {
                     res = await Analyticalservice.addAnalytical(values);
                 }
                 resetForm()
-                navigate("/website-management/country/analytical")
+                navigate("/website-management/section-management/analytical")
                 toast({
                     variant: "success",
                     title: "Analytical",

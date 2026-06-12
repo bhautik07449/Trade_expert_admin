@@ -99,7 +99,7 @@ export default function AddBrandManagement() {
 
                 if (res) {
                     resetForm()
-                    navigate("/website-management/content/brands")
+                    navigate("/stock-management/brands-management")
                     toast({
                         variant: "success",
                         title: "Brands",

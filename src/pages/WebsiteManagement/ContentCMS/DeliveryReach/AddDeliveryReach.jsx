@@ -40,7 +40,7 @@ export default function AddDeliveryReach() {
                     res = await Deliveryreachservice.addDeliveryreach(values);
                 }
                 resetForm()
-                navigate("/website-management/content/delivery_reach")
+                navigate("/website-management/section-management/delivery_reach")
                 toast({
                     variant: "success",
                     title: "Delivery Reach",

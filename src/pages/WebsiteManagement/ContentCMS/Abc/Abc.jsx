@@ -78,7 +78,7 @@ export default function Abc() {
     }
 
     const handleEdit = (row) => {
-        navigate(`/website-management/content/abc/${row.id}`)
+        navigate(`/stock-management/trade-diversity-management/name/${row.id}`)
     }
 
     return (
@@ -91,7 +91,7 @@ export default function Abc() {
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-end gap-4">
                     <div className="flex gap-3 items-center">
-                        <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/content/abc/add')}>
+                        <Button className="flex items-center gap-2" onClick={() => navigate('/stock-management/trade-diversity-management/name/add')}>
                             <CircleFadingPlus className="size-5" />
                             <span className="max-lg:hidden uppercase"> Add</span>
                         </Button>
