@@ -47,6 +47,15 @@ const update = async (payload, id) => {
     }
 }
 
+const updateHierarchy = async (payload) => {
+    try {
+        const response = serverCall.patch('/categories/hierarchy/update', payload)
+        return response
+    } catch (error) {
+        throw error
+    }
+}
+
 const deleteCat = async (id) => {
     try {
         const response = serverCall.delete(`/categories/${id}`)
@@ -57,7 +66,7 @@ const deleteCat = async (id) => {
 }
 
 const Categoriesservice = {
-    getList, create, update, deleteCat, getFlat, getById
+    getList, create, update, deleteCat, getFlat, getById, updateHierarchy
 };
 
 export default Categoriesservice;

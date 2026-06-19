@@ -136,12 +136,12 @@ export default function BasicInfo({ formik, categories, flatList }) {
                 </div>
 
                 <CommonBox
-                    label="Status"
-                    placeholders="Status"
+                    label="service type"
+                    placeholders="service type"
                     options={[
-                        { label: "Indenting", value: "Indenting" },
-                        { label: "On-behalf", value: "On-behalf" },
-                        { label: "Market-Development", value: "Market-Development" }
+                        { label: "Controlled Alone", value: "Controlled Alone" },
+                        { label: "Consolidated", value: "Consolidated" },
+                        { label: "Composite", value: "Composite" }
                     ]}
                     name="status"
                     value={formik.values.status}

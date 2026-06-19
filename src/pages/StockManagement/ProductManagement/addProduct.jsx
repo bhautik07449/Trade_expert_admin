@@ -79,7 +79,7 @@ export default function AddProduct() {
         season: data ? data?.season : 'All',
         country: data ? data?.country : "",
         offer_type: data ? data?.offer_type?.id : "",
-        status: data ? data?.status : 'Indenting',
+        status: data ? data?.status : 'Composite',
     };
 
     const formik = useFormik({
