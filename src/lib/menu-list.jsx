@@ -343,7 +343,7 @@ export function getMenuList(pathname) {
               submenus: [
                 {
                   href: "/website-management/section-management/product-name",
-                  label: "Product Name",
+                  label: "country diversity ",
                   active: pathname.includes("/website-management/section-management/product-name"),
                   icon: List,
                 },
