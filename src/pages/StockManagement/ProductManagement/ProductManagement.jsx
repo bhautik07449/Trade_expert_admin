@@ -9,6 +9,8 @@ import { getStatus } from "../../../lib/funcation";
 import { formatDate } from "../../../common/constants";
 import { toast } from "../../../components/ui/use-toast";
 import { useSelector } from "react-redux";
+import { FileUp } from "lucide-react";
+import ProductExcelUpload from "./ProductExcelUpload";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -38,6 +40,7 @@ const columns = [
 
 const ProductManagement = () => {
     const [list, setList] = useState([]);
+    const [isUploadOpen, setIsUploadOpen] = useState(false);
     const navigate = useNavigate();
     const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
@@ -97,6 +100,10 @@ const ProductManagement = () => {
 
             <Card className="p-4 grid gap-4 lg:gap-6">
                 <div className="flex items-center justify-end gap-4">
+                    <Button variant="outline" className="flex items-center gap-2" onClick={() => setIsUploadOpen(true)}>
+                        <FileUp className="size-5" />
+                        <span className="max-lg:hidden uppercase"> Upload Excel</span>
+                    </Button>
                     <div onClick={() => navigate("/stock-management/product-management/add")}>
                         <Button className="flex items-center gap-2">
                             <CircleFadingPlus className="size-5" />
@@ -114,6 +121,12 @@ const ProductManagement = () => {
                     onDelete={handleDelete}
                 />
             </Card>
+
+            <ProductExcelUpload 
+                open={isUploadOpen} 
+                onOpenChange={setIsUploadOpen} 
+                onSuccess={() => getList(selectedCountry)} 
+            />
         </div>
     );
 };
