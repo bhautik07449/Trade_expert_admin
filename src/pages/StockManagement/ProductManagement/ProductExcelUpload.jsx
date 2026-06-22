@@ -17,10 +17,19 @@ const ProductExcelUpload = ({ open, onOpenChange, onSuccess }) => {
     const { categories } = useSelector((state) => state.categories);
     const { flatList: measurements } = useSelector((state) => state.measurements);
 
+    const resetDialog = () => {
+        setFileData(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    };
+
     useEffect(() => {
         if (open) {
             dispatch(fetchCategories());
             dispatch(fetchFlatMeasurement());
+        } else {
+            resetDialog();
         }
     }, [open, dispatch]);
 
@@ -179,16 +188,8 @@ const ProductExcelUpload = ({ open, onOpenChange, onSuccess }) => {
         }
     };
 
-    const resetDialog = () => {
-        setFileData(null);
-        if (fileInputRef.current) {
-            fileInputRef.current.value = "";
-        }
-    }
-
     return (
         <Dialog open={open} onOpenChange={(val) => {
-            if (!val) resetDialog();
             onOpenChange(val);
         }}>
             <DialogContent className="max-w-4xl max-h-[80vh] flex flex-col">
