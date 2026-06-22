@@ -1,4 +1,4 @@
-import { Award, BadgeCheck, BarChart3, BookOpen, Boxes, Briefcase, BriefcaseBusiness, CalendarDays, CircleHelp, ClipboardList, CreditCard, Crown, Database, DollarSign, FileBox, FileCheck2, FileEdit, FileSpreadsheet, FileText, FileX2, Flag, Folder, FolderTree, Globe, Handshake, HandshakeIcon, HelpCircle, Images, Landmark, Languages, LayoutDashboard, Leaf, List, Mail, MapPinned, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, PieChart, Projector, ReceiptText, Ruler, ScrollText, Settings, ShieldCheck, TableOfContentsIcon, Tag, Tags, TrendingUp, Truck, User, Users, Workflow } from "lucide-react";
+import { Award, BadgeCheck, BarChart3, BookOpen, Boxes, Briefcase, BriefcaseBusiness, CalendarDays, CircleHelp, ClipboardList, Contact, CreditCard, Crown, Database, DollarSign, FileBox, FileCheck2, FileEdit, FileSpreadsheet, FileText, FileX2, Flag, Folder, FolderTree, Globe, Handshake, HandshakeIcon, HelpCircle, Images, Landmark, Languages, LayoutDashboard, Leaf, List, Mail, MapPinned, Megaphone, MessageSquare, MessageSquareQuote, Package, PackageSearch, Percent, Phone, PieChart, Projector, ReceiptText, Ruler, ScrollText, Settings, ShieldCheck, TableOfContentsIcon, Tag, Tags, TrendingUp, Truck, User, Users, Workflow } from "lucide-react";
 
 export function getMenuList(pathname) {
 
@@ -384,6 +384,12 @@ export function getMenuList(pathname) {
               label: "Data",
               active: pathname.includes("/website-management/section-management/data"),
               icon: Database,
+            },
+            {
+              href: "/website-management/section-management/contact",
+              label: "Contact",
+              active: pathname.includes("/website-management/section-management/contact"),
+              icon: Contact,
             }
           ],
         },

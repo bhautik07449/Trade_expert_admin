@@ -107,6 +107,8 @@ import AddFinacialService from "../pages/WebsiteManagement/ContentCMS/FinacialSe
 import FinacialService from "../pages/WebsiteManagement/ContentCMS/FinacialService/FinacialService";
 import UpcomingCollaboration from "../pages/WebsiteManagement/ContentCMS/UpcomingCollaboration/UpcomingCollaboration";
 import AddUpcomingCollaboration from "../pages/WebsiteManagement/ContentCMS/UpcomingCollaboration/AddUpcomingCollaboration";
+import Contact from "../pages/WebsiteManagement/ContentCMS/Contact/Contact";
+import AddContact from "../pages/WebsiteManagement/ContentCMS/Contact/AddContact";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -850,6 +852,21 @@ const routes = (isLoggedIn) => [
       {
         element: <AddUpcomingCollaboration />,
         path: "/website-management/section-management/upcoming_collaboration/edit/:id",
+        index: true,
+      },
+      {
+        element: <Contact />,
+        path: "/website-management/section-management/contact",
+        index: true,
+      },
+      {
+        element: <AddContact />,
+        path: "/website-management/section-management/contact/add",
+        index: true,
+      },
+      {
+        element: <AddContact />,
+        path: "/website-management/section-management/contact/edit/:id",
         index: true,
       },
     ],
