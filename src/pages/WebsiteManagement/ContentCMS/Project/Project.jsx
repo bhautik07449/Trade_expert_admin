@@ -28,6 +28,7 @@ const columns = [
     { field: "country", headerName: "Country", flex: 2 },
     { field: "category", headerName: "Category", flex: 2 },
     { field: "subcategory", headerName: "Sub Category", flex: 2 },
+    { field: "status", headerName: "Status ", flex: 1 },
     { field: "createdAt", headerName: "Created", flex: 1 },
     { field: "lastUpdatedAt", headerName: "Updated", flex: 1 },
 ]
@@ -94,7 +95,7 @@ export default function Project() {
     return (
         <div className="grid gap-4 lg:gap-6">
             <div className="flex items-center justify-between gap-2">
-                <h3 className="h4-bold">Project</h3>
+                <h3 className="h4-bold">Available Project</h3>
                 <h4 className="h6-bold">Total: {list?.length}</h4>
             </div>
 

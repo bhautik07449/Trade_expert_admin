@@ -48,9 +48,9 @@ export default function AddProduct() {
         slug: Yup.string().required("Slug is required"),
         category: Yup.string().required("Category is required"),
         // subCategory: Yup.string().required("Sub Category is required"),
-        pageTitle: Yup.string().required("Page title is required"),
-        metaKeywords: Yup.string().required("Meta keywords required"),
-        metaDescription: Yup.string().required("Meta description required"),
+        // pageTitle: Yup.string().required("Page title is required"),
+        // metaKeywords: Yup.string().required("Meta keywords required"),
+        // metaDescription: Yup.string().required("Meta description required"),
         seasonalChart: Yup.string().required("Seasonal chart required"),
     });
 
@@ -62,9 +62,6 @@ export default function AddProduct() {
         slug: data ? data?.slug : "",
         category: data ? data?.category?.id : "",
         subCategory: data ? data?.subcategory?.id : "",
-        newArrival: data ? data?.newArrival : true,
-        trending: data ? data?.trending : false,
-        featured: data ? data?.featured : false,
         description: data ? data?.description : "",
         policy: data ? data?.policy : "",
         seasonalChart: data ? data?.seasonalChart : "",
@@ -182,7 +179,7 @@ export default function AddProduct() {
                             <TabsTrigger type="button" value="details">Details</TabsTrigger>
                             <TabsTrigger type="button" value="image">Image</TabsTrigger>
                             <TabsTrigger type="button" value="offer">Offer</TabsTrigger>
-                            <TabsTrigger type="button" value="seo">SEO</TabsTrigger>
+                            <TabsTrigger type="button" value="seo">SEO on page</TabsTrigger>
                         </TabsList>
 
                         <TabsContent value="basic_info">

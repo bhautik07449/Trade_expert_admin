@@ -38,7 +38,7 @@ export default function AbcType() {
         } catch (error) {
             toast({
                 variant: "error",
-                title: "Abc Type List Error",
+                title: "Trade Diversity Type List Error",
                 description: error?.response?.data?.message || "Something went wrong",
             });
         }
@@ -56,14 +56,14 @@ export default function AbcType() {
                 getData(selectedCountry)
                 toast({
                     variant: "success",
-                    title: "Abc Type Deleted",
-                    description: res?.data?.message || "Abc Type has been deleted successfully",
+                    title: "Trade Diversity Type Deleted",
+                    description: res?.data?.message || "Trade Diversity Type has been deleted successfully",
                 });
             }
         } catch (error) {
             toast({
                 variant: "error",
-                title: "Delete Abc Type Error",
+                title: "Delete Trade Diversity Type Error",
                 description: error?.response?.data?.message || "Something went wrong",
             });
         }
@@ -77,7 +77,7 @@ export default function AbcType() {
     return (
         <div className="grid gap-4 lg:gap-6">
             <div className="flex items-center justify-between gap-2">
-                <h3 className="h4-bold">ABC Types</h3>
+                <h3 className="h4-bold">Trade Diversity Type</h3>
                 <h4 className="h6-bold">Total: {list?.length}</h4>
             </div>
 

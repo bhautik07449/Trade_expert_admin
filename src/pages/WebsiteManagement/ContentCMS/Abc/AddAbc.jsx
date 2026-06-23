@@ -165,7 +165,7 @@ export default function AddAbc() {
         <div className="grid gap-6">
             <div className="grid gap-4">
                 <BackPath />
-                <h3 className="h5-bold">{id ? "Edit" : "Add"} ABC</h3>
+                <h3 className="h5-bold">{id ? "Edit" : "Add"} Trade Diversity</h3>
             </div>
 
             <Card className="p-6">
@@ -173,8 +173,8 @@ export default function AddAbc() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-5">
                             <CommonBox
-                                label="ABC Type"
-                                placeholders="Select ABC Type"
+                                label="Trade Diversity Type"
+                                placeholders="Select Trade Diversity Type"
                                 options={abctypeOptions}
                                 name="abc_type"
                                 value={formik.values.abc_type}

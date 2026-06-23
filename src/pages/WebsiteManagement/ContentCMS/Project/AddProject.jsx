@@ -38,7 +38,8 @@ export default function AddProject() {
         category: list ? list?.category?.id : "",
         subcategory: list ? list?.subcategory?.id : "",
         country: list ? list?.country : "",
-        specification: list?.specification || []
+        specification: list?.specification || [],
+        status: list ? list?.status : "",
     };
 
     const validationSchema = Yup.object().shape({
@@ -139,6 +140,12 @@ export default function AddProject() {
         })) || [];
     }, [selectedCategory]);
 
+    const status = [
+        {label: "To be Initiated", value: "To be Initiated"},
+        {label: "Operational", value: "Operational"},
+        {label: "To be Re-opened", value: "To be Re-opened"},
+    ]
+
     return (
         <div className="grid gap-6">
             <div className="grid gap-4">
@@ -170,6 +177,16 @@ export default function AddProject() {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.description && formik.errors.description}
+                            />
+
+                            <CommonBox
+                                label="Status"
+                                placeholders="Select Status"
+                                options={status}
+                                name="status"
+                                value={formik.values.status}
+                                onChange={(value) => { formik.setFieldValue("status", value); }}
+                                error={formik.touched.status && formik.errors.status}
                             />
 
                             <CountrySelection formik={formik} />

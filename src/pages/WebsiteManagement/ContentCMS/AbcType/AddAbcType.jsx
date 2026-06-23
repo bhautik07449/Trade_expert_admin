@@ -43,14 +43,14 @@ export default function AddAbcType() {
                 navigate("/stock-management/trade-diversity-management/type")
                 toast({
                     variant: "success",
-                    title: "ABC Type",
+                    title: "Trade Diversity Type",
                     description: res?.data?.message,
                 });
             } catch (error) {
                 toast({
                     variant: "error",
-                    title: "Abc Type Failed",
-                    description: error?.response?.data?.message || "Abc Type Failed resubmit",
+                    title: "Trade Diversity Type Failed",
+                    description: error?.response?.data?.message || "Trade Diversity Type Failed resubmit",
                 });
             } finally {
                 setSubmitting(false);
@@ -70,7 +70,7 @@ export default function AddAbcType() {
             } catch (error) {
                 toast({
                     variant: "error",
-                    title: "Abc Type Details Error",
+                    title: "Trade Diversity Type Details Error",
                     description: error?.response?.data?.message || "Something went wrong",
                 });
             }
@@ -85,7 +85,7 @@ export default function AddAbcType() {
         <div className="grid gap-6">
             <div className="grid gap-4">
                 <BackPath />
-                <h3 className="h5-bold">{id ? "Edit" : "Add"} Abc Type</h3>
+                <h3 className="h5-bold">{id ? "Edit" : "Add"} Trade Diversity Type</h3>
             </div>
 
             <Card className="p-6">

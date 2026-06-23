@@ -108,30 +108,33 @@ export default function BasicInfo({ formik, categories, flatList }) {
                     error={formik.touched.subCategory && formik.errors.subCategory}
                 />
 
-                <div className="flex justify-between">
-                    <div className="flex items-center gap-2 mt-6">
-                        <Checkbox
-                            id="new-arrival-checkbox"
-                            checked={formik.values.newArrival}
-                            onCheckedChange={(value) => formik.setFieldValue("newArrival", value)}
-                        />
-                        <Label htmlFor="new-arrival-checkbox">New Arrival</Label>
-                    </div>
-                    <div className="flex items-center gap-2 mt-6">
-                        <Checkbox
-                            id="trending-checkbox"
-                            checked={formik.values.trending}
-                            onCheckedChange={(value) => formik.setFieldValue("trending", value)}
-                        />
-                        <Label htmlFor="trending-checkbox">Trending</Label>
-                    </div>
-                    <div className="flex items-center gap-2 mt-6">
-                        <Checkbox
-                            id="featured-checkbox"
-                            checked={formik.values.featured}
-                            onCheckedChange={(value) => formik.setFieldValue("featured", value)}
-                        />
-                        <Label htmlFor="featured-checkbox">Featured</Label>
+                <div className="mt-4">
+                    <Label className="mb-2 block">Season</Label>
+                    <div className="flex gap-6">
+                        <div className="flex items-center gap-2">
+                            <Checkbox
+                                id="season-all"
+                                checked={formik.values.season === 'All'}
+                                onCheckedChange={() => formik.setFieldValue("season", "All")}
+                            />
+                            <Label htmlFor="season-all">New Arrival</Label>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Checkbox
+                                id="season-current"
+                                checked={formik.values.season === 'Current'}
+                                onCheckedChange={() => formik.setFieldValue("season", "Current")}
+                            />
+                            <Label htmlFor="season-current">Trending</Label>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Checkbox
+                                id="season-upcoming"
+                                checked={formik.values.season === 'Upcoming'}
+                                onCheckedChange={() => formik.setFieldValue("season", "Upcoming")}
+                            />
+                            <Label htmlFor="season-upcoming">Featured</Label>
+                        </div>
                     </div>
                 </div>
 

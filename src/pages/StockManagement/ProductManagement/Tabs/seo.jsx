@@ -34,36 +34,6 @@ export default function SEO({ formik }) {
                 onChange={formik.handleChange}
                 error={formik.touched.metaDescription && formik.errors.metaDescription}
             />
-
-            <div className="mt-4">
-                <Label className="mb-2 block">Season</Label>
-                <div className="flex gap-6">
-                    <div className="flex items-center gap-2">
-                        <Checkbox
-                            id="season-all"
-                            checked={formik.values.season === 'All'}
-                            onCheckedChange={() => formik.setFieldValue("season", "All")}
-                        />
-                        <Label htmlFor="season-all">All</Label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Checkbox
-                            id="season-current"
-                            checked={formik.values.season === 'Current'}
-                            onCheckedChange={() => formik.setFieldValue("season", "Current")}
-                        />
-                        <Label htmlFor="season-current">Current</Label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Checkbox
-                            id="season-upcoming"
-                            checked={formik.values.season === 'Upcoming'}
-                            onCheckedChange={() => formik.setFieldValue("season", "Upcoming")}
-                        />
-                        <Label htmlFor="season-upcoming">Upcoming</Label>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 }

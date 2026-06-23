@@ -1,4 +1,5 @@
 import { Card } from "../../../components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../components/ui/tabs";
 import BackPath from "../../../components/common/BackPath";
 import CommonBox from "../../../components/common/common_box";
 import { CommonTextField } from "../../../components/widgets/common_textField";
@@ -39,9 +40,9 @@ export default function AddCategory() {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
         slug: Yup.string().required("Slug is required"),
-        pageTitle: Yup.string().required("Page Title is required"),
-        metaKeyword: Yup.string().required("Meta Keyword is required"),
-        metaDescription: Yup.string().required("Meta Description is required"),
+        // pageTitle: Yup.string().required("Page Title is required"),
+        // metaKeyword: Yup.string().required("Meta Keyword is required"),
+        // metaDescription: Yup.string().required("Meta Description is required"),
         country: Yup.string().required("Country is required"),
         status: Yup.string().required("Status is required")
     });
@@ -146,89 +147,101 @@ export default function AddCategory() {
 
             <Card className="p-6">
                 <form className="grid gap-6" onSubmit={formik.handleSubmit}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <CommonTextField
-                            label="Name"
-                            placeholder="Name"
-                            name="name"
-                            value={formik.values.name}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.name && formik.errors.name}
-                        />
+                    <Tabs defaultValue="basic" className="w-full">
+                        <TabsList>
+                            <TabsTrigger value="basic">Basic Information</TabsTrigger>
+                            <TabsTrigger value="seo">SEO on page</TabsTrigger>
+                        </TabsList>
+                        
+                        <TabsContent value="basic">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <CommonTextField
+                                    label="Name"
+                                    placeholder="Name"
+                                    name="name"
+                                    value={formik.values.name}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    error={formik.touched.name && formik.errors.name}
+                                />
 
-                        <CommonTextField
-                            label="Slug"
-                            placeholder="Slug"
-                            name="slug"
-                            value={formik.values.slug}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.slug && formik.errors.slug}
-                        />
+                                <CommonTextField
+                                    label="Slug"
+                                    placeholder="Slug"
+                                    name="slug"
+                                    value={formik.values.slug}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    error={formik.touched.slug && formik.errors.slug}
+                                />
 
-                        <CommonTextField
-                            label="Page Title"
-                            placeholder="Page Title"
-                            name="pageTitle"
-                            value={formik.values.pageTitle}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.pageTitle && formik.errors.pageTitle}
-                        />
+                                <CommonTextField
+                                    label="Page Title"
+                                    placeholder="Page Title"
+                                    name="pageTitle"
+                                    value={formik.values.pageTitle}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    error={formik.touched.pageTitle && formik.errors.pageTitle}
+                                />
 
-                        <CommonTextField
-                            label="Meta Key Word"
-                            placeholder="Meta Key Word"
-                            name="metaKeyword"
-                            value={formik.values.metaKeyword}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.metaKeyword && formik.errors.metaKeyword}
-                        />
+                                <CommonBox
+                                    label="Parent Category"
+                                    placeholders="Select Category"
+                                    options={parentOptions}
+                                    value={formik.values.parent}
+                                    onChange={(value) => {
+                                        formik.setFieldValue("parent", value);
+                                        if (value) {
+                                            const selectedParent = flatList.find((item) => item.id === value);
+                                            if (selectedParent && selectedParent.country) {
+                                                formik.setFieldValue("country", selectedParent.country);
+                                            }
+                                        }
+                                    }}
+                                    error={formik.touched.parent && formik.errors.parent}
+                                />
 
-                        <CommonTextField
-                            label="Meta Description"
-                            placeholder="Meta Description"
-                            name="metaDescription"
-                            value={formik.values.metaDescription}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.metaDescription && formik.errors.metaDescription}
-                        />
+                                <CountrySelection formik={formik} />
 
-                        <CommonBox
-                            label="Parent Category"
-                            placeholders="Select Category"
-                            options={parentOptions}
-                            value={formik.values.parent}
-                            onChange={(value) => {
-                                formik.setFieldValue("parent", value);
-                                if (value) {
-                                    const selectedParent = flatList.find((item) => item.id === value);
-                                    if (selectedParent && selectedParent.country) {
-                                        formik.setFieldValue("country", selectedParent.country);
-                                    }
-                                }
-                            }}
-                            error={formik.touched.parent && formik.errors.parent}
-                        />
+                                <CommonBox
+                                    label="Status"
+                                    placeholders="Select Category Status"
+                                    options={[
+                                        { label: "Active", value: "active" },
+                                        { label: "Blocked", value: "blocked" }
+                                    ]}
+                                    value={formik.values.status}
+                                    onChange={(value) => formik.setFieldValue("status", value)}
+                                    error={formik.touched.status && formik.errors.status}
+                                />
+                            </div>
+                        </TabsContent>
 
-                        <CountrySelection formik={formik} />
+                        <TabsContent value="seo">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <CommonTextField
+                                    label="Meta Key Word"
+                                    placeholder="Meta Key Word"
+                                    name="metaKeyword"
+                                    value={formik.values.metaKeyword}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    error={formik.touched.metaKeyword && formik.errors.metaKeyword}
+                                />
 
-                        <CommonBox
-                            label="Status"
-                            placeholders="Select Category Status"
-                            options={[
-                                { label: "Active", value: "active" },
-                                { label: "Blocked", value: "blocked" }
-                            ]}
-                            value={formik.values.status}
-                            onChange={(value) => formik.setFieldValue("status", value)}
-                            error={formik.touched.status && formik.errors.status}
-                        />
-
-                    </div>
+                                <CommonTextField
+                                    label="Meta Description"
+                                    placeholder="Meta Description"
+                                    name="metaDescription"
+                                    value={formik.values.metaDescription}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    error={formik.touched.metaDescription && formik.errors.metaDescription}
+                                />
+                            </div>
+                        </TabsContent>
+                    </Tabs>
 
                     <div className="flex justify-end gap-3 pt-5 border-t">
                         <CommonButton type="button" variant="outline">

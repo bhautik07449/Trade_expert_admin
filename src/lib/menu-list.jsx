@@ -149,7 +149,7 @@ export function getMenuList(pathname) {
           submenus: [
             {
               href: "/stock-management/trade-diversity-management/type",
-              label: "ABC Type",
+              label: "Trade Diversity Type",
               active: pathname.includes("/stock-management/trade-diversity-management/type"),
               icon: Tag,
             },
@@ -301,7 +301,7 @@ export function getMenuList(pathname) {
             },
             {
               href: "/website-management/section-management/ir_project",
-              label: "Project",
+              label: "Available Project",
               active: pathname.includes("/website-management/section-management/ir_project"),
               icon: Projector,
             },
@@ -337,19 +337,19 @@ export function getMenuList(pathname) {
             },
             {
               href: "/website-management/section-management/product",
-              label: "Product",
+              label: "Country Diversity",
               active: pathname.includes("/website-management/section-management/product"),
               icon: Package,
               submenus: [
                 {
                   href: "/website-management/section-management/product-name",
-                  label: "country diversity ",
+                  label: "Country Diversity Type",
                   active: pathname.includes("/website-management/section-management/product-name"),
                   icon: List,
                 },
                 {
                   href: "/website-management/section-management/product-list",
-                  label: "Product List",
+                  label: "Products Listed",
                   active: pathname.includes("/website-management/section-management/product-list"),
                   icon: Tag,
                 }

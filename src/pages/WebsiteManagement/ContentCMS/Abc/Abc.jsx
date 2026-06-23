@@ -47,7 +47,7 @@ export default function Abc() {
         } catch (error) {
             toast({
                 variant: "error",
-                title: "Abc List Error",
+                title: "Trade Diversity List Error",
                 description: error?.response?.data?.message || "Something went wrong",
             });
         }
@@ -64,14 +64,14 @@ export default function Abc() {
                 getList(selectedCountry)
                 toast({
                     variant: "success",
-                    title: "Abc Deleted",
-                    description: res?.data?.message || "Abc has been deleted successfully",
+                    title: "Trade Diversity Deleted",
+                    description: res?.data?.message || "Trade Diversity has been deleted successfully",
                 });
             }
         } catch (error) {
             toast({
                 variant: "error",
-                title: "Delete Abc Error",
+                title: "Delete Trade Diversity Error",
                 description: error?.response?.data?.message || "Something went wrong",
             });
         }
@@ -84,7 +84,7 @@ export default function Abc() {
     return (
         <div className="grid gap-4 lg:gap-6">
             <div className="flex items-center justify-between gap-2">
-                <h3 className="h4-bold">ABC</h3>
+                <h3 className="h4-bold">Trade Diversity</h3>
                 <h4 className="h6-bold">Total: {list.length}</h4>
             </div>
 
