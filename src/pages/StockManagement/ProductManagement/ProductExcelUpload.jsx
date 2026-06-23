@@ -56,15 +56,15 @@ const ProductExcelUpload = ({ open, onOpenChange, onSuccess }) => {
                 const wsname = wb.SheetNames[0];
                 const ws = wb.Sheets[wsname];
                 const data = xlsx.utils.sheet_to_json(ws);
-                
+
                 // Validate data
                 const validatedData = data.map((row) => {
                     const subcat = row.subCategory || row.subcategory;
                     let reasons = [];
-                    
+
                     if (!row.name) reasons.push("Missing name");
                     if (!row.price) reasons.push("Missing price");
-                    
+
                     if (!row.category) reasons.push("Missing category");
                     else if (!allCategories.some(c => String(c.name).toLowerCase() === String(row.category).toLowerCase() || c.id === Number(row.category))) {
                         reasons.push(`Category '${row.category}' not found`);
@@ -87,7 +87,7 @@ const ProductExcelUpload = ({ open, onOpenChange, onSuccess }) => {
                         reason: isValid ? "" : reasons.join(" | ")
                     };
                 });
-                
+
                 setFileData(validatedData);
             } catch (error) {
                 toast({
@@ -120,28 +120,51 @@ const ProductExcelUpload = ({ open, onOpenChange, onSuccess }) => {
 
         setIsUploading(true);
 
+        const parseKeyValue = (str) => {
+            if (!str) return [];
+            try {
+                const parsed = JSON.parse(str);
+                if (Array.isArray(parsed)) return parsed;
+            } catch (e) {}
+            return [{ key: "Details", value: String(str) }];
+        };
+
         try {
-            const payloads = validRows.map(row => ({
-                name: row.name,
-                price: row.price,
-                category: row.category, 
-                subCategory: row.subCategory || row.subcategory,
-                measure: row.measure,
-                teriff: row.teriff || "",
-                slug: row.slug || row.name?.toLowerCase().replace(/\s+/g, '-'),
-                pageTitle: row.pageTitle || row.name,
-                metaKeywords: row.metaKeywords || "",
-                metaDescription: row.metaDescription || "",
-                seasonalChart: row.seasonalChart || "",
-                description: row.description || "",
-                newArrival: true,
-                status: "Composite",
-                offer_type: row.offer_type || "",
-                country: row.country || ""
-            }));
-            
+            const payloads = validRows.map(row => {
+                const shipmentStr = row.shipmentmanual || row.shipmentship;
+                const techStr = row.technicalSpecification || row.technicalspecification;
+                const comStr = row.commercialAspect || row.commercialaspect;
+
+                return {
+                    name: row.name,
+                    price: row.price,
+                    category: row.category, 
+                    subCategory: row.subCategory || row.subcategory,
+                    measure: row.measure,
+                    teriff: row.teriff || "",
+                    slug: row.slug || row.name?.toLowerCase().replace(/\s+/g, '-'),
+                    pageTitle: row.pageTitle || row.name,
+                    metaKeywords: row.metaKeywords || "",
+                    metaDescription: row.metaDescription || "",
+                    seasonalChart: row.seasonalChart || "",
+                    description: row.description || "",
+                    newArrival: true,
+                    status: row.status || "Composite",
+                    offer_type: row.offer_type || "",
+                    country: row.country || "",
+                    images: row.images ? (typeof row.images === 'string' ? row.images.split(',').map(s => s.trim()) : row.images) : [],
+                    shipmentmanual: typeof shipmentStr === 'string' ? parseKeyValue(shipmentStr) : (shipmentStr || []),
+                    technicalSpecification: typeof techStr === 'string' ? parseKeyValue(techStr) : (techStr || []),
+                    commercialAspect: typeof comStr === 'string' ? parseKeyValue(comStr) : (comStr || []),
+                    certification: row.certification || "",
+                    policy: row.policy || "",
+                    season: row.season || "All",
+                    application: row.application || ""
+                };
+            });
+
             const res = await Productservice.addProduct(payloads);
-            
+
             if (res?.data?.errors && res.data.errors.length > 0) {
                 // Some failed. Update fileData to show the backend errors.
                 const newFileData = [...fileData];
@@ -157,7 +180,7 @@ const ProductExcelUpload = ({ open, onOpenChange, onSuccess }) => {
                         validRowIndex++;
                     }
                 }
-                
+
                 setFileData(newFileData);
                 toast({
                     variant: "error",
@@ -171,7 +194,7 @@ const ProductExcelUpload = ({ open, onOpenChange, onSuccess }) => {
                     title: "Upload Complete",
                     description: res?.data?.message || `Successfully added products.`,
                 });
-                
+
                 onSuccess();
                 onOpenChange(false);
                 setFileData(null);
@@ -196,16 +219,16 @@ const ProductExcelUpload = ({ open, onOpenChange, onSuccess }) => {
                 <DialogHeader>
                     <DialogTitle>Upload Products via Excel</DialogTitle>
                 </DialogHeader>
-                
+
                 <div className="flex-1 overflow-auto py-4">
                     {!fileData ? (
                         <div className="flex flex-col items-center justify-center p-10 border-2 border-dashed rounded-lg">
-                            <input 
-                                type="file" 
-                                accept=".xlsx, .xls, .csv" 
-                                onChange={handleFileUpload} 
+                            <input
+                                type="file"
+                                accept=".xlsx, .xls, .csv"
+                                onChange={handleFileUpload}
                                 ref={fileInputRef}
-                                className="hidden" 
+                                className="hidden"
                             />
                             <p className="mb-4 text-sm text-gray-500">Upload an excel file containing product details.</p>
                             <Button onClick={handleUploadClick}>Select File</Button>
@@ -251,12 +274,12 @@ const ProductExcelUpload = ({ open, onOpenChange, onSuccess }) => {
                         </div>
                     )}
                 </div>
-                
+
                 <DialogFooter>
                     <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
                     {fileData && (
-                        <Button 
-                            onClick={submitValidRows} 
+                        <Button
+                            onClick={submitValidRows}
                             disabled={isUploading || !fileData.some(r => r.isValid)}
                         >
                             {isUploading ? "Uploading..." : `Upload Valid Products (${fileData.filter(r => r.isValid).length})`}
