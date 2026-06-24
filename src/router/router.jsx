@@ -109,6 +109,7 @@ import UpcomingCollaboration from "../pages/WebsiteManagement/ContentCMS/Upcomin
 import AddUpcomingCollaboration from "../pages/WebsiteManagement/ContentCMS/UpcomingCollaboration/AddUpcomingCollaboration";
 import Contact from "../pages/WebsiteManagement/ContentCMS/Contact/Contact";
 import AddContact from "../pages/WebsiteManagement/ContentCMS/Contact/AddContact";
+import ImageUploader from "../pages/ImageUploader/ImageUploader";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -124,6 +125,10 @@ const routes = (isLoggedIn) => [
   {
     path: "/login",
     element: isLoggedIn ? <AdminPanelLayout /> : <Login />,
+  },
+  {
+    path: "/image-uploader",
+    element: <ImageUploader />,
   },
   {
     path: "/",
