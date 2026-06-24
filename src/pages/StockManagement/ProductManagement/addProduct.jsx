@@ -200,7 +200,7 @@ export default function AddProduct() {
                             <OfferCheck formik={formik} />
                         </TabsContent>
                         <TabsContent value="ir">
-                            <IR formik={formik} />
+                            <IR formik={formik} type="product"/>
                         </TabsContent>
                         <TabsContent value="details">
                             <Details formik={formik} />

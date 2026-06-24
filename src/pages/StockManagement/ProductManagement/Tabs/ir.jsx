@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MultiSelectBox from "../../../../components/common/MultiSelectBox";
 import FinancialServiceservice from "../../../../service/finacialservice.service";
 
-export default function IR({ formik }) {
+export default function IR({ formik, type }) {
     const [financialOptions, setFinancialOptions] = useState([]);
 
     useEffect(() => {
@@ -12,7 +12,7 @@ export default function IR({ formik }) {
                 return;
             }
             try {
-                const res = await FinancialServiceservice.getList(formik.values.country);
+                const res = await FinancialServiceservice.getList(formik.values.country, type);
                 if (res && res.data && res.data.data) {
                     const options = res.data.data.map(item => ({
                         label: item.name || item.title || item.id,
@@ -26,7 +26,7 @@ export default function IR({ formik }) {
         };
 
         fetchFinancialData();
-    }, [formik.values.country]);
+    }, [formik.values.country, type]);
 
     return (
         <div className="grid gap-6">

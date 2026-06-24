@@ -279,7 +279,7 @@ export default function AddProject() {
                         </TabsContent>
 
                         <TabsContent value="ir" className="mt-4">
-                            <IR formik={formik} />
+                            <IR formik={formik} type="project"/>
                         </TabsContent>
                     </Tabs>
 
