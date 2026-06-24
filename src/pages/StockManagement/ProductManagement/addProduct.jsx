@@ -16,6 +16,7 @@ import { fetchFlatMeasurement } from "../../../store/slice/measurementSlice";
 import Productservice from "../../../service/product.service";
 import { toast } from "../../../components/ui/use-toast";
 import OfferCheck from "./Tabs/OfferCheck";
+import IR from "./Tabs/ir";
 
 export default function AddProduct() {
     const { id } = useParams()
@@ -76,6 +77,7 @@ export default function AddProduct() {
         season: data ? data?.season : 'All',
         country: data ? data?.country : "",
         offer_type: data ? data?.offer_type?.id : "",
+        finacial_service: Array.isArray(data?.finacial_service) ? data.finacial_service.map(item => typeof item === 'object' ? item.id || item._id || item : item) : [],
         status: data ? data?.status : 'Composite',
     };
 
@@ -126,12 +128,14 @@ export default function AddProduct() {
         if (activeTab === "basic_info") setActiveTab("details");
         else if (activeTab === "details") setActiveTab("image");
         else if (activeTab === "image") setActiveTab("offer");
-        else if (activeTab === "offer") setActiveTab("seo")
+        else if (activeTab === "offer") setActiveTab("ir");
+        else if (activeTab === "ir") setActiveTab("seo");
     };
 
     const goBack = () => {
-        if (activeTab === "seo") setActiveTab("offer");
-        else if (activeTab === "offer") setActiveTab("image")
+        if (activeTab === "seo") setActiveTab("ir");
+        else if (activeTab === "ir") setActiveTab("offer");
+        else if (activeTab === "offer") setActiveTab("image");
         else if (activeTab === "image") setActiveTab("details");
         else if (activeTab === "details") setActiveTab("basic_info");
     };
@@ -179,6 +183,7 @@ export default function AddProduct() {
                             <TabsTrigger type="button" value="details">Details</TabsTrigger>
                             <TabsTrigger type="button" value="image">Image</TabsTrigger>
                             <TabsTrigger type="button" value="offer">Offer</TabsTrigger>
+                            <TabsTrigger type="button" value="ir">IR</TabsTrigger>
                             <TabsTrigger type="button" value="seo">SEO on page</TabsTrigger>
                         </TabsList>
 
@@ -193,6 +198,9 @@ export default function AddProduct() {
                         </TabsContent>
                         <TabsContent value="offer">
                             <OfferCheck formik={formik} />
+                        </TabsContent>
+                        <TabsContent value="ir">
+                            <IR formik={formik} />
                         </TabsContent>
                         <TabsContent value="details">
                             <Details formik={formik} />

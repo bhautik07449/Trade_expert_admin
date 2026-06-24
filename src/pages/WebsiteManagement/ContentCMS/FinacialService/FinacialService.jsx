@@ -8,24 +8,32 @@ import { formatDate } from "../../../../common/constants";
 import { toast } from "../../../../components/ui/use-toast";
 import FinancialServiceservice from "../../../../service/finacialservice.service";
 import { useSelector } from "react-redux";
+import CommonBox from "../../../../components/common/common_box";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "Name", flex: 4 },
     { field: "description", headerName: "Description", flex: 4 },
     { field: "country", headerName: "Country", flex: 2 },
+    { field: "type", headerName: "Finace Type", flex: 2 },
     { field: "createdAt", headerName: "Created", flex: 1 },
     { field: "lastUpdatedAt", headerName: "Updated", flex: 1 },
 ]
 
 export default function FinacialService() {
     const [list, setList] = useState([])
+    const [selectedType, setSelectedType] = useState()
     const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
     const navigate = useNavigate();
 
-    const getData = async (country) => {
+    const type = [
+        { value: "product", label: "Product Finance" },
+        { value: "project", label: "Project Finance" }
+    ]
+
+    const getData = async (country, finace) => {
         try {
-            const res = await FinancialServiceservice.getList(country);
+            const res = await FinancialServiceservice.getList(country, finace);
             if (res) {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
@@ -46,15 +54,15 @@ export default function FinacialService() {
     }
 
     useEffect(() => {
-        getData(selectedCountry)
-    }, [selectedCountry])
+        getData(selectedCountry, selectedType)
+    }, [selectedCountry, selectedType])
 
     const handleDelete = async (id) => {
         try {
             const res = await FinancialServiceservice.deleteFinancialService(id)
 
             if (res) {
-                getData(selectedCountry)
+                getData(selectedCountry, selectedType)
                 toast({
                     variant: "success",
                     title: "Finacial Service Deleted",
@@ -83,7 +91,15 @@ export default function FinacialService() {
             </div>
 
             <Card className="p-4 grid gap-4 lg:gap-6">
-                <div className="flex items-center justify-end gap-4">
+                <div className="flex items-center justify-between gap-4">
+                    <CommonBox
+                        placeholders="Select Finace Type"
+                        options={type}
+                        name="type"
+                        value={selectedType}
+                        onChange={(value) => setSelectedType(value)}
+                    />
+
                     <div className="flex gap-3 items-center">
                         <Button className="flex items-center gap-2" onClick={() => navigate('/website-management/section-management/finacial_service/add')}>
                             <CircleFadingPlus className="size-5" />

@@ -15,11 +15,14 @@ import { Button } from "../../../../components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../../../store/slice/categoriesSlice";
 import CommonBox from "../../../../components/common/common_box";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../../components/ui/tabs";
+import IR from "../../../StockManagement/ProductManagement/Tabs/ir";
 
 export default function AddProject() {
     const { id } = useParams()
     const navigate = useNavigate()
     const [list, setList] = useState()
+    const [activeTab, setActiveTab] = useState("basic_info");
 
     const dispatch = useDispatch();
 
@@ -38,6 +41,7 @@ export default function AddProject() {
         category: list ? list?.category?.id : "",
         subcategory: list ? list?.subcategory?.id : "",
         country: list ? list?.country : "",
+        finacial_service: Array.isArray(list?.finacial_service) ? list.finacial_service.map(item => typeof item === 'object' ? item.id || item._id || item : item) : [],
         specification: list?.specification || [],
         status: list ? list?.status : "",
     };
@@ -141,9 +145,9 @@ export default function AddProject() {
     }, [selectedCategory]);
 
     const status = [
-        {label: "To be Initiated", value: "To be Initiated"},
-        {label: "Operational", value: "Operational"},
-        {label: "To be Re-opened", value: "To be Re-opened"},
+        { label: "To be Initiated", value: "To be Initiated" },
+        { label: "Operational", value: "Operational" },
+        { label: "To be Re-opened", value: "To be Re-opened" },
     ]
 
     return (
@@ -155,133 +159,177 @@ export default function AddProject() {
 
             <Card className="p-6">
                 <form className="grid gap-6" onSubmit={formik.handleSubmit}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-5">
-                            <CommonTextField
-                                label="Title"
-                                placeholder="Title"
-                                name="title"
-                                value={formik.values.title}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                error={formik.touched.title && formik.errors.title}
-                            />
+                    <Tabs value={activeTab} onValueChange={setActiveTab}>
+                        <TabsList>
+                            <TabsTrigger type="button" value="basic_info">Basic Info</TabsTrigger>
+                            <TabsTrigger type="button" value="ir">IR</TabsTrigger>
+                        </TabsList>
 
-                            <CommonTextField
-                                label="Description"
-                                placeholder="Description"
-                                name="description"
-                                type="textarea"
-                                rows={4}
-                                value={formik.values.description}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                error={formik.touched.description && formik.errors.description}
-                            />
+                        <TabsContent value="basic_info">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                <div className="space-y-5">
+                                    <CommonTextField
+                                        label="Title"
+                                        placeholder="Title"
+                                        name="title"
+                                        value={formik.values.title}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.touched.title && formik.errors.title}
+                                    />
 
-                            <CommonBox
-                                label="Status"
-                                placeholders="Select Status"
-                                options={status}
-                                name="status"
-                                value={formik.values.status}
-                                onChange={(value) => { formik.setFieldValue("status", value); }}
-                                error={formik.touched.status && formik.errors.status}
-                            />
+                                    <CommonTextField
+                                        label="Description"
+                                        placeholder="Description"
+                                        name="description"
+                                        type="textarea"
+                                        rows={4}
+                                        value={formik.values.description}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.touched.description && formik.errors.description}
+                                    />
 
-                            <CountrySelection formik={formik} />
+                                    <CommonBox
+                                        label="Status"
+                                        placeholders="Select Status"
+                                        options={status}
+                                        name="status"
+                                        value={formik.values.status}
+                                        onChange={(value) => { formik.setFieldValue("status", value); }}
+                                        error={formik.touched.status && formik.errors.status}
+                                    />
 
-                            <div className="grid grid-cols-2 gap-4">
-                                <CommonBox
-                                    label="Category"
-                                    placeholders="Select Category"
-                                    options={categoryOptions}
-                                    name="category"
-                                    value={formik.values.category}
-                                    onChange={(value) => {
-                                        formik.setFieldValue("category", value);
-                                        formik.setFieldValue("subCategory", "");
-                                    }}
-                                    disabled={!formik?.values?.country}
-                                    error={formik.touched.category && formik.errors.category}
-                                />
-                                <CommonBox
-                                    label="Sub Category"
-                                    placeholders="Select Sub Category"
-                                    options={subCategoryOptions}
-                                    name="subcategory"
-                                    value={formik.values.subcategory}
-                                    onChange={(value) => formik.setFieldValue("subcategory", value)}
-                                    disabled={!formik?.values?.category}
-                                    error={formik.touched.subcategory && formik.errors.subcategory}
-                                />
-                            </div>
+                                    <CountrySelection formik={formik} />
 
-                            <div className="space-y-3">
-                                <div className="flex justify-between items-center">
-                                    <label className="text-sm font-medium">Specifications</label>
-                                    <Button type="button" variant="outline" size="sm" onClick={handleAddSpecification}>
-                                        <Plus className="w-4 h-4 mr-2" /> Add
-                                    </Button>
-                                </div>
-                                {formik.values.specification.map((spec, index) => (
-                                    <div key={index} className="flex gap-2 items-start">
-                                        <div className="flex-1">
-                                            <CommonTextField
-                                                placeholder="Key (e.g. Field)"
-                                                name={`specification[${index}].key`}
-                                                value={formik.values.specification[index]?.key}
-                                                onChange={formik.handleChange}
-                                            />
-                                        </div>
-                                        <div className="flex-1">
-                                            <CommonTextField
-                                                placeholder="Value (e.g. Textile)"
-                                                name={`specification[${index}].value`}
-                                                value={formik.values.specification[index]?.value}
-                                                onChange={formik.handleChange}
-                                            />
-                                        </div>
-                                        <Button
-                                            type="button"
-                                            variant="destructive"
-                                            size="icon"
-                                            onClick={() => handleRemoveSpecification(index)}
-                                            className="mt-1 flex-shrink-0"
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </Button>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <CommonBox
+                                            label="Category"
+                                            placeholders="Select Category"
+                                            options={categoryOptions}
+                                            name="category"
+                                            value={formik.values.category}
+                                            onChange={(value) => {
+                                                formik.setFieldValue("category", value);
+                                                formik.setFieldValue("subCategory", "");
+                                            }}
+                                            disabled={!formik?.values?.country}
+                                            error={formik.touched.category && formik.errors.category}
+                                        />
+                                        <CommonBox
+                                            label="Sub Category"
+                                            placeholders="Select Sub Category"
+                                            options={subCategoryOptions}
+                                            name="subcategory"
+                                            value={formik.values.subcategory}
+                                            onChange={(value) => formik.setFieldValue("subcategory", value)}
+                                            disabled={!formik?.values?.category}
+                                            error={formik.touched.subcategory && formik.errors.subcategory}
+                                        />
                                     </div>
-                                ))}
+
+                                    <div className="space-y-3">
+                                        <div className="flex justify-between items-center">
+                                            <label className="text-sm font-medium">Specifications</label>
+                                            <Button type="button" variant="outline" size="sm" onClick={handleAddSpecification}>
+                                                <Plus className="w-4 h-4 mr-2" /> Add
+                                            </Button>
+                                        </div>
+                                        {formik.values.specification.map((spec, index) => (
+                                            <div key={index} className="flex gap-2 items-start">
+                                                <div className="flex-1">
+                                                    <CommonTextField
+                                                        placeholder="Key (e.g. Field)"
+                                                        name={`specification[${index}].key`}
+                                                        value={formik.values.specification[index]?.key}
+                                                        onChange={formik.handleChange}
+                                                    />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <CommonTextField
+                                                        placeholder="Value (e.g. Textile)"
+                                                        name={`specification[${index}].value`}
+                                                        value={formik.values.specification[index]?.value}
+                                                        onChange={formik.handleChange}
+                                                    />
+                                                </div>
+                                                <Button
+                                                    type="button"
+                                                    variant="destructive"
+                                                    size="icon"
+                                                    onClick={() => handleRemoveSpecification(index)}
+                                                    className="mt-1 flex-shrink-0"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </Button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-5">
+                                    <ImageUploadField
+                                        value={formik.values.image}
+                                        onImageUpload={(url) => {
+                                            formik.setFieldValue("image", url);
+                                        }}
+                                    />
+                                </div>
                             </div>
-                        </div>
+                        </TabsContent>
 
-                        <div className="space-y-5">
-                            <ImageUploadField
-                                value={formik.values.image}
-                                onImageUpload={(url) => {
-                                    formik.setFieldValue("image", url);
+                        <TabsContent value="ir" className="mt-4">
+                            <IR formik={formik} />
+                        </TabsContent>
+                    </Tabs>
+
+                    <div className="flex justify-between pt-5 border-t">
+                        {activeTab !== "basic_info" ? (
+                            <CommonButton
+                                type="button"
+                                variant="outline"
+                                onClick={() => setActiveTab("basic_info")}
+                            >
+                                Back
+                            </CommonButton>
+                        ) : (
+                            <CommonButton
+                                type="button"
+                                variant="outline"
+                                onClick={() => formik.resetForm()}
+                            >
+                                Cancel
+                            </CommonButton>
+                        )}
+
+                        {activeTab !== "ir" ? (
+                            <CommonButton
+                                type="button"
+                                onClick={async () => {
+                                    const errors = await formik.validateForm();
+                                    if (errors.title || errors.description || errors.country || errors.category || errors.subcategory) {
+                                        formik.setTouched({
+                                            title: true,
+                                            description: true,
+                                            country: true,
+                                            category: true,
+                                            subcategory: true,
+                                        });
+                                        return;
+                                    }
+                                    setActiveTab("ir");
                                 }}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex justify-end gap-3 pt-5 border-t">
-                        <CommonButton
-                            type="button"
-                            variant="outline"
-                            onClick={() => formik.resetForm()}
-                        >
-                            Cancel
-                        </CommonButton>
-
-                        <CommonButton
-                            type="submit"
-                            isLoading={formik.isSubmitting}
-                            disabled={!formik.isValid}
-                        >
-                            {id ? "Update" : "Add"}
-                        </CommonButton>
+                            >
+                                Next
+                            </CommonButton>
+                        ) : (
+                            <CommonButton
+                                type="submit"
+                                isLoading={formik.isSubmitting}
+                            >
+                                {id ? "Update" : "Add"}
+                            </CommonButton>
+                        )}
                     </div>
                 </form>
             </Card>

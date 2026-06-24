@@ -7,19 +7,25 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "../../../../components/ui/use-toast";
-import Abctypeservice from "../../../../service/abctype.service";
 import CountrySelection from "../../../../components/widgets/country_selection";
 import FinancialServiceservice from "../../../../service/finacialservice.service";
+import CommonBox from "../../../../components/common/common_box";
 
 export default function AddFinacialService() {
     const { id } = useParams()
     const navigate = useNavigate()
     const [list, setList] = useState()
 
+    const type = [
+        { value: "product", label: "Product Finance" },
+        { value: "project", label: "Project Finance" }
+    ]
+
     const initialValues = {
         name: list ? list?.name : "",
         description: list ? list?.description : "",
         country: list ? list?.country : "",
+        type: list ? list?.type : "product"
     };
 
     const validationSchema = Yup.object().shape({
@@ -115,6 +121,16 @@ export default function AddFinacialService() {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 error={formik.touched.description && formik.errors.description}
+                            />
+
+                            <CommonBox
+                                label="Finace Type"
+                                placeholders="Select Finace Type"
+                                options={type}
+                                name="type"
+                                value={formik.values.type}
+                                onChange={(value) => { formik.setFieldValue("type", value); }}
+                                error={formik.touched.type && formik.errors.type}
                             />
 
                             <CountrySelection formik={formik} />
