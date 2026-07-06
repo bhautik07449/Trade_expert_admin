@@ -5,6 +5,7 @@ import CommonButton from "../../../components/widgets/common_button";
 import { CommonTextField } from "../../../components/widgets/common_textField";
 import BackPath from "../../../components/common/BackPath";
 import { Card } from "../../../components/ui/card";
+import { Tabs, TabsList, TabsTrigger } from "../../../components/ui/tabs";
 import CommonBox from "../../../components/common/common_box";
 import { Trash2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +18,7 @@ import { fetchProducts } from "../../../store/slice/productSlice";
 const AddDMR = () => {
     const { id } = useParams()
     const [data, setData] = useState()
+    const [activeTab, setActiveTab] = useState("spot_rate");
 
     const navigate = useNavigate()
     const dispatch = useDispatch();
@@ -184,7 +186,7 @@ const AddDMR = () => {
         <div className="grid gap-6">
             <div className="grid gap-4">
                 <BackPath />
-                <h3 className="h5-bold">{id ? "Edit" : "Add"} DMR</h3>
+                <h3 className="h5-bold">{id ? "Edit" : "Add"} Rates</h3>
             </div>
 
             <Card className="p-6">
@@ -237,146 +239,161 @@ const AddDMR = () => {
                         />
                     </div>
 
-                    <CommonButton type="button" onClick={addMarket}>
-                        Add New Market Details
-                    </CommonButton>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {formik.values.market?.map((item, index) => (
-                            <div
-                                key={index}
-                                className="relative p-4 border rounded-md space-y-4"
-                            >
-                                <CommonTextField
-                                    label="Country"
-                                    name={`market[${index}].country`}
-                                    value={item.country}
-                                    onChange={(e) =>
-                                        formik.setFieldValue(
-                                            `market[${index}].country`,
-                                            e.target.value
-                                        )
-                                    }
-                                    onBlur={formik.handleBlur}
-                                    error={
-                                        formik.touched?.market?.[index]?.country &&
-                                        formik.errors?.market?.[index]?.country
-                                    }
-                                />
-
-                                <CommonTextField
-                                    label="Quality"
-                                    name={`market[${index}].quality`}
-                                    value={item.quality}
-                                    onChange={(e) =>
-                                        formik.setFieldValue(
-                                            `market[${index}].quality`,
-                                            e.target.value
-                                        )
-                                    }
-                                    onBlur={formik.handleBlur}
-                                    error={
-                                        formik.touched?.market?.[index]?.quality &&
-                                        formik.errors?.market?.[index]?.quality
-                                    }
-                                />
-
-                                <CommonTextField
-                                    label="Rate"
-                                    name={`market[${index}].rate`}
-                                    value={item.rate}
-                                    onChange={(e) =>
-                                        formik.setFieldValue(
-                                            `market[${index}].rate`,
-                                            e.target.value
-                                        )
-                                    }
-                                    onBlur={formik.handleBlur}
-                                    error={
-                                        formik.touched?.market?.[index]?.rate &&
-                                        formik.errors?.market?.[index]?.rate
-                                    }
-                                />
-
-                                <CommonTextField
-                                    label="Packing"
-                                    name={`market[${index}].packing`}
-                                    value={item.packing}
-                                    onChange={(e) =>
-                                        formik.setFieldValue(
-                                            `market[${index}].packing`,
-                                            e.target.value
-                                        )
-                                    }
-                                    onBlur={formik.handleBlur}
-                                    error={
-                                        formik.touched?.market?.[index]?.packing &&
-                                        formik.errors?.market?.[index]?.packing
-                                    }
-                                />
-
-                                <CommonTextField
-                                    label="Delivery"
-                                    name={`market[${index}].delivery`}
-                                    value={item.delivery}
-                                    onChange={(e) =>
-                                        formik.setFieldValue(
-                                            `market[${index}].delivery`,
-                                            e.target.value
-                                        )
-                                    }
-                                    onBlur={formik.handleBlur}
-                                    error={
-                                        formik.touched?.market?.[index]?.delivery &&
-                                        formik.errors?.market?.[index]?.delivery
-                                    }
-                                />
-
-                                <CommonTextField
-                                    label="Category Type"
-                                    name={`market[${index}].categoryType`}
-                                    value={item.categoryType}
-                                    onChange={(e) =>
-                                        formik.setFieldValue(
-                                            `market[${index}].categoryType`,
-                                            e.target.value
-                                        )
-                                    }
-                                    onBlur={formik.handleBlur}
-                                    error={
-                                        formik.touched?.market?.[index]?.categoryType &&
-                                        formik.errors?.market?.[index]?.categoryType
-                                    }
-                                />
-
-                                <CommonTextField
-                                    label="No Of Packing"
-                                    name={`market[${index}].noOfPacking`}
-                                    value={item.noOfPacking}
-                                    onChange={(e) =>
-                                        formik.setFieldValue(
-                                            `market[${index}].noOfPacking`,
-                                            e.target.value
-                                        )
-                                    }
-                                    onBlur={formik.handleBlur}
-                                    error={
-                                        formik.touched?.market?.[index]?.noOfPacking &&
-                                        formik.errors?.market?.[index]?.noOfPacking
-                                    }
-                                />
-
-                                {formik.values.market.length > 1 && (
-                                    <CommonButton
-                                        type="button"
-                                        onClick={() => removeMarket(index)}
-                                    >
-                                        <Trash2 size={16} />
-                                    </CommonButton>
-                                )}
-                            </div>
-                        ))}
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-2">
+                        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                            <TabsList className="mb-4 flex-wrap">
+                                <TabsTrigger value="spot_rate">Spot Rate</TabsTrigger>
+                                <TabsTrigger value="scheduled_rate">Scheduled Rate</TabsTrigger>
+                                <TabsTrigger value="offer_rate">Offer Rate</TabsTrigger>
+                                <TabsTrigger value="other">Other</TabsTrigger>
+                            </TabsList>
+                        </Tabs>
                     </div>
+
+                    {activeTab === "spot_rate" && (
+                        <>
+                            <CommonButton type="button" onClick={addMarket} className="max-w-max">
+                                Add New Spot Rate
+                            </CommonButton>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                {formik.values.market?.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className="relative p-4 border rounded-md space-y-4"
+                                    >
+                                        <CommonTextField
+                                            label="Country"
+                                            name={`market[${index}].country`}
+                                            value={item.country}
+                                            onChange={(e) =>
+                                                formik.setFieldValue(
+                                                    `market[${index}].country`,
+                                                    e.target.value
+                                                )
+                                            }
+                                            onBlur={formik.handleBlur}
+                                            error={
+                                                formik.touched?.market?.[index]?.country &&
+                                                formik.errors?.market?.[index]?.country
+                                            }
+                                        />
+
+                                        <CommonTextField
+                                            label="Quality"
+                                            name={`market[${index}].quality`}
+                                            value={item.quality}
+                                            onChange={(e) =>
+                                                formik.setFieldValue(
+                                                    `market[${index}].quality`,
+                                                    e.target.value
+                                                )
+                                            }
+                                            onBlur={formik.handleBlur}
+                                            error={
+                                                formik.touched?.market?.[index]?.quality &&
+                                                formik.errors?.market?.[index]?.quality
+                                            }
+                                        />
+
+                                        <CommonTextField
+                                            label="Rate"
+                                            name={`market[${index}].rate`}
+                                            value={item.rate}
+                                            onChange={(e) =>
+                                                formik.setFieldValue(
+                                                    `market[${index}].rate`,
+                                                    e.target.value
+                                                )
+                                            }
+                                            onBlur={formik.handleBlur}
+                                            error={
+                                                formik.touched?.market?.[index]?.rate &&
+                                                formik.errors?.market?.[index]?.rate
+                                            }
+                                        />
+
+                                        <CommonTextField
+                                            label="Packing"
+                                            name={`market[${index}].packing`}
+                                            value={item.packing}
+                                            onChange={(e) =>
+                                                formik.setFieldValue(
+                                                    `market[${index}].packing`,
+                                                    e.target.value
+                                                )
+                                            }
+                                            onBlur={formik.handleBlur}
+                                            error={
+                                                formik.touched?.market?.[index]?.packing &&
+                                                formik.errors?.market?.[index]?.packing
+                                            }
+                                        />
+
+                                        <CommonTextField
+                                            label="Delivery"
+                                            name={`market[${index}].delivery`}
+                                            value={item.delivery}
+                                            onChange={(e) =>
+                                                formik.setFieldValue(
+                                                    `market[${index}].delivery`,
+                                                    e.target.value
+                                                )
+                                            }
+                                            onBlur={formik.handleBlur}
+                                            error={
+                                                formik.touched?.market?.[index]?.delivery &&
+                                                formik.errors?.market?.[index]?.delivery
+                                            }
+                                        />
+
+                                        <CommonTextField
+                                            label="Category Type"
+                                            name={`market[${index}].categoryType`}
+                                            value={item.categoryType}
+                                            onChange={(e) =>
+                                                formik.setFieldValue(
+                                                    `market[${index}].categoryType`,
+                                                    e.target.value
+                                                )
+                                            }
+                                            onBlur={formik.handleBlur}
+                                            error={
+                                                formik.touched?.market?.[index]?.categoryType &&
+                                                formik.errors?.market?.[index]?.categoryType
+                                            }
+                                        />
+
+                                        <CommonTextField
+                                            label="No Of Packing"
+                                            name={`market[${index}].noOfPacking`}
+                                            value={item.noOfPacking}
+                                            onChange={(e) =>
+                                                formik.setFieldValue(
+                                                    `market[${index}].noOfPacking`,
+                                                    e.target.value
+                                                )
+                                            }
+                                            onBlur={formik.handleBlur}
+                                            error={
+                                                formik.touched?.market?.[index]?.noOfPacking &&
+                                                formik.errors?.market?.[index]?.noOfPacking
+                                            }
+                                        />
+
+                                        {formik.values.market.length > 1 && (
+                                            <CommonButton
+                                                type="button"
+                                                onClick={() => removeMarket(index)}
+                                            >
+                                                <Trash2 size={16} />
+                                            </CommonButton>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
 
                     <div className="flex justify-end gap-3 pt-5 border-t">
                         <CommonButton type="button" variant="outline">
