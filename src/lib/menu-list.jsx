@@ -486,6 +486,32 @@ export function getMenuList(pathname) {
           icon: Folder,
         }
       ],
+    },
+    {
+      href: "",
+      label: "Trade Bureau",
+      active: pathname.includes("/trade_bureau"),
+      icon: FileBox,
+      submenus: [
+        {
+          href: "/trade_bureau/trade_controller",
+          label: "Trade Controller",
+          active: pathname === "/trade_bureau/trade_controller",
+          icon: FileCheck2,
+        },
+        {
+          href: "/trade_bureau/trade_law",
+          label: "Trade Law",
+          active: pathname === "/trade_bureau/trade_law",
+          icon: ReceiptText,
+        },
+        // {
+        //   href: "/trade_bureau/trade_grievance",
+        //   label: "Trade Grievance",
+        //   active: pathname === "/trade_bureau/trade_grievance",
+        //   icon: FileCheck2,
+        // }
+      ]
     }
   ]
 

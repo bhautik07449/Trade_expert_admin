@@ -110,6 +110,10 @@ import AddUpcomingCollaboration from "../pages/WebsiteManagement/ContentCMS/Upco
 import Contact from "../pages/WebsiteManagement/ContentCMS/Contact/Contact";
 import AddContact from "../pages/WebsiteManagement/ContentCMS/Contact/AddContact";
 import ImageUploader from "../pages/ImageUploader/ImageUploader";
+import AddTradeLaw from "../pages/TradeBureau/TradeLaw/AddTradeLaw";
+import TradeLaw from "../pages/TradeBureau/TradeLaw/TradeLaw";
+import TradeController from "../pages/TradeBureau/TradeController/TradeController";
+import AddTradeController from "../pages/TradeBureau/TradeController/AddTradeController";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -872,6 +876,36 @@ const routes = (isLoggedIn) => [
       {
         element: <AddContact />,
         path: "/website-management/section-management/contact/edit/:id",
+        index: true,
+      },
+      {
+        element: <TradeLaw />,
+        path: "/trade_bureau/trade_law",
+        index: true,
+      },
+      {
+        element: <AddTradeLaw />,
+        path: "/trade_bureau/trade_law/add",
+        index: true,
+      },
+      {
+        element: <AddTradeLaw />,
+        path: "/trade_bureau/trade_law/edit/:id",
+        index: true,
+      },
+      {
+        element: <TradeController />,
+        path: "/trade_bureau/trade_controller",
+        index: true,
+      },
+      {
+        element: <AddTradeController />,
+        path: "/trade_bureau/trade_controller/add",
+        index: true,
+      },
+      {
+        element: <AddTradeController />,
+        path: "/trade_bureau/trade_controller/edit/:id",
         index: true,
       },
     ],

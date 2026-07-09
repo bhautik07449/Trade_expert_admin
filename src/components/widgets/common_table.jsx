@@ -138,7 +138,24 @@ const CommonTable = ({
             row: params.data,
             value: params.value,
           })
-        : undefined,
+        : (params) => {
+            let val = params.value;
+            if (Array.isArray(val)) {
+                val = val.join(", ");
+            } else if (val !== null && typeof val === 'object') {
+                val = val.name || val.title || val.label || JSON.stringify(val);
+            }
+            
+            return (
+              <div
+                title={val}
+                className="line-clamp-2 whitespace-normal break-words leading-tight"
+                style={{ paddingTop: '8px' }}
+              >
+                {val}
+              </div>
+            );
+          },
     }));
 
     if (showEdit || showView || showDelete) {
