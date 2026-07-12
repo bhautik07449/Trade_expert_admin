@@ -10,6 +10,7 @@ import productSlice from './slice/productSlice'
 import abctypeSlice from './slice/abctypeSlice'
 import productnameSlice from './slice/productnameSlice'
 import countryFilterReducer from './slice/countryFilterSlice'
+import franchiseSlice from './slice/franchiseSlice'
 
 const reducer = {
   auth: authReducer,
@@ -23,6 +24,7 @@ const reducer = {
   abctype: abctypeSlice,
   productname: productnameSlice,
   countryFilter: countryFilterReducer,
+  franchise: franchiseSlice,
 };
 
 const store = configureStore({

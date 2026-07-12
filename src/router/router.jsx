@@ -114,6 +114,8 @@ import AddTradeLaw from "../pages/TradeBureau/TradeLaw/AddTradeLaw";
 import TradeLaw from "../pages/TradeBureau/TradeLaw/TradeLaw";
 import TradeController from "../pages/TradeBureau/TradeController/TradeController";
 import AddTradeController from "../pages/TradeBureau/TradeController/AddTradeController";
+import Franchise from "../pages/TradeBureau/Franchise/Franchise";
+import AddFranchise from "../pages/TradeBureau/Franchise/AddFranchise";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -906,6 +908,21 @@ const routes = (isLoggedIn) => [
       {
         element: <AddTradeController />,
         path: "/trade_bureau/trade_controller/edit/:id",
+        index: true,
+      },
+      {
+        element: <Franchise />,
+        path: "/trade_bureau/franchise",
+        index: true,
+      },
+      {
+        element: <AddFranchise />,
+        path: "/trade_bureau/franchise/add",
+        index: true,
+      },
+      {
+        element: <AddFranchise />,
+        path: "/trade_bureau/franchise/edit/:id",
         index: true,
       },
     ],

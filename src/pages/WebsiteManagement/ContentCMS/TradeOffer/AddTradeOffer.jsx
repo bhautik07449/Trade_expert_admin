@@ -23,6 +23,11 @@ import {
 } from "../../../../components/ui/table";
 import { Trash2 } from "lucide-react";
 import CountrySelection from "../../../../components/widgets/country_selection";
+import DealerFields from "./components/DealerFields";
+import TenderFields from "./components/TenderFields";
+import AssociationFields from "./components/AssociationFields";
+import { fetchFranchise } from "../../../../store/slice/franchiseSlice";
+import ReadyStock from "./components/ReadyStock";
 
 export default function AddTradeOffer() {
     const { id } = useParams()
@@ -35,6 +40,7 @@ export default function AddTradeOffer() {
         dispatch(fetchTradeType());
         dispatch(fetchCategories());
         dispatch(fetchProducts());
+        dispatch(fetchFranchise());
     }, []);
 
     const { categories } = useSelector(
@@ -60,17 +66,9 @@ export default function AddTradeOffer() {
         trade_type: data ? data?.trade_type?.id : "",
         description: data ? data?.description : "",
         name: data ? data?.name : "",
-        category: "",
-        subCategory: "",
-        product: "",
-        hsncode: "",
-        quantity: "",
-        unit_measurement: "",
-        packing_configure: "",
-        actual_price: "",
-        discounted_price: "",
         items: data ? data?.items || [] : [],
         country: data?.country ? data?.country : "",
+        franchise_type: "",
     };
 
     const validationSchema = Yup.object().shape({
@@ -88,12 +86,57 @@ export default function AddTradeOffer() {
             setSubmitting(true);
             try {
 
-                const payload = {
+                const currentTradeTypeObj = flatList?.find((t) => t.id === values.trade_type);
+                const currentTradeTypeName = currentTradeTypeObj?.name?.toLowerCase() || "";
+
+                const isDealer = currentTradeTypeName.includes("dealer") || currentTradeTypeName.includes("franchise");
+                const isTender = currentTradeTypeName.includes("tender");
+                const isAssociation = currentTradeTypeName.includes("association") || currentTradeTypeName.includes("join");
+
+                const basePayload = {
                     name: values?.name,
                     description: values?.description,
                     trade_type: { id: values.trade_type },
                     country: values?.country,
-                    items: values.items.map((item) => ({
+                };
+
+                let payload = { ...basePayload };
+
+                if (isDealer) {
+                    payload.dealer = values.items.map((item) => ({
+                        category: { id: item.category },
+                        franchise_type: item.franchise_type,
+                        image: item.image,
+                        video: item.video,
+                        profile: item.profile,
+                        financials: item.financials
+                    }));
+                } else if (isTender) {
+                    payload.tender = values.items.map((item) => ({
+                        category: { id: item.category },
+                        tender_level: item.tender_level,
+                        govt_private: item.govt_private,
+                        department: item.department,
+                        extra_info: item.extra_info,
+                        description: item.description
+                    }));
+                } else if (isAssociation) {
+                    payload.association = values.items.map((item) => ({
+                        state: item.state,
+                        city: item.city,
+                        company_type: item.company_type,
+                        opportunity: item.opportunity,
+                        company_name: item.company_name,
+                        description: item.description,
+                        status: item.status,
+                        eoi: item.eoi,
+                        mou: item.mou,
+                        moa: item.moa,
+                        mois: item.mois,
+                        track_progress: item.track_progress
+                    }));
+                } else {
+                    payload.ready_stock = values.items.map((item) => ({
                         category: { id: item.category },
                         subCategory: { id: item.subCategory },
                         product: { id: item.product },
@@ -103,8 +146,13 @@ export default function AddTradeOffer() {
                         packing_configure: item.packing_configure,
                         actual_price: item.actual_price,
                         discounted_price: item.discounted_price,
-                    }))
-                };
+                    }));
+                }
+
+
+
+                console.log("payload", payload);
+                return;
 
                 let res
                 if (id) {
@@ -133,6 +181,11 @@ export default function AddTradeOffer() {
             }
         }
     });
+
+    const selectedTradeTypeObj = useMemo(() => {
+        return flatList?.find((t) => t.id === formik?.values?.trade_type);
+    }, [flatList, formik?.values?.trade_type]);
+    const tradeTypeName = selectedTradeTypeObj?.name?.toLowerCase() || "";
 
     const productOptions = useMemo(() => {
         let filteredList = list;
@@ -178,9 +231,19 @@ export default function AddTradeOffer() {
     }, [selectedCategory]);
 
     const handleAddItem = () => {
-        const { category, subCategory, product, hsncode, quantity, unit_measurement, packing_configure, actual_price, discounted_price } = formik.values;
+        const {
+            category, subCategory, product, hsncode, quantity, unit_measurement, packing_configure, actual_price, discounted_price,
+            franchise_type, franchiseName, image, video, profile, financials,
+            tender_level, govt_private, department, extra_info, description,
+            state, city, company_type, opportunity, company_name, status, eoi, mou, moa, mois, track_progress
+        } = formik.values;
 
-        if (!category || !subCategory || !product || !quantity || !actual_price) {
+        const isDealer = tradeTypeName.includes("dealer") || tradeTypeName.includes("franchise");
+        const isTender = tradeTypeName.includes("tender");
+        const isAssociation = tradeTypeName.includes("association") || tradeTypeName.includes("join");
+        const isStocklots = !isDealer && !isTender && !isAssociation;
+
+        if (isStocklots && (!category || !subCategory || !product || !quantity || !actual_price)) {
             toast({
                 variant: "error",
                 title: "Validation Error",
@@ -190,28 +253,53 @@ export default function AddTradeOffer() {
         }
 
         const newItem = {
-            category: { id: category, name: categoryOptions.find(c => c.value === category)?.label },
-            subCategory: { id: subCategory, name: subCategoryOptions.find(s => s.value === subCategory)?.label },
-            product: { id: product, name: productOptions.find(p => p.value === product)?.label },
+            category: category,
+            categoryName: categoryOptions.find(c => c.value === category)?.label,
+            subCategory: subCategory,
+            subCategoryName: subCategoryOptions.find(s => s.value === subCategory)?.label,
+            product: product,
+            productName: productOptions.find(p => p.value === product)?.label,
             hsncode,
             quantity,
             unit_measurement,
             packing_configure,
             actual_price,
             discounted_price,
+            franchise_type,
+            franchiseName,
+            image,
+            video,
+            profile,
+            financials,
+            tender_level,
+            govt_private,
+            department,
+            extra_info,
+            description,
+            state,
+            city,
+            company_type,
+            opportunity,
+            company_name,
+            status,
+            eoi,
+            mou,
+            moa,
+            mois,
+            track_progress
         };
 
         formik.setFieldValue("items", [...formik.values.items, newItem]);
 
-        formik.setFieldValue("category", "");
-        formik.setFieldValue("subCategory", "");
-        formik.setFieldValue("product", "");
-        formik.setFieldValue("hsncode", "");
-        formik.setFieldValue("quantity", "");
-        formik.setFieldValue("unit_measurement", "");
-        formik.setFieldValue("packing_configure", "");
-        formik.setFieldValue("actual_price", "");
-        formik.setFieldValue("discounted_price", "");
+        const fieldsToReset = [
+            "category", "subCategory", "product", "hsncode", "quantity",
+            "unit_measurement", "packing_configure", "actual_price", "discounted_price",
+            "franchise_type", "franchiseName", "image", "video", "profile", "financials",
+            "tender_level", "govt_private", "department", "extra_info", "description",
+            "state", "city", "company_type", "opportunity", "company_name", "status",
+            "eoi", "mou", "moa", "mois", "track_progress"
+        ];
+        fieldsToReset.forEach(field => formik.setFieldValue(field, ""));
     };
 
     const handleRemoveItem = (index) => {
@@ -294,92 +382,21 @@ export default function AddTradeOffer() {
                         <>
                             <div className="space-y-5">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <CommonBox
-                                        label="Category"
-                                        placeholders="Select Category"
-                                        options={categoryOptions}
-                                        name="category"
-                                        value={formik.values.category}
-                                        onChange={(value) => {
-                                            formik.setFieldValue("category", value);
-                                            formik.setFieldValue("subCategory", "");
-                                            formik.setFieldValue("product", "");
-                                        }}
-                                        disabled={!formik?.values?.country}
-                                error={formik.touched.category && formik.errors.category}
-                                    />
+                                    {(tradeTypeName.includes("dealer") || tradeTypeName.includes("franchise")) && (
+                                        <DealerFields formik={formik} categoryOptions={categoryOptions} />
+                                    )}
 
-                                    <CommonBox
-                                        label="Sub Category"
-                                        placeholders="Select Sub Category"
-                                        options={subCategoryOptions}
-                                        name="subCategory"
-                                        value={formik.values.subCategory}
-                                        onChange={(value) => {
-                                            formik.setFieldValue("subCategory", value);
-                                            formik.setFieldValue("product", "");
-                                        }}
-                                        error={formik.touched.subCategory && formik.errors.subCategory}
-                                    />
+                                    {tradeTypeName.includes("tender") && (
+                                        <TenderFields formik={formik} categoryOptions={categoryOptions} />
+                                    )}
 
-                                    <CommonBox
-                                        label="Product"
-                                        placeholders="Select Product"
-                                        options={productOptions}
-                                        name="product"
-                                        value={formik.values.product}
-                                        onChange={(value) => formik.setFieldValue("product", value)}
-                                        error={formik.touched.product && formik.errors.product}
-                                    />
+                                    {(tradeTypeName.includes("association") || tradeTypeName.includes("join")) && (
+                                        <AssociationFields formik={formik} />
+                                    )}
 
-                                    <CommonTextField
-                                        label="Hsncode"
-                                        placeholder="Hsncode"
-                                        name="hsncode"
-                                        value={formik.values.hsncode}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    <CommonTextField
-                                        label="Quantity"
-                                        placeholder="Quantity"
-                                        name="quantity"
-                                        value={formik.values.quantity}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    <CommonTextField
-                                        label="Unit Measurement"
-                                        placeholder="Unit Measurement"
-                                        name="unit_measurement"
-                                        value={formik.values.unit_measurement}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    <CommonTextField
-                                        label="Packing Configure"
-                                        placeholder="Packing Configure"
-                                        name="packing_configure"
-                                        value={formik.values.packing_configure}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    <CommonTextField
-                                        label="Actual Price"
-                                        placeholder="Actual Price"
-                                        name="actual_price"
-                                        value={formik.values.actual_price}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
-                                    <CommonTextField
-                                        label="Discounted Price"
-                                        placeholder="Discounted Price"
-                                        name="discounted_price"
-                                        value={formik.values.discounted_price}
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                    />
+                                    {(!tradeTypeName.includes("dealer") && !tradeTypeName.includes("franchise") && !tradeTypeName.includes("tender") && !tradeTypeName.includes("association") && !tradeTypeName.includes("join")) && (
+                                        <ReadyStock formik={formik} categoryOptions={categoryOptions} subCategoryOptions={subCategoryOptions} productOptions={productOptions} />
+                                    )}
                                 </div>
                                 <div className="flex justify-end">
                                     <CommonButton type="button" onClick={handleAddItem}>
@@ -395,24 +412,78 @@ export default function AddTradeOffer() {
                                         <Table>
                                             <TableHeader>
                                                 <TableRow>
-                                                    <TableHead>Category</TableHead>
-                                                    <TableHead>Sub Category</TableHead>
-                                                    <TableHead>Product</TableHead>
-                                                    <TableHead>HSN code</TableHead>
-                                                    <TableHead>Quantity</TableHead>
-                                                    <TableHead>Price</TableHead>
+                                                    {(tradeTypeName.includes("dealer") || tradeTypeName.includes("franchise")) && (
+                                                        <>
+                                                            <TableHead>Category</TableHead>
+                                                            <TableHead>Franchise Type</TableHead>
+                                                        </>
+                                                    )}
+                                                    {tradeTypeName.includes("tender") && (
+                                                        <>
+                                                            <TableHead>Category</TableHead>
+                                                            <TableHead>Level</TableHead>
+                                                            <TableHead>Govt/Private</TableHead>
+                                                            <TableHead>Department</TableHead>
+                                                            <TableHead>Extra Info</TableHead>
+                                                        </>
+                                                    )}
+                                                    {(tradeTypeName.includes("association") || tradeTypeName.includes("join")) && (
+                                                        <>
+                                                            <TableHead>State</TableHead>
+                                                            <TableHead>City</TableHead>
+                                                            <TableHead>Company Type</TableHead>
+                                                            <TableHead>Opportunity</TableHead>
+                                                        </>
+                                                    )}
+                                                    {(!tradeTypeName.includes("dealer") && !tradeTypeName.includes("franchise") && !tradeTypeName.includes("tender") && !tradeTypeName.includes("association") && !tradeTypeName.includes("join")) && (
+                                                        <>
+                                                            <TableHead>Category</TableHead>
+                                                            <TableHead>Sub Category</TableHead>
+                                                            <TableHead>Product</TableHead>
+                                                            <TableHead>HSN code</TableHead>
+                                                            <TableHead>Quantity</TableHead>
+                                                            <TableHead>Price</TableHead>
+                                                        </>
+                                                    )}
                                                     <TableHead className="text-right">Action</TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
                                                 {formik.values.items.map((item, index) => (
                                                     <TableRow key={index}>
-                                                        <TableCell>{item.category?.name}</TableCell>
-                                                        <TableCell>{item.subCategory?.name}</TableCell>
-                                                        <TableCell>{item.product?.name}</TableCell>
-                                                        <TableCell>{item.hsncode}</TableCell>
-                                                        <TableCell>{item.quantity} {item.unit_measurement}</TableCell>
-                                                        <TableCell>{item.actual_price}</TableCell>
+                                                        {(tradeTypeName.includes("dealer") || tradeTypeName.includes("franchise")) && (
+                                                            <>
+                                                                <TableCell>{item.categoryName || item.category?.name}</TableCell>
+                                                                <TableCell>{item.franchiseName || item.franchise_type}</TableCell>
+                                                            </>
+                                                        )}
+                                                        {tradeTypeName.includes("tender") && (
+                                                            <>
+                                                                <TableCell>{item.categoryName || item.category?.name}</TableCell>
+                                                                <TableCell>{item.tender_level}</TableCell>
+                                                                <TableCell>{item.govt_private}</TableCell>
+                                                                <TableCell>{item.department}</TableCell>
+                                                                <TableCell>{item.extra_info}</TableCell>
+                                                            </>
+                                                        )}
+                                                        {(tradeTypeName.includes("association") || tradeTypeName.includes("join")) && (
+                                                            <>
+                                                                <TableCell>{item.state}</TableCell>
+                                                                <TableCell>{item.city}</TableCell>
+                                                                <TableCell>{item.company_type}</TableCell>
+                                                                <TableCell>{item.opportunity}</TableCell>
+                                                            </>
+                                                        )}
+                                                        {(!tradeTypeName.includes("dealer") && !tradeTypeName.includes("franchise") && !tradeTypeName.includes("tender") && !tradeTypeName.includes("association") && !tradeTypeName.includes("join")) && (
+                                                            <>
+                                                                <TableCell>{item.categoryName || item.category?.name}</TableCell>
+                                                                <TableCell>{item.subCategoryName || item.subCategory?.name}</TableCell>
+                                                                <TableCell>{item.productName || item.product?.name}</TableCell>
+                                                                <TableCell>{item.hsncode}</TableCell>
+                                                                <TableCell>{item.quantity} {item.unit_measurement}</TableCell>
+                                                                <TableCell>{item.actual_price}</TableCell>
+                                                            </>
+                                                        )}
                                                         <TableCell className="text-right">
                                                             <CommonButton
                                                                 type="button"

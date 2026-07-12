@@ -505,6 +505,12 @@ export function getMenuList(pathname) {
           active: pathname === "/trade_bureau/trade_law",
           icon: ReceiptText,
         },
+        {
+          href: "/trade_bureau/franchise",
+          label: "Franchise",
+          active: pathname === "/trade_bureau/franchise",
+          icon: FileCheck2,
+        },
         // {
         //   href: "/trade_bureau/trade_grievance",
         //   label: "Trade Grievance",
