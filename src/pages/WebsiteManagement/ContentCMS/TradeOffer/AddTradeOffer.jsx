@@ -118,7 +118,7 @@ export default function AddTradeOffer() {
                         govt_private: item.govt_private,
                         department: item.department,
                         extra_info: item.extra_info,
-                        description: item.description
+                        details: item.details
                     }));
                 } else if (isAssociation) {
                     payload.association = values.items.map((item) => ({
@@ -127,7 +127,7 @@ export default function AddTradeOffer() {
                         company_type: item.company_type,
                         opportunity: item.opportunity,
                         company_name: item.company_name,
-                        description: item.description,
+                        details: item.details,
                         status: item.status,
                         eoi: item.eoi,
                         mou: item.mou,
@@ -416,6 +416,10 @@ export default function AddTradeOffer() {
                                                         <>
                                                             <TableHead>Category</TableHead>
                                                             <TableHead>Franchise Type</TableHead>
+                                                            <TableHead>image</TableHead>
+                                                            <TableHead>Video</TableHead>
+                                                            <TableHead>Profile</TableHead>
+                                                            <TableHead>Financials</TableHead>
                                                         </>
                                                     )}
                                                     {tradeTypeName.includes("tender") && (
@@ -425,14 +429,22 @@ export default function AddTradeOffer() {
                                                             <TableHead>Govt/Private</TableHead>
                                                             <TableHead>Department</TableHead>
                                                             <TableHead>Extra Info</TableHead>
+                                                            <TableHead>Description</TableHead>
                                                         </>
                                                     )}
                                                     {(tradeTypeName.includes("association") || tradeTypeName.includes("join")) && (
                                                         <>
                                                             <TableHead>State</TableHead>
                                                             <TableHead>City</TableHead>
+                                                            <TableHead>Company Name</TableHead>
                                                             <TableHead>Company Type</TableHead>
                                                             <TableHead>Opportunity</TableHead>
+                                                            <TableHead>Status</TableHead>
+                                                            <TableHead>EOI</TableHead>
+                                                            <TableHead>MOU</TableHead>
+                                                            <TableHead>MOA</TableHead>
+                                                            <TableHead>MOIS</TableHead>
+                                                            <TableHead>Track Progress</TableHead>
                                                         </>
                                                     )}
                                                     {(!tradeTypeName.includes("dealer") && !tradeTypeName.includes("franchise") && !tradeTypeName.includes("tender") && !tradeTypeName.includes("association") && !tradeTypeName.includes("join")) && (
@@ -455,6 +467,10 @@ export default function AddTradeOffer() {
                                                             <>
                                                                 <TableCell>{item.categoryName || item.category?.name}</TableCell>
                                                                 <TableCell>{item.franchiseName || item.franchise_type}</TableCell>
+                                                                <TableCell>{item.image}</TableCell>
+                                                                <TableCell>{item.video}</TableCell>
+                                                                <TableCell>{item.profile}</TableCell>
+                                                                <TableCell>{item.financials}</TableCell>
                                                             </>
                                                         )}
                                                         {tradeTypeName.includes("tender") && (
@@ -464,14 +480,22 @@ export default function AddTradeOffer() {
                                                                 <TableCell>{item.govt_private}</TableCell>
                                                                 <TableCell>{item.department}</TableCell>
                                                                 <TableCell>{item.extra_info}</TableCell>
+                                                                <TableCell>{item.description}</TableCell>
                                                             </>
                                                         )}
                                                         {(tradeTypeName.includes("association") || tradeTypeName.includes("join")) && (
                                                             <>
                                                                 <TableCell>{item.state}</TableCell>
                                                                 <TableCell>{item.city}</TableCell>
+                                                                <TableCell>{item.company_name}</TableCell>
                                                                 <TableCell>{item.company_type}</TableCell>
                                                                 <TableCell>{item.opportunity}</TableCell>
+                                                                <TableCell>{item.status}</TableCell>
+                                                                <TableCell>{item.eoi}</TableCell>
+                                                                <TableCell>{item.mou}</TableCell>
+                                                                <TableCell>{item.moa}</TableCell>
+                                                                <TableCell>{item.mois}</TableCell>
+                                                                <TableCell>{item.track_progress}</TableCell>
                                                             </>
                                                         )}
                                                         {(!tradeTypeName.includes("dealer") && !tradeTypeName.includes("franchise") && !tradeTypeName.includes("tender") && !tradeTypeName.includes("association") && !tradeTypeName.includes("join")) && (

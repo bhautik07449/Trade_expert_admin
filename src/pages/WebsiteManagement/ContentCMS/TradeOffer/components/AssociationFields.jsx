@@ -46,18 +46,9 @@ export default function AssociationFields({ formik }) {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
             />
-            <CommonTextField
-                label="Description"
-                placeholder="Description"
-                name="description"
-                type="textarea"
-                value={formik.values.description}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-            />
             <CommonBox
                 label="Status"
-                placeholders="Select Category Status"
+                placeholders="Select Status"
                 options={[
                     { label: "Active", value: "active" },
                     { label: "Pending", value: "pending" },
@@ -66,6 +57,15 @@ export default function AssociationFields({ formik }) {
                 value={formik.values.status}
                 onChange={(value) => formik.setFieldValue("status", value)}
                 error={formik.touched.status && formik.errors.status}
+            />
+            <CommonTextField
+                label="Description"
+                placeholder="Description"
+                name="details"
+                type="textarea"
+                value={formik.values.details}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
             />
             <Editor
                 label="EOI"

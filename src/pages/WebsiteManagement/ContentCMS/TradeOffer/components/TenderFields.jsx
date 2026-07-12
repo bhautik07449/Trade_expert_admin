@@ -1,6 +1,7 @@
 import React from "react";
 import CommonBox from "../../../../../components/common/common_box";
 import { CommonTextField } from "../../../../../components/widgets/common_textField";
+import Editor from "../../../../../common/Editor";
 
 export default function TenderFields({ formik, categoryOptions }) {
     return (
@@ -54,8 +55,8 @@ export default function TenderFields({ formik, categoryOptions }) {
             />
             <Editor
                 label="Description"
-                value={formik.values.description}
-                onChange={(value) => formik.setFieldValue("description", value)}
+                value={formik.values.details}
+                onChange={(value) => formik.setFieldValue("details", value)}
             />
         </>
     );
