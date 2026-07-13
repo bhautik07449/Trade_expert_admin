@@ -66,7 +66,7 @@ export default function AddTradeOffer() {
         trade_type: data ? data?.trade_type?.id : "",
         description: data ? data?.description : "",
         name: data ? data?.name : "",
-        items: data ? data?.items || [] : [],
+        items: data ? (data?.dealer || data?.tender || data?.association || data?.ready_stock || data?.items || []) : [],
         country: data?.country ? data?.country : "",
         franchise_type: "",
     };
@@ -118,7 +118,7 @@ export default function AddTradeOffer() {
                         govt_private: item.govt_private,
                         department: item.department,
                         extra_info: item.extra_info,
-                        details: item.details
+                        description: item.details
                     }));
                 } else if (isAssociation) {
                     payload.association = values.items.map((item) => ({
@@ -127,7 +127,7 @@ export default function AddTradeOffer() {
                         company_type: item.company_type,
                         opportunity: item.opportunity,
                         company_name: item.company_name,
-                        details: item.details,
+                        description: item.details,
                         status: item.status,
                         eoi: item.eoi,
                         mou: item.mou,
@@ -149,10 +149,7 @@ export default function AddTradeOffer() {
                     }));
                 }
 
-
-
                 console.log("payload", payload);
-                return;
 
                 let res
                 if (id) {
@@ -234,7 +231,7 @@ export default function AddTradeOffer() {
         const {
             category, subCategory, product, hsncode, quantity, unit_measurement, packing_configure, actual_price, discounted_price,
             franchise_type, franchiseName, image, video, profile, financials,
-            tender_level, govt_private, department, extra_info, description,
+            tender_level, govt_private, department, extra_info, details,
             state, city, company_type, opportunity, company_name, status, eoi, mou, moa, mois, track_progress
         } = formik.values;
 
@@ -275,7 +272,7 @@ export default function AddTradeOffer() {
             govt_private,
             department,
             extra_info,
-            description,
+            details,
             state,
             city,
             company_type,
@@ -295,7 +292,7 @@ export default function AddTradeOffer() {
             "category", "subCategory", "product", "hsncode", "quantity",
             "unit_measurement", "packing_configure", "actual_price", "discounted_price",
             "franchise_type", "franchiseName", "image", "video", "profile", "financials",
-            "tender_level", "govt_private", "department", "extra_info", "description",
+            "tender_level", "govt_private", "department", "extra_info", "details",
             "state", "city", "company_type", "opportunity", "company_name", "status",
             "eoi", "mou", "moa", "mois", "track_progress"
         ];
@@ -408,7 +405,7 @@ export default function AddTradeOffer() {
                             {formik.values.items.length > 0 && (
                                 <div className="mt-6">
                                     <h4 className="h6-bold mb-4">Added Items</h4>
-                                    <div className="border rounded-lg overflow-hidden">
+                                    <div className="border rounded-lg overflow-x-auto">
                                         <Table>
                                             <TableHeader>
                                                 <TableRow>
@@ -440,11 +437,12 @@ export default function AddTradeOffer() {
                                                             <TableHead>Company Type</TableHead>
                                                             <TableHead>Opportunity</TableHead>
                                                             <TableHead>Status</TableHead>
-                                                            <TableHead>EOI</TableHead>
-                                                            <TableHead>MOU</TableHead>
-                                                            <TableHead>MOA</TableHead>
-                                                            <TableHead>MOIS</TableHead>
-                                                            <TableHead>Track Progress</TableHead>
+                                                            <TableHead>Description</TableHead>
+                                                            {/* <TableHead>EOI</TableHead> */}
+                                                            {/* <TableHead>MOU</TableHead> */}
+                                                            {/* <TableHead>MOA</TableHead> */}
+                                                            {/* <TableHead>MOIS</TableHead> */}
+                                                            {/* <TableHead>Track Progress</TableHead> */}
                                                         </>
                                                     )}
                                                     {(!tradeTypeName.includes("dealer") && !tradeTypeName.includes("franchise") && !tradeTypeName.includes("tender") && !tradeTypeName.includes("association") && !tradeTypeName.includes("join")) && (
@@ -467,7 +465,13 @@ export default function AddTradeOffer() {
                                                             <>
                                                                 <TableCell>{item.categoryName || item.category?.name}</TableCell>
                                                                 <TableCell>{item.franchiseName || item.franchise_type}</TableCell>
-                                                                <TableCell>{item.image}</TableCell>
+                                                                <TableCell>
+                                                                    {item.image ? (
+                                                                        <img src={item.image} alt="Dealer" className="w-16 h-16 object-cover rounded border" />
+                                                                    ) : (
+                                                                        "-"
+                                                                    )}
+                                                                </TableCell>
                                                                 <TableCell>{item.video}</TableCell>
                                                                 <TableCell>{item.profile}</TableCell>
                                                                 <TableCell>{item.financials}</TableCell>
@@ -480,7 +484,7 @@ export default function AddTradeOffer() {
                                                                 <TableCell>{item.govt_private}</TableCell>
                                                                 <TableCell>{item.department}</TableCell>
                                                                 <TableCell>{item.extra_info}</TableCell>
-                                                                <TableCell>{item.description}</TableCell>
+                                                                <TableCell>{item.details || item.description}</TableCell>
                                                             </>
                                                         )}
                                                         {(tradeTypeName.includes("association") || tradeTypeName.includes("join")) && (
@@ -491,11 +495,12 @@ export default function AddTradeOffer() {
                                                                 <TableCell>{item.company_type}</TableCell>
                                                                 <TableCell>{item.opportunity}</TableCell>
                                                                 <TableCell>{item.status}</TableCell>
-                                                                <TableCell>{item.eoi}</TableCell>
-                                                                <TableCell>{item.mou}</TableCell>
-                                                                <TableCell>{item.moa}</TableCell>
-                                                                <TableCell>{item.mois}</TableCell>
-                                                                <TableCell>{item.track_progress}</TableCell>
+                                                                <TableCell>{item.details || item.description}</TableCell>
+                                                                {/* <TableCell>{item.eoi}</TableCell> */}
+                                                                {/* <TableCell>{item.mou}</TableCell> */}
+                                                                {/* <TableCell>{item.moa}</TableCell> */}
+                                                                {/* <TableCell>{item.mois}</TableCell> */}
+                                                                {/* <TableCell>{item.track_progress}</TableCell> */}
                                                             </>
                                                         )}
                                                         {(!tradeTypeName.includes("dealer") && !tradeTypeName.includes("franchise") && !tradeTypeName.includes("tender") && !tradeTypeName.includes("association") && !tradeTypeName.includes("join")) && (

@@ -12,9 +12,12 @@ const ImageUploadField = ({
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const fileInputRef = React.useRef(null);
+
   useEffect(() => {
-    if (value) {
-      setPreview(value);
+    setPreview(value || null);
+    if (!value && fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   }, [value]);
 
@@ -55,6 +58,7 @@ const ImageUploadField = ({
         type="file"
         accept={accept}
         onChange={handleImageChange}
+        ref={fileInputRef}
         className="file-input"
       />
 
