@@ -67,8 +67,7 @@ export default function AddTradeOffer() {
         description: data ? data?.description : "",
         name: data ? data?.name : "",
         items: data ? (data?.dealer || data?.tender || data?.association || data?.ready_stock || data?.items || []) : [],
-        country: data?.country ? data?.country : "",
-        franchise_type: "",
+        country: data?.country ? data?.country : ""
     };
 
     const validationSchema = Yup.object().shape({
@@ -133,7 +132,8 @@ export default function AddTradeOffer() {
                         mou: item.mou,
                         moa: item.moa,
                         mois: item.mois,
-                        track_progress: item.track_progress
+                        track_progress: item.track_progress,
+                        association_image: item.association_image
                     }));
                 } else {
                     payload.ready_stock = values.items.map((item) => ({
@@ -232,7 +232,7 @@ export default function AddTradeOffer() {
             category, subCategory, product, hsncode, quantity, unit_measurement, packing_configure, actual_price, discounted_price,
             franchise_type, franchiseName, image, video, profile, financials,
             tender_level, govt_private, department, extra_info, details,
-            state, city, company_type, opportunity, company_name, status, eoi, mou, moa, mois, track_progress
+            state, city, company_type, opportunity, company_name, status, eoi, mou, moa, mois, track_progress, association_image
         } = formik.values;
 
         const isDealer = tradeTypeName.includes("dealer") || tradeTypeName.includes("franchise");
@@ -283,7 +283,8 @@ export default function AddTradeOffer() {
             mou,
             moa,
             mois,
-            track_progress
+            track_progress,
+            association_image
         };
 
         formik.setFieldValue("items", [...formik.values.items, newItem]);
@@ -294,7 +295,7 @@ export default function AddTradeOffer() {
             "franchise_type", "franchiseName", "image", "video", "profile", "financials",
             "tender_level", "govt_private", "department", "extra_info", "details",
             "state", "city", "company_type", "opportunity", "company_name", "status",
-            "eoi", "mou", "moa", "mois", "track_progress"
+            "eoi", "mou", "moa", "mois", "track_progress", "association_image"
         ];
         fieldsToReset.forEach(field => formik.setFieldValue(field, ""));
     };
@@ -431,13 +432,14 @@ export default function AddTradeOffer() {
                                                     )}
                                                     {(tradeTypeName.includes("association") || tradeTypeName.includes("join")) && (
                                                         <>
+                                                            <TableHead>Image</TableHead>
                                                             <TableHead>State</TableHead>
                                                             <TableHead>City</TableHead>
                                                             <TableHead>Company Name</TableHead>
                                                             <TableHead>Company Type</TableHead>
                                                             <TableHead>Opportunity</TableHead>
                                                             <TableHead>Status</TableHead>
-                                                            <TableHead>Description</TableHead>
+                                                            {/* <TableHead>Description</TableHead> */}
                                                             {/* <TableHead>EOI</TableHead> */}
                                                             {/* <TableHead>MOU</TableHead> */}
                                                             {/* <TableHead>MOA</TableHead> */}
@@ -489,13 +491,20 @@ export default function AddTradeOffer() {
                                                         )}
                                                         {(tradeTypeName.includes("association") || tradeTypeName.includes("join")) && (
                                                             <>
+                                                                <TableCell>
+                                                                    {item.association_image ? (
+                                                                        <img src={item.association_image} alt="Dealer" className="w-16 h-16 object-cover rounded border" />
+                                                                    ) : (
+                                                                        "-"
+                                                                    )}
+                                                                </TableCell>
                                                                 <TableCell>{item.state}</TableCell>
                                                                 <TableCell>{item.city}</TableCell>
                                                                 <TableCell>{item.company_name}</TableCell>
                                                                 <TableCell>{item.company_type}</TableCell>
                                                                 <TableCell>{item.opportunity}</TableCell>
                                                                 <TableCell>{item.status}</TableCell>
-                                                                <TableCell>{item.details || item.description}</TableCell>
+                                                                {/* <TableCell>{item.details || item.description}</TableCell> */}
                                                                 {/* <TableCell>{item.eoi}</TableCell> */}
                                                                 {/* <TableCell>{item.mou}</TableCell> */}
                                                                 {/* <TableCell>{item.moa}</TableCell> */}

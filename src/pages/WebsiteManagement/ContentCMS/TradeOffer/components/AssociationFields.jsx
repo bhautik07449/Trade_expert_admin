@@ -2,6 +2,7 @@ import React from "react";
 import { CommonTextField } from "../../../../../components/widgets/common_textField";
 import Editor from "../../../../../common/Editor";
 import CommonBox from "../../../../../components/common/common_box";
+import ImageUploadField from "../../../../../components/common/ImageUploadField";
 
 export default function AssociationFields({ formik }) {
     return (
@@ -66,6 +67,12 @@ export default function AssociationFields({ formik }) {
                 value={formik.values.details}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+            />
+            <ImageUploadField
+                value={formik.values.association_image}
+                onImageUpload={(url) => {
+                    formik.setFieldValue("association_image", url);
+                }}
             />
             <Editor
                 label="EOI"
