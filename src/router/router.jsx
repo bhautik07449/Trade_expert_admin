@@ -117,6 +117,7 @@ import AddTradeController from "../pages/TradeBureau/TradeController/AddTradeCon
 import Franchise from "../pages/TradeBureau/Franchise/Franchise";
 import AddFranchise from "../pages/TradeBureau/Franchise/AddFranchise";
 import Investors from "../pages/BuyerInteraction/Investors/Investors";
+import TradeRequest from "../pages/WebsiteManagement/ContentCMS/TradeRequest/TradeRequest";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -929,6 +930,11 @@ const routes = (isLoggedIn) => [
       {
         element: <Investors />,
         path: "/user-management/crm/investors",
+        index: true,
+      },
+      {
+        element: <TradeRequest />,
+        path: "/user-management/trade/request-info",
         index: true,
       },
     ],

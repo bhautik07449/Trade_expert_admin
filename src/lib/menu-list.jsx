@@ -103,6 +103,12 @@ export function getMenuList(pathname) {
                   label: "Get in Touch",
                   active: pathname.includes("/user-management/trade/get-in-touch"),
                   icon: Phone,
+                },
+                {
+                  href: "/user-management/trade/request-info",
+                  label: "Request Info",
+                  active: pathname.includes("/user-management/trade/request-info"),
+                  icon: Phone,
                 }
               ]
             }
