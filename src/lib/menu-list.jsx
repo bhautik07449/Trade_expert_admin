@@ -63,6 +63,12 @@ export function getMenuList(pathname) {
               icon: Users,
             },
             {
+              href: "/user-management/crm/investors",
+              label: "Investors",
+              active: pathname.includes("/user-management/crm/investors"),
+              icon: Users,
+            },
+            {
               href: "",
               label: "Trade",
               active: pathname.includes("/user-management/trade"),
