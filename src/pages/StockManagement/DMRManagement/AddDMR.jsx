@@ -395,6 +395,20 @@ const AddDMR = () => {
                         </>
                     )}
 
+                    {activeTab === "scheduled_rate" && (
+                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <CommonBox
+                                label="Scheduled Rate"
+                                placeholders="Select Scheduled Rate"
+                                options={[
+                                    { value: "Central", label: "Central" },
+                                    { value: "State", label: "State" },
+                                    { value: "Municipal", label: "Municipal" }
+                                ]}
+                            />
+                        </div>
+                    )}
+
                     <div className="flex justify-end gap-3 pt-5 border-t">
                         <CommonButton type="button" variant="outline">
                             Cancel
