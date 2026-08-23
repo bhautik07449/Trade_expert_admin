@@ -142,9 +142,10 @@ export default function BasicInfo({ formik, categories, flatList }) {
                     label="service type"
                     placeholders="service type"
                     options={[
-                        { label: "Controlled Alone", value: "Controlled Alone" },
-                        { label: "Consolidated", value: "Consolidated" },
-                        { label: "Composite", value: "Composite" }
+                        { label: "Standalone", value: "Standalone" },
+                        { label: "Supervised", value: "Supervised" },
+                        { label: "Sectored", value: "Sectored" },
+                        { label: "Sovereign", value: "Sovereign" }
                     ]}
                     name="status"
                     value={formik.values.status}

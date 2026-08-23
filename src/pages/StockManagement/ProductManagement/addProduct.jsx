@@ -78,7 +78,7 @@ export default function AddProduct() {
         country: data ? data?.country : "",
         offer_type: data ? data?.offer_type?.id : "",
         finacial_service: Array.isArray(data?.finacial_service) ? data.finacial_service.map(item => typeof item === 'object' ? item.id || item._id || item : item) : [],
-        status: data ? data?.status : 'Composite',
+        status: data ? data?.status : 'Standalone',
     };
 
     const formik = useFormik({

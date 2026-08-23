@@ -149,7 +149,7 @@ const ProductExcelUpload = ({ open, onOpenChange, onSuccess }) => {
                     seasonalChart: row.seasonalChart || "",
                     description: row.description || "",
                     newArrival: true,
-                    status: row.status || "Composite",
+                    status: row.status || "Standalone",
                     offer_type: row.offer_type || "",
                     country: row.country || "",
                     images: row.images ? (typeof row.images === 'string' ? row.images.split(',').map(s => s.trim()) : row.images) : [],
