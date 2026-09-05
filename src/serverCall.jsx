@@ -10,7 +10,7 @@ const customAxios = axios.create({
 const requestHandler = (request) => {
   const user = localStorage.getItem("token");
 
-  if (user) {
+  if (user && !request.url?.includes('/auth/login')) {
     const token = user;
     request.headers.Authorization = `Bearer ${token}`;
   }

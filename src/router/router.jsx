@@ -1,6 +1,8 @@
 import React from "react";
 import { Navigate, useRoutes } from "react-router";
 import AdminPanelLayout from "../components/admin-panel/admin-panel-layout";
+import ProductAppsAccess from "../pages/ProductAppsAccess/ProductAppsAccess";
+import ProductModuleList from "../pages/ProductModules/ProductModuleList";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Login/Login";
 import AdminsManagement from "../pages/UserManagement/AdminsManagement/AdminsManagement";
@@ -146,6 +148,26 @@ const routes = (isLoggedIn) => [
         element: <Dashboard />,
         path: "/",
         index: true,
+      },
+      {
+        element: <ProductAppsAccess />,
+        path: "/product-apps-access",
+      },
+      {
+        element: <ProductModuleList moduleKey="montile" />,
+        path: "/product-modules/montile",
+      },
+      {
+        element: <ProductModuleList moduleKey="supplier" />,
+        path: "/product-modules/supplier",
+      },
+      {
+        element: <ProductModuleList moduleKey="client" />,
+        path: "/product-modules/client",
+      },
+      {
+        element: <ProductModuleList moduleKey="service" />,
+        path: "/product-modules/service",
       },
       {
         element: <AdminsManagement />,

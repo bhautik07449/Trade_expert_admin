@@ -19,8 +19,26 @@ const deleteBuyer = async (id) => {
 
 }
 
+const updateBuyerStatus = async (id, status) => {
+    try {
+        const response = await serverCall.patch(`/buyers/admin/${id}/status`, { status });
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
+const updateBuyer = async (id, body) => {
+    try {
+        const response = await serverCall.patch(`/buyers/admin/${id}`, body);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
 const Buyerservice = {
-    getList, deleteBuyer
+    getList, deleteBuyer, updateBuyerStatus, updateBuyer
 };
 
 export default Buyerservice;

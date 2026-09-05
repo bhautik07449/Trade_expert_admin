@@ -21,13 +21,7 @@ const Login = () => {
 
     const validationSchema = Yup.object({
         email: Yup.string().required(t("messages.emailRequired")),
-        password: Yup.string()
-            .min(8, t("messages.password"))
-            .matches(/[A-Z]/, t("messages.passwordUppercase"))
-            .matches(/[a-z]/, t("messages.passwordLowercase"))
-            .matches(/[0-9]/, t("messages.passwordNumber"))
-            .matches(/[!@#$%^&*_,]/, t("messages.passwordSpecialChar"))
-            .required(t("messages.passwordRequired")),
+        password: Yup.string().required(t("messages.passwordRequired")),
     });
 
     const handleSubmit = async (values, { setSubmitting }) => {

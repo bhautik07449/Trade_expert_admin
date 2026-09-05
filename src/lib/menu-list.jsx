@@ -11,6 +11,45 @@ export function getMenuList(pathname) {
       submenus: [],
     },
     {
+      href: "/product-apps-access",
+      label: "Product Apps Access Control",
+      active: pathname.includes("/product-apps-access"),
+      icon: ShieldCheck,
+      submenus: [],
+    },
+    {
+      href: "",
+      label: "Product Modules",
+      active: pathname.includes("/product-modules"),
+      icon: Boxes,
+      submenus: [
+        {
+          href: "/product-modules/montile",
+          label: "Montile App",
+          active: pathname.includes("/product-modules/montile"),
+          icon: TrendingUp,
+        },
+        {
+          href: "/product-modules/supplier",
+          label: "Supplier App",
+          active: pathname.includes("/product-modules/supplier"),
+          icon: Truck,
+        },
+        {
+          href: "/product-modules/client",
+          label: "Client App",
+          active: pathname.includes("/product-modules/client"),
+          icon: Users,
+        },
+        {
+          href: "/product-modules/service",
+          label: "Service App",
+          active: pathname.includes("/product-modules/service"),
+          icon: Briefcase,
+        },
+      ],
+    },
+    {
       href: "",
       label: "User Management",
       active: pathname.includes("/user-management"),
