@@ -9,9 +9,8 @@ export const login = createAsyncThunk(
       const response = await AuthService.login(requestObj);
       return response;
     } catch (error) {
-      return thunkAPI.rejectWithValue(
-        get(error, "response.data.message", error)
-      );
+      const apiMessage = error?.response?.data?.message || error?.response?.data?.errorCode || error?.message || "Invalid credentials";
+      return thunkAPI.rejectWithValue(apiMessage);
     }
   }
 );

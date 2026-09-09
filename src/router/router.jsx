@@ -2,7 +2,10 @@ import React from "react";
 import { Navigate, useRoutes } from "react-router";
 import AdminPanelLayout from "../components/admin-panel/admin-panel-layout";
 import ProductAppsAccess from "../pages/ProductAppsAccess/ProductAppsAccess";
-import ProductModuleList from "../pages/ProductModules/ProductModuleList";
+import MontileModule from "../pages/ProductModules/MontileModule";
+import SupplierModule from "../pages/ProductModules/SupplierModule";
+import ClientModule from "../pages/ProductModules/ClientModule";
+import ServiceModule from "../pages/ProductModules/ServiceModule";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Login/Login";
 import AdminsManagement from "../pages/UserManagement/AdminsManagement/AdminsManagement";
@@ -131,6 +134,16 @@ export const PublicRoute = ({ children }) => {
   return user ? <Navigate to="/" /> : children;
 };
 
+export const RoleProtectedRoute = ({ children, allowedRoles }) => {
+  const user = localStorage.getItem("token");
+  const role = localStorage.getItem("role") || localStorage.getItem("admin_type") || "super_admin";
+  if (!user) return <Navigate to="/login" />;
+  if (role === "super_admin" || allowedRoles.includes(role)) {
+    return children;
+  }
+  return <Navigate to="/" replace />;
+};
+
 const routes = (isLoggedIn) => [
   {
     path: "/login",
@@ -154,19 +167,19 @@ const routes = (isLoggedIn) => [
         path: "/product-apps-access",
       },
       {
-        element: <ProductModuleList moduleKey="montile" />,
+        element: <MontileModule />,
         path: "/product-modules/montile",
       },
       {
-        element: <ProductModuleList moduleKey="supplier" />,
+        element: <SupplierModule />,
         path: "/product-modules/supplier",
       },
       {
-        element: <ProductModuleList moduleKey="client" />,
+        element: <ClientModule />,
         path: "/product-modules/client",
       },
       {
-        element: <ProductModuleList moduleKey="service" />,
+        element: <ServiceModule />,
         path: "/product-modules/service",
       },
       {

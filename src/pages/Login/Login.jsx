@@ -30,19 +30,23 @@ const Login = () => {
             const response = await dispatch(login(values)).unwrap();
             if (response) {
                 localStorage.setItem("isLoggedIn", "true");
+                const userRole = response.role || response.data?.role || "super_admin";
+                localStorage.setItem("role", userRole);
+                localStorage.setItem("admin_type", userRole);
                 dispatch(setLoggedIn(true));
                 toast({
                     variant: "success",
                     title: "Login Successful",
-                    description: "You have successfully logged in.",
+                    description: `Logged in successfully as ${userRole.toUpperCase()}.`,
                 });
                 navigate("/");
             }
         } catch (error) {
+            const errorMsg = typeof error === 'string' ? error : (error?.message || "Invalid credentials");
             toast({
                 variant: "error",
                 title: "Login Failed",
-                description: error.message || "An error occurred during login.",
+                description: errorMsg,
             });
         } finally {
             setSubmitting(false);

@@ -15,33 +15,42 @@ export function UserNav({ profile }) {
     navigate("/login");
   };
 
+  const currentRole = localStorage.getItem("role") || localStorage.getItem("admin_type") || "super_admin";
+
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center space-x-2 cursor-pointer">
             <img src={profile?.photo} alt="" srcset="" className="w-8 h-8 rounded-full object-cover" />
-            <p className="capitalize font-sans text-slate-200">{profile?.firstName}{" "}{profile?.lastName}</p>
+            <div className="flex flex-col">
+              <p className="capitalize font-sans text-slate-200 text-sm font-medium">{profile?.firstName}{" "}{profile?.lastName}</p>
+              <span className="text-[10px] text-blue-200 uppercase font-semibold tracking-wider">
+                {currentRole.replace('_', ' ')}
+              </span>
+            </div>
           </div>
         </DropdownMenuTrigger>
 
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">Admin</p>
+              <p className="text-sm font-medium leading-none">{profile?.firstName}{" "}{profile?.lastName}</p>
               <p className="text-xs leading-none text-muted-foreground">
                 {profile?.email}
+              </p>
+              <p className="text-xs text-blue-500 font-semibold uppercase mt-1">
+                Role: {currentRole.replace('_', ' ')}
               </p>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="hover:cursor-pointer"
+            className="hover:cursor-pointer text-red-500 hover:text-red-600"
             onClick={() => handleLogout()}
           >
-            <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
+            <LogOut className="w-4 h-4 mr-3" />
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>

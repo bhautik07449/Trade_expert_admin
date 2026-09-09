@@ -19,7 +19,8 @@ import { setLoggedIn } from "../../store/slice/auth";
 
 export function Menu({ isOpen, profile }) {
   const pathname = window.location.pathname;
-  const menuList = getMenuList(pathname);
+  const role = localStorage.getItem("role") || localStorage.getItem("admin_type") || "super_admin";
+  const menuList = getMenuList(pathname, role);
   const [openMenus, setOpenMenus] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();

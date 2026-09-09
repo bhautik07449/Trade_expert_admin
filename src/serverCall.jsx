@@ -18,15 +18,9 @@ const requestHandler = (request) => {
 };
 
 const responseHandler = (response) => {
-  if (response.status === 401 || response.status === 403 || response.status === 400) {
-    localStorage.clear();
-    window.location.replace("/login");
-  }
-
   if (response.status === 500) {
-    alert("Server is down")
+    console.error("Server error 500");
   }
-
   return response;
 };
 
@@ -36,10 +30,10 @@ const requestErrorHandler = (error) => {
 
 const responseErrorHandler = (error) => {
   if (error.response) {
-    if (error.response.status === 401 || error.response.status === 403) {
+    const isLoginRequest = error.config?.url?.includes('/auth/login');
+    if ((error.response.status === 401 || error.response.status === 403) && !isLoginRequest) {
       localStorage.clear();
       window.location.replace("/login");
-      return Promise.reject(error);
     }
   }
   return Promise.reject(error);
