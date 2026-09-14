@@ -4,15 +4,22 @@ import { LogOut } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { useDispatch } from "react-redux";
 import { setLoggedIn } from "../../store/slice/auth";
+import AuthService from "../../service/auth.service";
 
 export function UserNav({ profile }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(setLoggedIn(false));
-    localStorage.clear();
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await AuthService.logout();
+    } catch (error) {
+      console.error("Logout API error:", error);
+    } finally {
+      dispatch(setLoggedIn(false));
+      localStorage.clear();
+      navigate("/login");
+    }
   };
 
   const currentRole = localStorage.getItem("role") || localStorage.getItem("admin_type") || "super_admin";

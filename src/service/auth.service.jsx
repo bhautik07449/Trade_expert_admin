@@ -31,8 +31,17 @@ const getProfile = async () => {
   }
 }
 
+const logout = async () => {
+  try {
+    const response = await serverCall.post('/auth/logout');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const AuthService = {
-  login, getProfile
+  login, getProfile, logout
 };
 
 export default AuthService;

@@ -6,6 +6,7 @@ import { formatDate } from "../../../common/constants";
 import { toast } from "../../../components/ui/use-toast";
 import { useSelector } from "react-redux";
 import Investorservice from "../../../service/investors.service";
+import { getStatusStyles } from "../../../lib/funcation";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -19,6 +20,13 @@ const columns = [
     { field: "country", headerName: "Country", flex: 2 },
     { field: "website", headerName: "Website", flex: 2 },
     { field: "service_type", headerName: "Service Type", flex: 1 },
+    {
+        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
+                {params.value || "inactive"}
+            </span>
+        )
+    },
     { field: "createdAt", headerName: "Created", flex: 1 },
     { field: "lastUpdatedAt", headerName: "Updated", flex: 1 },
 ]

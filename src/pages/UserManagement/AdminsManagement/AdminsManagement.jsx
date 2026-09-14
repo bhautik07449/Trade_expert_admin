@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import Adminservice from "../../../service/admin.service";
 import { toast } from "../../../components/ui/use-toast";
 import { useSelector } from "react-redux";
+import { getStatusStyles } from "../../../lib/funcation";
 
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
@@ -16,6 +17,13 @@ const columns = [
     { field: "country", headerName: "Country", flex: 1 },
     { field: "email", headerName: "email", flex: 1 },
     { field: "phone", headerName: "PhoneNo", flex: 1 },
+    {
+        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
+            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(params.value)}`}>
+                {params.value || "inactive"}
+            </span>
+        )
+    },
     { field: "createdAt", headerName: "Created", flex: 1 },
 ]
 

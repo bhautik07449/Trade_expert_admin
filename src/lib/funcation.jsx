@@ -1,8 +1,13 @@
 export const getStatusStyles = (status) => {
-    if (status?.toLowerCase() === "active") {
-        return "bg-green-100 text-green-600";
+    const s = status?.toLowerCase();
+    if (s === "active") {
+        return "bg-green-100 text-green-700 font-semibold";
+    } else if (s === "inactive") {
+        return "bg-amber-100 text-amber-700 font-semibold";
+    } else if (s === "pending") {
+        return "bg-blue-100 text-blue-700 font-semibold";
     } else {
-        return "bg-red-100 text-red-600";
+        return "bg-red-100 text-red-700 font-semibold";
     }
 };
 
