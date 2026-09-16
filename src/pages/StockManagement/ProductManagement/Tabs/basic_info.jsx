@@ -147,10 +147,10 @@ export default function BasicInfo({ formik, categories, flatList }) {
                         { label: "Sectored", value: "Sectored" },
                         { label: "Sovereign", value: "Sovereign" }
                     ]}
-                    name="status"
-                    value={formik.values.status}
-                    onChange={(value) => formik.setFieldValue("status", value)}
-                    error={formik.touched.status && formik.errors.status}
+                    name="service_type"
+                    value={formik.values.service_type}
+                    onChange={(value) => formik.setFieldValue("service_type", value)}
+                    error={formik.touched.service_type && formik.errors.service_type}
                 />
             </div>
         </div>

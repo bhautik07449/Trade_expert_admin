@@ -45,8 +45,26 @@ const deleteProduct = async (id) => {
     }
 }
 
+const approveProduct = async (id) => {
+    try {
+        const response = await serverCall.patch(`/products/${id}/approve`);
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const rejectProduct = async (id, reason) => {
+    try {
+        const response = await serverCall.patch(`/products/${id}/reject`, { reason });
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const Productservice = {
-    getProductList, addProduct, getById, updateProduct, deleteProduct
+    getProductList, addProduct, getById, updateProduct, deleteProduct, approveProduct, rejectProduct
 };
 
 export default Productservice;

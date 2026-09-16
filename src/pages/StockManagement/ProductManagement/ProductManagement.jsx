@@ -29,11 +29,75 @@ const columns = [
     { field: "teriff", headerName: "Tariff", flex: 1 },
     { field: "price", headerName: "Price", flex: 1 },
     {
-        field: "status", headerName: "Status", flex: 1, renderCell: (params) => (
+        field: "service_type", headerName: "Service Type", flex: 1, renderCell: (params) => (
             <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatus(params.value)}`}>
-                {params.value}
+                {params.value || "-"}
             </span>
         )
+    },
+    {
+        field: "approval_status", headerName: "APPROVAL STATUS", flex: 1.8, renderCell: (params) => {
+            const val = (params.value || "approved").toLowerCase();
+            if (val === "approved") {
+                return (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                        Approved
+                    </span>
+                );
+            } else if (val === "pending") {
+                return (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                        Pending Approval
+                    </span>
+                );
+            } else {
+                return (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/15 text-rose-400 border border-rose-500/30">
+                        Rejected
+                    </span>
+                );
+            }
+        }
+    },
+    {
+        field: "approvalActions",
+        headerName: "ADMIN APPROVAL ACTIONS",
+        flex: 2,
+        renderCell: (params) => {
+            const row = params.row || params.data || {};
+            const val = (row?.approval_status || "approved").toLowerCase();
+
+            const onApprove = row?.onApprove || params.onApprove;
+            const onReject = row?.onReject || params.onReject;
+
+            if (val === "pending" || val === "rejected") {
+                return (
+                    <Button
+                        size="sm"
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-md shadow transition-colors"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onApprove?.(row.id);
+                        }}
+                    >
+                        Approve
+                    </Button>
+                );
+            } else {
+                return (
+                    <Button
+                        size="sm"
+                        className="bg-red-600 hover:bg-red-700 text-white flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-md shadow transition-colors"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onReject?.(row.id);
+                        }}
+                    >
+                        Reject
+                    </Button>
+                );
+            }
+        }
     },
     { field: "createdAt", headerName: "createdAt", flex: 1 },
 ]
@@ -44,6 +108,46 @@ const ProductManagement = () => {
     const navigate = useNavigate();
     const selectedCountry = useSelector((state) => state.countryFilter.selectedCountry);
 
+    const handleApprove = async (id) => {
+        try {
+            const res = await Productservice.approveProduct(id);
+            if (res) {
+                toast({
+                    variant: "success",
+                    title: "Product Approval",
+                    description: "Product approved successfully.",
+                });
+                getList(selectedCountry);
+            }
+        } catch (error) {
+            toast({
+                variant: "error",
+                title: "Product Approval",
+                description: error?.response?.data?.message || "Failed to approve product.",
+            });
+        }
+    };
+
+    const handleReject = async (id) => {
+        try {
+            const res = await Productservice.rejectProduct(id);
+            if (res) {
+                toast({
+                    variant: "success",
+                    title: "Product Rejection",
+                    description: "Product rejected successfully.",
+                });
+                getList(selectedCountry);
+            }
+        } catch (error) {
+            toast({
+                variant: "error",
+                title: "Product Rejection",
+                description: error?.response?.data?.message || "Failed to reject product.",
+            });
+        }
+    };
+
     const getList = async (country) => {
         try {
             const res = await Productservice.getProductList(country);
@@ -51,10 +155,14 @@ const ProductManagement = () => {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
+                    service_type: item?.service_type || item?.status || "-",
+                    approval_status: item?.approval_status || (item?.is_supplier_created ? "pending" : "approved"),
                     category: item?.category?.name || "-",
                     subcategory: item?.subcategory?.name || "-",
                     offer_type: item?.offer_type?.name || "-",
                     createdAt: formatDate(item?.lastUpdatedAt),
+                    onApprove: handleApprove,
+                    onReject: handleReject,
                 }))
                 setList(formattedData);
             }
