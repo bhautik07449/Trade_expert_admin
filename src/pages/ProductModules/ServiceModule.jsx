@@ -75,7 +75,7 @@ export default function ServiceModule() {
   };
 
   const columns = [
-    { field: "SrNo", headerName: "#", flex: 0.5 },
+    { field: "SrNo", headerName: "Sr No.", flex: 0.5 },
     {
       field: "name",
       headerName: "USER NAME",
