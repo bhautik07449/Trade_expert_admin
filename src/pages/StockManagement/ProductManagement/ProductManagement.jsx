@@ -15,6 +15,7 @@ import ProductExcelUpload from "./ProductExcelUpload";
 const columns = [
     { field: "SrNo", headerName: "SrNo", flex: 1 },
     { field: "name", headerName: "name", flex: 1 },
+    { field: "supplier", headerName: "Supplier Name", flex: 1 },
     { field: "country", headerName: "Country", flex: 1 },
     { field: "category", headerName: "Category", flex: 1 },
     { field: "subcategory", headerName: "Sub Category", flex: 1 },
@@ -155,6 +156,7 @@ const ProductManagement = () => {
                 const formattedData = res?.data?.data?.map((item, index) => ({
                     ...item,
                     SrNo: index + 1,
+                    supplier: item?.is_supplier_created ? (item?.supplier_name || "Supplier") : "Admin",
                     service_type: item?.service_type || item?.status || "-",
                     approval_status: item?.approval_status || (item?.is_supplier_created ? "pending" : "approved"),
                     category: item?.category?.name || "-",
