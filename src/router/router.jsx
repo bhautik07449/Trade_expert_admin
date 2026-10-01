@@ -164,23 +164,23 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <ProductAppsAccess />,
-        path: "/product-apps-access",
+        path: "/product-apps-access/dashboard",
       },
       {
         element: <MontileModule />,
-        path: "/product-modules/montile",
+        path: "/product-apps-access/montile",
       },
       {
         element: <SupplierModule />,
-        path: "/product-modules/supplier",
+        path: "/product-apps-access/supplier",
       },
       {
         element: <ClientModule />,
-        path: "/product-modules/client",
+        path: "/product-apps-access/client",
       },
       {
         element: <ServiceModule />,
-        path: "/product-modules/service",
+        path: "/product-apps-access/service",
       },
       {
         element: <AdminsManagement />,
