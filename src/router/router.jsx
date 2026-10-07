@@ -130,6 +130,7 @@ import AddDevelopPrepositions from "../pages/PopulizationConnect/DevelopPreposit
 import AddInterwatchAlert from "../pages/SupplierConnect/InterwatchAlert/AddInterwatchAlert";
 import Consolidate from "../pages/SupplierConnect/Consolidate/Consolidate";
 import AddConsolidate from "../pages/SupplierConnect/Consolidate/AddConsolidate";
+import AddDevelopTopologies from "../pages/PopulizationConnect/DevelopTopologies/AddDevelopTopologies";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -179,19 +180,19 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddDevelopPrepositions />,
-        path: "/populization-connect/develop-prepositions/:id",
+        path: "/populization-connect/develop-prepositions/edit/:id",
       },
       {
         element: <DevelopTopologies />,
         path: "/populization-connect/develop-topologies",
       },
       {
-        element: <AddDevelopPrepositions />,
+        element: <AddDevelopTopologies />,
         path: "/populization-connect/develop-topologies/add",
       },
       {
-        element: <AddDevelopPrepositions />,
-        path: "/populization-connect/develop-topologies/:id",
+        element: <AddDevelopTopologies />,
+        path: "/populization-connect/develop-topologies/edit/:id",
       },
       {
         element: <InterwatchAlert />,
@@ -203,7 +204,7 @@ const routes = (isLoggedIn) => [
       },
       {
         element: <AddInterwatchAlert />,
-        path: "/supplier-connect/interwatch-alert/:id",
+        path: "/supplier-connect/interwatch-alert/edit/:id",
       },
       {
         element: <Consolidate />,

@@ -11,6 +11,9 @@ import abctypeSlice from './slice/abctypeSlice'
 import productnameSlice from './slice/productnameSlice'
 import countryFilterReducer from './slice/countryFilterSlice'
 import franchiseSlice from './slice/franchiseSlice'
+import careerSlice from './slice/careerSlice'
+import developPrepositionsSlice from './slice/developPrepositionsSlice'
+import developTopologiesSlice from './slice/developTopologiesSlice'
 
 const reducer = {
   auth: authReducer,
@@ -25,6 +28,9 @@ const reducer = {
   productname: productnameSlice,
   countryFilter: countryFilterReducer,
   franchise: franchiseSlice,
+  career: careerSlice,
+  developPrepositions: developPrepositionsSlice,
+  developTopologies: developTopologiesSlice,
 };
 
 const store = configureStore({
