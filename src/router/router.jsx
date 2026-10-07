@@ -8,6 +8,9 @@ import ClientModule from "../pages/ProductModules/ClientModule";
 import ServiceModule from "../pages/ProductModules/ServiceModule";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Login/Login";
+import DevelopPrepositions from "../pages/PopulizationConnect/DevelopPrepositions/DevelopPrepositions";
+import DevelopTopologies from "../pages/PopulizationConnect/DevelopTopologies/DevelopTopologies";
+import InterwatchAlert from "../pages/SupplierConnect/InterwatchAlert/InterwatchAlert";
 import AdminsManagement from "../pages/UserManagement/AdminsManagement/AdminsManagement";
 import SuppliersManagement from "../pages/UserManagement/SuppliersManagement/SuppliersManagement";
 import ProductManagement from "../pages/StockManagement/ProductManagement/ProductManagement";
@@ -123,6 +126,10 @@ import Franchise from "../pages/TradeBureau/Franchise/Franchise";
 import AddFranchise from "../pages/TradeBureau/Franchise/AddFranchise";
 import Investors from "../pages/BuyerInteraction/Investors/Investors";
 import TradeRequest from "../pages/WebsiteManagement/ContentCMS/TradeRequest/TradeRequest";
+import AddDevelopPrepositions from "../pages/PopulizationConnect/DevelopPrepositions/AddDevelopPrepositions";
+import AddInterwatchAlert from "../pages/SupplierConnect/InterwatchAlert/AddInterwatchAlert";
+import Consolidate from "../pages/SupplierConnect/Consolidate/Consolidate";
+import AddConsolidate from "../pages/SupplierConnect/Consolidate/AddConsolidate";
 
 export const PrivateRoute = ({ children }) => {
   const user = localStorage.getItem("token");
@@ -161,6 +168,54 @@ const routes = (isLoggedIn) => [
         element: <Dashboard />,
         path: "/",
         index: true,
+      },
+      {
+        element: <DevelopPrepositions />,
+        path: "/populization-connect/develop-prepositions",
+      },
+      {
+        element: <AddDevelopPrepositions />,
+        path: "/populization-connect/develop-prepositions/add",
+      },
+      {
+        element: <AddDevelopPrepositions />,
+        path: "/populization-connect/develop-prepositions/:id",
+      },
+      {
+        element: <DevelopTopologies />,
+        path: "/populization-connect/develop-topologies",
+      },
+      {
+        element: <AddDevelopPrepositions />,
+        path: "/populization-connect/develop-topologies/add",
+      },
+      {
+        element: <AddDevelopPrepositions />,
+        path: "/populization-connect/develop-topologies/:id",
+      },
+      {
+        element: <InterwatchAlert />,
+        path: "/supplier-connect/interwatch-alert",
+      },
+      {
+        element: <AddInterwatchAlert />,
+        path: "/supplier-connect/interwatch-alert/add",
+      },
+      {
+        element: <AddInterwatchAlert />,
+        path: "/supplier-connect/interwatch-alert/:id",
+      },
+      {
+        element: <Consolidate />,
+        path: "/supplier-connect/consolidate",
+      },
+      {
+        element: <AddConsolidate />,
+        path: "/supplier-connect/consolidate/add",
+      },
+      {
+        element: <AddConsolidate />,
+        path: "/supplier-connect/consolidate/:id",
       },
       {
         element: <ProductAppsAccess />,

@@ -561,12 +561,46 @@ export function getMenuList(pathname) {
           active: pathname === "/trade_bureau/franchise",
           icon: FileCheck2,
         },
-        // {
-        //   href: "/trade_bureau/trade_grievance",
-        //   label: "Trade Grievance",
-        //   active: pathname === "/trade_bureau/trade_grievance",
-        //   icon: FileCheck2,
-        // }
+      ]
+    },
+    {
+      href: "",
+      label: "Populization Connect",
+      active: pathname.includes("/populization-connect"),
+      icon: Users,
+      submenus: [
+        {
+          href: "/populization-connect/develop-prepositions",
+          label: "Develop Prepositions",
+          active: pathname === "/populization-connect/develop-prepositions",
+          icon: FileEdit,
+        },
+        {
+          href: "/populization-connect/develop-topologies",
+          label: "Develop Topologies",
+          active: pathname === "/populization-connect/develop-topologies",
+          icon: FolderTree,
+        }
+      ]
+    },
+    {
+      href: "",
+      label: "Supplier Connect",
+      active: pathname.includes("/supplier-connect"),
+      icon: Handshake,
+      submenus: [
+        {
+          href: "/supplier-connect/interwatch-alert",
+          label: "Interwatch Fall Short",
+          active: pathname === "/supplier-connect/interwatch-alert",
+          icon: ShieldCheck,
+        },
+        {
+          href: "/supplier-connect/consolidate",
+          label: "Consolidate of one",
+          active: pathname === "/supplier-connect/consolidate",
+          icon: ShieldCheck,
+        }
       ]
     }
   ]
