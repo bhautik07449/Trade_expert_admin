@@ -9,22 +9,13 @@ export default function InterwatchAlert() {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
 
-  const columns = [
-    { field: "supplierName", headerName: "Supplier Name", flex: 2 },
-    { field: "category", headerName: "Category", flex: 1 },
-    { field: "reasonDesc", headerName: "Reason Desc", flex: 3 },
-    { field: "reasonType", headerName: "Reason Type", flex: 2 },
-    { field: "notification", headerName: "Notification", flex: 2 }
-  ];
-
   const [list, setList] = useState([
     {
       id: 1,
       supplierName: "Supplier A",
       category: "Material",
       reasonDesc: "Short on raw materials",
-      reasonType: "Fall Short",
-      notification: "Material"
+      reasonType: "Fall short",
     },
     {
       id: 2,
@@ -32,23 +23,20 @@ export default function InterwatchAlert() {
       category: "Personnel",
       reasonDesc: "Staff unavailable",
       reasonType: "Availability",
-      notification: "Personnel"
     },
     {
       id: 3,
       supplierName: "Supplier C",
       category: "Compliance",
       reasonDesc: "Failed recent audit",
-      reasonType: "Excessive",
-      notification: "Compliance"
+      reasonType: "Fall short",
     },
     {
       id: 4,
       supplierName: "Supplier D",
       category: "Services",
       reasonDesc: "Service delay reported",
-      reasonType: "Fall Short",
-      notification: "Services"
+      reasonType: "Fall short",
     },
     {
       id: 5,
@@ -56,18 +44,25 @@ export default function InterwatchAlert() {
       category: "Logistical",
       reasonDesc: "Transport breakdown",
       reasonType: "Availability",
-      notification: "Logistical"
     }
   ]);
 
+  const columns = [
+    { field: "supplierName", headerName: "Supplier Name", flex: 2 },
+    { field: "category", headerName: "Category", flex: 2 },
+    { field: "reasonDesc", headerName: "Reason Desc", flex: 3 },
+    { field: "reasonType", headerName: "Reason Type", flex: 2 },
+  ];
+
   const handleDelete = (item) => {
-    setList(list.filter(i => i.id !== item.id));
-  };
+    const updatedList = list.filter((row) => row.id !== item.id);
+    setList(updatedList);
+  }
 
   return (
     <div className="grid gap-4 lg:gap-6">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="h4-bold">Interwatch Alert</h3>
+        <h3 className="h4-bold">Supplier Connect → Interwatch Alert</h3>
         <h4 className="h6-bold">Total: {list?.length || 0}</h4>
       </div>
 
@@ -92,4 +87,4 @@ export default function InterwatchAlert() {
       </Card>
     </div>
   );
-};
+}
