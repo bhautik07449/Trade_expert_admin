@@ -591,7 +591,7 @@ export function getMenuList(pathname) {
       submenus: [
         {
           href: "/supplier-connect/interwatch-alert",
-          label: "Interwatch Fall Short",
+          label: "Interwatch Alert",
           active: pathname === "/supplier-connect/interwatch-alert",
           icon: ShieldCheck,
         },
