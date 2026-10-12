@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from "react-router";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -8,12 +8,14 @@ import CommonButton from '../../../components/widgets/common_button';
 import { Card } from '../../../components/ui/card';
 import BackPath from "../../../components/common/BackPath";
 import DevelopPrepositionsService from '../../../service/develop_prepositions.service';
+import Abctypeservice from '../../../service/abctype.service';
 import CommonBox from '../../../components/common/common_box';
 
 export default function AddDevelopPrepositions() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [list, setList] = useState(null);
+  const [tradeDiversityTypes, setTradeDiversityTypes] = useState([]);
 
   const initialValues = {
     belief: list ? list?.belief : "",
@@ -90,6 +92,41 @@ export default function AddDevelopPrepositions() {
     },
   });
 
+  const fetchTradeDiversityTypes = async () => {
+    try {
+      const res = await Abctypeservice.getList();
+      if (res?.data?.data) {
+        setTradeDiversityTypes(res.data.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch Trade Diversity Types", error);
+    }
+  };
+
+  const tradeDiversityTypeOptions = useMemo(() => {
+    const uniqueNames = new Set();
+    const options = [];
+
+    tradeDiversityTypes?.forEach((item) => {
+      if (item?.name && !uniqueNames.has(item.name)) {
+        uniqueNames.add(item.name);
+        options.push({
+          label: item.name,
+          value: item.name,
+        });
+      }
+    });
+
+    if (formik.values.name && !uniqueNames.has(formik.values.name)) {
+      options.unshift({
+        label: formik.values.name,
+        value: formik.values.name,
+      });
+    }
+
+    return options;
+  }, [tradeDiversityTypes, formik.values.name]);
+
   const fetchDevelopPreposition = async () => {
     try {
       const res = await DevelopPrepositionsService.getDevelopPrepositionById(id);
@@ -100,6 +137,10 @@ export default function AddDevelopPrepositions() {
       // handled
     }
   };
+
+  useEffect(() => {
+    fetchTradeDiversityTypes();
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -150,13 +191,14 @@ export default function AddDevelopPrepositions() {
               error={formik.touched.goal && formik.errors.goal}
             />
 
-            <CommonTextField
+            <CommonBox
               label="Name a Preposition."
-              name="name"
+              placeholders="Select Trade Diversity Type"
+              options={tradeDiversityTypeOptions}
               value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="Name"
+              onChange={(value) => {
+                formik.setFieldValue("name", value);
+              }}
               error={formik.touched.name && formik.errors.name}
             />
           </div>
